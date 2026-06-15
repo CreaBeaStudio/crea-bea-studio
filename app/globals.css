@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #FDF6F0;
+  --cream-dark: #F5E8DC;
+  --pink: #F4607A;
+  --pink-light: #FF8FA0;
+  --pink-dark: #D94060;
+  --ink: #1A1A1A;
+  --muted: #888;
+  --card-bg: #FFFFFF;
+  --border: #E8D5C8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--pink);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--pink-dark); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--pink);
+  border: 2px solid var(--pink);
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-decoration: none;
+}
+.btn-outline:hover { background: var(--pink); color: white; }
+
+select, input[type="text"], textarea {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 15px;
+  background: white;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+select:focus, input[type="text"]:focus, textarea:focus {
+  border-color: var(--pink);
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}

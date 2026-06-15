@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "app/api/generate-pbn/route.ts": {
+      "maxDuration": 120,
+      "memory": 1024
+    }
+  }
+}
