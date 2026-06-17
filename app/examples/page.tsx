@@ -1,74 +1,267 @@
+"use client";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect, useCallback } from "react";
 
 const EXAMPLES = [
   {
-    photo: "/example-beach-couple.jpg",
-    pbn:   "/example-beach-couple-pbn.jpg",
-    label: "Beach Couple",
+    photo: "/example-family-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite family, celebration photo",
   },
   {
-    photo: "/example-kids-dog.jpg",
-    pbn:   "/example-kids-dog-pbn.jpg",
-    label: "Kids & Dog",
+    photo: "/example-city-dog-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite pet photo",
   },
   {
-    photo: "/example-wedding.jpg",
-    pbn:   null,
-    label: "Wedding",
+    photo: "/example-beach-couple-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite holiday, celebration photo",
   },
   {
-    photo: "/example-family.jpg",
-    pbn:   null,
-    label: "Family",
+    photo: "/example-kitten-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite pet photo",
+  },
+  {
+    photo: "/example-col-couple-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite family, celebration photo",
+  },
+  {
+    photo: "/example-dog-rain-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite pet photo",
+  },
+  {
+    photo: "/example-wedding-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite family, celebration photo",
+  },
+  {
+    photo: "/example-fieldflower-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite nature, holiday photo",
+  },
+  {
+    photo: "/example-graduate-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite celebration photo",
+  },
+  {
+    photo: "/example-3kids-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite family photo",
+  },
+  {
+    photo: "/example-ktemple-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite holiday photo",
+  },
+  {
+    photo: "/example-boy-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite family photo",
+  },
+  {
+    photo: "/example-bday-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite celebration, family photo",
+  },
+  {
+    photo: "/example-mountain-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite holiday photo",
+  },
+  {
+    photo: "/example-girl-24.png",
+    label: "Intermediate",
+    desc:  "Perfect for your favorite family photo",
+  },
+  {
+    photo: "/example-poppy-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite nature, holiday photo",
+  },
+  {
+    photo: "/example-xmas-15.png",
+    label: "Beginner",
+    desc:  "Perfect for your favorite holiday, celebration photo",
+  },{
+    photo: "/example-babyhand-36.png",
+    label: "Advanced",
+    desc:  "Perfect for your favorite family, celebration photo",
   },
 ];
 
+const AUTOPLAY_INTERVAL = 4000;
+
 export default function Examples() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused]   = useState(false);
+
+  const prev = useCallback(() => setCurrent(c => (c - 1 + EXAMPLES.length) % EXAMPLES.length), []);
+  const next = useCallback(() => setCurrent(c => (c + 1) % EXAMPLES.length), []);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(next, AUTOPLAY_INTERVAL);
+    return () => clearInterval(t);
+  }, [paused, next]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft")  { setPaused(true); prev(); }
+      if (e.key === "ArrowRight") { setPaused(true); next(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [prev, next]);
+
+  const ex = EXAMPLES[current];
+
   return (
     <>
       <Navbar />
-      <main style={{ padding:"60px 24px", maxWidth:1100, margin:"0 auto", textAlign:"center" }}>
-        <h1 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,44px)", marginBottom:16 }}>
+      <main style={{ padding: "60px 24px", maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
+        <h1 style={{ fontFamily: "Nunito, sans-serif", color:"var(--pink)", fontWeight: 900, fontSize: "clamp(28px,4vw,44px)", marginBottom: 16 }}>
           📸 Examples
         </h1>
-        <p style={{ color:"#666", fontSize:17, marginBottom:48, maxWidth:560, margin:"0 auto 48px" }}>
-          See what CreaBea Studio creates from real photos. Every outline is uniquely generated for your image.
+        <p style={{ color: "#666", fontSize: 17, maxWidth: 560, margin: "0 auto 48px" }}>
+          See what CreaBeaStudio creates from real photos. Every Guangna by Number is uniquely generated from your photo and for your skill level.
         </p>
 
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(480px,1fr))", gap:32, marginBottom:48 }}>
-          {EXAMPLES.map(ex => (
-            <div key={ex.label} style={{
-              background:"white", borderRadius:20,
-              boxShadow:"0 4px 20px rgba(0,0,0,0.08)",
-              overflow:"hidden", textAlign:"left"
-            }}>
-              {ex.pbn ? (
-                // Side-by-side: PBN on left, photo on right
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", height:260 }}>
-                  <div style={{ position:"relative", overflow:"hidden" }}>
-                    <Image src={ex.pbn} alt={`${ex.label} PBN outline`} fill style={{ objectFit:"cover" }}/>
-                  </div>
-                  <div style={{ position:"relative", overflow:"hidden" }}>
-                    <Image src={ex.photo} alt={`${ex.label} original`} fill style={{ objectFit:"cover" }}/>
+        {/* ── Slideshow ── */}
+        <div
+          style={{ position: "relative", maxWidth: 600, margin: "0 auto 48px" }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div style={{
+            background: "white",
+            borderRadius: 24,
+            boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
+            overflow: "hidden",
+          }}>
+            {ex.pbn ? (
+              /*
+                Side-by-side: PBN outline (big, left) + original photo (smaller, right).
+                Both images use natural sizing — width is fixed, height follows the image.
+                We align them to the top so portrait images aren't cropped.
+              */
+              <div style={{ display: "flex", alignItems: "flex-start" }}>
+                {/* PBN outline — takes 60% of the card width */}
+                <div style={{ flex: "0 0 60%", lineHeight: 0 }}>
+                  <Image
+                    src={ex.pbn}
+                    alt={`${ex.label} PBN outline`}
+                    width={0}
+                    height={0}
+                    sizes="60vw"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                    priority
+                  />
+                </div>
+                {/* Original photo — takes 40%, sticks to top */}
+                <div style={{ flex: "0 0 40%", lineHeight: 0, position: "relative", borderLeft: "4px solid #fdf6f0" }}>
+                  <Image
+                    src={ex.photo}
+                    alt={`${ex.label} original photo`}
+                    width={0}
+                    height={0}
+                    sizes="40vw"
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                  <div style={{
+                    position: "absolute", bottom: 10, left: 10,
+                    background: "rgba(0,0,0,0.55)", color: "white",
+                    fontSize: 11, fontWeight: 700, borderRadius: 6,
+                    padding: "3px 8px", backdropFilter: "blur(4px)",
+                  }}>
+                    Original
                   </div>
                 </div>
-              ) : (
-                <div style={{ position:"relative", height:260, overflow:"hidden" }}>
-                  <Image src={ex.photo} alt={ex.label} fill style={{ objectFit:"cover" }}/>
-                </div>
-              )}
-              <div style={{ padding:"16px 20px" }}>
-                <div style={{ fontWeight:700, fontSize:16 }}>{ex.label}</div>
-                {ex.pbn && <div style={{ color:"var(--muted)", fontSize:13, marginTop:4 }}>Numbered outline + colour palette</div>}
+              </div>
+            ) : (
+              /* Photo only — full natural size */
+              <div style={{ lineHeight: 0 }}>
+                <Image
+                  src={ex.photo}
+                  alt={ex.label}
+                  width={0}
+                  height={0}
+                  sizes="820px"
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                  priority
+                />
+              </div>
+            )}
+
+            {/* Caption + dot indicators */}
+            <div style={{ padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontWeight: 800, fontSize: 17 }}>{ex.label}</div>
+                <div style={{ color: "#999", fontSize: 13, marginTop: 2 }}>{ex.desc}</div>
+              </div>
+              <div style={{ display: "flex", gap: 6 }}>
+                {EXAMPLES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setPaused(true); setCurrent(i); }}
+                    aria-label={`Go to example ${i + 1}`}
+                    style={{
+                      width: i === current ? 24 : 8,
+                      height: 8,
+                      borderRadius: 4,
+                      border: "none",
+                      background: i === current ? "var(--pink, #e85d8a)" : "#ddd",
+                      cursor: "pointer",
+                      padding: 0,
+                      transition: "width 0.25s, background 0.2s",
+                    }}
+                  />
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Arrow: Previous */}
+          <button
+            onClick={() => { setPaused(true); prev(); }}
+            aria-label="Previous example"
+            style={{
+              position: "absolute", left: -20, top: "40%", transform: "translateY(-50%)",
+              width: 44, height: 44, borderRadius: "50%",
+              background: "white", border: "none",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+              cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#444", lineHeight: 1, zIndex: 10,
+            }}
+          >
+            ‹
+          </button>
+
+          {/* Arrow: Next */}
+          <button
+            onClick={() => { setPaused(true); next(); }}
+            aria-label="Next example"
+            style={{
+              position: "absolute", right: -20, top: "40%", transform: "translateY(-50%)",
+              width: 44, height: 44, borderRadius: "50%",
+              background: "white", border: "none",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+              cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#444", lineHeight: 1, zIndex: 10,
+            }}
+          >
+            ›
+          </button>
         </div>
 
-        <Link href="/create" className="btn-primary" style={{ display:"inline-flex", fontSize:17, padding:"16px 40px" }}>
-          Create yours now →
+        <Link href="/create" className="btn-primary" style={{ display: "inline-flex", fontSize: 17, padding: "16px 40px" }}>
+          Create your Guangna by Number now →
         </Link>
       </main>
     </>
