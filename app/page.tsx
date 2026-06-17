@@ -23,7 +23,7 @@ const LEVELS = [
 
 const WHAT_YOU_GET = [
   { feature: "Paint by Number Outline (PDF)", beginner: true, intermediate: true, advanced: true },
-  { feature: "Guangna Color Palette Guide (PDF", beginner: true, intermediate: true, advanced: true },
+  { feature: "Guangna Color Palette Guide (PDF)", beginner: true, intermediate: true, advanced: true },
   { feature: "Impression Finished Artwork (PDF)", beginner: true, intermediate: true, advanced: true },
   { feature: "Impression Finished Artwork (JPG)", beginner: false, intermediate: true, advanced: true },
   { feature: "Colored Paint by Number Outline (PDF)", beginner: false, intermediate: false, advanced: true },
@@ -32,11 +32,104 @@ const WHAT_YOU_GET = [
 export default function Home() {
   return (
     <>
+      <style>{`
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+        }
+        .hero-buttons {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-bottom: 40px;
+        }
+        .hero-cta {
+          font-size: 17px;
+          padding: 16px 36px;
+          width: 100%;
+          max-width: 432px;
+          text-align: center;
+        }
+        .hero-outline {
+          font-size: 17px;
+          padding: 16px 36px;
+        }
+        .from-this-label {
+          color: var(--pink);
+          position: absolute;
+          left: -70px;
+          top: 10%;
+          transform: translateY(-60%);
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 28px;
+          font-weight: 600;
+        }
+        .palette-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+        }
+        .feature-cards {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .feature-card {
+          background: white;
+          border-radius: 14px;
+          padding: 16px 20px;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          flex: 1 1 130px;
+        }
+        @media (max-width: 768px) {
+          .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .hero-cta {
+            max-width: 100%;
+            font-size: 15px;
+            padding: 14px 20px;
+          }
+          .hero-outline {
+            font-size: 15px;
+            padding: 14px 20px;
+            width: 100%;
+            text-align: center;
+          }
+          .hero-buttons {
+            flex-direction: column;
+          }
+          .from-this-label {
+            position: static;
+            transform: none;
+            margin-bottom: 8px;
+            font-size: 20px;
+            justify-content: center;
+          }
+          .palette-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .feature-cards {
+            gap: 10px;
+          }
+          .feature-card {
+            flex: 1 1 calc(50% - 10px);
+          }
+        }
+      `}</style>
+
       <Navbar />
       <main>
         {/* ── HERO ── */}
         <section style={{ background:"linear-gradient(135deg,#FDF6F0 60%,#FFE8EE 100%)", padding:"80px 24px 60px" }}>
-          <div style={{ maxWidth:1400, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:60, alignItems:"center" }}>
+          <div style={{ maxWidth:1400, margin:"0 auto" }} className="hero-grid">
             <div>
               <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:16, marginBottom:16 }}>
                 🐾 CreaBeaStudio
@@ -46,21 +139,18 @@ export default function Home() {
                 <span style={{ color:"#FF4D6D" }}>Guangna by Number</span><br />
                 artwork
               </h1>
-              <p style={{ fontSize:24, color:"#444", maxWidth:550, marginBottom:32, lineHeight:1.7 }}>
+              <p style={{ fontSize:"clamp(16px,2.5vw,24px)", color:"#444", maxWidth:550, marginBottom:32, lineHeight:1.7 }}>
                 Take the guesswork out of color selection - just pick up your Guangna brush markers and start coloring.
               </p>
-              <div style={{ display:"flex", gap:40, flexWrap:"wrap", marginBottom:40, minWidth:200 }}>
-                <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 36px", minWidth:432 }}>
+              <div className="hero-buttons">
+                <a href="/create" className="btn-primary hero-cta">
                   Create your Guangna By Number →
                 </a>
-                <a href="/examples" className="btn-outline" style={{ fontSize:17, padding:"16px 36px" }}>See examples</a>
+                <a href="/examples" className="btn-outline hero-outline">See examples</a>
               </div>
-              <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+              <div className="feature-cards">
                 {FEATURES.map(f => (
-                  <div key={f.title} style={{
-                    background:"white", borderRadius:14, padding:"16px 20px",
-                    boxShadow:"0 2px 12px rgba(0,0,0,0.06)", flex:"1 1 130px"
-                  }}>
+                  <div key={f.title} className="feature-card">
                     {f.isGuangna
                       ? <Image src="/guangna-marker.png" alt="Guangna marker" width={45} height={30} style={{ objectFit:"contain", marginBottom:6 }} />
                       : <div style={{ fontSize:26, marginBottom:6 }}>{f.icon}</div>
@@ -72,18 +162,15 @@ export default function Home() {
             </div>
 
             {/* Right: image panel */}
-            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20, marginTop:-37 }}>
-              <div style={{ position:"relative", display:"flex", justifyContent:"center", width:"100%" }}>
-                <div style={{
-                  color: "var(--pink)",
-                  position:"absolute", marginTop:0, left:-70, top:"10%", transform:"translateY(-60%)",
-                  display:"flex", alignItems:"center", gap:4, fontSize:28, fontWeight:600}}>
+            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20 }}>
+              <div style={{ position:"relative", display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}>
+                <div className="from-this-label">
                   <span>From this</span>
                 </div>
                 <div style={{
                   background:"white", borderRadius:24, padding:16,
                   boxShadow:"0 20px 60px rgba(244,96,122,0.15)",
-                  maxWidth:550
+                  maxWidth:550, width:"100%"
                 }}>
                   <Image src="/dog-legends.png" alt="Sample PBN photo" width={600} height={600}
                     style={{ borderRadius:16, objectFit:"cover", width:"100%", height:"auto", maxWidth:"100%" }} />
@@ -91,8 +178,10 @@ export default function Home() {
               </div>
               <div style={{
                 background:"var(--pink)", color:"white",
-                borderRadius:16, padding:"16px 28px", height:"130px",
-                fontWeight:700, fontSize:22, textAlign:"center", display:"flex", alignItems:"center", justifyContent:"center"
+                borderRadius:16, padding:"16px 28px",
+                fontWeight:700, fontSize:"clamp(16px,2vw,22px)", textAlign:"center",
+                display:"flex", alignItems:"center", justifyContent:"center",
+                width:"100%", maxWidth:550
               }}>
                 <strong>To this: <br />Guangna by Number with personalised palette</strong>
               </div>
@@ -131,7 +220,7 @@ export default function Home() {
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", textAlign:"center", marginBottom:56 }}>
               How it Works
             </h2>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:32 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:32 }}>
               {HOW.map(h => (
                 <div key={h.step} style={{ textAlign:"center" }}>
                   <div style={{
@@ -180,7 +269,7 @@ export default function Home() {
                   )}
                   <div style={{ display:"flex", justifyContent:"center", marginBottom:16 }}>
                     <Image src={l.img} alt={`${l.name} detail`} width={350} height={250}
-                      style={{ borderRadius:10, objectFit:"cover", border:"3px solid #eee" }} />
+                      style={{ borderRadius:10, objectFit:"cover", border:"3px solid #eee", width:"100%", height:"auto" }} />
                   </div>
                   <div style={{ fontSize:32, marginBottom:8 }}>{l.emoji}</div>
                   <h3 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:24, marginBottom:12 }}>{l.name}</h3>
@@ -196,7 +285,7 @@ export default function Home() {
 
         {/* ── WHAT IS THE GUANGNA COLOR PALETTE GUIDE? ── */}
         <section style={{ padding:"80px 24px", background:"white" }}>
-          <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 1fr", gap:60, alignItems:"center" }}>
+          <div style={{ maxWidth:1100, margin:"0 auto" }} className="palette-grid">
 
             {/* Left: text */}
             <div>
@@ -211,19 +300,19 @@ export default function Home() {
                 No more guessing which colors to use. No more creating test swatches or comparing endless shades. This guide removes the uncertainty and lets you jump straight into what you love: coloring.
               </p>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:16 }}>
-                Each section of your Guangna by Number design is matched with the best-fitting Guangna marker from ,<strong> your personal set</strong>, ensuring accurate and satisfying results every time. At times, you'll find creative color options — giving you the freedom to add subtle shading, depth, and dimension.
+                Each section of your Guangna by Number design is matched with the best-fitting Guangna marker from <strong>your personal set</strong>, ensuring accurate and satisfying results every time. At times, you'll find creative color options — giving you the freedom to add subtle shading, depth, and dimension.
               </p>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:24 }}>
                 Simply get your markers ready, follow the guide, and start coloring with confidence.
               </p>
               <p style={{ fontSize:17, fontWeight:800, color:"var(--pink)" }}>
-                On your mark. Pick up your markers. Get set… and color. <Image src="/guangna-marker.png" alt="Guangna marker" width={150} height={100} style={{ objectFit:"contain", marginBottom:6 }} />
+                On your mark. Pick up your markers. Get set… and color.{" "}
+                <Image src="/guangna-marker.png" alt="Guangna marker" width={150} height={100} style={{ objectFit:"contain", marginBottom:6 }} />
               </p>
             </div>
 
-            {/* Right: palette guide image styled as A4 landscape on a wooden table */}
+            {/* Right: palette guide image */}
             <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
-              {/* Wooden table background */}
               <div style={{
                 background:"linear-gradient(160deg,#8B6347 0%,#A0714F 30%,#7A5230 60%,#9C6D3E 100%)",
                 borderRadius:20,
@@ -232,15 +321,13 @@ export default function Home() {
                 width:"100%",
                 maxWidth:520,
               }}>
-                {/* Wood grain lines */}
                 <div style={{ position:"relative" }}>
-                  {/* A4 landscape paper */}
                   <div style={{
                     background:"white",
                     borderRadius:4,
                     boxShadow:"0 8px 32px rgba(0,0,0,0.4), 2px 2px 0 rgba(255,255,255,0.3)",
                     overflow:"hidden",
-                    aspectRatio:"1.414 / 1",  /* A4 landscape ratio */
+                    aspectRatio:"1.414 / 1",
                     width:"100%",
                     transform:"rotate(-1.5deg)",
                   }}>
@@ -249,11 +336,10 @@ export default function Home() {
                       alt="Guangna Color Palette Guide"
                       width={0}
                       height={0}
-                      sizes="50vw"
+                      sizes="(max-width: 768px) 90vw, 50vw"
                       style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
                     />
                   </div>
-                  {/* Subtle page shadow underneath */}
                   <div style={{
                     position:"absolute", bottom:-6, left:"5%", right:"5%",
                     height:12, background:"rgba(0,0,0,0.25)",
@@ -273,27 +359,24 @@ export default function Home() {
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", marginBottom:16 }}>
               What do you get?
             </h2>
-            <p style={{ color:"#666", fontSize:16, maxWidth:520, margin:"0 auto 48px" }}>
-          
-            </p>
 
             <div style={{
               background:"white",
               borderRadius:20,
               boxShadow:"0 8px 40px rgba(0,0,0,0.08)",
-              overflow:"hidden",
+              overflow:"auto",
               maxWidth:780,
               margin:"0 auto 40px",
             }}>
-              <table style={{ width:"100%", borderCollapse:"collapse", fontSize:15 }}>
+              <table style={{ width:"100%", borderCollapse:"collapse", fontSize:15, minWidth:480 }}>
                 <thead>
                   <tr>
                     <th style={{ padding:"16px 20px", textAlign:"left", background:"#f5f5f5", fontWeight:700, color:"#444" }} />
                     {["Beginner", "Intermediate", "Advanced"].map(level => (
                       <th key={level} style={{
-                        padding:"16px 20px", textAlign:"center",
+                        padding:"16px 12px", textAlign:"center",
                         background:"var(--pink)", color:"white",
-                        fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:16,
+                        fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:14,
                       }}>
                         {level}
                       </th>
@@ -303,11 +386,11 @@ export default function Home() {
                 <tbody>
                   {WHAT_YOU_GET.map((row, i) => (
                     <tr key={row.feature} style={{ borderTop: i === 0 ? "none" : "1px solid #eee" }}>
-                      <td style={{ padding:"16px 20px", textAlign:"left", fontWeight:600, color:"#333", background:"#fafafa" }}>
+                      <td style={{ padding:"14px 16px", textAlign:"left", fontWeight:600, color:"#333", background:"#fafafa", fontSize:13 }}>
                         {row.feature}
                       </td>
                       {(["beginner", "intermediate", "advanced"] as const).map(level => (
-                        <td key={level} style={{ padding:"16px 20px", textAlign:"center" }}>
+                        <td key={level} style={{ padding:"14px 12px", textAlign:"center" }}>
                           <input
                             type="checkbox"
                             checked={row[level]}
@@ -346,7 +429,7 @@ export default function Home() {
             <p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>© {new Date().getFullYear()} CreaBeaStudio. All rights reserved.</p>
           </div>
           <Image src="/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
-            style={{ height:"100%", width:"auto", maxHeight:120, objectFit:"contain", alignSelf:"stretch" }} />
+            style={{ height:"auto", width:"auto", maxHeight:120, maxWidth:160, objectFit:"contain" }} />
         </footer>
       </main>
     </>
