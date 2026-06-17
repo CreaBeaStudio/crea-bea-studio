@@ -145,59 +145,17 @@ export default function Examples() {
             boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
             overflow: "hidden",
           }}>
-            {ex.pbn ? (
-              /*
-                Side-by-side: PBN outline (big, left) + original photo (smaller, right).
-                Both images use natural sizing — width is fixed, height follows the image.
-                We align them to the top so portrait images aren't cropped.
-              */
-              <div style={{ display: "flex", alignItems: "flex-start" }}>
-                {/* PBN outline — takes 60% of the card width */}
-                <div style={{ flex: "0 0 60%", lineHeight: 0 }}>
-                  <Image
-                    src={ex.pbn}
-                    alt={`${ex.label} PBN outline`}
-                    width={0}
-                    height={0}
-                    sizes="60vw"
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                    priority
-                  />
-                </div>
-                {/* Original photo — takes 40%, sticks to top */}
-                <div style={{ flex: "0 0 40%", lineHeight: 0, position: "relative", borderLeft: "4px solid #fdf6f0" }}>
-                  <Image
-                    src={ex.photo}
-                    alt={`${ex.label} original photo`}
-                    width={0}
-                    height={0}
-                    sizes="40vw"
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
-                  <div style={{
-                    position: "absolute", bottom: 10, left: 10,
-                    background: "rgba(0,0,0,0.55)", color: "white",
-                    fontSize: 11, fontWeight: 700, borderRadius: 6,
-                    padding: "3px 8px", backdropFilter: "blur(4px)",
-                  }}>
-                    Original
-                  </div>
-                </div>
-              </div>
-            ) : (
-              /* Photo only — full natural size */
-              <div style={{ lineHeight: 0 }}>
-                <Image
-                  src={ex.photo}
-                  alt={ex.label}
-                  width={0}
-                  height={0}
-                  sizes="820px"
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                  priority
-                />
-              </div>
-            )}
+          <div style={{ lineHeight: 0 }}>
+            <Image
+              src={ex.photo}
+              alt={ex.label}
+              width={0}
+              height={0}
+              sizes="820px"
+              style={{ width: "100%", height: "auto", display: "block" }}
+              priority
+            />
+          </div>
 
             {/* Caption + dot indicators */}
             <div style={{ padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
