@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image"
 import Navbar from "../components/Navbar";
 import { useState, useCallback } from "react";
 
@@ -611,7 +612,9 @@ export default function ColorConverter() {
       <Navbar/>
       <main style={{padding:"40px 24px",maxWidth:960,margin:"0 auto"}}>
         <h1 style={{fontFamily:"Nunito, sans-serif",color:"var(--pink)",fontWeight:900,fontSize:"clamp(26px,4vw,40px)",marginBottom:8}}>
-          🎨 Guangna Color Converter 
+        <div style={{ marginBottom:12 }}>
+        <Image src="/Guangna_brush.png" alt="Guangna brush" width={240} height={165} style={{ objectFit:"contain" }} />
+        </div>
         </h1>
         <p style={{color:"#666",marginBottom:36}}>
           Enter any color and find the closest Guangna marker available and, optionally, from your own collection.
