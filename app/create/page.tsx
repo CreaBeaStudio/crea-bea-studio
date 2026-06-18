@@ -113,6 +113,8 @@ const MARKER_SETS = [
   { label:"Classic brush-36",  value:"GN-8101-36"  },
   { label:"Classic brush-24",  value:"GN-8101-24"  },
   { label:"Classic brush-12",  value:"GN-8101-12"  },
+  { label:"Classic Brush: Skin (24F)",value:"GN.8201F-24" },
+  { label:"Classic Brush: Skin (12B)",value:"GN.8201B-12" },
   { label:"Dual tip: 240",     value:"GN.8109-240" },
   { label:"Dual tip: 72",      value:"GN.8109-72"  },
   { label:"Dual tip: 36",      value:"GN.8102-36"  },
@@ -130,8 +132,6 @@ const MARKER_SETS = [
   { label:"Dual tip: White-Gray",     value:"GN.8109I-12" },
   { label:"Dual tip: Tan",            value:"GN.8109J-12" },
   { label:"Dual tip: Pinkish skin",   value:"GN.8109K-12" },
-  { label:"Classic Brush: Skin (24F)",value:"GN.8201F-24" },
-  { label:"Classic Brush: Skin (12B)",value:"GN.8201B-12" },
   { label:"Macaron",                  value:"GN.8201M-24" },
 ];
 
@@ -341,7 +341,7 @@ function CreateInner() {
           <div style={{display:"flex", flexDirection:"column", gap:22}}>
 
             <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>📸 Upload your photo</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Step 1: 📸 Upload your photo</h2>
               <div
                 onDrop={onDrop}
                 onDragOver={e => e.preventDefault()}
@@ -381,7 +381,7 @@ function CreateInner() {
             </div>
 
             <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>🎯 Select your level</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Step 2: 🎯 Select your level</h2>
               <div style={{display:"flex", flexDirection:"column", gap:10}}>
                 {LEVELS.map(l => (
                   <label key={l.value} style={{
@@ -433,7 +433,7 @@ function CreateInner() {
 <div style={{display:"flex", flexDirection:"column", gap:22}}>
 
 <div className="card">
-  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>🖊️ Your Guangna Marker Sets</h2>
+  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖊️ Your Guangna Marker Sets</h2>
   <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
     Select the sets you own — we'll build the palette from your markers.
   </p>
@@ -472,7 +472,7 @@ function CreateInner() {
 
 {/* Email box */}
 <div className="card">
-  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>✉️ Your email</h2>
+  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: ✉️ Your email</h2>
   <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
 </div>

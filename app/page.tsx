@@ -183,7 +183,7 @@ export default function Home() {
                 display:"flex", alignItems:"center", justifyContent:"center",
                 width:"100%", maxWidth:550
               }}>
-                <strong>To this: Guangna by Number with personalised color palette</strong>
+                <strong>To this: Guangna by Number, with colour palette matched to your brush markers complete with Guangna codes and numbers.</strong>
               </div>
             </div>
           </div>

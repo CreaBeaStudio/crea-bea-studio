@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image"
 import Navbar from "../components/Navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -81,7 +82,10 @@ function ConfirmContent() {
       <Navbar />
       <main style={{ padding:"60px 24px", maxWidth:640, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:32 }}>
-          <div style={{ fontSize:56, marginBottom:12 }}>🎨</div>
+        <div style={{ marginBottom:12 }}>
+  <Image src="/Guangna_brush.png" alt="Guangna brush" width={160} height={110} 
+    style={{ objectFit:"contain", display:"block", margin:"0 auto" }} />
+</div>
           <h1 style={{
             fontFamily:"Nunito, sans-serif", color:"var(--pink)",
             fontWeight:900, fontSize:"clamp(22px,4vw,34px)", marginBottom:8,

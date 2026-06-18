@@ -25,7 +25,7 @@ const SECTIONS = [
   {
     title: "🐾 Tools & Care",
     tips: [
-      { q: "Keep the Tip Clean", a: "Wipe the tip occasionally to prevent color mixing and keep your shades crisp and accurate." },
+      { q: "Keep the Tip Clean", a: "Wipe the tip occasionally to prevent color mixing and keep your shades crisp and precise." },
       { q: "Store Horizontally", a: "Store markers horizontally to keep ink evenly distributed and ensure consistent flow." },
       { q: "Close Caps Tightly", a: "Always close your markers immediately after use to prevent them from drying out." },
       { q: "Revive a Dry Tip", a: "If a marker feels dry, gently shake it and press the nib on scrap paper to reactivate the flow before use." },
@@ -39,8 +39,7 @@ export default function TipsAndTricks() {
       <Navbar />
       <main style={{ padding:"60px 24px", maxWidth:740, margin:"0 auto" }}>
         <h1 style={{ fontFamily:"Nunito, sans-serif", color:"var(--pink)", fontWeight:900, fontSize:"clamp(28px,4vw,44px)", marginBottom:8 }}>
-           Tips & Tricks 
-           ♥Color Your Memories ♥
+           Tips & Tricks <br /> ♥Color Your Memories ♥
         </h1>
 
 

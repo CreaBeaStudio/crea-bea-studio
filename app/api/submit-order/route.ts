@@ -128,7 +128,7 @@ export async function POST(req: NextRequest) {
 
     // Customer confirmation email
 await resend.emails.send({
-  from:    "CreaBea Studio <orders@creabeastudio.com>",
+  from:    "CreaBeaStudio <orders@creabeastudio.com>",
   to:      customerEmail,
   subject: `💖 Thank you for your order #${orderId}!`,
   html: `

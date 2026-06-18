@@ -413,7 +413,41 @@ const GUANGNA_SETS: Record<string,string[]> = {
   "GN.8101M (24 colors)":["GN-627", "GN-628", "GN-635", "GN-646", "GN-648", "GN-649", "GN-655", "GN-669", "GN-700", "GN-702", "GN-704", "GN-706", "GN-717", "GN-723", "GN-729", "GN-730", "GN-732", "GN-733", "GN-736", "GN-737", "GN-738", "GN-744", "GN-745", "GN-822"]
 };
 
-const SET_OPTIONS = Object.keys(GUANGNA_SETS);
+const SET_OPTIONS = [
+  { label: "Classic brush-408",        key: "GN.8101-408 (360 colors)" },
+  { label: "Classic brush-366",        key: "GN.8101-366 (366 colors)" },
+  { label: "Classic brush-360",        key: "GN.8101-360 (360 colors)" },
+  { label: "Classic brush-288",        key: "GN.8101-288 (288 colors)" },
+  { label: "Classic brush-240",        key: "GN.8101-240 (240 colors)" },
+  { label: "Classic brush-168",        key: "GN.8101-168 (168 colors)" },
+  { label: "Classic brush-120",        key: "GN.8101-120 (120 colors)" },
+  { label: "Classic brush-100",        key: "GN.8101-100 (100 colors)" },
+  { label: "Classic brush-72",         key: "GN.8101-72 (72 colors)"   },
+  { label: "Classic brush-60",         key: "GN.8101-60 (60 colors)"   },
+  { label: "Classic brush-48",         key: "GN.8101-48 (48 colors)"   },
+  { label: "Classic brush-36",         key: "GN.8101-36 (36 colors)"   },
+  { label: "Classic brush-24",         key: "GN.8101-24 (24 colors)"   },
+  { label: "Classic brush-12",         key: "GN.8101-12 (12 colors)"   },
+  { label: "Classic Brush: Skin (24F)",key: "GN.8201F-24 (24 colors)"  },
+  { label: "Dual tip: 240",            key: "GN.8109-240 (240 colors)" },
+  { label: "Dual tip: 72",             key: "GN.8109-72 (72 colors)"   },
+  { label: "Dual tip: 36",             key: "GN.8102-36 (36 colors)"   },
+  { label: "Dual colors 84/168",       key: "GN.8106-84 (168 colors)"  },
+  { label: "Dual colors 60/120",       key: "GN.8106-60 (120 colors)"  },
+  { label: "Dual colors 30/60",        key: "GN.8106-30 (60 colors)"   },
+  { label: "Dual tip: Blue",           key: "GN.8109A-12 (12 colors)"  },
+  { label: "Dual tip: Pink",           key: "GN.8109B-12 (12 colors)"  },
+  { label: "Dual tip: Green",          key: "GN.8109C-12 (12 colors)"  },
+  { label: "Dual tip: Red",            key: "GN.8109D-12 (12 colors)"  },
+  { label: "Dual tip: Purple",         key: "GN.8109E-12 (12 colors)"  },
+  { label: "Dual tip: Yellow",         key: "GN.8109F-12 (12 colors)"  },
+  { label: "Dual tip: Warm skin",      key: "GN.8109G-12 (12 colors)"  },
+  { label: "Dual tip: Reddish brown",  key: "GN.8109H-12 (12 colors)"  },
+  { label: "Dual tip: White-Gray",     key: "GN.8109I-12 (12 colors)"  },
+  { label: "Dual tip: Pinkish skin",   key: "GN.8109K-12 (12 colors)"  },
+  { label: "Classic Brush: Skin (12B)",key: "GN.8101B (12 colors)"     },
+  { label: "Macaron",                  key: "GN.8101M (24 colors)"     },
+];
 
 // ─── Colour science — LAB-based ΔE (same as Python find_closest_guangna_v2) ──
 function rgbToLab([r,g,b]:[number,number,number]): [number,number,number] {
@@ -587,7 +621,22 @@ export default function ColorConverter() {
 
           {/* ── LEFT: input panel ── */}
           <div style={{display:"flex",flexDirection:"column",gap:20}}>
+          {/* ── My markers (optional) ── */}
+          <div className="card">
+              <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>🗂️ My Markers <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>optional</span></h3>
+              <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>Select your set to also see the best match from markers you own.</p>
+              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Marker set</label>
+              <select value={mySet} onChange={e=>setMySet(e.target.value)}
+                style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:12}}>
+                <option value="">— None selected —</option>
+                {SET_OPTIONS.map(s=><option key={s.key} value={s.key}>{s.label}</option>)}
+              </select>
+              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Extra codes <span style={{fontWeight:400,color:"var(--muted)"}}>(3-digit, comma or space separated)</span></label>
+              <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
+                placeholder="e.g. 603, 648, 820" style={{width:"100%"}}/>
+            </div>
 
+          </div>
             {/* Mode tabs */}
             <div className="card">
               <div style={{display:"flex",gap:8,marginBottom:20}}>
@@ -597,7 +646,7 @@ export default function ColorConverter() {
                     background:mode===m?"var(--pink)":"white",
                     color:mode===m?"white":"var(--pink)",
                     fontWeight:700,cursor:"pointer",fontSize:13,textTransform:"uppercase"
-                  }}>{m==="photo"?"📸 Photo":m.toUpperCase()}</button>
+                  }}>{m==="photo"?"📸 Photo Color Sample":m.toUpperCase()}</button>
                 ))}
               </div>
 
@@ -672,21 +721,7 @@ export default function ColorConverter() {
               </button>
             </div>
 
-            {/* ── My markers (optional) ── */}
-            <div className="card">
-              <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>🗂️ My Markers <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>optional</span></h3>
-              <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>Select your set to also see the best match from markers you own.</p>
-              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Marker set</label>
-              <select value={mySet} onChange={e=>setMySet(e.target.value)}
-                style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:12}}>
-                <option value="">— None selected —</option>
-                {SET_OPTIONS.map(s=><option key={s} value={s}>{s}</option>)}
-              </select>
-              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Extra codes <span style={{fontWeight:400,color:"var(--muted)"}}>(3-digit, comma or space separated)</span></label>
-              <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
-                placeholder="e.g. 603, 648, 820" style={{width:"100%"}}/>
-            </div>
-          </div>
+           
 
           {/* ── RIGHT: results panel ── */}
           <div>
