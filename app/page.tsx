@@ -462,12 +462,6 @@ export default function Home() {
           </div>
         </section>
 
-            <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 40px" }}>
-              Create your Guangna by Number →
-            </a>
-          </div>
-        </section>
-
         {/* ── FOOTER ── */}
         <footer style={{ background:"var(--ink)", color:"#aaa", padding:"24px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:16 }}>
           <div>
