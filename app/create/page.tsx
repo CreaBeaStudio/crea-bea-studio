@@ -136,9 +136,9 @@ const MARKER_SETS = [
 ];
 
 const LEVELS = [
-  { label:"🌱 Beginner",     value:"15", price:7,  priceLabel:"7€",  desc:"Fewer colors, larger areas." },
-  { label:"🌿 Intermediate", value:"24", price:9,  priceLabel:"9€",  desc:"Balanced mix of effort and detail.", popular:true },
-  { label:"🌲 Advanced",     value:"36", price:11, priceLabel:"11€", desc:"Wide color range, detailed." },
+  { label:"🌱 Beginner",     value:"15", price:7,  priceLabel:"7 €",  desc:"Fewer colors, larger areas." },
+  { label:"🌿 Intermediate", value:"24", price:9,  priceLabel:"9 €",  desc:"Balanced mix of effort and detail.", popular:true },
+  { label:"🌲 Advanced",     value:"36", price:11, priceLabel:"11 €", desc:"Wide color range, detailed." },
 ];
 
 const DEFAULT_LEVEL = "24";
@@ -164,6 +164,15 @@ function validateGnCode(code: string): boolean {
   return !isNaN(num) && num >= 600 && num <= 965;
 }
 
+function FxTag({ eur, usd, gbp }: { eur: number; usd: number | null; gbp: number | null }) {
+  if (!usd || !gbp) return null;
+  return (
+    <span style={{ fontSize: 11, color: "#999", fontWeight: 400, marginLeft: 6 }}>
+      ≈ ${(eur * usd).toFixed(0)} / £{(eur * gbp).toFixed(0)}
+    </span>
+  );
+}
+
 function CreateInner() {
   const router = useRouter();
   const params = useSearchParams();
@@ -178,6 +187,8 @@ function CreateInner() {
   const [errorMsg, setErrorMsg]     = useState("");
   const [prevOrders, setPrevOrders] = useState<OrderItem[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [usdRate, setUsdRate]       = useState<number | null>(null);
+  const [gbpRate, setGbpRate]       = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -193,6 +204,19 @@ function CreateInner() {
     if (pPrevOrders) {
       try { setPrevOrders(JSON.parse(decodeURIComponent(pPrevOrders))); } catch {}
     }
+  }, []);
+
+  // Fetch live FX rates on mount
+  useEffect(() => {
+    fetch("https://open.er-api.com/v6/latest/EUR")
+      .then(r => r.json())
+      .then(data => {
+        if (data?.rates) {
+          setUsdRate(data.rates.USD * 1.05);
+          setGbpRate(data.rates.GBP * 1.05);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleFile = (file: File) => {
@@ -371,8 +395,9 @@ function CreateInner() {
                       checked={level === l.value} onChange={() => setLevel(l.value)}
                       style={{accentColor:"var(--pink)"}}/>
                     <div style={{flex:1}}>
-                      <div style={{fontWeight:700, fontSize:15, display:"flex", alignItems:"center", gap:8}}>
+                      <div style={{fontWeight:700, fontSize:15, display:"flex", alignItems:"center", gap:8, flexWrap:"wrap"}}>
                         {l.label} — {l.priceLabel}
+                        <FxTag eur={l.price} usd={usdRate} gbp={gbpRate} />
                         {l.popular && (
                           <span style={{
                             fontSize:11, fontWeight:700,
@@ -389,106 +414,119 @@ function CreateInner() {
                   </label>
                 ))}
               </div>
-            </div>
 
-            <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:6}}>✉️ Your email</h2>
-              <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>We'll send your finished file here.</p>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
-            </div>
-          </div>
-
-          {/* ── RIGHT COLUMN ── */}
-          <div style={{display:"flex", flexDirection:"column", gap:22}}>
-
-            <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>🖊️ Your Guangna Marker Sets</h2>
-              <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-                Select the sets you own — we'll build the palette from your markers.
-              </p>
-              <div style={{display:"flex", flexDirection:"column", gap:10}}>
-                {sets.map((val, idx) => (
-                  <div key={idx}>
-                    <label style={{fontSize:13, fontWeight:600, color:"#555", display:"block", marginBottom:4}}>
-                      {idx === 0 ? "Set 1" : `Set ${idx+1} (optional)`}
-                    </label>
-                    <select value={val} onChange={e => updateSet(idx, e.target.value)}
-                      style={{width:"100%", padding:"10px 12px", borderRadius:10,
-                        border:"2px solid var(--border)", fontSize:14, background:"white", cursor:"pointer", outline:"none"}}>
-                      {idx > 0 && <option value="">— None —</option>}
-                      {optionsFor(idx).map(s => (
-                        <option key={s.value} value={s.value}>{s.label} ({s.value})</option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
-              </div>
-
-              <div style={{marginTop:18}}>
-                <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>Additional Marker Codes</h3>
-                <p style={{fontSize:12, color:"var(--muted)", marginBottom:8}}>
-                  Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.
+              {/* FX Disclaimer */}
+              <div style={{
+                marginTop:16, padding:"10px 14px",
+                background:"#f9f9f9", borderRadius:10,
+                borderLeft:"3px solid var(--border)",
+              }}>
+                <p style={{fontSize:11, color:"#999", margin:0, lineHeight:1.6}}>
+                  💱 Prices shown in EUR. Approximate equivalents in USD and GBP are shown for indication only, based on indicative exchange rates. Your bank or card provider may apply different rates and fees.
                 </p>
-                <textarea
-                  value={individualPens}
-                  onChange={e => validateIndPens(e.target.value)}
-                  placeholder="e.g. 603, 648, 712"
-                  rows={2}
-                  style={{resize:"vertical", border: indPenError ? "2px solid #c62828" : "2px solid var(--border)"}}
-                />
-                {indPenError && <p style={{fontSize:12, color:"#c62828", marginTop:4}}>⚠️ {indPenError}</p>}
               </div>
             </div>
 
-            <div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
-              <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
-              <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
-                <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
-                <Row label="Email"       value={email || "—"}/>
-                <Row label="Level"       value={currentLevelInfo ? `${currentLevelInfo.label} — ${currentLevelInfo.priceLabel}` : "—"}/>
-                <Row label="Marker sets" value={sets.filter(Boolean).length ? `${sets.filter(Boolean).length} selected` : "Default palette"}/>
-                <Row label="Turnaround"  value="Within 24 hours"/>
-                {prevOrders.length > 0 && (
-                  <>
-                    <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
-                    <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar}€`}/>
-                    <Row label="This order" value={currentLevelInfo ? currentLevelInfo.priceLabel : "—"}/>
-                    <div style={{borderTop:"1.5px solid var(--pink)", margin:"4px 0"}}/>
-                    <Row label="🧾 New total" value={`${totalSoFar + (currentLevelInfo?.price ?? 0)}€`} highlight/>
-                  </>
-                )}
-              </div>
-            </div>
-
-            <button
-              className="btn-primary"
-              onClick={handleSubmit}
-              disabled={!canSubmit || submitting}
-              style={{width:"100%", fontSize:17, padding:"16px", opacity:(canSubmit && !submitting) ? 1 : 0.5}}
-            >
-              {submitting ? "⏳ Sending your order…" : canSubmit ? "✨ Submit my order →" : "✨ Submit my order"}
-            </button>
-
-            {!photo && (
-              <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
-                Upload a photo to get started
-              </p>
-            )}
-            {!email && photo && (
-              <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
-                Add your email to continue
-              </p>
-            )}
-            {errorMsg && (
-              <div style={{background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14}}>
-                ⚠️ {errorMsg}
-              </div>
-            )}
           </div>
-        </div>
-      </main>
-    </>
-  );
+
+{/* ── RIGHT COLUMN ── */}
+<div style={{display:"flex", flexDirection:"column", gap:22}}>
+
+<div className="card">
+  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>🖊️ Your Guangna Marker Sets</h2>
+  <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
+    Select the sets you own — we'll build the palette from your markers.
+  </p>
+  <div style={{display:"flex", flexDirection:"column", gap:10}}>
+    {sets.map((val, idx) => (
+      <div key={idx}>
+        <label style={{fontSize:13, fontWeight:600, color:"#555", display:"block", marginBottom:4}}>
+          {idx === 0 ? "Set 1" : `Set ${idx+1} (optional)`}
+        </label>
+        <select value={val} onChange={e => updateSet(idx, e.target.value)}
+          style={{width:"100%", padding:"10px 12px", borderRadius:10,
+            border:"2px solid var(--border)", fontSize:14, background:"white", cursor:"pointer", outline:"none"}}>
+          {idx > 0 && <option value="">— None —</option>}
+          {optionsFor(idx).map(s => (
+            <option key={s.value} value={s.value}>{s.label} ({s.value})</option>
+          ))}
+        </select>
+      </div>
+    ))}
+  </div>
+  <div style={{marginTop:18}}>
+    <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>Additional Marker Codes</h3>
+    <p style={{fontSize:12, color:"var(--muted)", marginBottom:8}}>
+      Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.
+    </p>
+    <textarea
+      value={individualPens}
+      onChange={e => validateIndPens(e.target.value)}
+      placeholder="e.g. 603, 648, 712"
+      rows={2}
+      style={{resize:"vertical", border: indPenError ? "2px solid #c62828" : "2px solid var(--border)"}}
+    />
+    {indPenError && <p style={{fontSize:12, color:"#c62828", marginTop:4}}>⚠️ {indPenError}</p>}
+  </div>
+</div>
+
+{/* Email box */}
+<div className="card">
+  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>✉️ Your email</h2>
+  <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>We'll send your finished file here.</p>
+  <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
+</div>
+
+{/* Order summary */}
+<div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
+  <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
+  <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
+    <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
+    <Row label="Level"       value={currentLevelInfo ? `${currentLevelInfo.label} — ${currentLevelInfo.priceLabel}` : "—"}/>
+    <Row label="Marker sets" value={sets.filter(Boolean).length ? `${sets.filter(Boolean).length} selected` : "Default palette"}/>
+    <Row label="Turnaround"  value="Within 24 hours"/>
+    {prevOrders.length > 0 && (
+      <>
+        <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
+        <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar}€`}/>
+        <Row label="This order" value={currentLevelInfo ? currentLevelInfo.priceLabel : "—"}/>
+        <div style={{borderTop:"1.5px solid var(--pink)", margin:"4px 0"}}/>
+        <Row label="🧾 New total" value={`${totalSoFar + (currentLevelInfo?.price ?? 0)}€`} highlight/>
+      </>
+    )}
+  </div>
+</div>
+
+{/* Submit button */}
+<button
+  className="btn-primary"
+  onClick={handleSubmit}
+  disabled={!canSubmit || submitting}
+  style={{width:"100%", fontSize:17, padding:"16px", opacity:(canSubmit && !submitting) ? 1 : 0.5}}
+>
+  {submitting ? "⏳ Sending your order…" : canSubmit ? "✨ Submit my order →" : "✨ Submit my order"}
+</button>
+
+{!photo && (
+  <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
+    Upload a photo to get started
+  </p>
+)}
+{!email && photo && (
+  <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
+    Add your email to continue
+  </p>
+)}
+{errorMsg && (
+  <div style={{background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14}}>
+    ⚠️ {errorMsg}
+  </div>
+)}
+</div>
+</div>
+</main>
+</>
+);
 }
 
 export default function CreatePage() {

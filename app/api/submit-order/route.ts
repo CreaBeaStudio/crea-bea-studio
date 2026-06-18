@@ -61,9 +61,9 @@ export async function POST(req: NextRequest) {
         </p>
       `
       : "";
-
-    await resend.emails.send({
-      from:       "CreaBea Studio <orders@creabeastudio.com>",
+      
+      const { data, error } = await resend.emails.send({
+      from:       "CreaBeaStudio <orders@creabeastudio.com>",
       to:         notifyEmail,
       replyTo:    customerEmail,
       subject:    `🎨 New Order #${orderId} from ${customerEmail}`,
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
           content:     base64,
           contentType: imageFile.type || "image/jpeg",
         },
-      ],
+      ], 
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
           <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
@@ -123,6 +123,39 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+    console.log("Resend response:", JSON.stringify({ data, error }));
+    if (error) throw new Error(JSON.stringify(error));
+
+    // Customer confirmation email
+await resend.emails.send({
+  from:    "CreaBea Studio <orders@creabeastudio.com>",
+  to:      customerEmail,
+  subject: `💖 Thank you for your order #${orderId}!`,
+  html: `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
+      <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
+        <h1 style="color:white;margin:0;font-size:22px;">💖 Thank you for your order!</h1>
+      </div>
+      <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
+        <p style="font-size:16px;color:#444;line-height:1.7;">
+          We'll get started on your Guangna by Number right away!
+        </p>
+        <p style="font-size:16px;color:#444;line-height:1.7;">
+          Talk soon ✨
+        </p>
+        <div style="margin-top:24px;padding:16px;background:#FFF0F3;border-radius:10px;">
+          <p style="margin:0;font-size:14px;color:#888;">🔖 Order ID: <strong style="color:#e75480;">${orderId}</strong></p>
+          <p style="margin:8px 0 0;font-size:14px;color:#888;">🎯 Level: <strong>${levelLabel}</strong></p>
+        </div>
+        <p style="margin-top:24px;font-size:13px;color:#aaa;text-align:center;">
+          Questions? Reply to this email or contact us at 
+          <a href="mailto:hello@creabeastudio.com" style="color:#e75480;">hello@creabeastudio.com</a>
+        </p>
+        <p style="text-align:center;font-size:20px;margin-top:8px;">🐾</p>
+      </div>
+    </div>
+  `,
+});
 
     console.log("Email sent successfully, orderId:", orderId);
     return NextResponse.json({ success: true, orderId });
