@@ -19,22 +19,20 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        .nav-links a:hover {
-          background: var(--cream);
-        }
-        .mobile-menu a:hover {
-          background: var(--cream);
-        }
-        @media (max-width: 768px) {
-          .nav-links { display: none !important; }
-          .hamburger { display: flex !important; }
-          .nav-tagline { display: none !important; }
-        }
-        @media (min-width: 769px) {
-          .hamburger { display: none !important; }
-          .mobile-menu { display: none !important; }
-        }
-      `}</style>
+      .nav-links a:hover { background: var(--cream); }
+      .mobile-menu a:hover { background: var(--cream); }
+      .tagline-short { display: none; }
+      @media (max-width: 768px) {
+        .nav-links { display: none !important; }
+        .hamburger { display: flex !important; }
+        .tagline-full { display: none; }
+        .tagline-short { display: inline; }
+      }
+      @media (min-width: 769px) {
+        .hamburger { display: none !important; }
+        .mobile-menu { display: none !important; }
+      }
+    `}</style>
 
       <nav style={{
         background: "white",
@@ -56,11 +54,12 @@ export default function Navbar() {
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
             <Image src="/cat-logo.png" alt="CreaBeaStudio" width={100} height={100}
               style={{ objectFit: "contain", alignSelf: "flex-end" }} />
-            <span className="nav-tagline" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
-              <span style={{ fontSize: 22, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700, whiteSpace: "nowrap" }}>Color Your Memories</span>
-              <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
-            </span>
+           <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
+            <span className="tagline-full" style={{ fontSize: 22, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700, whiteSpace: "nowrap" }}>Color Your Memories</span>
+            <span className="tagline-short" style={{ fontSize: 16, color: "var(--pink)", fontWeight: 700, whiteSpace: "nowrap" }}>CreaBeaStudio</span>
+            <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
+          </span>
           </Link>
 
           {/* Desktop links */}
