@@ -352,34 +352,39 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── WHAT DO YOU GET? ── */}
-        <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
+               {/* ── WHAT DO YOU GET? ── */}
+               <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
+          <style>{`
+            .wdyg-table { display: block; }
+            .wdyg-cards { display: none; }
+            @media (max-width: 768px) {
+              .wdyg-table { display: none; }
+              .wdyg-cards { display: flex; flex-direction: column; gap: 16px; }
+            }
+          `}</style>
+
           <div style={{ maxWidth:900, margin:"0 auto", textAlign:"center" }}>
             <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Every order includes</p>
-            <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", marginBottom:16 }}>
+            <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", marginBottom:48 }}>
               What do you get?
             </h2>
 
-            <div style={{
-              background:"white",
-              borderRadius:20,
+            {/* ── DESKTOP: Table ── */}
+            <div className="wdyg-table" style={{
+              background:"white", borderRadius:20,
               boxShadow:"0 8px 40px rgba(0,0,0,0.08)",
-              overflow:"auto",
-              maxWidth:780,
-              margin:"0 auto 40px",
+              overflow:"auto", maxWidth:780, margin:"0 auto 40px",
             }}>
               <table style={{ width:"100%", borderCollapse:"collapse", fontSize:15, minWidth:480 }}>
                 <thead>
                   <tr>
                     <th style={{ padding:"16px 20px", textAlign:"left", background:"#f5f5f5", fontWeight:700, color:"#444" }} />
-                    {["Beginner", "Intermediate", "Advanced"].map(level => (
+                    {["Beginner","Intermediate","Advanced"].map(level => (
                       <th key={level} style={{
                         padding:"16px 12px", textAlign:"center",
                         background:"var(--pink)", color:"white",
                         fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:14,
-                      }}>
-                        {level}
-                      </th>
+                      }}>{level}</th>
                     ))}
                   </tr>
                 </thead>
@@ -389,15 +394,11 @@ export default function Home() {
                       <td style={{ padding:"14px 16px", textAlign:"left", fontWeight:600, color:"#333", background:"#fafafa", fontSize:13 }}>
                         {row.feature}
                       </td>
-                      {(["beginner", "intermediate", "advanced"] as const).map(level => (
+                      {(["beginner","intermediate","advanced"] as const).map(level => (
                         <td key={level} style={{ padding:"14px 12px", textAlign:"center" }}>
-                          <input
-                            type="checkbox"
-                            checked={row[level]}
-                            readOnly
+                          <input type="checkbox" checked={row[level]} readOnly
                             aria-label={`${row.feature} — ${level}`}
-                            style={{ width:20, height:20, accentColor:"var(--pink)", cursor:"default" }}
-                          />
+                            style={{ width:20, height:20, accentColor:"var(--pink)", cursor:"default" }} />
                         </td>
                       ))}
                     </tr>
@@ -405,6 +406,61 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+
+            {/* ── MOBILE: Cards per level ── */}
+            <div className="wdyg-cards">
+              {([
+                { level: "beginner" as const, name: "Beginner", emoji: "🌱" },
+                { level: "intermediate" as const, name: "Intermediate", emoji: "🌿", popular: true },
+                { level: "advanced" as const, name: "Advanced", emoji: "🌲" },
+              ]).map(({ level, name, emoji, popular }) => (
+                <div key={name} style={{
+                  background:"white",
+                  borderRadius:20,
+                  border: popular ? "2px solid var(--pink)" : "2px solid #eee",
+                  padding:"24px 20px",
+                  position:"relative",
+                  textAlign:"left",
+                }}>
+                  {popular && (
+                    <div style={{
+                      position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)",
+                      background:"var(--pink)", color:"white",
+                      borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700,
+                      whiteSpace:"nowrap",
+                    }}>Most Popular</div>
+                  )}
+                  <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+                    <span style={{ fontSize:28 }}>{emoji}</span>
+                    <span style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:22, color:"var(--ink)" }}>{name}</span>
+                  </div>
+                  <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+                    {WHAT_YOU_GET.map(row => (
+                      <div key={row.feature} style={{
+                        display:"flex", alignItems:"center", justifyContent:"space-between",
+                        padding:"10px 14px", borderRadius:12,
+                        background: row[level] ? "rgba(244,96,122,0.06)" : "#fafafa",
+                      }}>
+                        <span style={{ fontSize:14, fontWeight:600, color: row[level] ? "var(--ink)" : "#aaa" }}>
+                          {row.feature}
+                        </span>
+                        <span style={{ fontSize:20, marginLeft:12 }}>
+                          {row[level] ? "✅" : "—"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop:40 }}>
+              <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 40px" }}>
+                Create your Guangna by Number →
+              </a>
+            </div>
+          </div>
+        </section>
 
             <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 40px" }}>
               Create your Guangna by Number →
