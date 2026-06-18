@@ -319,7 +319,7 @@ function CreateInner() {
           Create Your Guangna by Number
         </h1>
         <p style={{color:"#666", marginBottom:8}}>
-          Upload your photo and choose your level and Guangna markers. We'll process it and email you the finished file — usually within 24 hours.
+        Upload your photo, choose your level and Guangna markers, and we’ll take care of the rest. Your finished file will be delivered to your inbox — within 24 hours, often much faster 😁
         </p>
 
         {prevOrders.length > 0 && (
@@ -473,7 +473,7 @@ function CreateInner() {
 {/* Email box */}
 <div className="card">
   <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>✉️ Your email</h2>
-  <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>We'll send your finished file here.</p>
+  <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
   <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
 </div>
 

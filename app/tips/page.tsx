@@ -60,7 +60,7 @@ export default function TipsAndTricks() {
 
         <div style={{ marginTop:40, textAlign:"center" }}>
           <p style={{ color:"#666", marginBottom:16 }}>Still have questions?</p>
-          <a href="mailto:CreaBeaStudio@gmail.com" className="btn-primary" style={{ display:"inline-flex" }}>
+          <a href="mailto:hello@CreaBeaStudio.com" className="btn-primary" style={{ display:"inline-flex" }}>
             Contact us
           </a>
         </div>

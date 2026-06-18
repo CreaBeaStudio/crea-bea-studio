@@ -130,7 +130,7 @@ export default function Examples() {
           📸 Examples
         </h1>
         <p style={{ color: "#666", fontSize: 17, maxWidth: 560, margin: "0 auto 48px" }}>
-          See what CreaBeaStudio creates from real photos. Every Guangna by Number is uniquely generated from your photo and for your skill level.
+          See what CreaBeaStudio can create from your photos. Every Guangna by Number is uniquely generated from your photo and tailored to your Guangna brush markers and skill level.
         </p>
 
         {/* ── Slideshow ── */}

@@ -9,10 +9,10 @@ const FEATURES = [
 ];
 
 const HOW = [
-  { step: "01", label: "Upload", desc: "Drop in any photo. We handle the rest." },
-  { step: "02", label: "Choose", desc: "Your Guangna markers and skill level." },
-  { step: "03", label: "Order", desc: "" },
-  { step: "04", label: "Color", desc: "Download, Print & Have fun" },
+  { step: "01", label: "Upload", desc: "Upload any photo. We'll take care of the rest." },
+  { step: "02", label: "Choose", desc: "Select your Guangna markers and skill level." },
+  { step: "03", label: "Order", desc: "We create your custom Guangna by Number file" },
+  { step: "04", label: "Color", desc: "Download, print, and start coloring!" },
 ];
 
 const LEVELS = [
@@ -183,7 +183,7 @@ export default function Home() {
                 display:"flex", alignItems:"center", justifyContent:"center",
                 width:"100%", maxWidth:550
               }}>
-                <strong>To this: <br />Guangna by Number with personalised palette</strong>
+                <strong>To this: Guangna by Number with personalised color palette</strong>
               </div>
             </div>
           </div>
@@ -196,9 +196,10 @@ export default function Home() {
           color:"white", textAlign:"center"
         }}>
           <div style={{ maxWidth:700, margin:"0 auto" }}>
-            <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16 }}>
-              🎨 Guangna Color Converter
-            </h2>
+          <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+  <Image src="/Guangna_brush.png" alt="Guangna_brush" width={120} height={84} style={{ objectFit:"contain" }} />
+  Guangna Color Converter
+</h2>
             <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
               Do you have a #HEX, RGB or a picture? Find the closest Guangna color instantly.
             </p>
