@@ -35,9 +35,10 @@ export default function Home() {
       <style>{`
         .hero-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1.5fr;
           gap: 60px;
-          align-items: center;
+          align-items: end;
+          alignItems:"flex-end"
         }
         .hero-buttons {
           display: flex;
@@ -165,15 +166,14 @@ export default function Home() {
             <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20 }}>
               <div style={{ position:"relative", display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}>
                 <div className="from-this-label">
-                  <span>From this</span>
                 </div>
                 <div style={{
                   background:"white", borderRadius:24, padding:16,
                   boxShadow:"0 20px 60px rgba(244,96,122,0.15)",
-                  maxWidth:550, width:"100%"
+                  maxWidth:800, width:"100%"
                 }}>
-                  <Image src="/dog-legends.png" alt="Sample PBN photo" width={600} height={600}
-                    style={{ borderRadius:16, objectFit:"cover", width:"100%", height:"auto", maxWidth:"100%" }} />
+                 <Image src="/Dog_Legend3.png" alt="Sample PBN photo" width={800} height={800} 
+                    style={{ borderRadius:16, objectFit:"cover", width:"100%", height:"600", minHeight:200, maxWidth:"100%" }} />
                 </div>
               </div>
               <div style={{
@@ -181,9 +181,9 @@ export default function Home() {
                 borderRadius:16, padding:"16px 28px",
                 fontWeight:700, fontSize:"clamp(16px,2vw,22px)", textAlign:"center",
                 display:"flex", alignItems:"center", justifyContent:"center",
-                width:"100%", maxWidth:550
+                width:"100%", maxWidth:800, marginTop:16
               }}>
-                <strong>To this: Guangna by Number, with colour palette matched to your brush markers complete with Guangna codes and numbers.</strong>
+                <strong>Guangna by Number <br /> with colour palette matched to your brush markers complete with Guangna codes and numbers.</strong>
               </div>
             </div>
           </div>

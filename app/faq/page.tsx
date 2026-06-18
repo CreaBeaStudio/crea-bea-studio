@@ -21,8 +21,7 @@ export default function FAQ() {
       <Navbar />
       <main style={{ padding:"60px 24px", maxWidth:740, margin:"0 auto" }}>
         <h1 style={{ fontFamily:"Nunito, sans-serif", color:"var(--pink)", fontWeight:900, fontSize:"clamp(28px,4vw,44px)", marginBottom:40 }}>
-        Frequently Asked Questions 
-        ♥Color Your Memories ♥
+        Frequently Asked Questions <br /> ♥Color Your Memories ♥
         </h1>
         {FAQS.map((f,i)=>(
           <div key={i} style={{ marginBottom:28, paddingBottom:28, borderBottom:"1px solid var(--border)" }}>
