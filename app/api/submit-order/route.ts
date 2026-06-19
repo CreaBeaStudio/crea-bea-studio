@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
     try { allOrders = JSON.parse(allOrdersRaw); } catch {}
 
     // Convert image to base64 for email attachment
-    const bytes      = await imageFile.arrayBuffer();
-    const buffer     = Buffer.from(bytes);
-    const base64     = buffer.toString("base64");
+    const bytes  = await imageFile.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString("base64");
 
     const notifyEmail = process.env.NOTIFY_EMAIL!;
 
@@ -61,25 +61,28 @@ export async function POST(req: NextRequest) {
         </p>
       `
       : "";
-      
-      const { data, error } = await resend.emails.send({
+
+    const { data, error } = await resend.emails.send({
       from:       "CreaBeaStudio <orders@creabeastudio.com>",
       to:         notifyEmail,
       replyTo:    customerEmail,
-      subject:    `🎨 New Order #${orderId} from ${customerEmail}`,
+      subject:    `🔖 RESERVED — Order #${orderId} from ${customerEmail} (awaiting payment link)`,
       attachments: [
         {
           filename:    imageFile.name,
           content:     base64,
           contentType: imageFile.type || "image/jpeg",
         },
-      ], 
+      ],
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
           <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-            <h1 style="color:white;margin:0;font-size:22px;">🎨 New Guangna by Number Order</h1>
+            <h1 style="color:white;margin:0;font-size:22px;">🔖 Reserved Order — Awaiting Payment</h1>
           </div>
           <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
+            <div style="margin-bottom:16px;padding:12px 16px;background:#FFF0C0;border-radius:8px;font-size:14px;color:#7a5c00;">
+              ⏳ This customer reserved their order before payment was live. Once LemonSqueezy checkout is ready, send them their <code>/complete-order</code> link so they can pay.
+            </div>
             <table style="width:100%;border-collapse:collapse;font-size:15px;">
               <tr>
                 <td style="padding:10px 0;color:#888;width:40%;">🔖 Order ID</td>
@@ -117,47 +120,17 @@ export async function POST(req: NextRequest) {
             ${multiOrderTable}
 
             <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
-              💡 Reply to this email to send files directly to <strong>${customerEmail}</strong>
+              💡 No customer email has been sent yet for this order. They'll only receive payment confirmation once they actually complete checkout via LemonSqueezy.
             </div>
           </div>
         </div>
       `,
     });
+
     console.log("Resend response:", JSON.stringify({ data, error }));
     if (error) throw new Error(JSON.stringify(error));
 
-    // Customer confirmation email
-await resend.emails.send({
-  from:    "CreaBeaStudio <orders@creabeastudio.com>",
-  to:      customerEmail,
-  subject: `💖 Thank you for your order #${orderId}!`,
-  html: `
-    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
-      <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-        <h1 style="color:white;margin:0;font-size:22px;">💖 Thank you for your order!</h1>
-      </div>
-      <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
-        <p style="font-size:16px;color:#444;line-height:1.7;">
-          We'll get started on your Guangna by Number right away!
-        </p>
-        <p style="font-size:16px;color:#444;line-height:1.7;">
-          Talk soon ✨
-        </p>
-        <div style="margin-top:24px;padding:16px;background:#FFF0F3;border-radius:10px;">
-          <p style="margin:0;font-size:14px;color:#888;">🔖 Order ID: <strong style="color:#e75480;">${orderId}</strong></p>
-          <p style="margin:8px 0 0;font-size:14px;color:#888;">🎯 Level: <strong>${levelLabel}</strong></p>
-        </div>
-        <p style="margin-top:24px;font-size:13px;color:#aaa;text-align:center;">
-          Questions? Reply to this email or contact us at 
-          <a href="mailto:hello@creabeastudio.com" style="color:#e75480;">hello@creabeastudio.com</a>
-        </p>
-        <p style="text-align:center;font-size:20px;margin-top:8px;">🐾</p>
-      </div>
-    </div>
-  `,
-});
-
-    console.log("Email sent successfully, orderId:", orderId);
+    console.log("Reserved order email sent, orderId:", orderId);
     return NextResponse.json({ success: true, orderId });
 
   } catch (e: any) {

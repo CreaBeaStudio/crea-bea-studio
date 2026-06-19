@@ -132,7 +132,21 @@ export default function Examples() {
         <p style={{ color: "#666", fontSize: 17, maxWidth: 560, margin: "0 auto 48px" }}>
           See what CreaBeaStudio can create from your photos. Every Guangna by Number is uniquely generated from your photo and tailored to your Guangna brush markers and skill level.
         </p>
-
+              <div style={{
+        background: "linear-gradient(135deg,#FFF0F3,#FDF6F0)",
+        border: "2px solid var(--pink)",
+        borderRadius: 16,
+        padding: "20px 28px",
+        maxWidth: 560,
+        margin: "0 auto 40px",
+      }}>
+        <p style={{ fontWeight: 800, fontSize: 18, color: "var(--pink)", marginBottom: 6 }}>
+          🎁 A Unique and Personal Gift
+        </p>
+        <p style={{ color: "#555", fontSize: 14, margin: 0 }}>
+        Color your memories and bring them to life. Each Guangna by Number is created from your favorite photo and matched to your markers, becoming a one-of-a-kind keepsake for birthdays, holidays, or meaningful moments.
+        </p>
+</div>
         {/* ── Slideshow ── */}
         <div
           style={{ position: "relative", maxWidth: 600, margin: "0 auto 48px" }}

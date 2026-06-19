@@ -3,23 +3,34 @@ import Navbar from "../components/Navbar";
 import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
+// LemonSqueezy checkout UUIDs per level
+const LEVEL_TO_CHECKOUT_UUID: Record<string, string> = {
+  "15": "7306ab5e-63cd-437e-a651-dec75cb55026", // Beginner
+  "24": "faeed499-4436-4638-8aca-87c8cbe81acd", // Intermediate
+  "36": "9e440091-97a9-4fff-983c-ed21467b0465", // Advanced
+};
+
 function PricingContent() {
   const params = useSearchParams();
-  const variantId = params.get("variantId") ?? "";
-  const email = params.get("email") ?? "";
+  const level   = params.get("level") ?? "";
+  const email   = params.get("email") ?? "";
 
   const STORE_SLUG = "creabeastudio";
+  const checkoutUuid = LEVEL_TO_CHECKOUT_UUID[level] ?? "";
+
+  const checkoutUrl = checkoutUuid
+    ? `https://${STORE_SLUG}.lemonsqueezy.com/checkout/buy/${checkoutUuid}${
+        email ? `?checkout[email]=${encodeURIComponent(email)}` : ""
+      }`
+    : "";
 
   useEffect(() => {
-    if (!variantId) return;
-    const checkoutUrl = `https://${STORE_SLUG}.lemonsqueezy.com/checkout/buy/${variantId}${
-      email ? `?checkout[email]=${encodeURIComponent(email)}` : ""
-    }`;
+    if (!checkoutUrl) return;
     const timer = setTimeout(() => {
       window.location.href = checkoutUrl;
     }, 3000);
     return () => clearTimeout(timer);
-  }, [variantId, email]);
+  }, [checkoutUrl]);
 
   return (
     <>
@@ -60,17 +71,18 @@ function PricingContent() {
           }
         `}</style>
 
-        {variantId && (
+        {checkoutUrl && (
           <p style={{ marginTop: 32, fontSize: 13, color: "var(--muted)" }}>
             Not redirected?{" "}
-            <a
-              href={`https://${STORE_SLUG}.lemonsqueezy.com/checkout/buy/${variantId}${
-                email ? `?checkout[email]=${encodeURIComponent(email)}` : ""
-              }`}
-              style={{ color: "var(--pink)", fontWeight: 700 }}
-            >
+            <a href={checkoutUrl} style={{ color: "var(--pink)", fontWeight: 700 }}>
               Click here
             </a>
+          </p>
+        )}
+
+        {!checkoutUrl && (
+          <p style={{ marginTop: 32, fontSize: 13, color: "#c62828" }}>
+            ⚠️ Could not find checkout link for the selected level. Please go back and try again, or contact us at hello@creabeastudio.com.
           </p>
         )}
       </main>

@@ -3,454 +3,205 @@ import Image from "next/image"
 import Navbar from "../components/Navbar";
 import { useState, useCallback } from "react";
 
-// ─── Full Guangna colour database (from Python tool, authoritative) ───────────
-// Format: [R, G, B, "Name"]
 const GN_COLORS: Record<string,[number,number,number,string]> = {
-  "GN-600":[255,255,255,"White"],
-  "GN-601":[76,166,218,"Sky blue"],
-  "GN-602":[130,194,178,"Lake green"],
-  "GN-603":[251,234,82,"Yellow"],
-  "GN-604":[226,153,61,"Orange"],
-  "GN-605":[197,89,72,"Red"],
-  "GN-606":[207,123,176,"Rose red"],
-  "GN-607":[82,61,143,"Lilac purple"],
-  "GN-608":[22,58,144,"Royal blue"],
-  "GN-609":[60,135,125,"Green"],
-  "GN-610":[174,181,178,"Gray"],
-  "GN-611":[20,20,20,"Black"],
-  "GN-612":[219,161,174,"Pink"],
-  "GN-613":[107,68,145,"Grape purple"],
-  "GN-614":[152,196,114,"Emerald green"],
-  "GN-615":[248,223,75,"Bright yellow"],
-  "GN-616":[60,135,183,"Dazzle blue"],
-  "GN-617":[40,85,155,"Ink blue"],
-  "GN-618":[222,157,87,"Amber"],
-  "GN-619":[193,137,145,"Carmine"],
-  "GN-620":[149,115,100,"Coffee"],
-  "GN-621":[52,120,195,"Indigo blue"],
-  "GN-622":[107,153,135,"Pine green"],
-  "GN-623":[181,154,195,"Wisteria"],
-  "GN-624":[242,214,217,"Pomelo pink"],
-  "GN-625":[240,201,187,"Cinnamon"],
-  "GN-626":[254,252,199,"Rice white"],
-  "GN-627":[196,223,198,"Mint green"],
-  "GN-628":[190,220,240,"Milk blue"],
-  "GN-629":[174,179,216,"Taro purple"],
-  "GN-630":[226,202,203,"Bean paste pink"],
-  "GN-631":[180,85,60,"Vermilion"],
-  "GN-632":[199,90,51,"Apple red"],
-  "GN-633":[124,155,170,"Haze blue"],
-  "GN-634":[81,143,67,"Forest green"],
-  "GN-635":[181,176,209,"Purple"],
-  "GN-636":[46,106,137,"Bicheng blue"],
-  "GN-637":[162,169,146,"Local green"],
-  "GN-638":[197,201,176,"Curious mind"],
-  "GN-639":[187,154,131,"Grounded red"],
-  "GN-640":[148,164,99,"Spring green"],
-  "GN-641":[157,183,166,"Celadon"],
-  "GN-642":[102,109,86,"Verdant hills green"],
-  "GN-643":[116,99,77,"Russet"],
-  "GN-644":[201,155,81,"Clay colour"],
-  "GN-645":[225,207,169,"Medieval yellow"],
-  "GN-646":[233,232,212,"Hummus"],
-  "GN-647":[157,183,80,"Bamboo shoot green"],
-  "GN-648":[191,212,114,"Sprout green"],
-  "GN-649":[231,166,103,"Light orange"],
-  "GN-650":[63,143,203,"Blue"],
-  "GN-651":[138,143,199,"Violet"],
-  "GN-652":[200,194,115,"Primrose green"],
-  "GN-653":[89,182,168,"Bluish green"],
-  "GN-654":[220,181,167,"Flesh color"],
-  "GN-655":[230,152,186,"Rose"],
-  "GN-656":[245,209,129,"Earthy yellow"],
-  "GN-657":[132,173,73,"Bishan green"],
-  "GN-658":[217,172,196,"Light pink"],
-  "GN-659":[42,99,174,"Dark blue"],
-  "GN-660":[222,123,166,"Heartbeat pink"],
-  "GN-661":[223,128,107,"Vibrant red"],
-  "GN-662":[151,193,100,"Vibrant green"],
-  "GN-663":[218,112,60,"Reddish orange"],
-  "GN-664":[204,55,43,"Bright red"],
-  "GN-665":[95,167,86,"Leaf green"],
-  "GN-666":[195,76,130,"Purplish red"],
-  "GN-667":[221,117,114,"Thin red"],
-  "GN-668":[81,169,94,"Stone cyan"],
-  "GN-669":[168,206,128,"Grass green"],
-  "GN-670":[129,152,202,"Rattan"],
-  "GN-671":[174,59,91,"Wine red"],
-  "GN-672":[154,78,70,"Brownish red"],
-  "GN-673":[27,32,127,"Klein blue"],
-  "GN-674":[150,69,76,"Strong brown"],
-  "GN-675":[126,81,104,"Sauce purple"],
-  "GN-676":[61,139,70,"Dark green"],
-  "GN-677":[238,177,175,"Peach red"],
-  "GN-678":[50,36,115,"Dark purple"],
-  "GN-679":[98,88,92,"Greyish red"],
-  "GN-680":[63,70,74,"Stone gray"],
-  "GN-681":[133,167,177,"Group cyan"],
-  "GN-682":[111,145,68,"Bamboo green"],
-  "GN-683":[251,232,201,"Creamy white"],
-  "GN-684":[241,204,157,"Apricot yellow"],
-  "GN-685":[141,196,167,"Onion green"],
-  "GN-686":[206,206,206,"Light gray"],
-  "GN-687":[101,159,75,"Bright green"],
-  "GN-688":[29,66,83,"Dark cyan"],
-  "GN-689":[141,182,221,"Porcelain blue"],
-  "GN-690":[131,161,160,"Green blue"],
-  "GN-691":[226,135,125,"Coral powder"],
-  "GN-692":[223,140,141,"Purple light"],
-  "GN-693":[92,113,129,"Blue grey"],
-  "GN-694":[58,111,119,"Soft jade"],
-  "GN-695":[61,125,133,"French green"],
-  "GN-696":[134,163,141,"Fruit green"],
-  "GN-697":[79,105,80,"Pine green"],
-  "GN-698":[211,199,223,"Sweat purple"],
-  "GN-699":[183,153,191,"Felongrass purple"],
-  "GN-700":[220,227,119,"Cream yellow"],
-  "GN-701":[249,225,203,"Light apricot"],
-  "GN-702":[241,190,128,"Pomelo"],
-  "GN-703":[250,227,224,"Ivory orange"],
-  "GN-704":[235,181,177,"Red lips"],
-  "GN-705":[149,82,97,"Cornel purple"],
-  "GN-706":[235,246,242,"White cyan"],
-  "GN-707":[214,225,200,"Magnolia"],
-  "GN-708":[97,76,54,"Sooty red"],
-  "GN-709":[82,61,61,"Brown black"],
-  "GN-710":[218,95,111,"Changchun"],
-  "GN-711":[213,112,125,"Lipstick pink"],
-  "GN-712":[230,160,192,"Fluorescent rose"],
-  "GN-713":[205,97,122,"Nelumbo red"],
-  "GN-714":[193,69,94,"Blackish red"],
-  "GN-715":[212,68,75,"Scarlet"],
-  "GN-716":[240,195,197,"Peach pink"],
-  "GN-717":[233,211,181,"Shallow camel"],
-  "GN-718":[241,220,183,"Tumeric"],
-  "GN-719":[252,238,216,"Cheese yellow"],
-  "GN-720":[248,236,217,"Bean yellow"],
-  "GN-721":[250,230,226,"Water pink"],
-  "GN-722":[89,182,168,"Turquoise blue"],
-  "GN-723":[247,226,234,"Sakura"],
-  "GN-724":[252,238,216,"Light beige"],
-  "GN-725":[225,132,54,"Fresh orange"],
-  "GN-726":[172,58,132,"Imperial purple"],
-  "GN-727":[180,205,88,"Willow green"],
-  "GN-728":[59,135,73,"Viridity"],
-  "GN-729":[225,220,158,"Grey yellow"],
-  "GN-730":[230,241,214,"Jade white"],
-  "GN-731":[206,194,161,"Sand dust"],
-  "GN-732":[254,247,176,"Velvet yellow"],
-  "GN-733":[252,244,161,"Light yellow"],
-  "GN-734":[224,193,215,"Pink purple"],
-  "GN-735":[162,202,127,"Pea green"],
-  "GN-736":[225,235,238,"Pale white"],
-  "GN-737":[154,204,188,"Bluish green"],
-  "GN-738":[237,225,215,"Onyx"],
-  "GN-739":[149,96,125,"Ormosia"],
-  "GN-740":[80,164,85,"Verdant"],
-  "GN-741":[142,171,91,"Dull green"],
-  "GN-742":[107,109,171,"Flower purple"],
-  "GN-743":[107,83,155,"Aubergine"],
-  "GN-744":[213,210,231,"Lavender"],
-  "GN-745":[152,182,221,"Light rattan"],
-  "GN-746":[46,68,115,"Fotou blue"],
-  "GN-747":[121,131,151,"Quetou blue"],
-  "GN-748":[84,129,149,"Tianqing blue"],
-  "GN-749":[81,126,170,"Qingming blue"],
-  "GN-750":[100,130,150,"Kongqing blue"],
-  "GN-751":[229,227,216,"Chalky white"],
-  "GN-752":[217,203,208,"Lotus root gray"],
-  "GN-753":[210,198,179,"Jade color"],
-  "GN-754":[214,191,185,"Pinkish red"],
-  "GN-755":[204,165,151,"Xianchi red"],
-  "GN-756":[186,136,123,"Light red"],
-  "GN-757":[177,151,123,"Chestnut brown"],
-  "GN-758":[160,133,113,"Agilawood"],
-  "GN-759":[128,111,106,"Sandstone yellow"],
-  "GN-760":[202,45,37,"Tomato red"],
-  "GN-761":[220,126,135,"Lychee pink"],
-  "GN-762":[225,144,180,"Vibrant pink"],
-  "GN-763":[23,54,99,"Ink blue black"],
-  "GN-764":[66,63,112,"Smoke purple black"],
-  "GN-765":[252,241,88,"Happy yellow"],
-  "GN-766":[254,251,188,"Jasmine yellow"],
-  "GN-767":[90,136,159,"Cloud blue"],
-  "GN-768":[145,180,186,"Mountain blue"],
-  "GN-769":[122,92,97,"Volcanic brown"],
-  "GN-770":[147,122,151,"Grayish purple"],
-  "GN-771":[215,195,198,"Milk coffee"],
-  "GN-772":[200,136,154,"Camelia"],
-  "GN-773":[161,154,186,"Vintage purple"],
-  "GN-774":[55,98,121,"Navy blue"],
-  "GN-775":[187,203,177,"Spray green"],
-  "GN-776":[79,55,64,"Brownish black"],
-  "GN-777":[253,244,116,"Pure yellow"],
-  "GN-778":[112,48,108,"Gentian violet"],
-  "GN-779":[102,71,82,"Black coffee"],
-  "GN-780":[138,62,60,"Maroon color"],
-  "GN-781":[159,45,44,"Deep red"],
-  "GN-782":[213,72,42,"Vivid red"],
-  "GN-783":[216,92,48,"Orange red"],
-  "GN-784":[135,46,44,"Dull red"],
-  "GN-785":[191,93,51,"Vermilion"],
-  "GN-786":[234,171,63,"Yellow orange"],
-  "GN-787":[196,196,88,"Straw yellow"],
-  "GN-788":[162,168,109,"Native yellow"],
-  "GN-789":[91,89,60,"Brownish green"],
-  "GN-790":[113,120,77,"Olive green"],
-  "GN-791":[49,77,55,"Black green"],
-  "GN-792":[85,125,109,"Old green"],
-  "GN-793":[138,148,85,"Moss green"],
-  "GN-794":[5,136,66,"Turquoise green"],
-  "GN-795":[38,90,64,"Dark green"],
-  "GN-796":[47,108,65,"Aquamarine"],
-  "GN-797":[45,105,108,"Dark cyan"],
-  "GN-798":[49,113,169,"Dark teal"],
-  "GN-799":[89,182,168,"Peacock green"],
-  "GN-800":[48,110,116,"Deepsea green"],
-  "GN-801":[242,242,242,"Feather white"],
-  "GN-802":[236,180,93,"Mango yellow"],
-  "GN-803":[232,232,232,"Light cloud white"],
-  "GN-804":[218,222,220,"Pewter"],
-  "GN-805":[162,163,158,"Coal gray"],
-  "GN-806":[65,87,113,"Faded red"],
-  "GN-807":[50,52,58,"Cool black"],
-  "GN-808":[88,63,88,"Grayish purple"],
-  "GN-809":[219,235,208,"Hazy green"],
-  "GN-810":[214,198,125,"Light grass yellow"],
-  "GN-811":[194,183,117,"Straw yellow"],
-  "GN-812":[172,157,96,"Khaki green"],
-  "GN-813":[195,170,92,"Grass yellow"],
-  "GN-814":[204,168,110,"Sandalwood yellow"],
-  "GN-815":[211,178,86,"Canghuang"],
-  "GN-816":[153,132,55,"Dark chartreuse"],
-  "GN-817":[191,146,52,"Juyi yellow"],
-  "GN-818":[194,223,232,"Water blue"],
-  "GN-819":[140,200,217,"Crystal blue"],
-  "GN-820":[100,185,217,"Peacock blue"],
-  "GN-821":[206,230,248,"Ice blue"],
-  "GN-822":[147,205,240,"Light blue"],
-  "GN-823":[95,162,199,"Lake blue"],
-  "GN-824":[29,73,138,"Midnight blue"],
-  "GN-825":[216,211,220,"Purple smoke color"],
-  "GN-826":[181,177,205,"Purple lotus"],
-  "GN-827":[127,132,169,"Greyish purple"],
-  "GN-828":[106,110,171,"Aster purple"],
-  "GN-829":[206,199,205,"Sand purple"],
-  "GN-830":[180,195,228,"Smoke purple"],
-  "GN-831":[153,131,159,"Dark purple / Dusk purple?"],
-  "GN-832":[136,77,149,"Amethyst"],
-  "GN-833":[161,120,173,"Rose purple"],
-  "GN-834":[236,206,206,"Peach powder"],
-  "GN-835":[225,207,214,"Satin grey powder"],
-  "GN-836":[252,242,246,"Soft pink"],
-  "GN-837":[247,231,229,"Rose pink"],
-  "GN-838":[244,215,226,"Moonlit powder"],
-  "GN-839":[219,182,184,"Moon white"],
-  "GN-840":[232,204,207,"Ceramic powder"],
-  "GN-841":[190,218,234,"Hazy blue"],
-  "GN-842":[150,200,212,"Azure"],
-  "GN-843":[183,210,207,"Smoke cyan"],
-  "GN-844":[157,180,179,"Cold frost cyan"],
-  "GN-845":[92,172,80,"Emerald green"],
-  "GN-846":[133,186,80,"Wood green"],
-  "GN-847":[208,210,92,"Willow yellow"],
-  "GN-848":[217,219,187,"Grey frost green"],
-  "GN-849":[161,161,58,"Wasabi green"],
-  "GN-850":[142,199,196,"Turquoise green"],
-  "GN-851":[189,204,184,"Nordic green"],
-  "GN-852":[160,171,78,"Khaki green"],
-  "GN-853":[224,221,218,"Rice grey"],
-  "GN-854":[226,152,157,"Fluorescent pink"],
-  "GN-855":[237,237,125,"Fluorescent yellow"],
-  "GN-856":[198,217,132,"Fluorescent green"],
-  "GN-857":[136,159,182,"Cement blue"],
-  "GN-858":[191,198,154,"Wind chime grey"],
-  "GN-859":[229,154,123,"Fluorescent orange"],
-  "GN-860":[111,121,124,"Graphite ash"],
-  "GN-861":[186,193,190,"Mountain ash"],
-  "GN-862":[232,222,226,"Rouge grey"],
-  "GN-863":[155,107,65,"Cinnamon brown"],
-  "GN-864":[127,75,52,"Walnut brown"],
-  "GN-865":[128,121,109,"Elegant brown"],
-  "GN-866":[134,105,70,"Ebony palm"],
-  "GN-867":[104,62,42,"Caramel brown"],
-  "GN-868":[193,161,104,"Dry leaf brown"],
-  "GN-869":[156,99,92,"Chocolate brown"],
-  "GN-870":[155,143,136,"Clay brown"],
-  "GN-871":[236,224,191,"Almond brown"],
-  "GN-872":[240,197,204,"Rouge powder"],
-  "GN-873":[241,209,224,"Ballet pink / Bullet pink"],
-  "GN-874":[235,220,183,"Light sand yellow"],
-  "GN-875":[165,87,55,"Honey brown"],
-  "GN-876":[232,238,162,"Williow bud white"],
-  "GN-877":[253,246,225,"Jasmine white"],
-  "GN-878":[218,237,249,"Ice white"],
-  "GN-879":[219,223,245,"Water purple / Water white?"],
-  "GN-880":[234,227,237,"Purple mist white"],
-  "GN-881":[250,229,232,"Makeup white"],
-  "GN-882":[250,234,225,"Pink white"],
-  "GN-883":[248,244,231,"Gardenia white"],
-  "GN-884":[225,232,233,"Matte white"],
-  "GN-885":[179,214,201,"Lanbai"],
-  "GN-886":[230,239,224,"Snow green white"],
-  "GN-887":[252,242,212,"Snowwhite"],
-  "GN-888":[146,190,221,"Azure blue"],
-  "GN-889":[119,196,233,"Cloud blue"],
-  "GN-890":[112,177,223,"Sea wave blue"],
-  "GN-891":[80,175,232,"Crystal blue"],
-  "GN-892":[75,159,196,"Sea cyan"],
-  "GN-893":[65,146,212,"Sapphire blue"],
-  "GN-894":[62,140,208,"Classic blue"],
-  "GN-895":[46,105,180,"Prusian blue"],
-  "GN-896":[45,100,152,"Aegean Sea blue"],
-  "GN-897":[28,38,116,"Nightfall blue"],
-  "GN-898":[177,203,235,"Light ice blue"],
-  "GN-899":[147,167,215,"Indigo purple"],
-  "GN-900":[120,126,179,"Agate purple"],
-  "GN-901":[65,65,139,"Cyanoze"],
-  "GN-902":[85,52,115,"Morning glory purple?"],
-  "GN-903":[242,207,219,"Litmus red"],
-  "GN-904":[224,116,162,"Glow red"],
-  "GN-905":[219,107,160,"Lotus pink"],
-  "GN-906":[188,74,141,"Redbud red"],
-  "GN-907":[197,64,104,"Chinese rose red"],
-  "GN-908":[195,110,139,"Magenta red"],
-  "GN-909":[190,102,159,"Saffron red"],
-  "GN-910":[192,81,106,"Crimson"],
-  "GN-911":[245,215,189,"Cream orange"],
-  "GN-912":[243,210,191,"Pomelo skin"],
-  "GN-913":[225,183,163,"Jade pink"],
-  "GN-914":[243,211,181,"Peach blush"],
-  "GN-915":[230,176,150,"Deer skin brown / Clear skin brown?"],
-  "GN-916":[227,169,127,"Crab shell red"],
-  "GN-917":[242,218,219,"Light coral"],
-  "GN-918":[227,183,188,"Hawthorn red"],
-  "GN-919":[185,119,121,"Faro red"],
-  "GN-920":[182,100,97,"Sunset glow red"],
-  "GN-921":[184,102,93,"Cocoa red"],
-  "GN-922":[166,82,86,"Lava red"],
-  "GN-923":[133,51,66,"Harrier crest"],
-  "GN-924":[245,243,232,"Pale white"],
-  "GN-925":[227,229,178,"Soy milk beige"],
-  "GN-926":[233,217,185,"Lotus seed white"],
-  "GN-927":[221,193,159,"Wheat hull beige"],
-  "GN-928":[202,172,126,"Hump brown"],
-  "GN-929":[238,213,155,"Almond yellow"],
-  "GN-930":[230,156,58,"Ginkgo orange"],
-  "GN-931":[205,133,64,"Suede brown"],
-  "GN-932":[176,124,65,"Coconut brown"],
-  "GN-933":[252,245,116,"Lemon yellow"],
-  "GN-934":[246,209,72,"Papaya yellow"],
-  "GN-935":[240,181,63,"Moonlight orange"],
-  "GN-936":[236,176,93,"Glazed orange"],
-  "GN-937":[225,132,54,"Vibrant orange"],
-  "GN-938":[194,196,68,"Vanilla green"],
-  "GN-939":[197,217,89,"Apple green"],
-  "GN-940":[183,205,177,"Jade green"],
-  "GN-941":[64,144,69,"Algae green"],
-  "GN-942":[51,118,69,"Enamel green"],
-  "GN-943":[188,172,88,"Silk yellow"],
-  "GN-944":[186,151,50,"Reed green"],
-  "GN-945":[101,101,61,"Dark cyan"],
-  "GN-946":[127,116,62,"Pond green"],
-  "GN-947":[119,100,66,"Turtle shell"],
-  "GN-948":[94,81,56,"Palm green"],
-  "GN-949":[228,228,228,"Frost white"],
-  "GN-950":[198,198,198,"Moon shadow grey"],
-  "GN-951":[177,187,190,"Cool gray"],
-  "GN-952":[152,168,179,"Warship gray"],
-  "GN-953":[136,144,137,"Smoke gray"],
-  "GN-954":[146,174,190,"Crab shell cyan"],
-  "GN-955":[214,219,210,"Sea fodrin green"],
-  "GN-956":[168,177,162,"Matte gray"],
-  "GN-957":[182,177,172,"Seagull gray"],
-  "GN-958":[156,134,122,"Red gray"],
-  "GN-959":[116,116,116,"Wild goose gray"],
-  "GN-960":[95,75,53,"Latte brown"],
-  "GN-961":[124, 157, 16,"Cloud moss"],
-  "GN-962":[181, 154, 191,"Taro purple"],
-  "GN-963":[206, 46, 40,"Sienna red"],
-  "GN-964":[124, 68, 39,"Cocoa brown"],
-  "GN-965":[191, 75, 146,"Cheek red"]
+  "GN-600":[255,255,255,"White"],"GN-601":[76,166,218,"Sky blue"],"GN-602":[130,194,178,"Lake green"],
+  "GN-603":[251,234,82,"Yellow"],"GN-604":[226,153,61,"Orange"],"GN-605":[197,89,72,"Red"],
+  "GN-606":[207,123,176,"Rose red"],"GN-607":[82,61,143,"Lilac purple"],"GN-608":[22,58,144,"Royal blue"],
+  "GN-609":[60,135,125,"Green"],"GN-610":[174,181,178,"Gray"],"GN-611":[20,20,20,"Black"],
+  "GN-612":[219,161,174,"Pink"],"GN-613":[107,68,145,"Grape purple"],"GN-614":[152,196,114,"Emerald green"],
+  "GN-615":[248,223,75,"Bright yellow"],"GN-616":[60,135,183,"Dazzle blue"],"GN-617":[40,85,155,"Ink blue"],
+  "GN-618":[222,157,87,"Amber"],"GN-619":[193,137,145,"Carmine"],"GN-620":[149,115,100,"Coffee"],
+  "GN-621":[52,120,195,"Indigo blue"],"GN-622":[107,153,135,"Pine green"],"GN-623":[181,154,195,"Wisteria"],
+  "GN-624":[242,214,217,"Pomelo pink"],"GN-625":[240,201,187,"Cinnamon"],"GN-626":[254,252,199,"Rice white"],
+  "GN-627":[196,223,198,"Mint green"],"GN-628":[190,220,240,"Milk blue"],"GN-629":[174,179,216,"Taro purple"],
+  "GN-630":[226,202,203,"Bean paste pink"],"GN-631":[180,85,60,"Vermilion"],"GN-632":[199,90,51,"Apple red"],
+  "GN-633":[124,155,170,"Haze blue"],"GN-634":[81,143,67,"Forest green"],"GN-635":[181,176,209,"Purple"],
+  "GN-636":[46,106,137,"Bicheng blue"],"GN-637":[162,169,146,"Local green"],"GN-638":[197,201,176,"Curious mind"],
+  "GN-639":[187,154,131,"Grounded red"],"GN-640":[148,164,99,"Spring green"],"GN-641":[157,183,166,"Celadon"],
+  "GN-642":[102,109,86,"Verdant hills green"],"GN-643":[116,99,77,"Russet"],"GN-644":[201,155,81,"Clay colour"],
+  "GN-645":[225,207,169,"Medieval yellow"],"GN-646":[233,232,212,"Hummus"],"GN-647":[157,183,80,"Bamboo shoot green"],
+  "GN-648":[191,212,114,"Sprout green"],"GN-649":[231,166,103,"Light orange"],"GN-650":[63,143,203,"Blue"],
+  "GN-651":[138,143,199,"Violet"],"GN-652":[200,194,115,"Primrose green"],"GN-653":[89,182,168,"Bluish green"],
+  "GN-654":[220,181,167,"Flesh color"],"GN-655":[230,152,186,"Rose"],"GN-656":[245,209,129,"Earthy yellow"],
+  "GN-657":[132,173,73,"Bishan green"],"GN-658":[217,172,196,"Light pink"],"GN-659":[42,99,174,"Dark blue"],
+  "GN-660":[222,123,166,"Heartbeat pink"],"GN-661":[223,128,107,"Vibrant red"],"GN-662":[151,193,100,"Vibrant green"],
+  "GN-663":[218,112,60,"Reddish orange"],"GN-664":[204,55,43,"Bright red"],"GN-665":[95,167,86,"Leaf green"],
+  "GN-666":[195,76,130,"Purplish red"],"GN-667":[221,117,114,"Thin red"],"GN-668":[81,169,94,"Stone cyan"],
+  "GN-669":[168,206,128,"Grass green"],"GN-670":[129,152,202,"Rattan"],"GN-671":[174,59,91,"Wine red"],
+  "GN-672":[154,78,70,"Brownish red"],"GN-673":[27,32,127,"Klein blue"],"GN-674":[150,69,76,"Strong brown"],
+  "GN-675":[126,81,104,"Sauce purple"],"GN-676":[61,139,70,"Dark green"],"GN-677":[238,177,175,"Peach red"],
+  "GN-678":[50,36,115,"Dark purple"],"GN-679":[98,88,92,"Greyish red"],"GN-680":[63,70,74,"Stone gray"],
+  "GN-681":[133,167,177,"Group cyan"],"GN-682":[111,145,68,"Bamboo green"],"GN-683":[251,232,201,"Creamy white"],
+  "GN-684":[241,204,157,"Apricot yellow"],"GN-685":[141,196,167,"Onion green"],"GN-686":[206,206,206,"Light gray"],
+  "GN-687":[101,159,75,"Bright green"],"GN-688":[29,66,83,"Dark cyan"],"GN-689":[141,182,221,"Porcelain blue"],
+  "GN-690":[131,161,160,"Green blue"],"GN-691":[226,135,125,"Coral powder"],"GN-692":[223,140,141,"Purple light"],
+  "GN-693":[92,113,129,"Blue grey"],"GN-694":[58,111,119,"Soft jade"],"GN-695":[61,125,133,"French green"],
+  "GN-696":[134,163,141,"Fruit green"],"GN-697":[79,105,80,"Pine green"],"GN-698":[211,199,223,"Sweat purple"],
+  "GN-699":[183,153,191,"Felongrass purple"],"GN-700":[220,227,119,"Cream yellow"],"GN-701":[249,225,203,"Light apricot"],
+  "GN-702":[241,190,128,"Pomelo"],"GN-703":[250,227,224,"Ivory orange"],"GN-704":[235,181,177,"Red lips"],
+  "GN-705":[149,82,97,"Cornel purple"],"GN-706":[235,246,242,"White cyan"],"GN-707":[214,225,200,"Magnolia"],
+  "GN-708":[97,76,54,"Sooty red"],"GN-709":[82,61,61,"Brown black"],"GN-710":[218,95,111,"Changchun"],
+  "GN-711":[213,112,125,"Lipstick pink"],"GN-712":[230,160,192,"Fluorescent rose"],"GN-713":[205,97,122,"Nelumbo red"],
+  "GN-714":[193,69,94,"Blackish red"],"GN-715":[212,68,75,"Scarlet"],"GN-716":[240,195,197,"Peach pink"],
+  "GN-717":[233,211,181,"Shallow camel"],"GN-718":[241,220,183,"Tumeric"],"GN-719":[252,238,216,"Cheese yellow"],
+  "GN-720":[248,236,217,"Bean yellow"],"GN-721":[250,230,226,"Water pink"],"GN-722":[89,182,168,"Turquoise blue"],
+  "GN-723":[247,226,234,"Sakura"],"GN-724":[252,238,216,"Light beige"],"GN-725":[225,132,54,"Fresh orange"],
+  "GN-726":[172,58,132,"Imperial purple"],"GN-727":[180,205,88,"Willow green"],"GN-728":[59,135,73,"Viridity"],
+  "GN-729":[225,220,158,"Grey yellow"],"GN-730":[230,241,214,"Jade white"],"GN-731":[206,194,161,"Sand dust"],
+  "GN-732":[254,247,176,"Velvet yellow"],"GN-733":[252,244,161,"Light yellow"],"GN-734":[224,193,215,"Pink purple"],
+  "GN-735":[162,202,127,"Pea green"],"GN-736":[225,235,238,"Pale white"],"GN-737":[154,204,188,"Bluish green"],
+  "GN-738":[237,225,215,"Onyx"],"GN-739":[149,96,125,"Ormosia"],"GN-740":[80,164,85,"Verdant"],
+  "GN-741":[142,171,91,"Dull green"],"GN-742":[107,109,171,"Flower purple"],"GN-743":[107,83,155,"Aubergine"],
+  "GN-744":[213,210,231,"Lavender"],"GN-745":[152,182,221,"Light rattan"],"GN-746":[46,68,115,"Fotou blue"],
+  "GN-747":[121,131,151,"Quetou blue"],"GN-748":[84,129,149,"Tianqing blue"],"GN-749":[81,126,170,"Qingming blue"],
+  "GN-750":[100,130,150,"Kongqing blue"],"GN-751":[229,227,216,"Chalky white"],"GN-752":[217,203,208,"Lotus root gray"],
+  "GN-753":[210,198,179,"Jade color"],"GN-754":[214,191,185,"Pinkish red"],"GN-755":[204,165,151,"Xianchi red"],
+  "GN-756":[186,136,123,"Light red"],"GN-757":[177,151,123,"Chestnut brown"],"GN-758":[160,133,113,"Agilawood"],
+  "GN-759":[128,111,106,"Sandstone yellow"],"GN-760":[202,45,37,"Tomato red"],"GN-761":[220,126,135,"Lychee pink"],
+  "GN-762":[225,144,180,"Vibrant pink"],"GN-763":[23,54,99,"Ink blue black"],"GN-764":[66,63,112,"Smoke purple black"],
+  "GN-765":[252,241,88,"Happy yellow"],"GN-766":[254,251,188,"Jasmine yellow"],"GN-767":[90,136,159,"Cloud blue"],
+  "GN-768":[145,180,186,"Mountain blue"],"GN-769":[122,92,97,"Volcanic brown"],"GN-770":[147,122,151,"Grayish purple"],
+  "GN-771":[215,195,198,"Milk coffee"],"GN-772":[200,136,154,"Camelia"],"GN-773":[161,154,186,"Vintage purple"],
+  "GN-774":[55,98,121,"Navy blue"],"GN-775":[187,203,177,"Spray green"],"GN-776":[79,55,64,"Brownish black"],
+  "GN-777":[253,244,116,"Pure yellow"],"GN-778":[112,48,108,"Gentian violet"],"GN-779":[102,71,82,"Black coffee"],
+  "GN-780":[138,62,60,"Maroon color"],"GN-781":[159,45,44,"Deep red"],"GN-782":[213,72,42,"Vivid red"],
+  "GN-783":[216,92,48,"Orange red"],"GN-784":[135,46,44,"Dull red"],"GN-785":[191,93,51,"Vermilion"],
+  "GN-786":[234,171,63,"Yellow orange"],"GN-787":[196,196,88,"Straw yellow"],"GN-788":[162,168,109,"Native yellow"],
+  "GN-789":[91,89,60,"Brownish green"],"GN-790":[113,120,77,"Olive green"],"GN-791":[49,77,55,"Black green"],
+  "GN-792":[85,125,109,"Old green"],"GN-793":[138,148,85,"Moss green"],"GN-794":[5,136,66,"Turquoise green"],
+  "GN-795":[38,90,64,"Dark green"],"GN-796":[47,108,65,"Aquamarine"],"GN-797":[45,105,108,"Dark cyan"],
+  "GN-798":[49,113,169,"Dark teal"],"GN-799":[89,182,168,"Peacock green"],"GN-800":[48,110,116,"Deepsea green"],
+  "GN-801":[242,242,242,"Feather white"],"GN-802":[236,180,93,"Mango yellow"],"GN-803":[232,232,232,"Light cloud white"],
+  "GN-804":[218,222,220,"Pewter"],"GN-805":[162,163,158,"Coal gray"],"GN-806":[65,87,113,"Faded red"],
+  "GN-807":[50,52,58,"Cool black"],"GN-808":[88,63,88,"Grayish purple"],"GN-809":[219,235,208,"Hazy green"],
+  "GN-810":[214,198,125,"Light grass yellow"],"GN-811":[194,183,117,"Straw yellow"],"GN-812":[172,157,96,"Khaki green"],
+  "GN-813":[195,170,92,"Grass yellow"],"GN-814":[204,168,110,"Sandalwood yellow"],"GN-815":[211,178,86,"Canghuang"],
+  "GN-816":[153,132,55,"Dark chartreuse"],"GN-817":[191,146,52,"Juyi yellow"],"GN-818":[194,223,232,"Water blue"],
+  "GN-819":[140,200,217,"Crystal blue"],"GN-820":[100,185,217,"Peacock blue"],"GN-821":[206,230,248,"Ice blue"],
+  "GN-822":[147,205,240,"Light blue"],"GN-823":[95,162,199,"Lake blue"],"GN-824":[29,73,138,"Midnight blue"],
+  "GN-825":[216,211,220,"Purple smoke color"],"GN-826":[181,177,205,"Purple lotus"],"GN-827":[127,132,169,"Greyish purple"],
+  "GN-828":[106,110,171,"Aster purple"],"GN-829":[206,199,205,"Sand purple"],"GN-830":[180,195,228,"Smoke purple"],
+  "GN-831":[153,131,159,"Dark purple"],"GN-832":[136,77,149,"Amethyst"],"GN-833":[161,120,173,"Rose purple"],
+  "GN-834":[236,206,206,"Peach powder"],"GN-835":[225,207,214,"Satin grey powder"],"GN-836":[252,242,246,"Soft pink"],
+  "GN-837":[247,231,229,"Rose pink"],"GN-838":[244,215,226,"Moonlit powder"],"GN-839":[219,182,184,"Moon white"],
+  "GN-840":[232,204,207,"Ceramic powder"],"GN-841":[190,218,234,"Hazy blue"],"GN-842":[150,200,212,"Azure"],
+  "GN-843":[183,210,207,"Smoke cyan"],"GN-844":[157,180,179,"Cold frost cyan"],"GN-845":[92,172,80,"Emerald green"],
+  "GN-846":[133,186,80,"Wood green"],"GN-847":[208,210,92,"Willow yellow"],"GN-848":[217,219,187,"Grey frost green"],
+  "GN-849":[161,161,58,"Wasabi green"],"GN-850":[142,199,196,"Turquoise green"],"GN-851":[189,204,184,"Nordic green"],
+  "GN-852":[160,171,78,"Khaki green"],"GN-853":[224,221,218,"Rice grey"],"GN-854":[226,152,157,"Fluorescent pink"],
+  "GN-855":[237,237,125,"Fluorescent yellow"],"GN-856":[198,217,132,"Fluorescent green"],"GN-857":[136,159,182,"Cement blue"],
+  "GN-858":[191,198,154,"Wind chime grey"],"GN-859":[229,154,123,"Fluorescent orange"],"GN-860":[111,121,124,"Graphite ash"],
+  "GN-861":[186,193,190,"Mountain ash"],"GN-862":[232,222,226,"Rouge grey"],"GN-863":[155,107,65,"Cinnamon brown"],
+  "GN-864":[127,75,52,"Walnut brown"],"GN-865":[128,121,109,"Elegant brown"],"GN-866":[134,105,70,"Ebony palm"],
+  "GN-867":[104,62,42,"Caramel brown"],"GN-868":[193,161,104,"Dry leaf brown"],"GN-869":[156,99,92,"Chocolate brown"],
+  "GN-870":[155,143,136,"Clay brown"],"GN-871":[236,224,191,"Almond brown"],"GN-872":[240,197,204,"Rouge powder"],
+  "GN-873":[241,209,224,"Ballet pink"],"GN-874":[235,220,183,"Light sand yellow"],"GN-875":[165,87,55,"Honey brown"],
+  "GN-876":[232,238,162,"Willow bud white"],"GN-877":[253,246,225,"Jasmine white"],"GN-878":[218,237,249,"Ice white"],
+  "GN-879":[219,223,245,"Water purple"],"GN-880":[234,227,237,"Purple mist white"],"GN-881":[250,229,232,"Makeup white"],
+  "GN-882":[250,234,225,"Pink white"],"GN-883":[248,244,231,"Gardenia white"],"GN-884":[225,232,233,"Matte white"],
+  "GN-885":[179,214,201,"Lanbai"],"GN-886":[230,239,224,"Snow green white"],"GN-887":[252,242,212,"Snowwhite"],
+  "GN-888":[146,190,221,"Azure blue"],"GN-889":[119,196,233,"Cloud blue"],"GN-890":[112,177,223,"Sea wave blue"],
+  "GN-891":[80,175,232,"Crystal blue"],"GN-892":[75,159,196,"Sea cyan"],"GN-893":[65,146,212,"Sapphire blue"],
+  "GN-894":[62,140,208,"Classic blue"],"GN-895":[46,105,180,"Prusian blue"],"GN-896":[45,100,152,"Aegean Sea blue"],
+  "GN-897":[28,38,116,"Nightfall blue"],"GN-898":[177,203,235,"Light ice blue"],"GN-899":[147,167,215,"Indigo purple"],
+  "GN-900":[120,126,179,"Agate purple"],"GN-901":[65,65,139,"Cyanoze"],"GN-902":[85,52,115,"Morning glory purple"],
+  "GN-903":[242,207,219,"Litmus red"],"GN-904":[224,116,162,"Glow red"],"GN-905":[219,107,160,"Lotus pink"],
+  "GN-906":[188,74,141,"Redbud red"],"GN-907":[197,64,104,"Chinese rose red"],"GN-908":[195,110,139,"Magenta red"],
+  "GN-909":[190,102,159,"Saffron red"],"GN-910":[192,81,106,"Crimson"],"GN-911":[245,215,189,"Cream orange"],
+  "GN-912":[243,210,191,"Pomelo skin"],"GN-913":[225,183,163,"Jade pink"],"GN-914":[243,211,181,"Peach blush"],
+  "GN-915":[230,176,150,"Deer skin brown"],"GN-916":[227,169,127,"Crab shell red"],"GN-917":[242,218,219,"Light coral"],
+  "GN-918":[227,183,188,"Hawthorn red"],"GN-919":[185,119,121,"Faro red"],"GN-920":[182,100,97,"Sunset glow red"],
+  "GN-921":[184,102,93,"Cocoa red"],"GN-922":[166,82,86,"Lava red"],"GN-923":[133,51,66,"Harrier crest"],
+  "GN-924":[245,243,232,"Pale white"],"GN-925":[227,229,178,"Soy milk beige"],"GN-926":[233,217,185,"Lotus seed white"],
+  "GN-927":[221,193,159,"Wheat hull beige"],"GN-928":[202,172,126,"Hump brown"],"GN-929":[238,213,155,"Almond yellow"],
+  "GN-930":[230,156,58,"Ginkgo orange"],"GN-931":[205,133,64,"Suede brown"],"GN-932":[176,124,65,"Coconut brown"],
+  "GN-933":[252,245,116,"Lemon yellow"],"GN-934":[246,209,72,"Papaya yellow"],"GN-935":[240,181,63,"Moonlight orange"],
+  "GN-936":[236,176,93,"Glazed orange"],"GN-937":[225,132,54,"Vibrant orange"],"GN-938":[194,196,68,"Vanilla green"],
+  "GN-939":[197,217,89,"Apple green"],"GN-940":[183,205,177,"Jade green"],"GN-941":[64,144,69,"Algae green"],
+  "GN-942":[51,118,69,"Enamel green"],"GN-943":[188,172,88,"Silk yellow"],"GN-944":[186,151,50,"Reed green"],
+  "GN-945":[101,101,61,"Dark cyan"],"GN-946":[127,116,62,"Pond green"],"GN-947":[119,100,66,"Turtle shell"],
+  "GN-948":[94,81,56,"Palm green"],"GN-949":[228,228,228,"Frost white"],"GN-950":[198,198,198,"Moon shadow grey"],
+  "GN-951":[177,187,190,"Cool gray"],"GN-952":[152,168,179,"Warship gray"],"GN-953":[136,144,137,"Smoke gray"],
+  "GN-954":[146,174,190,"Crab shell cyan"],"GN-955":[214,219,210,"Sea fodrin green"],"GN-956":[168,177,162,"Matte gray"],
+  "GN-957":[182,177,172,"Seagull gray"],"GN-958":[156,134,122,"Red gray"],"GN-959":[116,116,116,"Wild goose gray"],
+  "GN-960":[95,75,53,"Latte brown"],"GN-961":[124,157,16,"Cloud moss"],"GN-962":[181,154,191,"Taro purple"],
+  "GN-963":[206,46,40,"Sienna red"],"GN-964":[124,68,39,"Cocoa brown"],"GN-965":[191,75,146,"Cheek red"]
 };
 
-// ─── GN.8101-366 — the full reference assortment ──────────────────────────────
-const GN_366_IDS: string[] = ["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-829", "GN-830", "GN-831", "GN-832", "GN-833", "GN-834", "GN-835", "GN-836", "GN-837", "GN-838", "GN-839", "GN-840", "GN-841", "GN-842", "GN-843", "GN-844", "GN-845", "GN-846", "GN-847", "GN-848", "GN-849", "GN-850", "GN-851", "GN-852", "GN-853", "GN-854", "GN-855", "GN-856", "GN-857", "GN-858", "GN-859", "GN-860", "GN-861", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-873", "GN-874", "GN-875", "GN-876", "GN-877", "GN-878", "GN-879", "GN-880", "GN-881", "GN-882", "GN-883", "GN-884", "GN-885", "GN-886", "GN-887", "GN-888", "GN-889", "GN-890", "GN-891", "GN-892", "GN-893", "GN-894", "GN-895", "GN-896", "GN-897", "GN-898", "GN-899", "GN-900", "GN-901", "GN-902", "GN-903", "GN-904", "GN-905", "GN-906", "GN-907", "GN-908", "GN-909", "GN-910", "GN-911", "GN-912", "GN-913", "GN-914", "GN-915", "GN-916", "GN-917", "GN-918", "GN-919", "GN-920", "GN-921", "GN-922", "GN-923", "GN-924", "GN-925", "GN-926", "GN-927", "GN-928", "GN-929", "GN-930", "GN-931", "GN-932", "GN-933", "GN-934", "GN-935", "GN-936", "GN-937", "GN-938", "GN-939", "GN-940", "GN-941", "GN-942", "GN-943", "GN-944", "GN-945", "GN-946", "GN-947", "GN-948", "GN-949", "GN-950", "GN-951", "GN-952", "GN-953", "GN-954", "GN-955", "GN-956", "GN-957", "GN-958", "GN-959", "GN-960", "GN-961", "GN-962", "GN-963", "GN-964", "GN-965"];
+const GN_366_IDS: string[] = ["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-829","GN-830","GN-831","GN-832","GN-833","GN-834","GN-835","GN-836","GN-837","GN-838","GN-839","GN-840","GN-841","GN-842","GN-843","GN-844","GN-845","GN-846","GN-847","GN-848","GN-849","GN-850","GN-851","GN-852","GN-853","GN-854","GN-855","GN-856","GN-857","GN-858","GN-859","GN-860","GN-861","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-873","GN-874","GN-875","GN-876","GN-877","GN-878","GN-879","GN-880","GN-881","GN-882","GN-883","GN-884","GN-885","GN-886","GN-887","GN-888","GN-889","GN-890","GN-891","GN-892","GN-893","GN-894","GN-895","GN-896","GN-897","GN-898","GN-899","GN-900","GN-901","GN-902","GN-903","GN-904","GN-905","GN-906","GN-907","GN-908","GN-909","GN-910","GN-911","GN-912","GN-913","GN-914","GN-915","GN-916","GN-917","GN-918","GN-919","GN-920","GN-921","GN-922","GN-923","GN-924","GN-925","GN-926","GN-927","GN-928","GN-929","GN-930","GN-931","GN-932","GN-933","GN-934","GN-935","GN-936","GN-937","GN-938","GN-939","GN-940","GN-941","GN-942","GN-943","GN-944","GN-945","GN-946","GN-947","GN-948","GN-949","GN-950","GN-951","GN-952","GN-953","GN-954","GN-955","GN-956","GN-957","GN-958","GN-959","GN-960","GN-961","GN-962","GN-963","GN-964","GN-965"];
 
-// ─── All Guangna marker sets (mirrors "Create Guangna by Number") ─────────────
 const GUANGNA_SETS: Record<string,string[]> = {
-  "GN.8101-12 (12 colors)":["GN-600", "GN-601", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-611", "GN-614", "GN-620"],
-  "GN.8101-24 (24 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-634", "GN-655"],
-  "GN.8101-36 (36 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-626", "GN-627", "GN-628", "GN-634", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658"],
-  "GN.8101-48 (48 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-626", "GN-627", "GN-628", "GN-629", "GN-634", "GN-635", "GN-646", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-663", "GN-664", "GN-665", "GN-668", "GN-671", "GN-672", "GN-673", "GN-681", "GN-684"],
-  "GN.8101-60 (60 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-634", "GN-635", "GN-637", "GN-643", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-663", "GN-664", "GN-665", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-676", "GN-681", "GN-683", "GN-684", "GN-686"],
-  "GN.8101-72 (72 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-633", "GN-634", "GN-635", "GN-637", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686"],
-  "GN.8101-100 (100 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-633", "GN-634", "GN-635", "GN-637", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-697", "GN-700", "GN-702", "GN-703", "GN-704", "GN-706", "GN-717", "GN-719", "GN-723", "GN-729", "GN-730", "GN-732", "GN-734", "GN-736", "GN-737", "GN-740", "GN-744", "GN-745", "GN-802", "GN-819", "GN-820", "GN-822", "GN-824", "GN-827", "GN-854"],
-  "GN.8101-120 (120 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-633", "GN-634", "GN-635", "GN-637", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-706", "GN-707", "GN-717", "GN-719", "GN-723", "GN-725", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-802", "GN-819", "GN-820", "GN-822", "GN-823", "GN-824", "GN-832", "GN-854"],
-  "GN.8101-168 (168 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-633", "GN-634", "GN-635", "GN-637", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-659", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-706", "GN-707", "GN-712", "GN-717", "GN-719", "GN-723", "GN-725", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-802", "GN-809", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-832", "GN-833", "GN-836", "GN-854", "GN-855", "GN-856", "GN-857", "GN-860", "GN-870", "GN-873", "GN-874"],
-  "GN.8101-240 (240 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-832", "GN-833", "GN-836", "GN-837", "GN-854", "GN-855", "GN-856", "GN-857", "GN-860", "GN-870", "GN-873", "GN-874"],
-  "GN.8101-288 (288 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-829", "GN-830", "GN-831", "GN-832", "GN-833", "GN-834", "GN-835", "GN-836", "GN-837", "GN-838", "GN-839", "GN-840", "GN-841", "GN-842", "GN-843", "GN-844", "GN-845", "GN-846", "GN-847", "GN-848", "GN-850", "GN-851", "GN-852", "GN-853", "GN-854", "GN-855", "GN-856", "GN-857", "GN-858", "GN-859", "GN-860", "GN-861", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-873", "GN-874", "GN-875", "GN-876", "GN-877", "GN-878", "GN-879", "GN-880", "GN-881", "GN-882", "GN-883", "GN-884", "GN-885", "GN-886", "GN-887", "GN-888"],
-  "GN.8101-360 (360 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-829", "GN-830", "GN-831", "GN-832", "GN-833", "GN-834", "GN-835", "GN-836", "GN-837", "GN-838", "GN-839", "GN-840", "GN-841", "GN-842", "GN-843", "GN-844", "GN-845", "GN-846", "GN-847", "GN-848", "GN-849", "GN-850", "GN-851", "GN-852", "GN-853", "GN-854", "GN-855", "GN-856", "GN-857", "GN-858", "GN-859", "GN-860", "GN-861", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-873", "GN-874", "GN-875", "GN-876", "GN-877", "GN-878", "GN-879", "GN-880", "GN-881", "GN-882", "GN-883", "GN-884", "GN-885", "GN-886", "GN-887", "GN-888", "GN-889", "GN-890", "GN-891", "GN-892", "GN-893", "GN-894", "GN-895", "GN-896", "GN-897", "GN-898", "GN-899", "GN-900", "GN-901", "GN-902", "GN-903", "GN-904", "GN-905", "GN-906", "GN-907", "GN-908", "GN-909", "GN-910", "GN-911", "GN-912", "GN-913", "GN-914", "GN-915", "GN-916", "GN-917", "GN-918", "GN-919", "GN-920", "GN-921", "GN-922", "GN-923", "GN-924", "GN-925", "GN-926", "GN-927", "GN-928", "GN-929", "GN-930", "GN-931", "GN-932", "GN-933", "GN-934", "GN-935", "GN-936", "GN-937", "GN-938", "GN-939", "GN-940", "GN-941", "GN-942", "GN-943", "GN-944", "GN-945", "GN-946", "GN-947", "GN-948", "GN-949", "GN-950", "GN-951", "GN-952", "GN-953", "GN-954", "GN-955", "GN-956", "GN-957", "GN-958", "GN-959"],
-  "GN.8101-366 (366 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-829", "GN-830", "GN-831", "GN-832", "GN-833", "GN-834", "GN-835", "GN-836", "GN-837", "GN-838", "GN-839", "GN-840", "GN-841", "GN-842", "GN-843", "GN-844", "GN-845", "GN-846", "GN-847", "GN-848", "GN-849", "GN-850", "GN-851", "GN-852", "GN-853", "GN-854", "GN-855", "GN-856", "GN-857", "GN-858", "GN-859", "GN-860", "GN-861", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-873", "GN-874", "GN-875", "GN-876", "GN-877", "GN-878", "GN-879", "GN-880", "GN-881", "GN-882", "GN-883", "GN-884", "GN-885", "GN-886", "GN-887", "GN-888", "GN-889", "GN-890", "GN-891", "GN-892", "GN-893", "GN-894", "GN-895", "GN-896", "GN-897", "GN-898", "GN-899", "GN-900", "GN-901", "GN-902", "GN-903", "GN-904", "GN-905", "GN-906", "GN-907", "GN-908", "GN-909", "GN-910", "GN-911", "GN-912", "GN-913", "GN-914", "GN-915", "GN-916", "GN-917", "GN-918", "GN-919", "GN-920", "GN-921", "GN-922", "GN-923", "GN-924", "GN-925", "GN-926", "GN-927", "GN-928", "GN-929", "GN-930", "GN-931", "GN-932", "GN-933", "GN-934", "GN-935", "GN-936", "GN-937", "GN-938", "GN-939", "GN-940", "GN-941", "GN-942", "GN-943", "GN-944", "GN-945", "GN-946", "GN-947", "GN-948", "GN-949", "GN-950", "GN-951", "GN-952", "GN-953", "GN-954", "GN-955", "GN-956", "GN-957", "GN-958", "GN-959", "GN-960", "GN-961", "GN-962", "GN-963", "GN-964", "GN-965"],
-  "GN.8101-408 (360 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-829", "GN-830", "GN-831", "GN-832", "GN-833", "GN-834", "GN-835", "GN-836", "GN-837", "GN-838", "GN-839", "GN-840", "GN-841", "GN-842", "GN-843", "GN-844", "GN-845", "GN-846", "GN-847", "GN-848", "GN-849", "GN-850", "GN-851", "GN-852", "GN-853", "GN-854", "GN-855", "GN-856", "GN-857", "GN-858", "GN-859", "GN-860", "GN-861", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-873", "GN-874", "GN-875", "GN-876", "GN-877", "GN-878", "GN-879", "GN-880", "GN-881", "GN-882", "GN-883", "GN-884", "GN-885", "GN-886", "GN-887", "GN-888", "GN-889", "GN-890", "GN-891", "GN-892", "GN-893", "GN-894", "GN-895", "GN-896", "GN-897", "GN-898", "GN-899", "GN-900", "GN-901", "GN-902", "GN-903", "GN-904", "GN-905", "GN-906", "GN-907", "GN-908", "GN-909", "GN-910", "GN-911", "GN-912", "GN-913", "GN-914", "GN-915", "GN-916", "GN-917", "GN-918", "GN-919", "GN-920", "GN-921", "GN-922", "GN-923", "GN-924", "GN-925", "GN-926", "GN-927", "GN-928", "GN-929", "GN-930", "GN-931", "GN-932", "GN-933", "GN-934", "GN-935", "GN-936", "GN-937", "GN-938", "GN-939", "GN-940", "GN-941", "GN-942", "GN-943", "GN-944", "GN-945", "GN-946", "GN-947", "GN-948", "GN-949", "GN-950", "GN-951", "GN-952", "GN-953", "GN-954", "GN-955", "GN-956", "GN-957", "GN-958", "GN-959"],
-  "GN.8102-36 (36 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-606", "GN-608", "GN-609", "GN-611", "GN-618", "GN-623", "GN-628", "GN-634", "GN-635", "GN-639", "GN-648", "GN-649", "GN-655", "GN-656", "GN-658", "GN-664", "GN-667", "GN-672", "GN-674", "GN-686", "GN-687", "GN-704", "GN-725", "GN-732", "GN-734", "GN-737", "GN-739", "GN-740", "GN-742", "GN-822", "GN-832"],
-  "GN.8106-30 (60 colors)":["GN-600", "GN-601", "GN-602", "GN-606", "GN-607", "GN-608", "GN-611", "GN-618", "GN-648", "GN-649", "GN-650", "GN-652", "GN-655", "GN-656", "GN-659", "GN-664", "GN-665", "GN-666", "GN-670", "GN-672", "GN-673", "GN-676", "GN-678", "GN-680", "GN-682", "GN-686", "GN-687", "GN-691", "GN-702", "GN-704", "GN-712", "GN-725", "GN-732", "GN-733", "GN-734", "GN-735", "GN-741", "GN-743", "GN-744", "GN-745", "GN-777", "GN-780", "GN-781", "GN-782", "GN-784", "GN-786", "GN-787", "GN-794", "GN-795", "GN-796", "GN-799", "GN-802", "GN-818", "GN-819", "GN-821", "GN-822", "GN-832", "GN-833", "GN-872", "GN-873"],
-  "GN.8106-84 (168 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-633", "GN-634", "GN-635", "GN-637", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-654", "GN-655", "GN-656", "GN-658", "GN-659", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-678", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-706", "GN-707", "GN-712", "GN-717", "GN-719", "GN-723", "GN-725", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-802", "GN-809", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-832", "GN-833", "GN-836", "GN-839", "GN-853", "GN-854", "GN-855", "GN-856", "GN-869", "GN-872", "GN-873", "GN-879"],
-  "GN.8106-60 (120 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-610", "GN-611", "GN-612", "GN-614", "GN-615", "GN-617", "GN-618", "GN-623", "GN-624", "GN-625", "GN-627", "GN-628", "GN-629", "GN-630", "GN-634", "GN-635", "GN-637", "GN-639", "GN-641", "GN-643", "GN-644", "GN-645", "GN-648", "GN-649", "GN-650", "GN-652", "GN-655", "GN-656", "GN-658", "GN-659", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-672", "GN-673", "GN-676", "GN-678", "GN-680", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-691", "GN-693", "GN-697", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-706", "GN-707", "GN-712", "GN-719", "GN-723", "GN-725", "GN-727", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-738", "GN-739", "GN-740", "GN-741", "GN-743", "GN-744", "GN-745", "GN-772", "GN-776", "GN-777", "GN-779", "GN-780", "GN-781", "GN-782", "GN-784", "GN-785", "GN-786", "GN-787", "GN-789", "GN-790", "GN-791", "GN-794", "GN-795", "GN-796", "GN-799", "GN-802", "GN-818", "GN-819", "GN-821", "GN-822", "GN-824", "GN-832", "GN-833", "GN-836", "GN-839", "GN-854", "GN-855", "GN-856", "GN-872", "GN-873"],
-  "GN.8109-240 (240 colors)":["GN-600", "GN-601", "GN-602", "GN-603", "GN-604", "GN-605", "GN-606", "GN-607", "GN-608", "GN-609", "GN-610", "GN-611", "GN-612", "GN-613", "GN-614", "GN-615", "GN-616", "GN-617", "GN-618", "GN-619", "GN-620", "GN-621", "GN-622", "GN-623", "GN-624", "GN-625", "GN-626", "GN-627", "GN-628", "GN-629", "GN-630", "GN-631", "GN-632", "GN-633", "GN-634", "GN-635", "GN-636", "GN-637", "GN-638", "GN-639", "GN-640", "GN-641", "GN-642", "GN-643", "GN-644", "GN-645", "GN-646", "GN-647", "GN-648", "GN-649", "GN-650", "GN-651", "GN-652", "GN-653", "GN-654", "GN-655", "GN-656", "GN-657", "GN-658", "GN-659", "GN-660", "GN-661", "GN-662", "GN-663", "GN-664", "GN-665", "GN-666", "GN-667", "GN-668", "GN-669", "GN-670", "GN-671", "GN-672", "GN-673", "GN-674", "GN-675", "GN-676", "GN-677", "GN-678", "GN-679", "GN-680", "GN-681", "GN-682", "GN-683", "GN-684", "GN-685", "GN-686", "GN-687", "GN-688", "GN-689", "GN-690", "GN-691", "GN-692", "GN-693", "GN-694", "GN-695", "GN-696", "GN-697", "GN-698", "GN-699", "GN-700", "GN-701", "GN-702", "GN-703", "GN-704", "GN-705", "GN-706", "GN-707", "GN-708", "GN-709", "GN-710", "GN-711", "GN-712", "GN-713", "GN-714", "GN-715", "GN-716", "GN-717", "GN-719", "GN-720", "GN-721", "GN-722", "GN-723", "GN-724", "GN-725", "GN-726", "GN-727", "GN-728", "GN-729", "GN-730", "GN-731", "GN-732", "GN-733", "GN-734", "GN-735", "GN-736", "GN-737", "GN-738", "GN-739", "GN-740", "GN-741", "GN-742", "GN-743", "GN-744", "GN-745", "GN-746", "GN-747", "GN-748", "GN-749", "GN-750", "GN-751", "GN-752", "GN-753", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-760", "GN-761", "GN-762", "GN-763", "GN-764", "GN-765", "GN-766", "GN-767", "GN-768", "GN-769", "GN-770", "GN-771", "GN-772", "GN-773", "GN-774", "GN-775", "GN-776", "GN-777", "GN-778", "GN-779", "GN-780", "GN-781", "GN-782", "GN-783", "GN-784", "GN-785", "GN-786", "GN-787", "GN-788", "GN-789", "GN-790", "GN-791", "GN-792", "GN-793", "GN-794", "GN-795", "GN-796", "GN-797", "GN-798", "GN-799", "GN-800", "GN-801", "GN-802", "GN-803", "GN-804", "GN-805", "GN-806", "GN-807", "GN-808", "GN-809", "GN-810", "GN-811", "GN-812", "GN-813", "GN-814", "GN-815", "GN-816", "GN-817", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822", "GN-823", "GN-824", "GN-825", "GN-826", "GN-827", "GN-828", "GN-832", "GN-833", "GN-836", "GN-838", "GN-853", "GN-854", "GN-855", "GN-856", "GN-859", "GN-869", "GN-872", "GN-873"],
-  "GN.8109-72 (72 colors)":["GN-600", "GN-611", "GN-619", "GN-620", "GN-623", "GN-624", "GN-625", "GN-630", "GN-638", "GN-639", "GN-643", "GN-644", "GN-645", "GN-646", "GN-654", "GN-656", "GN-667", "GN-672", "GN-683", "GN-684", "GN-686", "GN-691", "GN-701", "GN-703", "GN-704", "GN-708", "GN-709", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-724", "GN-731", "GN-738", "GN-751", "GN-752", "GN-754", "GN-755", "GN-756", "GN-757", "GN-758", "GN-759", "GN-766", "GN-769", "GN-770", "GN-771", "GN-779", "GN-780", "GN-801", "GN-802", "GN-805", "GN-808", "GN-837", "GN-840", "GN-862", "GN-863", "GN-864", "GN-865", "GN-866", "GN-867", "GN-868", "GN-869", "GN-870", "GN-871", "GN-872", "GN-874", "GN-875", "GN-881", "GN-882", "GN-883", "GN-887"],
-  "GN.8109A-12 (12 colors)":["GN-601", "GN-608", "GN-616", "GN-636", "GN-650", "GN-659", "GN-688", "GN-818", "GN-819", "GN-820", "GN-821", "GN-822"],
-  "GN.8109B-12 (12 colors)":["GN-606", "GN-612", "GN-655", "GN-658", "GN-660", "GN-666", "GN-712", "GN-723", "GN-726", "GN-762", "GN-836", "GN-873"],
-  "GN.8109C-12 (12 colors)":["GN-614", "GN-634", "GN-648", "GN-657", "GN-668", "GN-669", "GN-687", "GN-700", "GN-727", "GN-728", "GN-740", "GN-794"],
-  "GN.8109D-12 (12 colors)":["GN-605", "GN-664", "GN-674", "GN-677", "GN-713", "GN-714", "GN-716", "GN-760", "GN-761", "GN-781", "GN-783", "GN-784"],
-  "GN.8109E-12 (12 colors)":["GN-607", "GN-623", "GN-635", "GN-651", "GN-678", "GN-734", "GN-742", "GN-743", "GN-744", "GN-778", "GN-832", "GN-833"],
-  "GN.8109F-12 (12 colors)":["GN-603", "GN-604", "GN-615", "GN-632", "GN-649", "GN-702", "GN-725", "GN-765", "GN-766", "GN-777", "GN-783", "GN-786"],
-  "GN.8109G-12 (12 colors)":["GN-656", "GN-683", "GN-684", "GN-701", "GN-717", "GN-718", "GN-719", "GN-720", "GN-724", "GN-732", "GN-733", "GN-802"],
-  "GN.8109H-12 (12 colors)":["GN-619", "GN-620", "GN-630", "GN-654", "GN-672", "GN-754", "GN-755", "GN-756", "GN-769", "GN-779", "GN-780", "GN-869"],
-  "GN.8109I-12 (12 colors)":["GN-618", "GN-639", "GN-643", "GN-644", "GN-645", "GN-708", "GN-731", "GN-738", "GN-757", "GN-758", "GN-776", "GN-814"],
-  "GN.8109K-12 (12 colors)":["GN-624", "GN-625", "GN-667", "GN-691", "GN-692", "GN-703", "GN-704", "GN-710", "GN-711", "GN-721", "GN-837", "GN-872"],
-  "GN.8101B (12 colors)":["GN-624", "GN-625", "GN-677", "GN-691", "GN-692", "GN-703", "GN-704", "GN-716", "GN-721", "GN-761", "GN-837", "GN-872"],
-  "GN.8201F-24 (24 colors)":["GN-618", "GN-624", "GN-625", "GN-626", "GN-639", "GN-644", "GN-654", "GN-656", "GN-658", "GN-667", "GN-672", "GN-683", "GN-684", "GN-701", "GN-703", "GN-704", "GN-716", "GN-717", "GN-718", "GN-719", "GN-720", "GN-721", "GN-723", "GN-724"],
-  "GN.8101M (24 colors)":["GN-627", "GN-628", "GN-635", "GN-646", "GN-648", "GN-649", "GN-655", "GN-669", "GN-700", "GN-702", "GN-704", "GN-706", "GN-717", "GN-723", "GN-729", "GN-730", "GN-732", "GN-733", "GN-736", "GN-737", "GN-738", "GN-744", "GN-745", "GN-822"]
+  "GN.8101-12 (12 colors)":["GN-600","GN-601","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-611","GN-614","GN-620"],
+  "GN.8101-24 (24 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-634","GN-655"],
+  "GN.8101-36 (36 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-626","GN-627","GN-628","GN-634","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658"],
+  "GN.8101-48 (48 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-626","GN-627","GN-628","GN-629","GN-634","GN-635","GN-646","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-663","GN-664","GN-665","GN-668","GN-671","GN-672","GN-673","GN-681","GN-684"],
+  "GN.8101-60 (60 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-634","GN-635","GN-637","GN-643","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-663","GN-664","GN-665","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-676","GN-681","GN-683","GN-684","GN-686"],
+  "GN.8101-72 (72 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-633","GN-634","GN-635","GN-637","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686"],
+  "GN.8101-100 (100 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-633","GN-634","GN-635","GN-637","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-697","GN-700","GN-702","GN-703","GN-704","GN-706","GN-717","GN-719","GN-723","GN-729","GN-730","GN-732","GN-734","GN-736","GN-737","GN-740","GN-744","GN-745","GN-802","GN-819","GN-820","GN-822","GN-824","GN-827","GN-854"],
+  "GN.8101-120 (120 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-633","GN-634","GN-635","GN-637","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-693","GN-694","GN-695","GN-696","GN-697","GN-700","GN-701","GN-702","GN-703","GN-704","GN-706","GN-707","GN-717","GN-719","GN-723","GN-725","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-802","GN-819","GN-820","GN-822","GN-823","GN-824","GN-832","GN-854"],
+  "GN.8101-168 (168 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-633","GN-634","GN-635","GN-637","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-659","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-693","GN-694","GN-695","GN-696","GN-697","GN-700","GN-701","GN-702","GN-703","GN-704","GN-706","GN-707","GN-712","GN-717","GN-719","GN-723","GN-725","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-802","GN-809","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-832","GN-833","GN-836","GN-854","GN-855","GN-856","GN-857","GN-860","GN-870","GN-873","GN-874"],
+  "GN.8101-240 (240 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-832","GN-833","GN-836","GN-837","GN-854","GN-855","GN-856","GN-857","GN-860","GN-870","GN-873","GN-874"],
+  "GN.8101-288 (288 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-829","GN-830","GN-831","GN-832","GN-833","GN-834","GN-835","GN-836","GN-837","GN-838","GN-839","GN-840","GN-841","GN-842","GN-843","GN-844","GN-845","GN-846","GN-847","GN-848","GN-850","GN-851","GN-852","GN-853","GN-854","GN-855","GN-856","GN-857","GN-858","GN-859","GN-860","GN-861","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-873","GN-874","GN-875","GN-876","GN-877","GN-878","GN-879","GN-880","GN-881","GN-882","GN-883","GN-884","GN-885","GN-886","GN-887","GN-888"],
+  "GN.8101-360 (360 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-829","GN-830","GN-831","GN-832","GN-833","GN-834","GN-835","GN-836","GN-837","GN-838","GN-839","GN-840","GN-841","GN-842","GN-843","GN-844","GN-845","GN-846","GN-847","GN-848","GN-849","GN-850","GN-851","GN-852","GN-853","GN-854","GN-855","GN-856","GN-857","GN-858","GN-859","GN-860","GN-861","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-873","GN-874","GN-875","GN-876","GN-877","GN-878","GN-879","GN-880","GN-881","GN-882","GN-883","GN-884","GN-885","GN-886","GN-887","GN-888","GN-889","GN-890","GN-891","GN-892","GN-893","GN-894","GN-895","GN-896","GN-897","GN-898","GN-899","GN-900","GN-901","GN-902","GN-903","GN-904","GN-905","GN-906","GN-907","GN-908","GN-909","GN-910","GN-911","GN-912","GN-913","GN-914","GN-915","GN-916","GN-917","GN-918","GN-919","GN-920","GN-921","GN-922","GN-923","GN-924","GN-925","GN-926","GN-927","GN-928","GN-929","GN-930","GN-931","GN-932","GN-933","GN-934","GN-935","GN-936","GN-937","GN-938","GN-939","GN-940","GN-941","GN-942","GN-943","GN-944","GN-945","GN-946","GN-947","GN-948","GN-949","GN-950","GN-951","GN-952","GN-953","GN-954","GN-955","GN-956","GN-957","GN-958","GN-959"],
+  "GN.8101-366 (366 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-829","GN-830","GN-831","GN-832","GN-833","GN-834","GN-835","GN-836","GN-837","GN-838","GN-839","GN-840","GN-841","GN-842","GN-843","GN-844","GN-845","GN-846","GN-847","GN-848","GN-849","GN-850","GN-851","GN-852","GN-853","GN-854","GN-855","GN-856","GN-857","GN-858","GN-859","GN-860","GN-861","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-873","GN-874","GN-875","GN-876","GN-877","GN-878","GN-879","GN-880","GN-881","GN-882","GN-883","GN-884","GN-885","GN-886","GN-887","GN-888","GN-889","GN-890","GN-891","GN-892","GN-893","GN-894","GN-895","GN-896","GN-897","GN-898","GN-899","GN-900","GN-901","GN-902","GN-903","GN-904","GN-905","GN-906","GN-907","GN-908","GN-909","GN-910","GN-911","GN-912","GN-913","GN-914","GN-915","GN-916","GN-917","GN-918","GN-919","GN-920","GN-921","GN-922","GN-923","GN-924","GN-925","GN-926","GN-927","GN-928","GN-929","GN-930","GN-931","GN-932","GN-933","GN-934","GN-935","GN-936","GN-937","GN-938","GN-939","GN-940","GN-941","GN-942","GN-943","GN-944","GN-945","GN-946","GN-947","GN-948","GN-949","GN-950","GN-951","GN-952","GN-953","GN-954","GN-955","GN-956","GN-957","GN-958","GN-959","GN-960","GN-961","GN-962","GN-963","GN-964","GN-965"],
+  "GN.8101-408 (360 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-829","GN-830","GN-831","GN-832","GN-833","GN-834","GN-835","GN-836","GN-837","GN-838","GN-839","GN-840","GN-841","GN-842","GN-843","GN-844","GN-845","GN-846","GN-847","GN-848","GN-849","GN-850","GN-851","GN-852","GN-853","GN-854","GN-855","GN-856","GN-857","GN-858","GN-859","GN-860","GN-861","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-873","GN-874","GN-875","GN-876","GN-877","GN-878","GN-879","GN-880","GN-881","GN-882","GN-883","GN-884","GN-885","GN-886","GN-887","GN-888","GN-889","GN-890","GN-891","GN-892","GN-893","GN-894","GN-895","GN-896","GN-897","GN-898","GN-899","GN-900","GN-901","GN-902","GN-903","GN-904","GN-905","GN-906","GN-907","GN-908","GN-909","GN-910","GN-911","GN-912","GN-913","GN-914","GN-915","GN-916","GN-917","GN-918","GN-919","GN-920","GN-921","GN-922","GN-923","GN-924","GN-925","GN-926","GN-927","GN-928","GN-929","GN-930","GN-931","GN-932","GN-933","GN-934","GN-935","GN-936","GN-937","GN-938","GN-939","GN-940","GN-941","GN-942","GN-943","GN-944","GN-945","GN-946","GN-947","GN-948","GN-949","GN-950","GN-951","GN-952","GN-953","GN-954","GN-955","GN-956","GN-957","GN-958","GN-959"],
+  "GN.8102-36 (36 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-606","GN-608","GN-609","GN-611","GN-618","GN-623","GN-628","GN-634","GN-635","GN-639","GN-648","GN-649","GN-655","GN-656","GN-658","GN-664","GN-667","GN-672","GN-674","GN-686","GN-687","GN-704","GN-725","GN-732","GN-734","GN-737","GN-739","GN-740","GN-742","GN-822","GN-832"],
+  "GN.8106-30 (60 colors)":["GN-600","GN-601","GN-602","GN-606","GN-607","GN-608","GN-611","GN-618","GN-648","GN-649","GN-650","GN-652","GN-655","GN-656","GN-659","GN-664","GN-665","GN-666","GN-670","GN-672","GN-673","GN-676","GN-678","GN-680","GN-682","GN-686","GN-687","GN-691","GN-702","GN-704","GN-712","GN-725","GN-732","GN-733","GN-734","GN-735","GN-741","GN-743","GN-744","GN-745","GN-777","GN-780","GN-781","GN-782","GN-784","GN-786","GN-787","GN-794","GN-795","GN-796","GN-799","GN-802","GN-818","GN-819","GN-821","GN-822","GN-832","GN-833","GN-872","GN-873"],
+  "GN.8106-84 (168 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-633","GN-634","GN-635","GN-637","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-648","GN-649","GN-650","GN-651","GN-652","GN-654","GN-655","GN-656","GN-658","GN-659","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-678","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-693","GN-694","GN-695","GN-696","GN-697","GN-700","GN-701","GN-702","GN-703","GN-704","GN-706","GN-707","GN-712","GN-717","GN-719","GN-723","GN-725","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-802","GN-809","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-832","GN-833","GN-836","GN-839","GN-853","GN-854","GN-855","GN-856","GN-869","GN-872","GN-873","GN-879"],
+  "GN.8106-60 (120 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-610","GN-611","GN-612","GN-614","GN-615","GN-617","GN-618","GN-623","GN-624","GN-625","GN-627","GN-628","GN-629","GN-630","GN-634","GN-635","GN-637","GN-639","GN-641","GN-643","GN-644","GN-645","GN-648","GN-649","GN-650","GN-652","GN-655","GN-656","GN-658","GN-659","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-672","GN-673","GN-676","GN-678","GN-680","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-691","GN-693","GN-697","GN-700","GN-701","GN-702","GN-703","GN-704","GN-706","GN-707","GN-712","GN-719","GN-723","GN-725","GN-727","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-738","GN-739","GN-740","GN-741","GN-743","GN-744","GN-745","GN-772","GN-776","GN-777","GN-779","GN-780","GN-781","GN-782","GN-784","GN-785","GN-786","GN-787","GN-789","GN-790","GN-791","GN-794","GN-795","GN-796","GN-799","GN-802","GN-818","GN-819","GN-821","GN-822","GN-824","GN-832","GN-833","GN-836","GN-839","GN-854","GN-855","GN-856","GN-872","GN-873"],
+  "GN.8109-240 (240 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-610","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-621","GN-622","GN-623","GN-624","GN-625","GN-626","GN-627","GN-628","GN-629","GN-630","GN-631","GN-632","GN-633","GN-634","GN-635","GN-636","GN-637","GN-638","GN-639","GN-640","GN-641","GN-642","GN-643","GN-644","GN-645","GN-646","GN-647","GN-648","GN-649","GN-650","GN-651","GN-652","GN-653","GN-654","GN-655","GN-656","GN-657","GN-658","GN-659","GN-660","GN-661","GN-662","GN-663","GN-664","GN-665","GN-666","GN-667","GN-668","GN-669","GN-670","GN-671","GN-672","GN-673","GN-674","GN-675","GN-676","GN-677","GN-678","GN-679","GN-680","GN-681","GN-682","GN-683","GN-684","GN-685","GN-686","GN-687","GN-688","GN-689","GN-690","GN-691","GN-692","GN-693","GN-694","GN-695","GN-696","GN-697","GN-698","GN-699","GN-700","GN-701","GN-702","GN-703","GN-704","GN-705","GN-706","GN-707","GN-708","GN-709","GN-710","GN-711","GN-712","GN-713","GN-714","GN-715","GN-716","GN-717","GN-719","GN-720","GN-721","GN-722","GN-723","GN-724","GN-725","GN-726","GN-727","GN-728","GN-729","GN-730","GN-731","GN-732","GN-733","GN-734","GN-735","GN-736","GN-737","GN-738","GN-739","GN-740","GN-741","GN-742","GN-743","GN-744","GN-745","GN-746","GN-747","GN-748","GN-749","GN-750","GN-751","GN-752","GN-753","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-760","GN-761","GN-762","GN-763","GN-764","GN-765","GN-766","GN-767","GN-768","GN-769","GN-770","GN-771","GN-772","GN-773","GN-774","GN-775","GN-776","GN-777","GN-778","GN-779","GN-780","GN-781","GN-782","GN-783","GN-784","GN-785","GN-786","GN-787","GN-788","GN-789","GN-790","GN-791","GN-792","GN-793","GN-794","GN-795","GN-796","GN-797","GN-798","GN-799","GN-800","GN-801","GN-802","GN-803","GN-804","GN-805","GN-806","GN-807","GN-808","GN-809","GN-810","GN-811","GN-812","GN-813","GN-814","GN-815","GN-816","GN-817","GN-818","GN-819","GN-820","GN-821","GN-822","GN-823","GN-824","GN-825","GN-826","GN-827","GN-828","GN-832","GN-833","GN-836","GN-838","GN-853","GN-854","GN-855","GN-856","GN-859","GN-869","GN-872","GN-873"],
+  "GN.8109-72 (72 colors)":["GN-600","GN-611","GN-619","GN-620","GN-623","GN-624","GN-625","GN-630","GN-638","GN-639","GN-643","GN-644","GN-645","GN-646","GN-654","GN-656","GN-667","GN-672","GN-683","GN-684","GN-686","GN-691","GN-701","GN-703","GN-704","GN-708","GN-709","GN-717","GN-718","GN-719","GN-720","GN-721","GN-724","GN-731","GN-738","GN-751","GN-752","GN-754","GN-755","GN-756","GN-757","GN-758","GN-759","GN-766","GN-769","GN-770","GN-771","GN-779","GN-780","GN-801","GN-802","GN-805","GN-808","GN-837","GN-840","GN-862","GN-863","GN-864","GN-865","GN-866","GN-867","GN-868","GN-869","GN-870","GN-871","GN-872","GN-874","GN-875","GN-881","GN-882","GN-883","GN-887"],
+  "GN.8109A-12 (12 colors)":["GN-601","GN-608","GN-616","GN-636","GN-650","GN-659","GN-688","GN-818","GN-819","GN-820","GN-821","GN-822"],
+  "GN.8109B-12 (12 colors)":["GN-606","GN-612","GN-655","GN-658","GN-660","GN-666","GN-712","GN-723","GN-726","GN-762","GN-836","GN-873"],
+  "GN.8109C-12 (12 colors)":["GN-614","GN-634","GN-648","GN-657","GN-668","GN-669","GN-687","GN-700","GN-727","GN-728","GN-740","GN-794"],
+  "GN.8109D-12 (12 colors)":["GN-605","GN-664","GN-674","GN-677","GN-713","GN-714","GN-716","GN-760","GN-761","GN-781","GN-783","GN-784"],
+  "GN.8109E-12 (12 colors)":["GN-607","GN-623","GN-635","GN-651","GN-678","GN-734","GN-742","GN-743","GN-744","GN-778","GN-832","GN-833"],
+  "GN.8109F-12 (12 colors)":["GN-603","GN-604","GN-615","GN-632","GN-649","GN-702","GN-725","GN-765","GN-766","GN-777","GN-783","GN-786"],
+  "GN.8109G-12 (12 colors)":["GN-656","GN-683","GN-684","GN-701","GN-717","GN-718","GN-719","GN-720","GN-724","GN-732","GN-733","GN-802"],
+  "GN.8109H-12 (12 colors)":["GN-619","GN-620","GN-630","GN-654","GN-672","GN-754","GN-755","GN-756","GN-769","GN-779","GN-780","GN-869"],
+  "GN.8109I-12 (12 colors)":["GN-618","GN-639","GN-643","GN-644","GN-645","GN-708","GN-731","GN-738","GN-757","GN-758","GN-776","GN-814"],
+  "GN.8109K-12 (12 colors)":["GN-624","GN-625","GN-667","GN-691","GN-692","GN-703","GN-704","GN-710","GN-711","GN-721","GN-837","GN-872"],
+  "GN.8101B (12 colors)":["GN-624","GN-625","GN-677","GN-691","GN-692","GN-703","GN-704","GN-716","GN-721","GN-761","GN-837","GN-872"],
+  "GN.8201F-24 (24 colors)":["GN-618","GN-624","GN-625","GN-626","GN-639","GN-644","GN-654","GN-656","GN-658","GN-667","GN-672","GN-683","GN-684","GN-701","GN-703","GN-704","GN-716","GN-717","GN-718","GN-719","GN-720","GN-721","GN-723","GN-724"],
+  "GN.8101M (24 colors)":["GN-627","GN-628","GN-635","GN-646","GN-648","GN-649","GN-655","GN-669","GN-700","GN-702","GN-704","GN-706","GN-717","GN-723","GN-729","GN-730","GN-732","GN-733","GN-736","GN-737","GN-738","GN-744","GN-745","GN-822"]
 };
 
 const SET_OPTIONS = [
-  { label: "Classic brush-408",        key: "GN.8101-408 (360 colors)" },
-  { label: "Classic brush-366",        key: "GN.8101-366 (366 colors)" },
-  { label: "Classic brush-360",        key: "GN.8101-360 (360 colors)" },
-  { label: "Classic brush-288",        key: "GN.8101-288 (288 colors)" },
-  { label: "Classic brush-240",        key: "GN.8101-240 (240 colors)" },
-  { label: "Classic brush-168",        key: "GN.8101-168 (168 colors)" },
-  { label: "Classic brush-120",        key: "GN.8101-120 (120 colors)" },
-  { label: "Classic brush-100",        key: "GN.8101-100 (100 colors)" },
-  { label: "Classic brush-72",         key: "GN.8101-72 (72 colors)"   },
-  { label: "Classic brush-60",         key: "GN.8101-60 (60 colors)"   },
-  { label: "Classic brush-48",         key: "GN.8101-48 (48 colors)"   },
-  { label: "Classic brush-36",         key: "GN.8101-36 (36 colors)"   },
-  { label: "Classic brush-24",         key: "GN.8101-24 (24 colors)"   },
-  { label: "Classic brush-12",         key: "GN.8101-12 (12 colors)"   },
-  { label: "Classic Brush: Skin (24F)",key: "GN.8201F-24 (24 colors)"  },
-  { label: "Dual tip: 240",            key: "GN.8109-240 (240 colors)" },
-  { label: "Dual tip: 72",             key: "GN.8109-72 (72 colors)"   },
-  { label: "Dual tip: 36",             key: "GN.8102-36 (36 colors)"   },
-  { label: "Dual colors 84/168",       key: "GN.8106-84 (168 colors)"  },
-  { label: "Dual colors 60/120",       key: "GN.8106-60 (120 colors)"  },
-  { label: "Dual colors 30/60",        key: "GN.8106-30 (60 colors)"   },
-  { label: "Dual tip: Blue",           key: "GN.8109A-12 (12 colors)"  },
-  { label: "Dual tip: Pink",           key: "GN.8109B-12 (12 colors)"  },
-  { label: "Dual tip: Green",          key: "GN.8109C-12 (12 colors)"  },
-  { label: "Dual tip: Red",            key: "GN.8109D-12 (12 colors)"  },
-  { label: "Dual tip: Purple",         key: "GN.8109E-12 (12 colors)"  },
-  { label: "Dual tip: Yellow",         key: "GN.8109F-12 (12 colors)"  },
-  { label: "Dual tip: Warm skin",      key: "GN.8109G-12 (12 colors)"  },
-  { label: "Dual tip: Reddish brown",  key: "GN.8109H-12 (12 colors)"  },
-  { label: "Dual tip: White-Gray",     key: "GN.8109I-12 (12 colors)"  },
-  { label: "Dual tip: Pinkish skin",   key: "GN.8109K-12 (12 colors)"  },
-  { label: "Classic Brush: Skin (12B)",key: "GN.8101B (12 colors)"     },
-  { label: "Macaron",                  key: "GN.8101M (24 colors)"     },
+  { label: "Classic brush-408", key: "GN.8101-408 (360 colors)" },
+  { label: "Classic brush-366", key: "GN.8101-366 (366 colors)" },
+  { label: "Classic brush-360", key: "GN.8101-360 (360 colors)" },
+  { label: "Classic brush-288", key: "GN.8101-288 (288 colors)" },
+  { label: "Classic brush-240", key: "GN.8101-240 (240 colors)" },
+  { label: "Classic brush-168", key: "GN.8101-168 (168 colors)" },
+  { label: "Classic brush-120", key: "GN.8101-120 (120 colors)" },
+  { label: "Classic brush-100", key: "GN.8101-100 (100 colors)" },
+  { label: "Classic brush-72",  key: "GN.8101-72 (72 colors)"  },
+  { label: "Classic brush-60",  key: "GN.8101-60 (60 colors)"  },
+  { label: "Classic brush-48",  key: "GN.8101-48 (48 colors)"  },
+  { label: "Classic brush-36",  key: "GN.8101-36 (36 colors)"  },
+  { label: "Classic brush-24",  key: "GN.8101-24 (24 colors)"  },
+  { label: "Classic brush-12",  key: "GN.8101-12 (12 colors)"  },
+  { label: "Classic Brush: Skin (24F)", key: "GN.8201F-24 (24 colors)" },
+  { label: "Dual tip: 240",     key: "GN.8109-240 (240 colors)" },
+  { label: "Dual tip: 72",      key: "GN.8109-72 (72 colors)"  },
+  { label: "Dual tip: 36",      key: "GN.8102-36 (36 colors)"  },
+  { label: "Dual colors 84/168",key: "GN.8106-84 (168 colors)" },
+  { label: "Dual colors 60/120",key: "GN.8106-60 (120 colors)" },
+  { label: "Dual colors 30/60", key: "GN.8106-30 (60 colors)"  },
+  { label: "Dual tip: Blue",    key: "GN.8109A-12 (12 colors)" },
+  { label: "Dual tip: Pink",    key: "GN.8109B-12 (12 colors)" },
+  { label: "Dual tip: Green",   key: "GN.8109C-12 (12 colors)" },
+  { label: "Dual tip: Red",     key: "GN.8109D-12 (12 colors)" },
+  { label: "Dual tip: Purple",  key: "GN.8109E-12 (12 colors)" },
+  { label: "Dual tip: Yellow",  key: "GN.8109F-12 (12 colors)" },
+  { label: "Dual tip: Warm skin",     key: "GN.8109G-12 (12 colors)" },
+  { label: "Dual tip: Reddish brown", key: "GN.8109H-12 (12 colors)" },
+  { label: "Dual tip: White-Gray",    key: "GN.8109I-12 (12 colors)" },
+  { label: "Dual tip: Pinkish skin",  key: "GN.8109K-12 (12 colors)" },
+  { label: "Classic Brush: Skin (12B)", key: "GN.8101B (12 colors)"  },
+  { label: "Macaron",           key: "GN.8101M (24 colors)"    },
 ];
 
-// ─── Colour science — LAB-based ΔE (same as Python find_closest_guangna_v2) ──
 function rgbToLab([r,g,b]:[number,number,number]): [number,number,number] {
   const lin = (c:number) => { c/=255; return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4); };
   const lr=lin(r), lg=lin(g), lb=lin(b);
@@ -464,7 +215,6 @@ function rgbToLab([r,g,b]:[number,number,number]): [number,number,number] {
 function deltaE(lab1:[number,number,number],lab2:[number,number,number]) {
   return Math.sqrt((lab1[0]-lab2[0])**2+(lab1[1]-lab2[1])**2+(lab1[2]-lab2[2])**2);
 }
-
 function findClosest(rgb:[number,number,number], ids:string[]): {code:string;name:string;rgb:[number,number,number]} {
   const labT = rgbToLab(rgb);
   let bestId="", bestD=Infinity;
@@ -477,7 +227,6 @@ function findClosest(rgb:[number,number,number], ids:string[]): {code:string;nam
   const c = GN_COLORS[bestId];
   return { code:bestId, name:c[3], rgb:[c[0],c[1],c[2]] };
 }
-
 function hexToRgb(hex:string):[number,number,number]|null {
   const m = hex.replace("#","").match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
   return m ? [parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)] : null;
@@ -485,7 +234,6 @@ function hexToRgb(hex:string):[number,number,number]|null {
 function rgbToHex([r,g,b]:[number,number,number]) {
   return "#"+[r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
 }
-
 function getDominantColor(dataUrl:string): Promise<[number,number,number]> {
   return new Promise(resolve=>{
     const img = new window.Image();
@@ -506,19 +254,15 @@ function getDominantColor(dataUrl:string): Promise<[number,number,number]> {
   });
 }
 
-// ─── Protected colour swatch — makes colour-picking hard ─────────────────────
 function ProtectedSwatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
   const hex = rgbToHex(rgb);
   return (
     <div style={{position:"relative",width:size,height:size,borderRadius:10,overflow:"hidden",flexShrink:0,border:"2px solid rgba(0,0,0,0.1)"}}>
-      {/* Base colour */}
       <div style={{position:"absolute",inset:0,background:hex}}/>
-      {/* Noise overlay — breaks solid fill for colour pickers */}
       <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.18,pointerEvents:"none",userSelect:"none"}} xmlns="http://www.w3.org/2000/svg">
         <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
         <rect width="100%" height="100%" filter="url(#noise)"/>
       </svg>
-      {/* Gradient glare — adds highlight making eyedrop unreliable */}
       <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(255,255,255,0.25) 0%,transparent 60%)",pointerEvents:"none"}}/>
     </div>
   );
@@ -537,12 +281,8 @@ export default function ColorConverter() {
   const [photoName,setPhotoName]   = useState("");
   const [dominantRgb,setDominantRgb] = useState<[number,number,number]|null>(null);
   const [searching,setSearching]   = useState(false);
-
-  // "My markers" selector
   const [mySet,setMySet]           = useState<string>("");
   const [extraCodes,setExtraCodes] = useState("");
-
-  // Results
   const [bestFull,setBestFull]     = useState<MatchResult|null>(null);
   const [bestOwned,setBestOwned]   = useState<MatchResult|null>(null);
   const [hasOwned,setHasOwned]     = useState(false);
@@ -563,13 +303,11 @@ export default function ColorConverter() {
       ? [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0]
       : dominantRgb||[0,0,0];
 
-  // Build user's owned marker IDs
   const getOwnedIds = (): string[] => {
     const ids: string[] = [];
     if (mySet && GUANGNA_SETS[mySet]) {
       for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
     }
-    // Extra codes
     for (const tok of extraCodes.split(/[\s,;]+/)) {
       const t=tok.trim();
       if (/^\d{3}$/.test(t)) {
@@ -591,10 +329,8 @@ export default function ColorConverter() {
       } else {
         rgb = [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0];
       }
-      // Best from full GN.8101-366
       const full = findClosest(rgb, GN_366_IDS);
       setBestFull(full);
-      // Best from owned markers
       const ownedIds = getOwnedIds();
       if (ownedIds.length>0) {
         const owned = findClosest(rgb, ownedIds);
@@ -609,23 +345,29 @@ export default function ColorConverter() {
 
   return (
     <>
+      <style>{`
+        .converter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } }
+      `}</style>
       <Navbar/>
       <main style={{padding:"40px 24px",maxWidth:960,margin:"0 auto"}}>
-        <h1 style={{fontFamily:"Nunito, sans-serif",color:"var(--pink)",fontWeight:900,fontSize:"clamp(26px,4vw,40px)",marginBottom:8}}>
-        <div style={{ marginBottom:12 }}>
-        <Image src="/Guangna_brush.png" alt="Guangna brush" width={240} height={165} style={{ objectFit:"contain" }} />
+        <div style={{marginBottom:12}}>
+          <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{objectFit:"contain",height:"auto"}} />
         </div>
+        <h1 style={{fontFamily:"Nunito, sans-serif",color:"var(--pink)",fontWeight:900,fontSize:"clamp(26px,4vw,40px)",marginBottom:8}}>
+          Guangna Color Converter
         </h1>
         <p style={{color:"#666",marginBottom:36}}>
           Enter any color and find the closest Guangna marker available and, optionally, from your own collection.
         </p>
 
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:32}}>
+        <div className="converter-grid">
 
-          {/* ── LEFT: input panel ── */}
+          {/* ── LEFT ── */}
           <div style={{display:"flex",flexDirection:"column",gap:20}}>
-          {/* ── My markers (optional) ── */}
-          <div className="card">
+
+            {/* My Markers */}
+            <div className="card">
               <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>🗂️ My Markers <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>optional</span></h3>
               <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>Select your set to also see the best match from markers you own.</p>
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Marker set</label>
@@ -639,10 +381,9 @@ export default function ColorConverter() {
                 placeholder="e.g. 603, 648, 820" style={{width:"100%"}}/>
             </div>
 
-          </div>
-            {/* Mode tabs */}
+            {/* Color input */}
             <div className="card">
-              <div style={{display:"flex",gap:8,marginBottom:20}}>
+              <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>
                 {(["hex","rgb","photo"] as InputMode[]).map(m=>(
                   <button key={m} onClick={()=>{setMode(m);setBestFull(null);setBestOwned(null);}} style={{
                     padding:"8px 18px",borderRadius:20,border:"2px solid var(--pink)",
@@ -723,10 +464,9 @@ export default function ColorConverter() {
                 {searching?"🔍 Searching…":"Convert to Guangna code →"}
               </button>
             </div>
+          </div>
 
-           
-
-          {/* ── RIGHT: results panel ── */}
+          {/* ── RIGHT: Results ── */}
           <div>
             <h2 style={{fontWeight:800,fontSize:17,marginBottom:16}}>Results</h2>
 
@@ -737,13 +477,10 @@ export default function ColorConverter() {
               </div>
             ) : (
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
-
-                {/* Best Guangna match */}
                 <div className="card" style={{border:"2px solid var(--pink)"}}>
                   <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
                     <span style={{fontWeight:800,fontSize:16}}>Best match</span>
-                    <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14
-                      ,fontWeight:700}}>Guangna</span>
+                    <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14,fontWeight:700}}>Guangna</span>
                   </div>
                   <div style={{display:"flex",alignItems:"center",gap:16}}>
                     <ProtectedSwatch rgb={bestFull.rgb} size={72}/>
@@ -757,7 +494,6 @@ export default function ColorConverter() {
                   </p>
                 </div>
 
-                {/* Best from owned markers */}
                 {hasOwned && bestOwned && (
                   <div className="card" style={{border:bestOwned.code===bestFull.code?"2px solid #4caf50":"2px solid var(--border)"}}>
                     <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
@@ -774,11 +510,10 @@ export default function ColorConverter() {
                       </div>
                     </div>
                     {bestOwned.code!==bestFull.code && (
-                      <div style={{marginTop:12,padding:"8px 12px",borderRadius:8,background:"var(--cream)",fontSize:18,color:"var(--muted)"}}>
-                        💡 The best Guangna match available ({bestFull.code}) is not in your set. <br />
+                      <div style={{marginTop:12,padding:"8px 12px",borderRadius:8,background:"var(--cream)",fontSize:14,color:"var(--muted)"}}>
+                        💡 The best Guangna match ({bestFull.code}) is not in your set.{" "}
                         <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
-                          style={{color:"var(--pink)",fontWeight:700,marginLeft:6}}
-                          >Would you like to order it? →</a>
+                          style={{color:"var(--pink)",fontWeight:700}}>Would you like to order it? →</a>
                       </div>
                     )}
                   </div>

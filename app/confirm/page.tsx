@@ -2,7 +2,7 @@
 import Image from "next/image"
 import Navbar from "../components/Navbar";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 
 const LEVELS: Record<string, { label: string; price: number; priceLabel: string }> = {
   "15": { label: "🌱 Beginner",     price: 7,  priceLabel: "7€"  },
@@ -20,13 +20,12 @@ type OrderItem = {
   indPens: string;
 };
 
-const STORE_SLUG = "creabeastudio";
-
 function ConfirmContent() {
   const router  = useRouter();
   const params  = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
-  const variantId    = params.get("variantId")   ?? "";
   const email        = params.get("email")        ?? "";
   const levelValue   = params.get("level")        ?? "24";
   const photoName    = params.get("photoName")    ?? "—";
@@ -53,12 +52,32 @@ function ConfirmContent() {
   const allOrders  = [...prevOrders, thisOrder];
   const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
 
-  const goToCheckout = () => {
-    // Pass orderId as custom data so the webhook can look up the order after payment
-    const checkoutUrl = `https://${STORE_SLUG}.lemonsqueezy.com/checkout/buy/${variantId}`
-      + `?checkout[email]=${encodeURIComponent(email)}`
-      + `&checkout[custom][order_id]=${encodeURIComponent(orderId)}`;
-    window.location.href = checkoutUrl;
+  const goToCheckout = async () => {
+    setLoading(true);
+    setCheckoutError("");
+    try {
+      const allLevels = allOrders.map(o => o.level);
+      const res = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          levels: allLevels,
+          email,
+          orderId,
+          levelLabel: levelInfo.label,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        setCheckoutError("Could not start checkout. Please try again or contact hello@creabeastudio.com.");
+        setLoading(false);
+        return;
+      }
+      window.location.href = data.url;
+    } catch (e) {
+      setCheckoutError("Something went wrong. Please try again or contact hello@creabeastudio.com.");
+      setLoading(false);
+    }
   };
 
   const goBack = () => {
@@ -83,8 +102,8 @@ function ConfirmContent() {
       <main style={{ padding:"60px 24px", maxWidth:640, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:32 }}>
         <div style={{ marginBottom:12 }}>
-  <Image src="/Guangna_brush.png" alt="Guangna brush" width={160} height={110} 
-    style={{ objectFit:"contain", display:"block", margin:"0 auto" }} />
+  <Image src="/Guangna_brush.png" alt="Guangna brush" width={160} height={110}
+    style={{ objectFit:"contain", height:"auto", display:"block", margin:"0 auto" }} />
 </div>
           <h1 style={{
             fontFamily:"Nunito, sans-serif", color:"var(--pink)",
@@ -149,13 +168,43 @@ function ConfirmContent() {
           <span style={{ color:"white", fontWeight:900, fontSize:22 }}>{grandTotal}€</span>
         </div>
 
+        {checkoutError && (
+          <div style={{ background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14, marginBottom:16 }}>
+            ⚠️ {checkoutError}
+          </div>
+        )}
+
         {/* Buttons */}
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-          <button onClick={goToCheckout} className="btn-primary"
-            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor:"pointer" }}>
-            💳 Yes, I'd like to pay — {grandTotal}€
+          <button onClick={goToCheckout} className="btn-primary" disabled={true}
+            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
+            {loading ? "⏳ Preparing checkout…" : `🔒 Payment opening soon — ${grandTotal}€`}
           </button>
+          <p style={{ textAlign:"center", fontSize:13, color:"var(--muted)", margin:"4px 0" }}>
+  We're almost ready! Our payment system is currently being set up. Feel free to reserve your order, and we'll let you know the moment you can complete your purchase.
+</p>
 
+<button
+  onClick={() => {
+    const q = new URLSearchParams({
+      email,
+      orderId,
+      levels: allOrders.map(o => o.level).join(","),
+      photoNames: allOrders.map(o => o.photoName).join("|"),
+    });
+    router.push(`/complete-order?${q.toString()}`);
+  }}
+  
+  style={{
+    width:"100%", fontSize:15, padding:"14px",
+    border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
+    fontWeight:700, borderRadius:14, cursor:"pointer", fontFamily:"Nunito, sans-serif",
+  }}
+  onMouseEnter={e => (e.currentTarget.style.background = "#FFF0F3")}
+  onMouseLeave={e => (e.currentTarget.style.background = "white")}
+>
+  🔖 Reserve your Order
+</button>
           <button onClick={orderAnother}
             style={{
               width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,

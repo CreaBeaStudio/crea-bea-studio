@@ -38,7 +38,12 @@ export default function Home() {
           grid-template-columns: 1fr 1.5fr;
           gap: 60px;
           align-items: end;
-          alignItems:"flex-end"
+        }
+        .hero-left {
+          order: 1;
+        }
+        .hero-right {
+          order: 2;
         }
         .hero-buttons {
           display: flex;
@@ -92,6 +97,12 @@ export default function Home() {
             grid-template-columns: 1fr;
             gap: 32px;
           }
+          .hero-left {
+            order: 2;
+          }
+          .hero-right {
+            order: 1;
+          }
           .hero-cta {
             max-width: 100%;
             font-size: 15px;
@@ -131,7 +142,9 @@ export default function Home() {
         {/* ── HERO ── */}
         <section style={{ background:"linear-gradient(135deg,#FDF6F0 60%,#FFE8EE 100%)", padding:"80px 24px 60px" }}>
           <div style={{ maxWidth:1400, margin:"0 auto" }} className="hero-grid">
-            <div>
+
+            {/* Left: text */}
+            <div className="hero-left">
               <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:16, marginBottom:16 }}>
                 🐾 CreaBeaStudio
               </p>
@@ -163,16 +176,15 @@ export default function Home() {
             </div>
 
             {/* Right: image panel */}
-            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20 }}>
+            <div className="hero-right" style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20 }}>
               <div style={{ position:"relative", display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}>
-                <div className="from-this-label">
-                </div>
+                <div className="from-this-label" />
                 <div style={{
                   background:"white", borderRadius:24, padding:16,
                   boxShadow:"0 20px 60px rgba(244,96,122,0.15)",
                   maxWidth:800, width:"100%"
                 }}>
-                 <Image src="/Dog_Legend3.png" alt="Sample PBN photo" width={800} height={800} 
+                 <Image src="/Dog_Legend4.png" alt="Sample PBN photo" width={800} height={800} loading="eager"
                     style={{ borderRadius:16, objectFit:"cover", width:"100%", height:"600", minHeight:200, maxWidth:"100%" }} />
                 </div>
               </div>
@@ -183,7 +195,7 @@ export default function Home() {
                 display:"flex", alignItems:"center", justifyContent:"center",
                 width:"100%", maxWidth:800, marginTop:16
               }}>
-                <strong>Guangna by Number <br /> with colour palette matched to your brush markers complete with Guangna codes and numbers.</strong>
+                <strong>Guangna by Number <br /> includes a color palette matched to your Guangna markers — with exact codes and numbers</strong>
               </div>
             </div>
           </div>
@@ -196,10 +208,10 @@ export default function Home() {
           color:"white", textAlign:"center"
         }}>
           <div style={{ maxWidth:700, margin:"0 auto" }}>
-          <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
-  <Image src="/Guangna_brush.png" alt="Guangna_brush" width={120} height={84} style={{ objectFit:"contain" }} />
-  Guangna Color Converter
-</h2>
+            <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+              <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
+              Guangna Color Converter
+            </h2>
             <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
               Do you have a #HEX, RGB or a picture? Find the closest Guangna color instantly.
             </p>
@@ -287,8 +299,6 @@ export default function Home() {
         {/* ── WHAT IS THE GUANGNA COLOR PALETTE GUIDE? ── */}
         <section style={{ padding:"80px 24px", background:"white" }}>
           <div style={{ maxWidth:1100, margin:"0 auto" }} className="palette-grid">
-
-            {/* Left: text */}
             <div>
               <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Included with every order</p>
               <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(26px,4vw,38px)", marginBottom:24, lineHeight:1.2 }}>
@@ -312,34 +322,23 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Right: palette guide image */}
             <div style={{ display:"flex", justifyContent:"center", alignItems:"center" }}>
               <div style={{
                 background:"linear-gradient(160deg,#8B6347 0%,#A0714F 30%,#7A5230 60%,#9C6D3E 100%)",
-                borderRadius:20,
-                padding:32,
+                borderRadius:20, padding:32,
                 boxShadow:"0 20px 60px rgba(0,0,0,0.35)",
-                width:"100%",
-                maxWidth:520,
+                width:"100%", maxWidth:520,
               }}>
                 <div style={{ position:"relative" }}>
                   <div style={{
-                    background:"white",
-                    borderRadius:4,
+                    background:"white", borderRadius:4,
                     boxShadow:"0 8px 32px rgba(0,0,0,0.4), 2px 2px 0 rgba(255,255,255,0.3)",
-                    overflow:"hidden",
-                    aspectRatio:"1.414 / 1",
-                    width:"100%",
+                    overflow:"hidden", aspectRatio:"1.414 / 1", width:"100%",
                     transform:"rotate(-1.5deg)",
                   }}>
-                    <Image
-                      src="/GN_Palette_landscape.png"
-                      alt="Guangna Color Palette Guide"
-                      width={0}
-                      height={0}
-                      sizes="(max-width: 768px) 90vw, 50vw"
-                      style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }}
-                    />
+                    <Image src="/GN_Palette_landscape.png" alt="Guangna Color Palette Guide"
+                      width={0} height={0} sizes="(max-width: 768px) 90vw, 50vw"
+                      style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
                   </div>
                   <div style={{
                     position:"absolute", bottom:-6, left:"5%", right:"5%",
@@ -349,12 +348,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
           </div>
         </section>
 
-               {/* ── WHAT DO YOU GET? ── */}
-               <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
+        {/* ── WHAT DO YOU GET? ── */}
+        <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
           <style>{`
             .wdyg-table { display: block; }
             .wdyg-cards { display: none; }
@@ -370,7 +368,6 @@ export default function Home() {
               What do you get?
             </h2>
 
-            {/* ── DESKTOP: Table ── */}
             <div className="wdyg-table" style={{
               background:"white", borderRadius:20,
               boxShadow:"0 8px 40px rgba(0,0,0,0.08)",
@@ -408,7 +405,6 @@ export default function Home() {
               </table>
             </div>
 
-            {/* ── MOBILE: Cards per level ── */}
             <div className="wdyg-cards">
               {([
                 { level: "beginner" as const, name: "Beginner", emoji: "🌱" },
@@ -416,19 +412,15 @@ export default function Home() {
                 { level: "advanced" as const, name: "Advanced", emoji: "🌲" },
               ]).map(({ level, name, emoji, popular }) => (
                 <div key={name} style={{
-                  background:"white",
-                  borderRadius:20,
+                  background:"white", borderRadius:20,
                   border: popular ? "2px solid var(--pink)" : "2px solid #eee",
-                  padding:"24px 20px",
-                  position:"relative",
-                  textAlign:"left",
+                  padding:"24px 20px", position:"relative", textAlign:"left",
                 }}>
                   {popular && (
                     <div style={{
                       position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)",
                       background:"var(--pink)", color:"white",
-                      borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700,
-                      whiteSpace:"nowrap",
+                      borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700, whiteSpace:"nowrap",
                     }}>Most Popular</div>
                   )}
                   <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
@@ -445,9 +437,7 @@ export default function Home() {
                         <span style={{ fontSize:14, fontWeight:600, color: row[level] ? "var(--ink)" : "#aaa" }}>
                           {row.feature}
                         </span>
-                        <span style={{ fontSize:20, marginLeft:12 }}>
-                          {row[level] ? "✅" : "—"}
-                        </span>
+                        <span style={{ fontSize:20, marginLeft:12 }}>{row[level] ? "✅" : "—"}</span>
                       </div>
                     ))}
                   </div>
@@ -477,7 +467,11 @@ export default function Home() {
               <a href="/Tips&Tricks" style={{ color:"#aaa", textDecoration:"none" }}>Tips&Tricks</a>
               <a href="/faq" style={{ color:"#aaa", textDecoration:"none" }}>FAQ</a>
             </div>
-            <p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>© {new Date().getFullYear()} CreaBeaStudio. All rights reserved.</p>
+            <a href="https://www.tiktok.com/@CreaBeaStudio" target="_blank" rel="noopener noreferrer" style={{ color:"#aaa", textDecoration:"none" }}>TikTok</a><div style={{ display:"flex", gap:16, flexWrap:"wrap", fontSize:12, marginTop:8 }}>
+             <a href="/privacy" style={{ color:"#aaa", textDecoration:"none" }}>Privacy Notice</a>
+             <a href="/terms" style={{ color:"#aaa", textDecoration:"none" }}>Terms of Service</a>
+             <a href="/refund" style={{ color:"#aaa", textDecoration:"none" }}>Refund Policy</a>
+              </div><p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>© {new Date().getFullYear()} CreaBeaStudio. All rights reserved.</p>
           </div>
           <Image src="/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
             style={{ height:"auto", width:"auto", maxHeight:120, maxWidth:160, objectFit:"contain" }} />

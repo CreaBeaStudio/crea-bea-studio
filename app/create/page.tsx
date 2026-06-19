@@ -206,7 +206,6 @@ function CreateInner() {
     }
   }, []);
 
-  // Fetch live FX rates on mount
   useEffect(() => {
     fetch("https://open.er-api.com/v6/latest/EUR")
       .then(r => r.json())
@@ -257,9 +256,7 @@ function CreateInner() {
   const handleSubmit = async () => {
     if (!photo || !email || indPenError) return;
     setSubmitting(true);
-
     let orderId = "";
-
     try {
       const levelInfo  = LEVELS.find(l => l.value === level)!;
       const filledSets = sets.filter(Boolean);
@@ -274,7 +271,6 @@ function CreateInner() {
       };
       const allOrders  = [...prevOrders, thisOrder];
       const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
-
       const formData = new FormData();
       formData.append("image",      photo);
       formData.append("email",      email);
@@ -283,21 +279,15 @@ function CreateInner() {
       formData.append("indPens",    individualPens);
       formData.append("allOrders",  JSON.stringify(allOrders));
       formData.append("grandTotal", String(grandTotal));
-
       const res  = await fetch("/api/submit-order", { method: "POST", body: formData });
       const data = await res.json();
       orderId = data.orderId ?? "";
-
     } catch (err) {
       console.error("Failed to submit order:", err);
     }
-
     const filledSets = sets.filter(Boolean);
-    const variantId  = LEVEL_TO_VARIANT[level];
     const q = new URLSearchParams({
-      variantId,
-      email,
-      level,
+      email, level,
       photoName:  photo!.name,
       sets:       filledSets.join("|"),
       indPens:    individualPens,
@@ -313,13 +303,26 @@ function CreateInner() {
 
   return (
     <>
+      <style>{`
+        .create-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+          margin-top: 28px;
+        }
+        @media (max-width: 768px) {
+          .create-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
       <Navbar />
       <main style={{padding:"40px 24px", maxWidth:1100, margin:"0 auto"}}>
         <h1 style={{fontFamily:"Nunito, sans-serif", color:"var(--pink)", fontWeight:900, fontSize:"clamp(26px,4vw,40px)", marginBottom:6}}>
           Create Your Guangna by Number
         </h1>
         <p style={{color:"#666", marginBottom:8}}>
-        Upload your photo, choose your level and Guangna markers, and we’ll take care of the rest. Your finished file will be delivered to your inbox — within 24 hours, often much faster 😁
+          Upload your photo, choose your level and Guangna markers, and we'll take care of the rest. Your finished file will be delivered to your inbox — within 24 hours, often much faster 😁
         </p>
 
         {prevOrders.length > 0 && (
@@ -335,11 +338,12 @@ function CreateInner() {
           </div>
         )}
 
-        <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:28, marginTop:28}}>
+        <div className="create-grid">
 
           {/* ── LEFT COLUMN ── */}
           <div style={{display:"flex", flexDirection:"column", gap:22}}>
 
+            {/* Step 1: Photo */}
             <div className="card">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Step 1: 📸 Upload your photo</h2>
               <div
@@ -380,6 +384,7 @@ function CreateInner() {
               )}
             </div>
 
+            {/* Step 2: Level */}
             <div className="card">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Step 2: 🎯 Select your level</h2>
               <div style={{display:"flex", flexDirection:"column", gap:10}}>
@@ -399,12 +404,7 @@ function CreateInner() {
                         {l.label} — {l.priceLabel}
                         <FxTag eur={l.price} usd={usdRate} gbp={gbpRate} />
                         {l.popular && (
-                          <span style={{
-                            fontSize:11, fontWeight:700,
-                            background:"var(--pink)", color:"white",
-                            borderRadius:20, padding:"2px 8px",
-                            letterSpacing:"0.03em",
-                          }}>
+                          <span style={{fontSize:11, fontWeight:700, background:"var(--pink)", color:"white", borderRadius:20, padding:"2px 8px", letterSpacing:"0.03em"}}>
                             ★ Most Popular
                           </span>
                         )}
@@ -414,13 +414,7 @@ function CreateInner() {
                   </label>
                 ))}
               </div>
-
-              {/* FX Disclaimer */}
-              <div style={{
-                marginTop:16, padding:"10px 14px",
-                background:"#f9f9f9", borderRadius:10,
-                borderLeft:"3px solid var(--border)",
-              }}>
+              <div style={{marginTop:16, padding:"10px 14px", background:"#f9f9f9", borderRadius:10, borderLeft:"3px solid var(--border)"}}>
                 <p style={{fontSize:11, color:"#999", margin:0, lineHeight:1.6}}>
                   💱 Prices shown in EUR. Approximate equivalents in USD and GBP are shown for indication only, based on indicative exchange rates. Your bank or card provider may apply different rates and fees.
                 </p>
@@ -429,104 +423,104 @@ function CreateInner() {
 
           </div>
 
-{/* ── RIGHT COLUMN ── */}
-<div style={{display:"flex", flexDirection:"column", gap:22}}>
+          {/* ── RIGHT COLUMN ── */}
+          <div style={{display:"flex", flexDirection:"column", gap:22}}>
 
-<div className="card">
-  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖊️ Your Guangna Marker Sets</h2>
-  <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-    Select the sets you own — we'll build the palette from your markers.
-  </p>
-  <div style={{display:"flex", flexDirection:"column", gap:10}}>
-    {sets.map((val, idx) => (
-      <div key={idx}>
-        <label style={{fontSize:13, fontWeight:600, color:"#555", display:"block", marginBottom:4}}>
-          {idx === 0 ? "Set 1" : `Set ${idx+1} (optional)`}
-        </label>
-        <select value={val} onChange={e => updateSet(idx, e.target.value)}
-          style={{width:"100%", padding:"10px 12px", borderRadius:10,
-            border:"2px solid var(--border)", fontSize:14, background:"white", cursor:"pointer", outline:"none"}}>
-          {idx > 0 && <option value="">— None —</option>}
-          {optionsFor(idx).map(s => (
-            <option key={s.value} value={s.value}>{s.label} ({s.value})</option>
-          ))}
-        </select>
-      </div>
-    ))}
-  </div>
-  <div style={{marginTop:18}}>
-    <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>Additional Marker Codes</h3>
-    <p style={{fontSize:12, color:"var(--muted)", marginBottom:8}}>
-      Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.
-    </p>
-    <textarea
-      value={individualPens}
-      onChange={e => validateIndPens(e.target.value)}
-      placeholder="e.g. 603, 648, 712"
-      rows={2}
-      style={{resize:"vertical", border: indPenError ? "2px solid #c62828" : "2px solid var(--border)"}}
-    />
-    {indPenError && <p style={{fontSize:12, color:"#c62828", marginTop:4}}>⚠️ {indPenError}</p>}
-  </div>
-</div>
+            {/* Step 3: Markers */}
+            <div className="card">
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖊️ Your Guangna Marker Sets</h2>
+              <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
+                Select the sets you own — we'll build the palette from your markers.
+              </p>
+              <div style={{display:"flex", flexDirection:"column", gap:10}}>
+                {sets.map((val, idx) => (
+                  <div key={idx}>
+                    <label style={{fontSize:13, fontWeight:600, color:"#555", display:"block", marginBottom:4}}>
+                      {idx === 0 ? "Set 1" : `Set ${idx+1} (optional)`}
+                    </label>
+                    <select value={val} onChange={e => updateSet(idx, e.target.value)}
+                      style={{width:"100%", padding:"10px 12px", borderRadius:10, border:"2px solid var(--border)", fontSize:14, background:"white", cursor:"pointer", outline:"none"}}>
+                      {idx > 0 && <option value="">— None —</option>}
+                      {optionsFor(idx).map(s => (
+                        <option key={s.value} value={s.value}>{s.label} ({s.value})</option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+              <div style={{marginTop:18}}>
+                <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>Additional Marker Codes</h3>
+                <p style={{fontSize:12, color:"var(--muted)", marginBottom:8}}>
+                  Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.
+                </p>
+                <textarea
+                  value={individualPens}
+                  onChange={e => validateIndPens(e.target.value)}
+                  placeholder="e.g. 603, 648, 712"
+                  rows={2}
+                  style={{resize:"vertical", border: indPenError ? "2px solid #c62828" : "2px solid var(--border)"}}
+                />
+                {indPenError && <p style={{fontSize:12, color:"#c62828", marginTop:4}}>⚠️ {indPenError}</p>}
+              </div>
+            </div>
 
-{/* Email box */}
-<div className="card">
-  <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: ✉️ Your email</h2>
-  <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
-  <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
-</div>
+            {/* Step 4: Email */}
+            <div className="card">
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: ✉️ Your email</h2>
+              <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
+            </div>
 
-{/* Order summary */}
-<div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
-  <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
-  <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
-    <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
-    <Row label="Level"       value={currentLevelInfo ? `${currentLevelInfo.label} — ${currentLevelInfo.priceLabel}` : "—"}/>
-    <Row label="Marker sets" value={sets.filter(Boolean).length ? `${sets.filter(Boolean).length} selected` : "Default palette"}/>
-    <Row label="Turnaround"  value="Within 24 hours"/>
-    {prevOrders.length > 0 && (
-      <>
-        <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
-        <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar}€`}/>
-        <Row label="This order" value={currentLevelInfo ? currentLevelInfo.priceLabel : "—"}/>
-        <div style={{borderTop:"1.5px solid var(--pink)", margin:"4px 0"}}/>
-        <Row label="🧾 New total" value={`${totalSoFar + (currentLevelInfo?.price ?? 0)}€`} highlight/>
-      </>
-    )}
-  </div>
-</div>
+            {/* Order summary */}
+            <div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
+              <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
+              <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
+                <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
+                <Row label="Level"       value={currentLevelInfo ? `${currentLevelInfo.label} — ${currentLevelInfo.priceLabel}` : "—"}/>
+                <Row label="Marker sets" value={sets.filter(Boolean).length ? `${sets.filter(Boolean).length} selected` : "Default palette"}/>
+                <Row label="Turnaround"  value="Within 24 hours"/>
+                {prevOrders.length > 0 && (
+                  <>
+                    <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
+                    <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar}€`}/>
+                    <Row label="This order" value={currentLevelInfo ? currentLevelInfo.priceLabel : "—"}/>
+                    <div style={{borderTop:"1.5px solid var(--pink)", margin:"4px 0"}}/>
+                    <Row label="🧾 New total" value={`${totalSoFar + (currentLevelInfo?.price ?? 0)}€`} highlight/>
+                  </>
+                )}
+              </div>
+            </div>
 
-{/* Submit button */}
-<button
-  className="btn-primary"
-  onClick={handleSubmit}
-  disabled={!canSubmit || submitting}
-  style={{width:"100%", fontSize:17, padding:"16px", opacity:(canSubmit && !submitting) ? 1 : 0.5}}
->
-  {submitting ? "⏳ Sending your order…" : canSubmit ? "✨ Submit my order →" : "✨ Submit my order"}
-</button>
-
-{!photo && (
-  <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
-    Upload a photo to get started
-  </p>
-)}
-{!email && photo && (
-  <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
-    Add your email to continue
-  </p>
-)}
-{errorMsg && (
-  <div style={{background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14}}>
-    ⚠️ {errorMsg}
-  </div>
-)}
-</div>
-</div>
-</main>
-</>
-);
+            {/* Submit */}
+            <button
+              className="btn-primary"
+              onClick={handleSubmit}
+              disabled={!canSubmit || submitting}
+              style={{width:"100%", fontSize:17, padding:"16px", opacity:(canSubmit && !submitting) ? 1 : 0.5}}
+            >
+              {submitting ? "⏳ Sending your order…" : canSubmit ? "✨ Submit my order →" : "✨ Submit my order"}
+            </button>
+            
+            {!photo && (
+              <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
+                Upload a photo to get started
+              </p>
+            )}
+            {!email && photo && (
+              <p style={{textAlign:"center", fontSize:13, color:"var(--muted)", marginTop:-12}}>
+                Add your email to continue
+              </p>
+            )}
+            {errorMsg && (
+              <div style={{background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14}}>
+                ⚠️ {errorMsg}
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+    </>
+  );
 }
 
 export default function CreatePage() {

@@ -74,7 +74,7 @@ export default function Navbar() {
           {/* Logo + tagline */}
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
             <Image src="/cat-logo.png" alt="CreaBeaStudio" width={100} height={100}
-              style={{ objectFit: "contain", alignSelf: "flex-end" }} />
+              style={{ objectFit: "contain", alignSelf: "flex-end", width:"auto" }} />
             <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
               <span className="tagline-full" style={{ fontSize: 18, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700, whiteSpace: "nowrap" }}>Color Your Memories</span>
@@ -119,14 +119,7 @@ export default function Navbar() {
               );
             })}
 
-            {/* Cart icon */}
-            <Link href="/pricing" title="Check out" style={{
-              textDecoration: "none", color: "var(--ink)",
-              padding: "6px 10px", borderRadius: 8, fontSize: 20,
-              display: "flex", alignItems: "center",
-            }}>
-              🛒
-            </Link>
+       
 
             {/* Email icon */}
             <a href="mailto:hello@creabeastudio.com" title="Contact us" style={{
@@ -200,10 +193,7 @@ export default function Navbar() {
               }}>{item[0]}</Link>
             );
           })}
-          <Link href="/pricing" onClick={() => setOpen(false)} style={{
-            textDecoration: "none", color: "var(--ink)", fontSize: 17,
-            fontWeight: 500, padding: "12px 8px", borderRadius: 8,
-          }}>🛒 Check out</Link>
+         
           <a href="mailto:hello@creabeastudio.com" style={{
             textDecoration: "none", color: "var(--ink)", fontSize: 17,
             fontWeight: 500, padding: "12px 8px", borderRadius: 8,
