@@ -1,11 +1,8 @@
 // app/markers/[brand]/[setSize]/page.tsx
 //
 // Programmatic SEO landing page for marker/PBN set combinations.
-// Now covers every Classic Brush size from your CreateInner component's
-// MARKER_SETS list (12 through 408) instead of just four.
-//
-// To add a new brand later, add a new top-level key to MARKER_DATA below
-// with its own `sets` map — generateStaticParams() picks it up automatically.
+// Covers every Classic Brush size from your CreateInner component's
+// MARKER_SETS list (12 through 408).
 //
 // FUNNEL: each page's CTA links to /create?sets=<CODE> — your existing
 // CreateInner component already reads that "sets" query param and
@@ -15,14 +12,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "../../../components/Navbar"; // three levels deep: app/markers/[brand]/[setSize]/page.tsx -> app/components/Navbar
 
+type Params = { params: Promise<{ brand: string; setSize: string }> };
+
 // -----------------------------------------------------------------------
-// 1. DATA — every Classic Brush size, matching the `value` strings in
-//    MARKER_SETS inside CreateInner so the /create prefill works exactly.
-//    (Skin-tone, dual-tip, dual-color, and macaron variants aren't
-//    included here since they don't map to a clean numeric setSize —
-//    those would need a separate route, e.g. /markers/guangna/special/[variant].)
+// 1. DATA
 // -----------------------------------------------------------------------
-const MARKER_DATA = {
+const MARKER_DATA: Record<
+  string,
+  { displayName: string; sets: Record<string, { code: string; label: string }> }
+> = {
   guangna: {
     displayName: "Guangna",
     sets: {
@@ -59,7 +57,7 @@ export function generateStaticParams() {
 // -----------------------------------------------------------------------
 // Shared lookup so metadata + JSON-LD + page body stay in sync.
 // -----------------------------------------------------------------------
-function getMarkerContext(brand, setSize) {
+function getMarkerContext(brand: string, setSize: string) {
   const brandData = MARKER_DATA[brand?.toLowerCase()];
   const setInfo = brandData?.sets?.[setSize];
   if (!brandData || !setInfo) return null;
@@ -82,7 +80,7 @@ function getMarkerContext(brand, setSize) {
 // -----------------------------------------------------------------------
 // 3. METADATA
 // -----------------------------------------------------------------------
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: Params) {
   const { brand, setSize } = await params;
   const ctx = getMarkerContext(brand, setSize);
 
@@ -125,7 +123,7 @@ export async function generateMetadata({ params }) {
 // -----------------------------------------------------------------------
 // 4. PAGE COMPONENT
 // -----------------------------------------------------------------------
-export default async function MarkerSetPage({ params }) {
+export default async function MarkerSetPage({ params }: Params) {
   const { brand, setSize } = await params;
   const ctx = getMarkerContext(brand, setSize);
 

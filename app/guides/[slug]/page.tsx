@@ -9,13 +9,28 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar"; // two levels deep: app/guides/[slug]/page.tsx -> app/components/Navbar
 import { GUIDES_DATA } from "../guidesData";
 
+type Params = { params: Promise<{ slug: string }> };
+
+// Shape of a single guide entry. Declared here (rather than relying on
+// TypeScript's inferred type from the plain .js data file) so that
+// indexing GUIDES_DATA by a dynamic string (the URL slug) type-checks.
+type Guide = {
+  title: string;
+  description: string;
+  intro: string;
+  sections: { heading: string; body?: string }[];
+  cta: { href: string; label: string };
+};
+
+const guidesData: Record<string, Guide> = GUIDES_DATA;
+
 export function generateStaticParams() {
   return Object.keys(GUIDES_DATA).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: Params) {
   const { slug } = await params;
-  const guide = GUIDES_DATA[slug];
+  const guide = guidesData[slug];
 
   if (!guide) {
     return {
@@ -40,9 +55,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function GuidePage({ params }) {
+export default async function GuidePage({ params }: Params) {
   const { slug } = await params;
-  const guide = GUIDES_DATA[slug];
+  const guide = guidesData[slug];
 
   if (!guide) notFound();
 
@@ -94,7 +109,9 @@ export default async function GuidePage({ params }) {
             <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 6 }}>
               {section.heading}
             </h2>
-            <p style={{ color: "#555", margin: 0 }}>{section.body}</p>
+            {section.body && (
+              <p style={{ color: "#555", margin: 0 }}>{section.body}</p>
+            )}
           </div>
         ))}
 
