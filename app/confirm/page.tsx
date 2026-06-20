@@ -185,7 +185,21 @@ function ConfirmContent() {
 </p>
 
 <button
-  onClick={() => {
+  onClick={async () => {
+    try {
+      await fetch("/api/reserve-confirmation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          orderId,
+          summary: allOrders.map(o => `${o.photoName} — ${o.levelLabel}`).join(", "),
+          grandTotal,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to send reserve confirmation:", err);
+    }
     const q = new URLSearchParams({
       email,
       orderId,

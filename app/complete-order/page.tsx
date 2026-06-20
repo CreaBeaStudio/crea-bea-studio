@@ -105,11 +105,6 @@ const grandTotal = items.reduce((acc, i) => acc + i.price, 0);
           </div>
         )}
 
-        <button onClick={goToCheckout} className="btn-primary" disabled={true}
-          style={{ width:"100%", fontSize:17, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
-          {loading ? "🔒 Payment opening soon" : `💳 Pay now — ${grandTotal}€`}
-        </button>
-
         <p style={{ marginTop:24, fontSize:13, color:"var(--muted)" }}>
           Questions? Email us at <a href="mailto:hello@creabeastudio.com" style={{ color:"var(--pink)" }}>hello@creabeastudio.com</a>
         </p>
