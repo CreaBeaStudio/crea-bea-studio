@@ -22,11 +22,11 @@ const LEVELS = [
 ];
 
 const WHAT_YOU_GET = [
-  { feature: "Paint by Number Outline (PDF)", beginner: true, intermediate: true, advanced: true },
+  { feature: "Guangna by Number Outline (PDF)", beginner: true, intermediate: true, advanced: true },
   { feature: "Guangna Color Palette Guide (PDF)", beginner: true, intermediate: true, advanced: true },
   { feature: "Impression Finished Artwork (PDF)", beginner: true, intermediate: true, advanced: true },
   { feature: "Impression Finished Artwork (JPG)", beginner: false, intermediate: true, advanced: true },
-  { feature: "Colored Paint by Number Outline (PDF)", beginner: false, intermediate: false, advanced: true },
+  { feature: "Colored Guangna by Number Outline (PDF)", beginner: false, intermediate: false, advanced: true },
 ];
 
 export default function Home() {
