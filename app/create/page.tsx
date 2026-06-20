@@ -256,6 +256,7 @@ function CreateInner() {
   const handleSubmit = async () => {
     if (!photo || !email || indPenError) return;
     setSubmitting(true);
+    setErrorMsg("");
     let orderId = "";
     try {
       const levelInfo  = LEVELS.find(l => l.value === level)!;
@@ -281,9 +282,18 @@ function CreateInner() {
       formData.append("grandTotal", String(grandTotal));
       const res  = await fetch("/api/submit-order", { method: "POST", body: formData });
       const data = await res.json();
-      orderId = data.orderId ?? "";
+
+      if (!res.ok || !data.orderId) {
+        setErrorMsg(data.error || "Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com.");
+        setSubmitting(false);
+        return;
+      }
+      orderId = data.orderId;
     } catch (err) {
       console.error("Failed to submit order:", err);
+      setErrorMsg("Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com.");
+      setSubmitting(false);
+      return;
     }
     const filledSets = sets.filter(Boolean);
     const q = new URLSearchParams({
