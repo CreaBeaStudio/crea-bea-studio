@@ -57,6 +57,11 @@ const LEVEL_TO_VARIANT: Record<string, string> = {
 };
 
 // ── CROP: aspect ratio presets shown as quick-select buttons ──────────────
+// Feature flag — set to true to re-enable these buttons later, once
+// the Render service is upgraded off the free tier. Code stays intact,
+// just not rendered while this is false.
+const BG_TOOLS_ENABLED = false;
+
 const ASPECT_PRESETS = [
   { label: "Free", value: undefined },
   { label: "1:1",  value: 1 },
@@ -427,7 +432,7 @@ function CreateInner() {
                       </button>
                     ))}
                   </div>
-                  <div style={{borderRadius:14, overflow:"hidden", border:"2px solid var(--border)", background:"#222"}}>
+                  <div style={{borderRadius:14, overflow:"hidden", border:"2px solid var(--border)", background:"#222", display:"flex", justifyContent:"center"}}>
                     <ReactCrop
                       crop={crop}
                       onChange={(_: any, percentCrop: any) => setCrop(percentCrop)}
@@ -483,7 +488,7 @@ function CreateInner() {
                   >
                     {photoUrl
                       ? <img src={photoUrl} alt="Preview"
-                          style={{width:"100%", height:"auto", maxHeight:500, objectFit:"contain", borderRadius:12, display:"block"}}/>
+                          style={{width:"100%", height:"auto", maxHeight:500, objectFit:"contain", borderRadius:12, display:"block", margin:"0 auto"}}/>
                       : <>
                           <div style={{fontSize:44, marginBottom:8}}>🖼️</div>
                           <p style={{fontWeight:600, fontSize:15, marginBottom:4}}>Drop photo here</p>
@@ -500,18 +505,23 @@ function CreateInner() {
                         <div style={{display:"flex", gap:14, flexWrap:"wrap"}}>
                           {/* ── CROP: entry point button ── */}
                           <button onClick={() => setShowCropper(true)} disabled={!!bgProcessing}
-                            style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", fontWeight:600}}>
-                            ✂️ Crop
+                            style={{fontSize:16, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", fontWeight:700, display:"flex", alignItems:"center", gap:6}}>
+                            <span style={{fontSize:20}}>✂️</span> Crop
                           </button>
-                          {/* ── BACKGROUND TOOLS: remove / blur ── */}
-                          <button onClick={() => applyBackgroundAction("remove")} disabled={!!bgProcessing}
-                            style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "remove" ? 0.4 : 1}}>
-                            {bgProcessing === "remove" ? "⏳ Removing…" : "🪄 Remove Background"}
-                          </button>
-                          <button onClick={() => applyBackgroundAction("blur")} disabled={!!bgProcessing}
-                            style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "blur" ? 0.4 : 1}}>
-                            {bgProcessing === "blur" ? "⏳ Blurring…" : "🌫️ Blur Background"}
-                          </button>
+                     
+                         {/* ── BACKGROUND TOOLS: remove / blur — hidden via flag, code intact ── */}
+                         {BG_TOOLS_ENABLED && (
+                            <>
+                              <button onClick={() => applyBackgroundAction("remove")} disabled={!!bgProcessing}
+                                style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "remove" ? 0.4 : 1}}>
+                                {bgProcessing === "remove" ? "⏳ Removing…" : "🪄 Remove Background"}
+                              </button>
+                              <button onClick={() => applyBackgroundAction("blur")} disabled={!!bgProcessing}
+                                style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "blur" ? 0.4 : 1}}>
+                                {bgProcessing === "blur" ? "⏳ Blurring…" : "🌫️ Blur Background"}
+                              </button>
+                            </>
+                          )}
                           {photo !== originalPhoto && (
                             <button onClick={resetToOriginal} disabled={!!bgProcessing}
                               style={{fontSize:12, color:"var(--muted)", background:"none", border:"none", cursor:"pointer"}}>
@@ -527,7 +537,7 @@ function CreateInner() {
                       {bgError && (
                         <p style={{fontSize:12, color:"#c62828", margin:0}}>⚠️ {bgError}</p>
                       )}
-                      {bgProcessing && (
+                      {BG_TOOLS_ENABLED && bgProcessing && (
                         <p style={{fontSize:11, color:"var(--muted)", margin:0}}>
                           This can take up to a minute if the photo tool is just waking up — hang tight.
                         </p>
