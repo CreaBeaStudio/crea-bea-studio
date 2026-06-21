@@ -6,10 +6,10 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import ClarityInit from './clarity-init';
 
 export const metadata: Metadata = {
-  title: "CreaBea Studio – Custom Paint by Number",
+  title: "CreaBeaStudio – Custom Paint by Number",
   description: "Turn your favourite photos into Paint-by-Number colouring pages with a personalised Guangna marker colour palette guide.",
   openGraph: {
-    title: "CreaBea Studio – Custom Paint by Number",
+    title: "CreaBeaStudio – Custom Paint by Number",
     description: "Turn your favourite photos into Paint-by-Number colouring pages with personalised Guangna marker colours.",
     images: ["/og-image.png"],
   },

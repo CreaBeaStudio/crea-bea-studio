@@ -22,7 +22,7 @@ export default function RefundPage() {
 
         <h2 style={sectionHeading}>Cancellations</h2>
         <p>
-          If you wish to cancel an order, please contact us as soon as possible. If production has not yet started, we can cancel and refund your order in full. Once production has begun, cancellations are no longer possible.
+          If you wish to cancel an order, please contact us as soon as possible. If production has not yet started, we can cancel your order. Once production has begun, cancellations are no longer possible.
         </p>
 
         <h2 style={sectionHeading}>Content Restrictions</h2>
@@ -33,7 +33,7 @@ export default function RefundPage() {
 
         <h2 style={sectionHeading}>How Refunds Are Processed</h2>
         <p>
-          Approved refunds will be issued to your original payment method via Stripe or Lemon Squeezy, typically within 5–10 business days.
+          Approved refunds will be issued to your original payment method via Lemon Squeezy, typically within 5–10 business days.
         </p>
 
         <h2 style={sectionHeading}>Contact Us</h2>

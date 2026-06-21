@@ -74,10 +74,9 @@ const grandTotal = items.reduce((acc, i) => acc + i.price, 0);
           Your Order is Reserved 🎉
         </h1>
         <p style={{ color:"#666", fontSize:15, marginBottom:32 }}>
-        Thanks for waiting! Your order has been successfully reserved.
-        We are currently finalizing our payment setup. As soon as everything is ready, you will be the first to know so you can complete your purchase.
+        Your order has been successfully reserved.
+        We are currently finalizing our payment setup. 
         No action needed for now — we will notify you by email as soon as checkout goes live.
-        We cannot wait for you to start coloring your memories ✨
         </p>
 
         {orderId && (
