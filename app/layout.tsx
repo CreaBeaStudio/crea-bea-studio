@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClarityInit />
         <Analytics />
         <SpeedInsights />
-        <GoogleAnalytics gaId="G-15123793647" />
+        <GoogleAnalytics gaId="G-PFXB1CJ13C" />
       </body>
     </html>
   );
