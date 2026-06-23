@@ -77,3 +77,33 @@
       "contactUs": "Contact"
     }
   }
+  "faq": {
+  "title": "Veelgestelde Vragen",
+  "subtitle": "Kleur je herinneringen",
+  "q1": "Wat ontvang ik na het plaatsen van een bestelling?",
+  "a1": "Je ontvangt een compleet digitaal pakket: een Paint by Number Omtrek (PDF), een Persoonlijke Guangna Kleurenpalet Gids en een Impressie van het Afgewerkte Kunstwerk (PDF). Let op: dit is een digitaal maatwerkkunstwerk — er worden geen fysieke producten verzonden.",
+  "q2": "Hoe lang duurt het voordat ik mijn ontwerp ontvang?",
+  "a2": "Je bestanden worden binnen 24 uur na ontvangst van je foto in je inbox afgeleverd (meestal veel sneller).",
+  "q3": "Welke bestandsformaten kan ik uploaden?",
+  "a3": "We accepteren JPG, PNG, WEBP en HEIC. De meeste telefoonfoto's werken perfect.",
+  "q4": "Welk type foto werkt het beste?",
+  "a4": "Gebruik scherpe, hoge-resolutiefoto's met goede belichting en een goed in beeld gebracht onderwerp. Vermijd vage, donkere of overdreven gedetailleerde foto's. Geen screenshots of bijgesneden afbeeldingen.",
+  "q5": "Hoe lang bewaren jullie mijn foto's?",
+  "a5": "Je bestanden worden 30 dagen veilig opgeslagen en daarna permanent verwijderd.",
+  "q6": "Voor welk niveau is dit geschikt?",
+  "a6": "Onze sjablonen zijn geschikt voor Beginners, Gemiddelde en Gevorderde makers. Twijfel je? Kies dan Gemiddeld — de beste balans tussen detail en relaxte moeilijkheidsgraad.",
+  "q7": "Waarom moeten we weten welke Guangna sets ik heb?",
+  "a7": "Hierdoor kunnen we elk kleurvlak direct koppelen aan de brush markers die jij hebt. Je krijgt combinaties die je meteen kunt gebruiken, zonder giswerk en zonder ontbrekende kleuren.",
+  "q8": "Werkt Guangna by Number met alle Guangna markers?",
+  "a8": "Het werkt met elke set die op onze creatiepagina staat vermeld! Staat jouw specifieke set er niet bij, stuur ons gerust een mailtje — we voegen deze graag voor je toe.",
+  "q9": "Mijn markerkleur komt niet overeen met de palet gids?",
+  "a9": "Kleine kleurverschillen kunnen ontstaan door verschillen in inktpartijen, printkwaliteit of papierabsorptie. Je gids geeft de best passende aanbeveling.",
+  "q10": "Hoe print ik mijn kleurplaat?",
+  "a10": "Print thuis of bij een lokale printshop. Gebruik dikker papier (160-200 gsm), print op 100% schaal, ontworpen voor A4 of Letter formaat.",
+  "q11": "Bieden jullie restitutie aan?",
+  "a11": "Vanwege de gepersonaliseerde digitale aard van onze producten kan er geen restitutie worden verleend zodra het ontwerp is gestart.",
+  "q12": "Wat maakt CreaBeaStudio anders?",
+  "a12": "Wij zijn gespecialiseerd in op maat gemaakte kleurplaten speciaal afgestemd op Guangna brush markers — zodat je direct kunt beginnen met kleuren, zonder tijdrovend kleuren uitzoeken.",
+  "stillQuestions": "Nog vragen?",
+  "contactUs": "Contact"
+}
