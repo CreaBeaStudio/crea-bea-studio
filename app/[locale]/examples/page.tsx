@@ -3,102 +3,33 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 
 const EXAMPLES = [
-  {
-    photo: "/example-family-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite family, celebration photo",
-  },
-  {
-    photo: "/example-city-dog-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite pet photo",
-  },
-  {
-    photo: "/example-beach-couple-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite holiday, celebration photo",
-  },
-  {
-    photo: "/example-kitten-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite pet photo",
-  },
-  {
-    photo: "/example-col-couple-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite family, celebration photo",
-  },
-  {
-    photo: "/example-dog-rain-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite pet photo",
-  },
-  {
-    photo: "/example-wedding-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite family, celebration photo",
-  },
-  {
-    photo: "/example-fieldflower-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite nature, holiday photo",
-  },
-  {
-    photo: "/example-graduate-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite celebration photo",
-  },
-  {
-    photo: "/example-3kids-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite family photo",
-  },
-  {
-    photo: "/example-ktemple-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite holiday photo",
-  },
-  {
-    photo: "/example-boy-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite family photo",
-  },
-  {
-    photo: "/example-bday-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite celebration, family photo",
-  },
-  {
-    photo: "/example-mountain-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite holiday photo",
-  },
-  {
-    photo: "/example-girl-24.png",
-    label: "Intermediate",
-    desc:  "Perfect for your favorite family photo",
-  },
-  {
-    photo: "/example-poppy-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite nature, holiday photo",
-  },
-  {
-    photo: "/example-xmas-15.png",
-    label: "Beginner",
-    desc:  "Perfect for your favorite holiday, celebration photo",
-  },{
-    photo: "/example-babyhand-36.png",
-    label: "Advanced",
-    desc:  "Perfect for your favorite family, celebration photo",
-  },
+  { photo: "/example-family-15.png", labelKey: "labelBeginner", descKey: "descFamilyCelebration" },
+  { photo: "/example-city-dog-24.png", labelKey: "labelIntermediate", descKey: "descPet" },
+  { photo: "/example-beach-couple-36.png", labelKey: "labelAdvanced", descKey: "descHolidayCelebration" },
+  { photo: "/example-kitten-15.png", labelKey: "labelBeginner", descKey: "descPet" },
+  { photo: "/example-col-couple-24.png", labelKey: "labelIntermediate", descKey: "descFamilyCelebration" },
+  { photo: "/example-dog-rain-15.png", labelKey: "labelBeginner", descKey: "descPet" },
+  { photo: "/example-wedding-24.png", labelKey: "labelIntermediate", descKey: "descFamilyCelebration" },
+  { photo: "/example-fieldflower-24.png", labelKey: "labelIntermediate", descKey: "descNatureHoliday" },
+  { photo: "/example-graduate-24.png", labelKey: "labelIntermediate", descKey: "descCelebration" },
+  { photo: "/example-3kids-36.png", labelKey: "labelAdvanced", descKey: "descFamily" },
+  { photo: "/example-ktemple-36.png", labelKey: "labelAdvanced", descKey: "descHoliday" },
+  { photo: "/example-boy-15.png", labelKey: "labelBeginner", descKey: "descFamily" },
+  { photo: "/example-bday-36.png", labelKey: "labelAdvanced", descKey: "descCelebrationFamily" },
+  { photo: "/example-mountain-15.png", labelKey: "labelBeginner", descKey: "descHoliday" },
+  { photo: "/example-girl-24.png", labelKey: "labelIntermediate", descKey: "descFamily" },
+  { photo: "/example-poppy-36.png", labelKey: "labelAdvanced", descKey: "descNatureHoliday" },
+  { photo: "/example-xmas-15.png", labelKey: "labelBeginner", descKey: "descHolidayCelebration" },
+  { photo: "/example-babyhand-36.png", labelKey: "labelAdvanced", descKey: "descFamilyCelebration" },
 ];
 
 const AUTOPLAY_INTERVAL = 4000;
 
 export default function Examples() {
+  const t = useTranslations("examples");
   const [current, setCurrent] = useState(0);
   const [paused, setPaused]   = useState(false);
 
@@ -127,26 +58,26 @@ export default function Examples() {
       <Navbar />
       <main style={{ padding: "60px 24px", maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
         <h1 style={{ fontFamily: "Nunito, sans-serif", color:"var(--pink)", fontWeight: 900, fontSize: "clamp(28px,4vw,44px)", marginBottom: 16 }}>
-          📸 Examples
+          📸 {t("title")}
         </h1>
         <p style={{ color: "#666", fontSize: 17, maxWidth: 560, margin: "0 auto 48px" }}>
-          See what CreaBeaStudio can create from your photos. Every Guangna by Number is uniquely generated from your photo and tailored to your Guangna brush markers and skill level.
+          {t("subtitle")}
         </p>
-              <div style={{
-        background: "linear-gradient(135deg,#FFF0F3,#FDF6F0)",
-        border: "2px solid var(--pink)",
-        borderRadius: 16,
-        padding: "20px 28px",
-        maxWidth: 560,
-        margin: "0 auto 40px",
-      }}>
-        <p style={{ fontWeight: 800, fontSize: 18, color: "var(--pink)", marginBottom: 6 }}>
-          🎁 A Unique and Personal Gift
-        </p>
-        <p style={{ color: "#555", fontSize: 14, margin: 0 }}>
-        Color your memories and bring them to life. Each Guangna by Number is created from your favorite photo and matched to your markers, becoming a one-of-a-kind keepsake for birthdays, holidays, or meaningful moments.
-        </p>
-</div>
+        <div style={{
+          background: "linear-gradient(135deg,#FFF0F3,#FDF6F0)",
+          border: "2px solid var(--pink)",
+          borderRadius: 16,
+          padding: "20px 28px",
+          maxWidth: 560,
+          margin: "0 auto 40px",
+        }}>
+          <p style={{ fontWeight: 800, fontSize: 18, color: "var(--pink)", marginBottom: 6 }}>
+            🎁 {t("giftTitle")}
+          </p>
+          <p style={{ color: "#555", fontSize: 14, margin: 0 }}>
+            {t("giftText")}
+          </p>
+        </div>
         {/* ── Slideshow ── */}
         <div
           style={{ position: "relative", maxWidth: 600, margin: "0 auto 48px" }}
@@ -162,7 +93,7 @@ export default function Examples() {
           <div style={{ lineHeight: 0 }}>
             <Image
               src={ex.photo}
-              alt={ex.label}
+              alt={t(ex.labelKey)}
               width={0}
               height={0}
               sizes="820px"
@@ -174,15 +105,15 @@ export default function Examples() {
             {/* Caption + dot indicators */}
             <div style={{ padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontWeight: 800, fontSize: 17 }}>{ex.label}</div>
-                <div style={{ color: "#999", fontSize: 13, marginTop: 2 }}>{ex.desc}</div>
+                <div style={{ fontWeight: 800, fontSize: 17 }}>{t(ex.labelKey)}</div>
+                <div style={{ color: "#999", fontSize: 13, marginTop: 2 }}>{t(ex.descKey)}</div>
               </div>
               <div style={{ display: "flex", gap: 6 }}>
                 {EXAMPLES.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => { setPaused(true); setCurrent(i); }}
-                    aria-label={`Go to example ${i + 1}`}
+                    aria-label={t("goToExample", { number: i + 1 })}
                     style={{
                       width: i === current ? 24 : 8,
                       height: 8,
@@ -202,7 +133,7 @@ export default function Examples() {
           {/* Arrow: Previous */}
           <button
             onClick={() => { setPaused(true); prev(); }}
-            aria-label="Previous example"
+            aria-label={t("previousExample")}
             style={{
               position: "absolute", left: -20, top: "40%", transform: "translateY(-50%)",
               width: 44, height: 44, borderRadius: "50%",
@@ -218,7 +149,7 @@ export default function Examples() {
           {/* Arrow: Next */}
           <button
             onClick={() => { setPaused(true); next(); }}
-            aria-label="Next example"
+            aria-label={t("nextExample")}
             style={{
               position: "absolute", right: -20, top: "40%", transform: "translateY(-50%)",
               width: 44, height: 44, borderRadius: "50%",
@@ -233,7 +164,7 @@ export default function Examples() {
         </div>
 
         <Link href="/create" className="btn-primary" style={{ display: "inline-flex", fontSize: 17, padding: "16px 40px" }}>
-          Create your Guangna by Number now →
+          {t("createCta")}
         </Link>
       </main>
     </>
