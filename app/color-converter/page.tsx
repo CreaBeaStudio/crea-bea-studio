@@ -440,8 +440,7 @@ export default function ColorConverter() {
                     <div style={{marginTop:12,padding:"10px 14px",borderRadius:10,background:"var(--cream)",display:"flex",alignItems:"center",gap:12}}>
                       <ProtectedSwatch rgb={dominantRgb} size={36}/>
                       <div style={{fontSize:13}}>
-                        <div style={{fontWeight:700}}>Dominant colour extracted</div>
-                        <div style={{color:"var(--muted)"}}>{rgbToHex(dominantRgb)} · rgb({dominantRgb.join(", ")})</div>
+                        <div style={{fontWeight:700}}>Dominant color extracted</div>
                       </div>
                     </div>
                   )}
