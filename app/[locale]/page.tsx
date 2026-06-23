@@ -1,35 +1,38 @@
 import Navbar from "./components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const FEATURES = [
-  { icon: "📸", title: "Your favourite photo" },
-  { icon: "🎨", title: "No more guessing colors" },
-  { icon: "✏️", title: "Made for your Guangna markers", isGuangna: true },
+  { icon: "📸", key: "featureCamera" },
+  { icon: "🎨", key: "featureNoGuessing" },
+  { icon: "✏️", key: "featureGuangna", isGuangna: true },
 ];
 
 const HOW = [
-  { step: "01", label: "Upload", desc: "Upload any photo. We'll take care of the rest." },
-  { step: "02", label: "Choose", desc: "Select your Guangna markers and skill level." },
-  { step: "03", label: "Order", desc: "We create your custom Guangna by Number file" },
-  { step: "04", label: "Color", desc: "Download, print, and start coloring!" },
+  { step: "01", labelKey: "howUpload", descKey: "howUploadDesc" },
+  { step: "02", labelKey: "howChoose", descKey: "howChooseDesc" },
+  { step: "03", labelKey: "howOrder", descKey: "howOrderDesc" },
+  { step: "04", labelKey: "howColor", descKey: "howColorDesc" },
 ];
 
 const LEVELS = [
-  { name: "Beginner", desc: "Ideal for your first Guangna by Number. Fewer colors, larger areas, easy and relaxing coloring.", emoji: "🌱", img: "/detail-beginner.png" },
-  { name: "Intermediate", desc: "Balanced mix of effort and detail. More colors, shading and detail give you more variety.", emoji: "🌿", img: "/detail-int.png" },
-  { name: "Advanced", desc: "A wider color range, intricate areas, more depth and color richness.", emoji: "🌲", img: "/detail-adv.png" },
+  { nameKey: "levelBeginner", descKey: "levelBeginnerDesc", emoji: "🌱", img: "/detail-beginner.png" },
+  { nameKey: "levelIntermediate", descKey: "levelIntermediateDesc", emoji: "🌿", img: "/detail-int.png", popular: true },
+  { nameKey: "levelAdvanced", descKey: "levelAdvancedDesc", emoji: "🌲", img: "/detail-adv.png" },
 ];
 
 const WHAT_YOU_GET = [
-  { feature: "Guangna by Number Outline (PDF)", beginner: true, intermediate: true, advanced: true },
-  { feature: "Guangna Color Palette Guide (PDF)", beginner: true, intermediate: true, advanced: true },
-  { feature: "Impression Finished Artwork (PDF)", beginner: true, intermediate: true, advanced: true },
-  { feature: "Impression Finished Artwork (JPG)", beginner: false, intermediate: true, advanced: true },
-  { feature: "Colored Guangna by Number Outline (PDF)", beginner: false, intermediate: false, advanced: true },
+  { featureKey: "wdygOutline", beginner: true, intermediate: true, advanced: true },
+  { featureKey: "wdygPalette", beginner: true, intermediate: true, advanced: true },
+  { featureKey: "wdygImpressionPdf", beginner: true, intermediate: true, advanced: true },
+  { featureKey: "wdygImpressionJpg", beginner: false, intermediate: true, advanced: true },
+  { featureKey: "wdygColoredOutline", beginner: false, intermediate: false, advanced: true },
 ];
 
 export default function Home() {
+  const t = useTranslations("home");
+
   return (
     <>
       <style>{`
@@ -146,30 +149,30 @@ export default function Home() {
             {/* Left: text */}
             <div className="hero-left">
               <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:16, marginBottom:16 }}>
-                🐾 CreaBeaStudio
+                {t("badge")}
               </p>
               <h1 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(36px,5.5vw,58px)", lineHeight:1.1, marginBottom:24 }}>
-                Turn your photo into<br />
-                <span style={{ color:"#FF4D6D" }}>Guangna by Number</span><br />
-                artwork
+                {t("heroTitle1")}<br />
+                <span style={{ color:"#FF4D6D" }}>{t("heroTitle2")}</span><br />
+                {t("heroTitle3")}
               </h1>
               <p style={{ fontSize:"clamp(16px,2.5vw,24px)", color:"#444", maxWidth:550, marginBottom:32, lineHeight:1.7 }}>
-                Take the guesswork out of color selection - just pick up your Guangna brush markers and start coloring.
+                {t("heroSubtitle")}
               </p>
               <div className="hero-buttons">
                 <a href="/create" className="btn-primary hero-cta">
-                  Create your Guangna By Number →
+                  {t("heroCta")}
                 </a>
-                <a href="/examples" className="btn-outline hero-outline">See examples</a>
+                <a href="/examples" className="btn-outline hero-outline">{t("heroSeeExamples")}</a>
               </div>
               <div className="feature-cards">
                 {FEATURES.map(f => (
-                  <div key={f.title} className="feature-card">
+                  <div key={f.key} className="feature-card">
                     {f.isGuangna
                       ? <Image src="/guangna-marker.png" alt="Guangna marker" width={45} height={30} style={{ objectFit:"contain", marginBottom:6 }} />
                       : <div style={{ fontSize:26, marginBottom:6 }}>{f.icon}</div>
                     }
-                    <div style={{ fontWeight:700, fontSize:14 }}>{f.title}</div>
+                    <div style={{ fontWeight:700, fontSize:14 }}>{t(f.key)}</div>
                   </div>
                 ))}
               </div>
@@ -195,7 +198,7 @@ export default function Home() {
                 display:"flex", alignItems:"center", justifyContent:"center",
                 width:"100%", maxWidth:800, marginTop:16
               }}>
-                <strong>Guangna by Number <br /> includes a color palette matched to your Guangna markers — with exact codes and numbers</strong>
+                <strong>{t("paletteBanner")}</strong>
               </div>
             </div>
           </div>
@@ -210,10 +213,10 @@ export default function Home() {
           <div style={{ maxWidth:700, margin:"0 auto" }}>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
               <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
-              Guangna Color Converter
+              {t("converterTitle")}
             </h2>
             <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
-              Do you have a #HEX, RGB or a picture? Find the closest Guangna color instantly.
+              {t("converterSubtitle")}
             </p>
             <Link href="/color-converter" style={{
               background:"white", color:"var(--pink)",
@@ -221,7 +224,7 @@ export default function Home() {
               fontWeight:700, fontSize:16,
               textDecoration:"none", display:"inline-block"
             }}>
-              Open Guangna Color Converter →
+              {t("converterCta")}
             </Link>
           </div>
         </section>
@@ -229,9 +232,9 @@ export default function Home() {
         {/* ── HOW IT WORKS ── */}
         <section style={{ padding:"80px 24px", background:"white" }}>
           <div style={{ maxWidth:1100, margin:"0 auto" }}>
-            <p style={{ textAlign:"center", color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Process</p>
+            <p style={{ textAlign:"center", color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>{t("processLabel")}</p>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", textAlign:"center", marginBottom:56 }}>
-              How it Works
+              {t("howTitle")}
             </h2>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:32 }}>
               {HOW.map(h => (
@@ -243,14 +246,14 @@ export default function Home() {
                     fontSize:20, display:"flex", alignItems:"center", justifyContent:"center",
                     margin:"0 auto 16px", boxShadow:"0 4px 16px rgba(244,96,122,0.3)"
                   }}>{h.step}</div>
-                  <h3 style={{ fontWeight:800, fontSize:20, marginBottom:8 }}>{h.label}</h3>
-                  {h.desc && <p style={{ color:"#666", fontSize:15 }}>{h.desc}</p>}
+                  <h3 style={{ fontWeight:800, fontSize:20, marginBottom:8 }}>{t(h.labelKey)}</h3>
+                  <p style={{ color:"#666", fontSize:15 }}>{t(h.descKey)}</p>
                 </div>
               ))}
             </div>
             <div style={{ textAlign:"center", marginTop:48 }}>
               <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 36px" }}>
-                Create your Guangna by Number page
+                {t("createCta")}
               </a>
             </div>
           </div>
@@ -259,36 +262,36 @@ export default function Home() {
         {/* ── SKILL LEVELS ── */}
         <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
           <div style={{ maxWidth:1100, margin:"0 auto" }}>
-            <p style={{ textAlign:"center", color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Choose your level</p>
+            <p style={{ textAlign:"center", color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>{t("chooseLevelLabel")}</p>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", textAlign:"center", marginBottom:16 }}>
-              From beginner to advanced
+              {t("levelsTitle")}
             </h2>
             <p style={{ textAlign:"center", color:"#666", fontSize:16, maxWidth:500, margin:"0 auto 48px" }}>
-              Higher levels include more colors and finer details — choose the level that suits you.
+              {t("levelsSubtitle")}
             </p>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:24 }}>
               {LEVELS.map(l => (
-                <div key={l.name} className="card" style={{
+                <div key={l.nameKey} className="card" style={{
                   textAlign:"center", padding:32,
-                  border: l.name==="Intermediate" ? "2px solid var(--pink)" : "2px solid transparent",
+                  border: l.popular ? "2px solid var(--pink)" : "2px solid transparent",
                   position:"relative", borderRadius:20
                 }}>
-                  {l.name==="Intermediate" && (
+                  {l.popular && (
                     <div style={{
                       position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)",
                       background:"var(--pink)", color:"white",
                       borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700
-                    }}>Most Popular</div>
+                    }}>{t("mostPopular")}</div>
                   )}
                   <div style={{ display:"flex", justifyContent:"center", marginBottom:16 }}>
-                    <Image src={l.img} alt={`${l.name} detail`} width={350} height={250}
+                    <Image src={l.img} alt={`${t(l.nameKey)} detail`} width={350} height={250}
                       style={{ borderRadius:10, objectFit:"cover", border:"3px solid #eee", width:"100%", height:"auto" }} />
                   </div>
                   <div style={{ fontSize:32, marginBottom:8 }}>{l.emoji}</div>
-                  <h3 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:24, marginBottom:12 }}>{l.name}</h3>
-                  <p style={{ color:"#555", fontSize:15, marginBottom:24 }}>{l.desc}</p>
+                  <h3 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:24, marginBottom:12 }}>{t(l.nameKey)}</h3>
+                  <p style={{ color:"#555", fontSize:15, marginBottom:24 }}>{t(l.descKey)}</p>
                   <a href="/create" className="btn-primary" style={{ width:"100%", display:"flex", justifyContent:"center" }}>
-                    Try {l.name}
+                    {t("tryLevel", { level: t(l.nameKey) })}
                   </a>
                 </div>
               ))}
@@ -300,24 +303,24 @@ export default function Home() {
         <section style={{ padding:"80px 24px", background:"white" }}>
           <div style={{ maxWidth:1100, margin:"0 auto" }} className="palette-grid">
             <div>
-              <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Included with every order</p>
+              <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>{t("includedLabel")}</p>
               <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(26px,4vw,38px)", marginBottom:24, lineHeight:1.2 }}>
-                What is the Guangna<br />Color Palette Guide?
+                {t("paletteTitle1")}<br />{t("paletteTitle2")}
               </h2>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:16 }}>
-                The Guangna Color Palette Guide is your <strong>personalized roadmap to effortless, beautiful coloring</strong> — tailored specifically to the Guangna markers you own.
+                {t("paletteP1")}
               </p>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:16 }}>
-                No more guessing which colors to use. No more creating test swatches or comparing endless shades. This guide removes the uncertainty and lets you jump straight into what you love: coloring.
+                {t("paletteP2")}
               </p>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:16 }}>
-                Each section of your Guangna by Number design is matched with the best-fitting Guangna marker from <strong>your personal set</strong>, ensuring accurate and satisfying results every time. At times, you'll find creative color options — giving you the freedom to add subtle shading, depth, and dimension.
+                {t("paletteP3")}
               </p>
               <p style={{ fontSize:16, color:"#444", lineHeight:1.8, marginBottom:24 }}>
-                Simply get your markers ready, follow the guide, and start coloring with confidence.
+                {t("paletteP4")}
               </p>
               <p style={{ fontSize:17, fontWeight:800, color:"var(--pink)" }}>
-                On your mark. Pick up your markers. Get set… and color.{" "}
+                {t("paletteSlogan")}{" "}
                 <Image src="/guangna-marker.png" alt="Guangna marker" width={150} height={100} style={{ objectFit:"contain", marginBottom:6 }} />
               </p>
             </div>
@@ -363,9 +366,9 @@ export default function Home() {
           `}</style>
 
           <div style={{ maxWidth:900, margin:"0 auto", textAlign:"center" }}>
-            <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>Every order includes</p>
+            <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>{t("everyOrderLabel")}</p>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", marginBottom:48 }}>
-              What do you get?
+              {t("wdygTitle")}
             </h2>
 
             <div className="wdyg-table" style={{
@@ -377,25 +380,29 @@ export default function Home() {
                 <thead>
                   <tr>
                     <th style={{ padding:"16px 20px", textAlign:"left", background:"#f5f5f5", fontWeight:700, color:"#444" }} />
-                    {["Beginner","Intermediate","Advanced"].map(level => (
-                      <th key={level} style={{
+                    {[
+                      { key: "levelBeginner" },
+                      { key: "levelIntermediate" },
+                      { key: "levelAdvanced" },
+                    ].map(({ key }) => (
+                      <th key={key} style={{
                         padding:"16px 12px", textAlign:"center",
                         background:"var(--pink)", color:"white",
                         fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:14,
-                      }}>{level}</th>
+                      }}>{t(key)}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {WHAT_YOU_GET.map((row, i) => (
-                    <tr key={row.feature} style={{ borderTop: i === 0 ? "none" : "1px solid #eee" }}>
+                    <tr key={row.featureKey} style={{ borderTop: i === 0 ? "none" : "1px solid #eee" }}>
                       <td style={{ padding:"14px 16px", textAlign:"left", fontWeight:600, color:"#333", background:"#fafafa", fontSize:13 }}>
-                        {row.feature}
+                        {t(row.featureKey)}
                       </td>
                       {(["beginner","intermediate","advanced"] as const).map(level => (
                         <td key={level} style={{ padding:"14px 12px", textAlign:"center" }}>
                           <input type="checkbox" checked={row[level]} readOnly
-                            aria-label={`${row.feature} — ${level}`}
+                            aria-label={`${t(row.featureKey)} — ${level}`}
                             style={{ width:20, height:20, accentColor:"var(--pink)", cursor:"default" }} />
                         </td>
                       ))}
@@ -407,11 +414,11 @@ export default function Home() {
 
             <div className="wdyg-cards">
               {([
-                { level: "beginner" as const, name: "Beginner", emoji: "🌱" },
-                { level: "intermediate" as const, name: "Intermediate", emoji: "🌿", popular: true },
-                { level: "advanced" as const, name: "Advanced", emoji: "🌲" },
-              ]).map(({ level, name, emoji, popular }) => (
-                <div key={name} style={{
+                { level: "beginner" as const, nameKey: "levelBeginner", emoji: "🌱" },
+                { level: "intermediate" as const, nameKey: "levelIntermediate", emoji: "🌿", popular: true },
+                { level: "advanced" as const, nameKey: "levelAdvanced", emoji: "🌲" },
+              ]).map(({ level, nameKey, emoji, popular }) => (
+                <div key={nameKey} style={{
                   background:"white", borderRadius:20,
                   border: popular ? "2px solid var(--pink)" : "2px solid #eee",
                   padding:"24px 20px", position:"relative", textAlign:"left",
@@ -421,21 +428,21 @@ export default function Home() {
                       position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)",
                       background:"var(--pink)", color:"white",
                       borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700, whiteSpace:"nowrap",
-                    }}>Most Popular</div>
+                    }}>{t("mostPopular")}</div>
                   )}
                   <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
                     <span style={{ fontSize:28 }}>{emoji}</span>
-                    <span style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:22, color:"var(--ink)" }}>{name}</span>
+                    <span style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:22, color:"var(--ink)" }}>{t(nameKey)}</span>
                   </div>
                   <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
                     {WHAT_YOU_GET.map(row => (
-                      <div key={row.feature} style={{
+                      <div key={row.featureKey} style={{
                         display:"flex", alignItems:"center", justifyContent:"space-between",
                         padding:"10px 14px", borderRadius:12,
                         background: row[level] ? "rgba(244,96,122,0.06)" : "#fafafa",
                       }}>
                         <span style={{ fontSize:14, fontWeight:600, color: row[level] ? "var(--ink)" : "#aaa" }}>
-                          {row.feature}
+                          {t(row.featureKey)}
                         </span>
                         <span style={{ fontSize:20, marginLeft:12 }}>{row[level] ? "✅" : "—"}</span>
                       </div>
@@ -447,7 +454,7 @@ export default function Home() {
 
             <div style={{ marginTop:40 }}>
               <a href="/create" className="btn-primary" style={{ fontSize:17, padding:"16px 40px" }}>
-                Create your Guangna by Number →
+                {t("finalCta")}
               </a>
             </div>
           </div>
@@ -459,19 +466,19 @@ export default function Home() {
             <p style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:16, color:"var(--pink)", marginBottom:4 }}>
               CreaBeaStudio
             </p>
-            <p style={{ fontSize:13, marginBottom:12 }}>Color your memories, one number at a time. 🐾</p>
+            <p style={{ fontSize:13, marginBottom:12 }}>{t("footerTagline")}</p>
             <div style={{ display:"flex", gap:20, flexWrap:"wrap", fontSize:13 }}>
-              <a href="/create" style={{ color:"#aaa", textDecoration:"none" }}>Create</a>
-              <a href="/color-converter" style={{ color:"#aaa", textDecoration:"none" }}>Color Converter</a>
-              <a href="/examples" style={{ color:"#aaa", textDecoration:"none" }}>Examples</a>
-              <a href="/Tips&Tricks" style={{ color:"#aaa", textDecoration:"none" }}>Tips&Tricks</a>
-              <a href="/faq" style={{ color:"#aaa", textDecoration:"none" }}>FAQ</a>
+              <a href="/create" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerCreate")}</a>
+              <a href="/color-converter" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerConverter")}</a>
+              <a href="/examples" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerExamples")}</a>
+              <a href="/Tips&Tricks" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTips")}</a>
+              <a href="/faq" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerFaq")}</a>
             </div>
-            <a href="https://www.tiktok.com/@CreaBeaStudio" target="_blank" rel="noopener noreferrer" style={{ color:"#aaa", textDecoration:"none" }}>TikTok</a><div style={{ display:"flex", gap:16, flexWrap:"wrap", fontSize:12, marginTop:8 }}>
-             <a href="/privacy" style={{ color:"#aaa", textDecoration:"none" }}>Privacy Notice</a>
-             <a href="/terms" style={{ color:"#aaa", textDecoration:"none" }}>Terms of Service</a>
-             <a href="/refund" style={{ color:"#aaa", textDecoration:"none" }}>Refund Policy</a>
-              </div><p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>© {new Date().getFullYear()} CreaBeaStudio. All rights reserved.</p>
+            <a href="https://www.tiktok.com/@CreaBeaStudio" target="_blank" rel="noopener noreferrer" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTiktok")}</a><div style={{ display:"flex", gap:16, flexWrap:"wrap", fontSize:12, marginTop:8 }}>
+             <a href="/privacy" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerPrivacy")}</a>
+             <a href="/terms" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTerms")}</a>
+             <a href="/refund" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerRefund")}</a>
+              </div><p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>{t("footerRights", { year: new Date().getFullYear() })}</p>
           </div>
           <Image src="/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
             style={{ height:"auto", width:"auto", maxHeight:120, maxWidth:160, objectFit:"contain" }} />

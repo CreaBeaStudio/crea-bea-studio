@@ -2,21 +2,23 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-
-const LINKS = [
-  ["Home", "/"],
-  { label: "Guangna", children: [
-    ["Create Guangna by Number", "/create"],
-    ["Color Converter", "/color-converter"],
-  ]},
-  ["Examples", "/examples"],
-  ["Tips & Tricks", "/tips"],
-  ["FAQ", "/faq"],
-];
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
+  const t = useTranslations("nav");
+
+  const LINKS = [
+    ["home", "/"],
+    { labelKey: "guangna", children: [
+      ["createGuangna", "/create"],
+      ["colorConverter", "/color-converter"],
+    ]},
+    ["examples", "/examples"],
+    ["tips", "/tips"],
+    ["faq", "/faq"],
+  ];
 
   return (
     <>
@@ -77,8 +79,8 @@ export default function Navbar() {
               style={{ objectFit: "contain", alignSelf: "flex-end", width:"auto" }} />
             <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
-              <span className="tagline-full" style={{ fontSize: 18, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700, whiteSpace: "nowrap" }}>Color Your Memories</span>
-              <span className="tagline-short" style={{ fontSize: 16, color: "var(--pink)", fontWeight: 700, whiteSpace: "nowrap" }}>CreaBeaStudio</span>
+              <span className="tagline-full" style={{ fontSize: 18, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", fontWeight: 700, whiteSpace: "nowrap" }}>{t("tagline")}</span>
+              <span className="tagline-short" style={{ fontSize: 16, color: "var(--pink)", fontWeight: 700, whiteSpace: "nowrap" }}>{t("taglineShort")}</span>
               <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>
             </span>
           </Link>
@@ -88,22 +90,22 @@ export default function Navbar() {
             {LINKS.map((item: any) => {
               if (item.children) {
                 return (
-                  <div key={item.label} className="dropdown-wrapper" style={{ position: "relative" }}>
+                  <div key={item.labelKey} className="dropdown-wrapper" style={{ position: "relative" }}>
                     <button className="nav-link" style={{
                       background: "none", border: "none", cursor: "pointer",
                       color: "var(--ink)", fontSize: 15, fontWeight: 500,
                       padding: "6px 12px", borderRadius: 8, whiteSpace: "nowrap",
                       display: "flex", alignItems: "center", gap: 4,
                     }}>
-                      {item.label} <span style={{ fontSize: 11 }}>▾</span>
+                      {t(item.labelKey)} <span style={{ fontSize: 11 }}>▾</span>
                     </button>
                     <div className="dropdown-menu">
-                      {item.children.map(([label, href]: string[]) => (
-                        <Link key={label} href={href} style={{
+                      {item.children.map(([labelKey, href]: string[]) => (
+                        <Link key={labelKey} href={href} style={{
                           textDecoration: "none", color: "var(--ink)",
                           fontSize: 14, fontWeight: 500, padding: "8px 12px",
                           display: "block", whiteSpace: "nowrap",
-                        }}>{label}</Link>
+                        }}>{t(labelKey)}</Link>
                       ))}
                     </div>
                   </div>
@@ -114,12 +116,13 @@ export default function Navbar() {
                   textDecoration: "none", color: "var(--ink)", fontSize: 15,
                   fontWeight: 500, padding: "6px 12px", borderRadius: 8, whiteSpace: "nowrap",
                 }}>
-                  {item[0]}
+                  {t(item[0])}
                 </Link>
               );
             })}
 
-       
+            {/* Language switcher */}
+            <LanguageSwitcher />
 
             {/* Email icon */}
             <a href="mailto:hello@creabeastudio.com" title="Contact us" style={{
@@ -173,15 +176,15 @@ export default function Navbar() {
           {LINKS.map((item: any) => {
             if (item.children) {
               return (
-                <div key={item.label}>
+                <div key={item.labelKey}>
                   <div style={{ padding: "12px 8px 4px", fontSize: 13, fontWeight: 700, color: "var(--pink)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    {item.label}
+                    {t(item.labelKey)}
                   </div>
-                  {item.children.map(([label, href]: string[]) => (
-                    <Link key={label} href={href} onClick={() => setOpen(false)} style={{
+                  {item.children.map(([labelKey, href]: string[]) => (
+                    <Link key={labelKey} href={href} onClick={() => setOpen(false)} style={{
                       textDecoration: "none", color: "var(--ink)", fontSize: 16,
                       fontWeight: 500, padding: "10px 16px", display: "block", borderRadius: 8,
-                    }}>{label}</Link>
+                    }}>{t(labelKey)}</Link>
                   ))}
                 </div>
               );
@@ -190,14 +193,18 @@ export default function Navbar() {
               <Link key={item[0]} href={item[1]} onClick={() => setOpen(false)} style={{
                 textDecoration: "none", color: "var(--ink)", fontSize: 17,
                 fontWeight: 500, padding: "12px 8px", borderRadius: 8,
-              }}>{item[0]}</Link>
+              }}>{t(item[0])}</Link>
             );
           })}
-         
+
+          <div style={{ padding: "12px 8px" }}>
+            <LanguageSwitcher />
+          </div>
+
           <a href="mailto:hello@creabeastudio.com" style={{
             textDecoration: "none", color: "var(--ink)", fontSize: 17,
             fontWeight: 500, padding: "12px 8px", borderRadius: 8,
-          }}>✉️ Contact us</a>
+          }}>✉️ {t("contactUs")}</a>
         </div>
       </nav>
     </>

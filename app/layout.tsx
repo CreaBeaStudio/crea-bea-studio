@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import ClarityInit from './clarity-init';
 
 export const metadata: Metadata = {
   title: "CreaBeaStudio – Custom Paint by Number",
@@ -25,10 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
-        <ClarityInit />
-        <Analytics />
-        <SpeedInsights />
-        <GoogleAnalytics gaId="G-PFXB1CJ13C" />
       </body>
     </html>
   );

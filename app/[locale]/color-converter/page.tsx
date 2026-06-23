@@ -438,12 +438,12 @@ export default function ColorConverter() {
                   {photoName && <p style={{fontSize:12,color:"var(--muted)",marginTop:6}}>✓ {photoName}</p>}
                   {dominantRgb && (
                     <div style={{marginTop:12,padding:"10px 14px",borderRadius:10,background:"var(--cream)",display:"flex",alignItems:"center",gap:12}}>
-                      <ProtectedSwatch rgb={dominantRgb} size={36}/>
-                      <div style={{fontSize:13}}>
-                        <div style={{fontWeight:700}}>Dominant color extracted</div>
-                      </div>
-                    </div>
-                  )}
+    <ProtectedSwatch rgb={dominantRgb} size={36}/>
+    <div style={{fontSize:13}}>
+      <div style={{fontWeight:700}}>Dominant color extracted</div>
+    </div>
+  </div>
+)}
                 </div>
               )}
 
