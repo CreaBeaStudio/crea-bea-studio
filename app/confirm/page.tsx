@@ -178,47 +178,9 @@ function ConfirmContent() {
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
         <button onClick={goToCheckout} className="btn-primary" disabled={loading}
   style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
-  {loading ? "⏳ Preparing checkout…" : `🔒 Proceed to Payment — ${grandTotal}€`}
+  {loading ? "⏳ Preparing checkout…" : `Proceed to Payment — ${grandTotal}€`}
 </button>
-          <p style={{ textAlign:"center", fontSize:13, color:"var(--muted)", margin:"4px 0" }}>
-  We're almost ready! Our payment system is currently being set up. Feel free to reserve your order, and we'll let you know the moment you can complete your purchase.
-</p>
 
-<button
-  onClick={async () => {
-    try {
-      await fetch("/api/reserve-confirmation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          orderId,
-          summary: allOrders.map(o => `${o.photoName} — ${o.levelLabel}`).join(", "),
-          grandTotal,
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to send reserve confirmation:", err);
-    }
-    const q = new URLSearchParams({
-      email,
-      orderId,
-      levels: allOrders.map(o => o.level).join(","),
-      photoNames: allOrders.map(o => o.photoName).join("|"),
-    });
-    router.push(`/complete-order?${q.toString()}`);
-  }}
-  
-  style={{
-    width:"100%", fontSize:15, padding:"14px",
-    border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
-    fontWeight:700, borderRadius:14, cursor:"pointer", fontFamily:"Nunito, sans-serif",
-  }}
-  onMouseEnter={e => (e.currentTarget.style.background = "#FFF0F3")}
-  onMouseLeave={e => (e.currentTarget.style.background = "white")}
->
-  🔖 Reserve your Order
-</button>
           <button onClick={orderAnother}
             style={{
               width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
