@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       from:       "CreaBeaStudio <orders@creabeastudio.com>",
       to:         notifyEmail,
       replyTo:    customerEmail,
-      subject:    `🔖 RESERVED — Order #${orderId} from ${customerEmail} (awaiting payment link)`,
+      subject:    `🎨 New Order #${orderId} from ${customerEmail} (awaiting payment)`,
       attachments: [
         {
           filename:    imageFile.name,
@@ -77,12 +77,9 @@ export async function POST(req: NextRequest) {
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
           <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-            <h1 style="color:white;margin:0;font-size:22px;">🔖 Reserved Order — Awaiting Payment</h1>
+            <h1 style="color:white;margin:0;font-size:22px;">🎨 New Guangna by Number Order (Awaiting Payment)</h1>
           </div>
           <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
-            <div style="margin-bottom:16px;padding:12px 16px;background:#FFF0C0;border-radius:8px;font-size:14px;color:#7a5c00;">
-              ⏳ This customer reserved their order before payment was live. Once LemonSqueezy checkout is ready, send them their <code>/complete-order</code> link so they can pay.
-            </div>
             <table style="width:100%;border-collapse:collapse;font-size:15px;">
               <tr>
                 <td style="padding:10px 0;color:#888;width:40%;">🔖 Order ID</td>
@@ -120,7 +117,7 @@ export async function POST(req: NextRequest) {
             ${multiOrderTable}
 
             <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
-              💡 No customer email has been sent yet for this order. They'll only receive payment confirmation once they actually complete checkout via LemonSqueezy.
+              💡 This is a pre-payment notification. The customer will receive their confirmation email once they pay via LemonSqueezy.
             </div>
           </div>
         </div>
@@ -130,7 +127,7 @@ export async function POST(req: NextRequest) {
     console.log("Resend response:", JSON.stringify({ data, error }));
     if (error) throw new Error(JSON.stringify(error));
 
-    console.log("Reserved order email sent, orderId:", orderId);
+    console.log("Email sent successfully, orderId:", orderId);
     return NextResponse.json({ success: true, orderId });
 
   } catch (e: any) {

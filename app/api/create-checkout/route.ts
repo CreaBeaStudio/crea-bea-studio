@@ -1,31 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Single-item variants
+// Single-item variants (LIVE mode IDs)
 const LEVEL_TO_VARIANT_ID: Record<string, string> = {
-  "15": "1797148", // Beginner
-  "24": "1797163", // Intermediate
-  "36": "1797167", // Advanced
+  "15": "1827481", // Beginner
+  "24": "1827482", // Intermediate
+  "36": "1827483", // Advanced
 };
 
 // Combo variants — key is the sorted, comma-joined list of levels in the cart.
 // e.g. two Beginners = "15,15", one of each = "15,24,36"
 const COMBO_TO_VARIANT_ID: Record<string, string> = {
-  "15,15":       "1797168", // 2x Beginner (€14)
-  "15,24":       "1811339", // Beginner + Intermediate (€16)
-  "15,36":       "1811729", // Beginner + Advanced (€18)
-  "24,24":       "1811734", // 2x Intermediate (€18)
-  "24,36":       "1811819", // Intermediate + Advanced (€20)
-  "36,36":       "1811825", // 2x Advanced (€22)
-  "15,15,15":    "1811829", // 3x Beginner (€21)
-  "15,15,24":    "1811830", // 2x Beginner + 1x Intermediate (€23)
-  "15,15,36":    "1811832", // 2x Beginner + 1x Advanced (€25)
-  "15,24,24":    "1811833", // 1x Beginner + 2x Intermediate (€25)
-  "15,24,36":    "1811287", // Beginner + Intermediate + Advanced (€27)
-  "15,36,36":    "1811835", // 1x Beginner + 2x Advanced (€29)
-  "24,24,24":    "1811837", // 3x Intermediate (€27)
-  "24,24,36":    "1811838", // 2x Intermediate + 1x Advanced (€29)
-  "24,36,36":    "1811840", // 1x Intermediate + 2x Advanced (€31)
-  "36,36,36":    "1811842", // 3x Advanced (€33)
+  "15,15":     "1827484", // 2x Beginner (€14)
+  "15,24":     "1827486", // Beginner + Intermediate (€16)
+  "15,36":     "1827487", // Beginner + Advanced (€18)
+  "24,24":     "1827488", // 2x Intermediate (€18)
+  "24,36":     "1827489", // Intermediate + Advanced (€20)
+  "36,36":     "1827490", // 2x Advanced (€22)
+  "15,15,15":  "1827491", // 3x Beginner (€21)
+  "15,15,24":  "1827492", // 2x Beginner + 1x Intermediate (€23)
+  "15,15,36":  "1827493", // 2x Beginner + 1x Advanced (€25)
+  "15,24,24":  "1827494", // 1x Beginner + 2x Intermediate (€25)
+  "15,24,36":  "1827485", // Beginner + Intermediate + Advanced (€27)
+  "15,36,36":  "1827495", // 1x Beginner + 2x Advanced (€29)
+  "24,24,24":  "1827496", // 3x Intermediate (€27)
+  "24,24,36":  "1827497", // 2x Intermediate + 1x Advanced (€29)
+  "24,36,36":  "1827498", // 1x Intermediate + 2x Advanced (€31)
+  "36,36,36":  "1827499", // 3x Advanced (€33)
 };
 
 function comboKey(levels: string[]): string {

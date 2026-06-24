@@ -3,11 +3,11 @@ import Navbar from "../components/Navbar";
 import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-// LemonSqueezy checkout UUIDs per level
+// LemonSqueezy checkout UUIDs per level — LIVE MODE
 const LEVEL_TO_CHECKOUT_UUID: Record<string, string> = {
-  "15": "7306ab5e-63cd-437e-a651-dec75cb55026", // Beginner
-  "24": "faeed499-4436-4638-8aca-87c8cbe81acd", // Intermediate
-  "36": "9e440091-97a9-4fff-983c-ed21467b0465", // Advanced
+  "15": "5b978c55-d770-4952-845f-57f4d5abbbe0", // Beginner
+  "24": "2eef5a5c-5ec2-4885-bbef-73f071e42045", // Intermediate
+  "36": "9f2e5dc6-34d0-4118-a292-e16c1c4472ab", // Advanced
 };
 
 function PricingContent() {
@@ -52,7 +52,6 @@ function PricingContent() {
           You will be redirected to Lemon Squeezy to complete your payment shortly…
         </p>
 
-        {/* Animated dots */}
         <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
           {[0, 1, 2].map(i => (
             <div key={i} style={{
