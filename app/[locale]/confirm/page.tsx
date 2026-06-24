@@ -176,10 +176,10 @@ function ConfirmContent() {
 
         {/* Buttons */}
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-          <button onClick={goToCheckout} className="btn-primary" disabled={loading}
-            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
-            {loading ? "⏳ Preparing checkout…" : `🔒 Proceed to Payment — ${grandTotal}€`}
-          </button>
+        <button onClick={goToCheckout} className="btn-primary" disabled={loading}
+  style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
+  {loading ? "⏳ Preparing checkout…" : `🔒 Proceed to Payment — ${grandTotal}€`}
+</button>
 
           <button onClick={orderAnother}
             style={{
