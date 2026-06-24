@@ -59,11 +59,14 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey  = process.env.LEMONSQUEEZY_API_KEY;
-    const storeId = process.env.LEMONSQUEEZY_STORE_ID;
+const storeId = process.env.LEMONSQUEEZY_STORE_ID;
 
-    if (!apiKey || !storeId) {
-      return NextResponse.json({ error: "Missing LemonSqueezy credentials" }, { status: 500 });
-    }
+console.log("DEBUG storeId:", storeId);
+console.log("DEBUG apiKey starts with:", apiKey?.slice(0, 10));
+
+if (!apiKey || !storeId) {
+  return NextResponse.json({ error: "Missing LemonSqueezy credentials" }, { status: 500 });
+}
 
     const response = await fetch("https://api.lemonsqueezy.com/v1/checkouts", {
       method: "POST",
