@@ -15,6 +15,13 @@ const LEVELS: Record<string, { label: string; price: number; priceLabel: string 
   "36": { label: "🌲 Advanced",     price: 11, priceLabel: "11€" },
 };
 
+// USD prices for the Lemon Squeezy / "Pay in USD" button.
+const USD_PRICES: Record<string, number> = {
+  "15": 9,
+  "24": 12,
+  "36": 14,
+};
+
 type OrderItem = {
   photoName: string;
   level: string;
@@ -56,7 +63,8 @@ function ConfirmContent() {
   };
   const allOrders  = [...prevOrders, thisOrder];
   const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
-
+  const grandTotalUsd = allOrders.reduce((acc, o) => acc + (USD_PRICES[o.level] ?? 0), 0);
+  
   const goToLemonSqueezyCheckout = async () => {
     setLoadingProvider("lemonsqueezy");
     setCheckoutError("");
@@ -250,7 +258,7 @@ function ConfirmContent() {
             {loadingProvider === "lemonsqueezy"
               ? "⏳ Preparing checkout…"
               : PAYHIP_ENABLED
-                ? `🌍 Pay in USD — ${grandTotal}€`
+                  ? `🌍 Pay in USD — $${grandTotalUsd}`
                 : `🔒 Proceed to Payment — ${grandTotal}€`}
           </button>
 
