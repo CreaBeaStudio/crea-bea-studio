@@ -7,7 +7,7 @@ import { buildPayhipCheckoutUrl } from "../../lib/payhip"; // adjust path if you
 
 // Flip this in Vercel's Environment Variables once you've tested the Payhip flow.
 // NEXT_PUBLIC_PAYHIP_ENABLED=true
-const PAYHIP_ENABLED = process.env.NEXT_PUBLIC_PAYHIP_ENABLED === "false";
+const PAYHIP_ENABLED = process.env.NEXT_PUBLIC_PAYHIP_ENABLED === "true";
 
 const LEVELS: Record<string, { label: string; price: number; priceLabel: string }> = {
   "15": { label: "🌱 Beginner",     price: 7,  priceLabel: "7€"  },
