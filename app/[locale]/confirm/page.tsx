@@ -135,7 +135,7 @@ function ConfirmContent() {
             fontFamily:"Nunito, sans-serif", color:"var(--pink)",
             fontWeight:900, fontSize:"clamp(22px,4vw,34px)", marginBottom:8,
           }}>
-            Is everything correct? / Alles correct?
+            Is everything correct?
           </h1>
           <p style={{ color:"#666", fontSize:15 }}>Please review your order before proceeding.</p>
         </div>
