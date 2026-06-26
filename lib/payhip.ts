@@ -3,9 +3,9 @@
 // e.g. https://payhip.com/b/ean3D  ->  the key is "ean3D"
 // Replace the placeholders below once your Payhip products are created.
 export const LEVEL_TO_PAYHIP_KEY: Record<string, string> = {
-    "15": "REPLACE_WITH_BEGINNER_KEY",     // Beginner
-    "24": "REPLACE_WITH_INTERMEDIATE_KEY", // Intermediate
-    "36": "REPLACE_WITH_ADVANCED_KEY",     // Advanced
+    "15": "8JZrE",     // Beginner
+    "24": "gvw3Y", // Intermediate
+    "36": "vxWfT",     // Advanced
   };
   
   /**

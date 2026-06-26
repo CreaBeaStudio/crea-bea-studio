@@ -1,8 +1,13 @@
 "use client";
-import Image from "next/image"
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { buildPayhipCheckoutUrl } from "../../lib/payhip"; // adjust path if your lib folder is elsewhere
+
+// Flip this in Vercel's Environment Variables once you've tested the Payhip flow.
+// NEXT_PUBLIC_PAYHIP_ENABLED=true
+const PAYHIP_ENABLED = process.env.NEXT_PUBLIC_PAYHIP_ENABLED === "false";
 
 const LEVELS: Record<string, { label: string; price: number; priceLabel: string }> = {
   "15": { label: "🌱 Beginner",     price: 7,  priceLabel: "7€"  },
@@ -23,7 +28,7 @@ type OrderItem = {
 function ConfirmContent() {
   const router  = useRouter();
   const params  = useSearchParams();
-  const [loading, setLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] = useState<"lemonsqueezy" | "payhip" | null>(null);
   const [checkoutError, setCheckoutError] = useState("");
 
   const email        = params.get("email")        ?? "";
@@ -52,8 +57,8 @@ function ConfirmContent() {
   const allOrders  = [...prevOrders, thisOrder];
   const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
 
-  const goToCheckout = async () => {
-    setLoading(true);
+  const goToLemonSqueezyCheckout = async () => {
+    setLoadingProvider("lemonsqueezy");
     setCheckoutError("");
     try {
       const allLevels = allOrders.map(o => o.level);
@@ -70,14 +75,27 @@ function ConfirmContent() {
       const data = await res.json();
       if (!res.ok || !data.url) {
         setCheckoutError("Could not start checkout. Please try again or contact hello@creabeastudio.com.");
-        setLoading(false);
+        setLoadingProvider(null);
         return;
       }
       window.location.href = data.url;
     } catch (e) {
       setCheckoutError("Something went wrong. Please try again or contact hello@creabeastudio.com.");
-      setLoading(false);
+      setLoadingProvider(null);
     }
+  };
+
+  const goToPayhipCheckout = () => {
+    setLoadingProvider("payhip");
+    setCheckoutError("");
+    const allLevels = allOrders.map(o => o.level);
+    const url = buildPayhipCheckoutUrl(allLevels);
+    if (!url) {
+      setCheckoutError("This combination isn't set up yet for EUR/GBP payment. Please contact hello@creabeastudio.com or use the USD option.");
+      setLoadingProvider(null);
+      return;
+    }
+    window.location.href = url;
   };
 
   const goBack = () => {
@@ -174,14 +192,45 @@ function ConfirmContent() {
           </div>
         )}
 
-        {/* Buttons */}
+        {/* Payment buttons */}
+        {PAYHIP_ENABLED && (
+          <p style={{ fontSize:14, color:"var(--muted)", marginBottom:12, fontWeight:700, textAlign:"center" }}>
+            How would you like to pay?
+          </p>
+        )}
+
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-        <button onClick={goToCheckout} className="btn-primary" disabled={loading}
-  style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14, cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1 }}>
-  {loading ? "⏳ Preparing checkout…" : `Proceed to Payment — ${grandTotal}€`}
-</button>
+
+          {PAYHIP_ENABLED && (
+            <button
+              onClick={goToPayhipCheckout}
+              disabled={loadingProvider !== null}
+              style={{
+                width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
+                border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
+                fontWeight:700, cursor: loadingProvider !== null ? "default" : "pointer",
+                opacity: loadingProvider !== null && loadingProvider !== "payhip" ? 0.6 : 1,
+                fontFamily:"Nunito, sans-serif",
+              }}
+            >
+              {loadingProvider === "payhip" ? "⏳ Redirecting…" : "🇪🇺🇬🇧 Pay in EUR"}
+            </button>
+          )}
+
+          <button onClick={goToLemonSqueezyCheckout} className="btn-primary"
+            disabled={loadingProvider !== null}
+            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
+              cursor: loadingProvider !== null ? "default" : "pointer",
+              opacity: loadingProvider !== null && loadingProvider !== "lemonsqueezy" ? 0.6 : 1 }}>
+            {loadingProvider === "lemonsqueezy"
+              ? "⏳ Preparing checkout…"
+              : PAYHIP_ENABLED
+                ? `🌍 Pay in USD — ${grandTotal}€`
+                : `🔒 Proceed to Payment — ${grandTotal}€`}
+          </button>
 
           <button onClick={orderAnother}
+            disabled={loadingProvider !== null}
             style={{
               width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
               border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
@@ -194,6 +243,7 @@ function ConfirmContent() {
           </button>
 
           <button onClick={goBack}
+            disabled={loadingProvider !== null}
             style={{
               width:"100%", fontSize:15, padding:"14px 24px", borderRadius:14,
               border:"2px solid var(--border)", background:"white", color:"#666",
