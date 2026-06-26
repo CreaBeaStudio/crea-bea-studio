@@ -84,11 +84,11 @@ function validateGnCode(code: string): boolean {
   return !isNaN(num) && num >= 600 && num <= 965;
 }
 
-function FxTag({ eur, usd, gbp }: { eur: number; usd: number | null; gbp: number | null }) {
-  if (!usd || !gbp) return null;
+function FxTag({ eur, gbp }: { eur: number; gbp: number | null }) {
+  if (!gbp) return null;
   return (
     <span style={{ fontSize: 11, color: "#999", fontWeight: 400, marginLeft: 6 }}>
-      ≈ ${(eur * usd).toFixed(0)} / £{(eur * gbp).toFixed(0)}
+      ≈ £{(eur * gbp).toFixed(0)}
     </span>
   );
 }
@@ -146,7 +146,6 @@ function CreateInner() {
   const [errorMsg, setErrorMsg]     = useState("");
   const [prevOrders, setPrevOrders] = useState<OrderItem[]>([]);
   const [submitting, setSubmitting] = useState(false);
-  const [usdRate, setUsdRate]       = useState<number | null>(null);
   const [gbpRate, setGbpRate]       = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -184,7 +183,6 @@ function CreateInner() {
       .then(r => r.json())
       .then(data => {
         if (data?.rates) {
-          setUsdRate(data.rates.USD * 1.05);
           setGbpRate(data.rates.GBP * 1.05);
         }
       })
@@ -566,7 +564,7 @@ function CreateInner() {
                     <div style={{flex:1}}>
                       <div style={{fontWeight:700, fontSize:15, display:"flex", alignItems:"center", gap:8, flexWrap:"wrap"}}>
                         {l.label} — {l.priceLabel}
-                        <FxTag eur={l.price} usd={usdRate} gbp={gbpRate} />
+                        <FxTag eur={l.price} gbp={gbpRate} />
                         {l.popular && (
                           <span style={{fontSize:11, fontWeight:700, background:"var(--pink)", color:"white", borderRadius:20, padding:"2px 8px", letterSpacing:"0.03em"}}>
                             ★ Most Popular
@@ -580,7 +578,7 @@ function CreateInner() {
               </div>
               <div style={{marginTop:16, padding:"10px 14px", background:"#f9f9f9", borderRadius:10, borderLeft:"3px solid var(--border)"}}>
                 <p style={{fontSize:11, color:"#999", margin:0, lineHeight:1.6}}>
-                  💱 Prices shown in EUR. Approximate equivalents in USD and GBP are shown for indication only, based on indicative exchange rates. Your bank or card provider may apply different rates and fees.
+                  💱 Prices shown in EUR. The approximate equivalent in GBP is shown for indication only, based on indicative exchange rates. Your bank or card provider may apply different rates and fees.
                 </p>
               </div>
             </div>
