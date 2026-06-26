@@ -91,7 +91,7 @@ function ConfirmContent() {
     const allLevels = allOrders.map(o => o.level);
     const url = buildPayhipCheckoutUrl(allLevels);
     if (!url) {
-      setCheckoutError("This combination isn't set up yet for EUR/GBP payment. Please contact hello@creabeastudio.com or use the USD option.");
+      setCheckoutError("This combination isn't set up yet for EUR payment. Please contact hello@creabeastudio.com or use the USD option.");
       setLoadingProvider(null);
       return;
     }
@@ -194,39 +194,29 @@ function ConfirmContent() {
 
         {/* Payment buttons */}
         {PAYHIP_ENABLED && (
-          <p style={{ fontSize:14, color:"var(--muted)", marginBottom:12, fontWeight:700, textAlign:"center" }}>
-            How would you like to pay?
-          </p>
+          <>
+            <p style={{ fontSize:14, color:"var(--muted)", marginBottom:4, fontWeight:700, textAlign:"center" }}>
+              How would you like to pay?
+            </p>
+            <p style={{ fontSize:13, color:"var(--muted)", marginBottom:12, textAlign:"center" }}>
+              You'll be redirected to a secure payment provider to complete your purchase.
+            </p>
+          </>
         )}
 
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
 
-          {PAYHIP_ENABLED && (
-            <button
-              onClick={goToPayhipCheckout}
-              disabled={loadingProvider !== null}
-              style={{
-                width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
-                border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
-                fontWeight:700, cursor: loadingProvider !== null ? "default" : "pointer",
-                opacity: loadingProvider !== null && loadingProvider !== "payhip" ? 0.6 : 1,
-                fontFamily:"Nunito, sans-serif",
-              }}
-            >
-              {loadingProvider === "payhip" ? "⏳ Redirecting…" : "🇪🇺🇬🇧 Pay in EUR"}
-            </button>
-          )}
-
-          <button onClick={goToLemonSqueezyCheckout} className="btn-primary"
+          <button onClick={goBack}
             disabled={loadingProvider !== null}
-            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
-              cursor: loadingProvider !== null ? "default" : "pointer",
-              opacity: loadingProvider !== null && loadingProvider !== "lemonsqueezy" ? 0.6 : 1 }}>
-            {loadingProvider === "lemonsqueezy"
-              ? "⏳ Preparing checkout…"
-              : PAYHIP_ENABLED
-                ? `🌍 Pay in USD — ${grandTotal}€`
-                : `🔒 Proceed to Payment — ${grandTotal}€`}
+            style={{
+              width:"100%", fontSize:15, padding:"14px 24px", borderRadius:14,
+              border:"2px solid var(--border)", background:"white", color:"#666",
+              fontWeight:600, cursor:"pointer", fontFamily:"Nunito, sans-serif",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "#f9f9f9")}
+            onMouseLeave={e => (e.currentTarget.style.background = "white")}
+          >
+            ✏️ No, I want to make changes
           </button>
 
           <button onClick={orderAnother}
@@ -242,18 +232,28 @@ function ConfirmContent() {
             🖼️ Order another Guangna by Number
           </button>
 
-          <button onClick={goBack}
+          {PAYHIP_ENABLED && (
+            <button onClick={goToPayhipCheckout} className="btn-primary"
+              disabled={loadingProvider !== null}
+              style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
+                cursor: loadingProvider !== null ? "default" : "pointer",
+                opacity: loadingProvider !== null && loadingProvider !== "payhip" ? 0.6 : 1 }}>
+              {loadingProvider === "payhip" ? "⏳ Redirecting…" : `🇪🇺 Pay in EUR — ${grandTotal}€`}
+            </button>
+          )}
+
+          <button onClick={goToLemonSqueezyCheckout} className="btn-primary"
             disabled={loadingProvider !== null}
-            style={{
-              width:"100%", fontSize:15, padding:"14px 24px", borderRadius:14,
-              border:"2px solid var(--border)", background:"white", color:"#666",
-              fontWeight:600, cursor:"pointer", fontFamily:"Nunito, sans-serif",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#f9f9f9")}
-            onMouseLeave={e => (e.currentTarget.style.background = "white")}
-          >
-            ✏️ No, I want to make changes
+            style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
+              cursor: loadingProvider !== null ? "default" : "pointer",
+              opacity: loadingProvider !== null && loadingProvider !== "lemonsqueezy" ? 0.6 : 1 }}>
+            {loadingProvider === "lemonsqueezy"
+              ? "⏳ Preparing checkout…"
+              : PAYHIP_ENABLED
+                ? `🌍 Pay in USD — ${grandTotal}€`
+                : `🔒 Proceed to Payment — ${grandTotal}€`}
           </button>
+
         </div>
       </main>
     </>
