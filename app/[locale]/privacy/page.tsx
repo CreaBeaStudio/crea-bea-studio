@@ -25,6 +25,9 @@ export default function PrivacyPage() {
   const lemon = (chunks: React.ReactNode) => (
     <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener noreferrer">{chunks}</a>
   );
+  const payhip = (chunks: React.ReactNode) => (
+    <a href="https://payhip.com/privacy" target="_blank" rel="noopener noreferrer">{chunks}</a>
+  );
   const br = () => <br />;
 
   return (
@@ -59,7 +62,7 @@ export default function PrivacyPage() {
         </ul>
         <p><strong>{t("s1SensitiveLabel")}</strong> {t("s1SensitiveText")}</p>
         <p>
-          <strong>{t("s1PaymentLabel")}</strong> {t.rich("s1PaymentText", { stripe, lemon })}
+        <strong>{t("s1PaymentLabel")}</strong> {t.rich("s1PaymentText", { stripe, lemon, payhip })}
         </p>
 
         <h2 style={sectionHeading}>{t("s2Heading")}</h2>

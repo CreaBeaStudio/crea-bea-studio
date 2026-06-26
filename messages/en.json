@@ -10,7 +10,7 @@
     "featureCamera": "Your favourite photo",
     "featureNoGuessing": "No more guessing colors",
     "featureGuangna": "Made for your Guangna markers",
-    "paletteBanner": "Guangna by Number includes a color palette matched to your Guangna markers — with exact codes and numbers",
+    "paletteBanner": "Guangna by Number includes a color palette matched to your Guangna markers — with exact codes and names.",
     "converterTitle": "Guangna Color Converter",
     "converterSubtitle": "Do you have a #HEX, RGB or a picture? Find the closest Guangna color instantly.",
     "converterCta": "Open Guangna Color Converter →",
@@ -182,7 +182,7 @@
   "s4Heading": "4. Products",
   "s4Text": "All products are subject to availability. We reserve the right to discontinue any product at any time. Prices are subject to change.",
   "s5Heading": "5. Purchases and Payment",
-  "s5Text": "We accept Visa, Mastercard, American Express, and PayPal. All payments are in Euros. You agree to provide accurate billing information. We reserve the right to refuse or limit any order, and to correct pricing errors even after payment has been made.",
+  "s5Text": "We accept payment via Lemon Squeezy and, where available, Payhip, depending on your region. Prices are shown in the currency applicable to your selected payment method. You agree to provide accurate billing information. We reserve the right to refuse or limit any order, and to correct pricing errors even after payment has been made.",
   "s6Heading": "6. Prohibited Activities",
   "s6Intro": "You agree not to misuse the Services, including (but not limited to) attempting to defraud us or other users, circumventing security features, uploading malicious code, or using automated tools to access the Services. Specific to our Services:",
   "s6Bullet1Label": "Content restrictions:",
@@ -305,5 +305,52 @@
   "previousExample": "Previous example",
   "nextExample": "Next example",
   "createCta": "Create your Guangna by Number now →"
-}
-}
+  },
+    "ColorConverter": {
+      "title": "Guangna Color Converter",
+      "subtitle": "Enter any color and find the closest Guangna marker available and, optionally, from your own collection.",
+      "myMarkers": {
+        "heading": "🗂️ My Markers",
+        "optional": "optional",
+        "description": "Select your set to also see the best match from markers you own.",
+        "setLabel": "Marker set",
+        "noneSelected": "— None selected —",
+        "extraCodesLabel": "Extra codes",
+        "extraCodesHint": "(3-digit, comma or space separated)",
+        "extraCodesPlaceholder": "e.g. 603, 648, 820"
+      },
+      "modes": {
+        "hex": "HEX",
+        "rgb": "RGB",
+        "photo": "📸 Photo Color Sample"
+      },
+      "hex": { "label": "Hex Colour" },
+      "rgb": {
+        "rLabel": "R (0–255)",
+        "gLabel": "G (0–255)",
+        "bLabel": "B (0–255)"
+      },
+      "photo": {
+        "dropHint": "Drop photo or click to browse",
+        "fileTypes": "JPG, PNG",
+        "fileSelected": "✓ {fileName}",
+        "dominantColorExtracted": "Dominant color extracted"
+      },
+      "yourColour": "Your colour",
+      "searchButton": "Convert to Guangna code →",
+      "searching": "🔍 Searching…",
+      "results": {
+        "heading": "Results",
+        "emptyPrompt": "Enter a color and click Search",
+        "bestMatch": "Best match",
+        "guangnaBadge": "Guangna",
+        "screenDisclaimer": "⚠️ Screen colors may differ from the actual marker. Always test on paper.",
+        "bestMatchOwned": "Best match you have",
+        "youHaveIt": "✓ You have it!",
+        "fromYourSet": "From your set",
+        "notInSetNotice": "💡 The best Guangna match ({code}) is not in your set.",
+        "orderPrompt": "Would you like to order it? →",
+        "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes."
+      }
+    }
+  }

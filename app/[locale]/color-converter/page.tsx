@@ -2,6 +2,7 @@
 import Image from "next/image"
 import Navbar from "../components/Navbar";
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 
 const GN_COLORS: Record<string,[number,number,number,string]> = {
   "GN-600":[255,255,255,"White"],"GN-601":[95,167,220,"Sky blue"],"GN-602":[140,195,177,"Lake green"],
@@ -272,6 +273,7 @@ type InputMode = "hex"|"rgb"|"photo";
 type MatchResult = {code:string;name:string;rgb:[number,number,number]};
 
 export default function ColorConverter() {
+  const t = useTranslations("ColorConverter");
   const [mode,setMode]             = useState<InputMode>("hex");
   const [hexInput,setHexInput]     = useState("#ff6b6b");
   const [rInput,setRInput]         = useState("255");
@@ -355,10 +357,10 @@ export default function ColorConverter() {
           <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{objectFit:"contain",height:"auto"}} />
         </div>
         <h1 style={{fontFamily:"Nunito, sans-serif",color:"var(--pink)",fontWeight:900,fontSize:"clamp(26px,4vw,40px)",marginBottom:8}}>
-          Guangna Color Converter
+          {t("title")}
         </h1>
         <p style={{color:"#666",marginBottom:36}}>
-          Enter any color and find the closest Guangna marker available and, optionally, from your own collection.
+          {t("subtitle")}
         </p>
 
         <div className="converter-grid">
@@ -368,17 +370,17 @@ export default function ColorConverter() {
 
             {/* My Markers */}
             <div className="card">
-              <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>🗂️ My Markers <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>optional</span></h3>
-              <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>Select your set to also see the best match from markers you own.</p>
-              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Marker set</label>
+              <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>{t("myMarkers.heading")} <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>{t("myMarkers.optional")}</span></h3>
+              <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>{t("myMarkers.description")}</p>
+              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.setLabel")}</label>
               <select value={mySet} onChange={e=>setMySet(e.target.value)}
                 style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:12}}>
-                <option value="">— None selected —</option>
+                <option value="">{t("myMarkers.noneSelected")}</option>
                 {SET_OPTIONS.map(s=><option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
-              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>Extra codes <span style={{fontWeight:400,color:"var(--muted)"}}>(3-digit, comma or space separated)</span></label>
+              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.extraCodesLabel")} <span style={{fontWeight:400,color:"var(--muted)"}}>{t("myMarkers.extraCodesHint")}</span></label>
               <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
-                placeholder="e.g. 603, 648, 820" style={{width:"100%"}}/>
+                placeholder={t("myMarkers.extraCodesPlaceholder")} style={{width:"100%"}}/>
             </div>
 
             {/* Color input */}
@@ -390,13 +392,13 @@ export default function ColorConverter() {
                     background:mode===m?"var(--pink)":"white",
                     color:mode===m?"white":"var(--pink)",
                     fontWeight:700,cursor:"pointer",fontSize:13,textTransform:"uppercase"
-                  }}>{m==="photo"?"📸 Photo Color Sample":m.toUpperCase()}</button>
+                  }}>{m==="photo"?t("modes.photo"):t(`modes.${m}`)}</button>
                 ))}
               </div>
 
               {mode==="hex" && (
                 <div>
-                  <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:6}}>Hex Colour</label>
+                  <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:6}}>{t("hex.label")}</label>
                   <div style={{display:"flex",gap:10,alignItems:"center"}}>
                     <input type="color" value={hexInput} onChange={e=>setHexInput(e.target.value)}
                       style={{width:48,height:48,border:"none",borderRadius:8,cursor:"pointer",padding:0}}/>
@@ -407,9 +409,9 @@ export default function ColorConverter() {
 
               {mode==="rgb" && (
                 <div style={{display:"flex",flexDirection:"column",gap:12}}>
-                  {([["R",rInput,setRInput],["G",gInput,setGInput],["B",bInput,setBInput]] as [string,string,(v:string)=>void][]).map(([label,val,setter])=>(
-                    <div key={label}>
-                      <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{label} (0–255)</label>
+                  {([["r",rInput,setRInput],["g",gInput,setGInput],["b",bInput,setBInput]] as [string,string,(v:string)=>void][]).map(([key,val,setter])=>(
+                    <div key={key}>
+                      <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t(`rgb.${key}Label`)}</label>
                       <input type="number" min="0" max="255" value={val} onChange={e=>setter(e.target.value)}/>
                     </div>
                   ))}
@@ -429,18 +431,18 @@ export default function ColorConverter() {
                     {photoDataUrl
                       ? <img src={photoDataUrl} alt="Uploaded" style={{width:"100%",height:150,objectFit:"cover",borderRadius:10}}/>
                       : <><div style={{fontSize:36,marginBottom:8}}>📸</div>
-                          <p style={{fontWeight:600,fontSize:14}}>Drop photo or click to browse</p>
-                          <p style={{color:"var(--muted)",fontSize:12}}>JPG, PNG</p></>
+                          <p style={{fontWeight:600,fontSize:14}}>{t("photo.dropHint")}</p>
+                          <p style={{color:"var(--muted)",fontSize:12}}>{t("photo.fileTypes")}</p></>
                     }
                   </div>
                   <input id="photoInput" type="file" accept="image/*" style={{display:"none"}}
                     onChange={e=>{const f=e.target.files?.[0];if(f) handlePhotoFile(f);}}/>
-                  {photoName && <p style={{fontSize:12,color:"var(--muted)",marginTop:6}}>✓ {photoName}</p>}
+                  {photoName && <p style={{fontSize:12,color:"var(--muted)",marginTop:6}}>{t("photo.fileSelected", {fileName: photoName})}</p>}
                   {dominantRgb && (
                     <div style={{marginTop:12,padding:"10px 14px",borderRadius:10,background:"var(--cream)",display:"flex",alignItems:"center",gap:12}}>
     <ProtectedSwatch rgb={dominantRgb} size={36}/>
     <div style={{fontSize:13}}>
-      <div style={{fontWeight:700}}>Dominant color extracted</div>
+      <div style={{fontWeight:700}}>{t("photo.dominantColorExtracted")}</div>
     </div>
   </div>
 )}
@@ -451,7 +453,7 @@ export default function ColorConverter() {
                 <div style={{marginTop:20,padding:16,borderRadius:12,background:"var(--cream)",display:"flex",alignItems:"center",gap:16}}>
                   <ProtectedSwatch rgb={currentRgb} size={56}/>
                   <div>
-                    <div style={{fontWeight:700,fontSize:15}}>Your colour</div>
+                    <div style={{fontWeight:700,fontSize:15}}>{t("yourColour")}</div>
                     <div style={{color:"var(--muted)",fontSize:13}}>{rgbToHex(currentRgb)} · rgb({currentRgb.join(", ")})</div>
                   </div>
                 </div>
@@ -460,26 +462,26 @@ export default function ColorConverter() {
               <button className="btn-primary" onClick={handleSearch}
                 disabled={searching||(mode==="photo"&&!photoDataUrl)}
                 style={{width:"100%",marginTop:20,opacity:(searching||(mode==="photo"&&!photoDataUrl))?0.6:1}}>
-                {searching?"🔍 Searching…":"Convert to Guangna code →"}
+                {searching?t("searching"):t("searchButton")}
               </button>
             </div>
           </div>
 
           {/* ── RIGHT: Results ── */}
           <div>
-            <h2 style={{fontWeight:800,fontSize:17,marginBottom:16}}>Results</h2>
+            <h2 style={{fontWeight:800,fontSize:17,marginBottom:16}}>{t("results.heading")}</h2>
 
             {!bestFull ? (
               <div className="card" style={{textAlign:"center",opacity:0.5,padding:40}}>
                 <div style={{fontSize:48,marginBottom:8}}>🎨</div>
-                <p>Enter a color and click Search</p>
+                <p>{t("results.emptyPrompt")}</p>
               </div>
             ) : (
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
                 <div className="card" style={{border:"2px solid var(--pink)"}}>
                   <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-                    <span style={{fontWeight:800,fontSize:16}}>Best match</span>
-                    <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14,fontWeight:700}}>Guangna</span>
+                    <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatch")}</span>
+                    <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14,fontWeight:700}}>{t("results.guangnaBadge")}</span>
                   </div>
                   <div style={{display:"flex",alignItems:"center",gap:16}}>
                     <ProtectedSwatch rgb={bestFull.rgb} size={72}/>
@@ -489,17 +491,17 @@ export default function ColorConverter() {
                     </div>
                   </div>
                   <p style={{fontSize:11,color:"var(--muted)",marginTop:10,lineHeight:1.5}}>
-                    ⚠️ Screen colors may differ from the actual marker. Always test on paper.
+                    {t("results.screenDisclaimer")}
                   </p>
                 </div>
 
                 {hasOwned && bestOwned && (
                   <div className="card" style={{border:bestOwned.code===bestFull.code?"2px solid #4caf50":"2px solid var(--border)"}}>
                     <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-                      <span style={{fontWeight:800,fontSize:16}}>Best match you have</span>
+                      <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatchOwned")}</span>
                       {bestOwned.code===bestFull.code
-                        ? <span style={{background:"#4caf50",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>✓ You have it!</span>
-                        : <span style={{background:"#888",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>From your set</span>}
+                        ? <span style={{background:"#4caf50",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.youHaveIt")}</span>
+                        : <span style={{background:"#888",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.fromYourSet")}</span>}
                     </div>
                     <div style={{display:"flex",alignItems:"center",gap:16}}>
                       <ProtectedSwatch rgb={bestOwned.rgb} size={72}/>
@@ -510,9 +512,9 @@ export default function ColorConverter() {
                     </div>
                     {bestOwned.code!==bestFull.code && (
                       <div style={{marginTop:12,padding:"8px 12px",borderRadius:8,background:"var(--cream)",fontSize:14,color:"var(--muted)"}}>
-                        💡 The best Guangna match ({bestFull.code}) is not in your set.{" "}
+                        {t("results.notInSetNotice", {code: bestFull.code})}{" "}
                         <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
-                          style={{color:"var(--pink)",fontWeight:700}}>Would you like to order it? →</a>
+                          style={{color:"var(--pink)",fontWeight:700}}>{t("results.orderPrompt")}</a>
                       </div>
                     )}
                   </div>
@@ -520,7 +522,7 @@ export default function ColorConverter() {
 
                 {hasOwned && !bestOwned && (
                   <div className="card" style={{opacity:0.6,textAlign:"center",padding:24}}>
-                    <p style={{fontSize:13}}>No owned markers matched — try adding more sets or extra codes.</p>
+                    <p style={{fontSize:13}}>{t("results.noOwnedMatch")}</p>
                   </div>
                 )}
               </div>
@@ -531,4 +533,3 @@ export default function ColorConverter() {
     </>
   );
 }
-
