@@ -3,8 +3,7 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { buildPayhipCheckoutUrl } from "../../lib/payhip"; // adjust path if your lib folder is elsewhere
-
+import { buildPayhipCheckoutUrl } from "../../../lib/payhip";
 // Flip this in Vercel's Environment Variables when Payhip/Stripe are fully approved.
 // NEXT_PUBLIC_PAYHIP_ENABLED=true
 const PAYHIP_ENABLED = process.env.NEXT_PUBLIC_PAYHIP_ENABLED === "true";

@@ -27,7 +27,7 @@
     "createCta": "Maak jouw Guangna by Number pagina",
     "chooseLevelLabel": "Kies jouw niveau",
     "levelsTitle": "Van beginner tot gevorderd",
-    "levelsSubtitle": "Kies het niveau dat bij jou past, meer of minder kleuren en details.",
+    "levelsSubtitle": "Kies het niveau dat bij jou past, met meer of juist minder details en kleuren.",
     "levelBeginner": "Beginner",
     "levelBeginnerDesc": "Ideaal voor jouw eerste Guangna by Number. Minder kleuren, grotere vlakken, makkelijk en relaxed inkleuren.",
     "levelIntermediate": "Gemiddeld",
@@ -56,12 +56,12 @@
     "footerCreate": "Maken",
     "footerConverter": "Kleurenconverter",
     "footerExamples": "Voorbeelden",
-    "footerTips": "Tips&Tricks",
+    "footerTips": "Tips & Tricks",
     "footerFaq": "Veelgestelde vragen",
     "footerTiktok": "TikTok",
     "footerPrivacy": "Privacyverklaring",
     "footerTerms": "Algemene voorwaarden",
-    "footerRefund": "Retour beleid",
+    "footerRefund": "Retourbeleid",
     "footerRights": "© {year} CreaBeaStudio. Alle rechten voorbehouden."
   },
   "nav": {

@@ -131,7 +131,7 @@
     "s1SensitiveLabel": "Sensitive Information.",
     "s1SensitiveText": "We do not process sensitive information.",
     "s1PaymentLabel": "Payment Data.",
-    "s1PaymentText": "We may collect data necessary to process your payment if you choose to make purchases. All payment data is handled and stored by Stripe and Lemon Squeezy. You may find their privacy notices here: <stripe>Stripe Privacy Policy</stripe> and <lemon>Lemon Squeezy Privacy Policy</lemon>.",
+    "s1PaymentText": "We may collect data necessary to process your payment if you choose to make purchases. Depending on your location, payment data is handled and stored by Stripe and Lemon Squeezy, or by Payhip (which uses Stripe to process the payment). You may find their privacy notices here: <stripe>Stripe Privacy Policy</stripe>, <lemon>Lemon Squeezy Privacy Policy</lemon>, and <payhip>Payhip Privacy Policy</payhip>.",
     "s2Heading": "2. How Do We Process Your Information?",
     "s2Text": "We process your personal information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information when necessary to save or protect an individual's vital interest, such as to prevent harm.",
     "s3Heading": "3. What Legal Bases Do We Rely On?",
