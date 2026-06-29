@@ -22,6 +22,9 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('description'),
+    verification: {
+      google: "FZhMCwmmuDQRt-KikXkqK5EKfE8dDzeguVvn0pbarmU",
+    },
     openGraph: {
       title: t('title'),
       description: t('description'),
