@@ -12,7 +12,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "../../../components/Navbar"; // three levels deep: app/markers/[brand]/[setSize]/page.tsx -> app/components/Navbar
 import { MARKER_DATA } from "../../../../../lib/markerData";
-type Params = { params: Promise<{ brand: string; setSize: string }> };
+type Params = { params: Promise<{ brand: string; setSize: string; locale: string }> };
 
 // -----------------------------------------------------------------------
 // 1. DATA
@@ -58,7 +58,7 @@ function getMarkerContext(brand: string, setSize: string) {
 // 3. METADATA
 // -----------------------------------------------------------------------
 export async function generateMetadata({ params }: Params) {
-  const { brand, setSize } = await params;
+  const { brand, setSize, locale } = await params;
   const ctx = getMarkerContext(brand, setSize);
 
   if (!ctx) {
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: Params) {
     };
   }
 
-  const canonicalPath = `/markers/${ctx.brand}/${ctx.setSize}`;
+  const canonicalPath = `/${locale}/markers/${ctx.brand}/${ctx.setSize}`;
 
   return {
     title: ctx.title,
@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: Params) {
 // 4. PAGE COMPONENT
 // -----------------------------------------------------------------------
 export default async function MarkerSetPage({ params }: Params) {
-  const { brand, setSize } = await params;
+  const { brand, setSize, locale } = await params;
   const ctx = getMarkerContext(brand, setSize);
 
   if (!ctx) notFound();
@@ -113,7 +113,7 @@ export default async function MarkerSetPage({ params }: Params) {
     applicationCategory: "DesignApplication",
     operatingSystem: "Any",
     description: ctx.description,
-    url: `https://creabeastudio.com/markers/${ctx.brand}/${ctx.setSize}`,
+    url: `https://creabeastudio.com/${locale}/markers/${ctx.brand}/${ctx.setSize}`,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     publisher: { "@type": "Organization", name: "CreaBeaStudio", url: "https://creabeastudio.com" },
   };

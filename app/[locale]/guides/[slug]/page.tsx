@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar"; // two levels deep: app/guides/[slug]/page.tsx -> app/components/Navbar
 import { GUIDES_DATA } from "../guidesData";
 
-type Params = { params: Promise<{ slug: string }> };
+type Params = { params: Promise<{ slug: string; locale: string }> };
 
 // Shape of a single guide entry. Declared here (rather than relying on
 // TypeScript's inferred type from the plain .js data file) so that
@@ -29,18 +29,15 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Params) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const guide = guidesData[slug];
-
   if (!guide) {
     return {
       title: "Guide | CreaBeaStudio",
       description: "Paint by number guides from CreaBeaStudio.",
     };
   }
-
-  const canonicalPath = `/guides/${slug}`;
-
+  const canonicalPath = `/${locale}/guides/${slug}`;
   return {
     title: `${guide.title} | CreaBeaStudio`,
     description: guide.description,
@@ -56,7 +53,7 @@ export async function generateMetadata({ params }: Params) {
 }
 
 export default async function GuidePage({ params }: Params) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const guide = guidesData[slug];
 
   if (!guide) notFound();
@@ -66,7 +63,7 @@ export default async function GuidePage({ params }: Params) {
     "@type": "Article",
     headline: guide.title,
     description: guide.description,
-    url: `https://creabeastudio.com/guides/${slug}`,
+    url: `https://creabeastudio.com/${locale}/guides/${slug}`,
     publisher: {
       "@type": "Organization",
       name: "CreaBeaStudio",
