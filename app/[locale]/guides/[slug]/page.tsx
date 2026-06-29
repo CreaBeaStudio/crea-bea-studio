@@ -61,7 +61,7 @@ export default async function GuidePage({ params }: Params) {
 
   if (!guide) notFound();
 
-  const jsonLd = {
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: guide.title,
@@ -74,12 +74,41 @@ export default async function GuidePage({ params }: Params) {
     },
   };
 
+  // Any section whose heading starts with "Q" (e.g. "Q: ..." or "Q. ...")
+  // is treated as an FAQ entry — this lets FAQ schema build itself from
+  // guidesData.js with no extra tagging needed per guide.
+  const faqEntries = guide.sections.filter((s) =>
+    /^Q[:.]/.test(s.heading.trim())
+  );
+
+  const faqSchema =
+    faqEntries.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqEntries.map((entry) => ({
+            "@type": "Question",
+            name: entry.heading.replace(/^Q[:.]\s*/, ""),
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: entry.body ?? "",
+            },
+          })),
+        }
+      : null;
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       <Navbar />
 
