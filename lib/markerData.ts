@@ -2,7 +2,7 @@
 // Both the markers page and the sitemap read from here — add a new
 // brand or set size here once, and it shows up in both automatically.
 
-export const MARKER_DATA: Record
+export const MARKER_DATA: Record<
   string,
   { displayName: string; sets: Record<string, { code: string; label: string }> }
 > = {
