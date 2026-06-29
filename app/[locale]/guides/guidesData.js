@@ -102,5 +102,84 @@ export const GUIDES_DATA = {
       label: "Try the Color Converter →",
     },
   },
+  "guangna-by-number-faq": {
+    title: "Guangna by Number: Everything You Need to Know Before You Order",
+    description:
+      "From file delivery to refunds to which Guangna sets are supported — a complete walkthrough of how custom Guangna by Number ordering actually works.",
+    intro:
+      "Custom paint by number isn't a kit you grab off a shelf, so it's natural to have questions before you commit a photo and a few dollars to it. Here's a full walkthrough of how ordering actually works, beyond the quick-reference answers on our FAQ page.",
+    sections: [
+      {
+        heading: "What exactly are you paying for?",
+        body: "When you order, you're not buying a physical product — you're commissioning a digital conversion of your own photo. You receive three files: a printable Paint by Number Outline, a Custom Guangna Color Palette Guide matched to your exact marker set, and a Finished Artwork Impression so you can see roughly where you're headed before you pick up a pen. Nothing physical ships, and nothing generic is reused — every file is generated from your specific photo and your specific markers.",
+      },
+      {
+        heading: "How fast is 'fast,' really?",
+        body: "Files arrive within 24 hours of us receiving your photo, though most orders go out well before that. There's no queue you're stuck behind and no separate shipping wait — the moment the conversion is done, it's in your inbox.",
+      },
+      {
+        heading: "What if my markers don't perfectly match the guide?",
+        body: "This is one of the most common worries, and it's almost never a sign anything went wrong. Ink batches vary slightly, paper absorbs color differently, and printer color calibration isn't identical screen to screen. Your guide gives you the best mathematical match for your exact set — small shade variation is normal and won't break the final piece.",
+      },
+      {
+        heading: "Do you support every Guangna set size?",
+        body: "Every set listed on the creation page is fully supported, from the small 12-color starter pack up through the full 366 and 408-piece collections. If you own a set that isn't listed, email us — sets get added when there's demand, and it's a quick addition on our end.",
+      },
+      {
+        heading: "Why CreaBeaStudio over a generic photo-to-coloring-page tool?",
+        body: "Generic tools output colors that exist nowhere near your actual markers, leaving you guessing or mixing. Every palette here is built specifically around the Guangna lineup, which means the moment your file lands, you can start coloring with the pens already on your desk — no extra purchases, no approximating.",
+      },
+      {
+        heading: "One more thing — if you came here from mystery coloring books",
+        body: "If you're into mystery coloring books — the kind where a hidden image is revealed page by page — you'll recognize the appeal of Guangna by Number immediately, just flipped around. There's less mystery, since it's built from a photo you chose on purpose, but a lot more personal payoff: the picture that's revealed is one that actually means something to you.",
+      },
+    ],
+    cta: {
+      href: "/create",
+      label: "Start your own Guangna by Number →",
+    },
+  },
+
+  "guangna-marker-techniques-guide": {
+    title: "Getting the Most Out of Your Guangna Markers: A Technique Guide",
+    description:
+      "Layering, blending, highlights, and fixing mistakes — practical Guangna marker techniques that take your paint by number from flat to polished.",
+    intro:
+      "Owning the right markers is only half the equation — how you use them is what separates a flat, blocky result from something that actually looks intentional. Here's a closer look at the techniques behind a polished Guangna by Number piece.",
+    sections: [
+      {
+        heading: "Build color in layers, not in one pass",
+        body: "The single biggest jump in quality comes from resisting the urge to fully saturate an area in one stroke. Lay down a first thin layer, let it dry, then go back over it. Layering builds richer, more even tone than pressing hard once — and it gives you room to fix uneven spots on the second pass instead of living with them.",
+      },
+      {
+        heading: "Light to dark, every time",
+        body: "Work your lighter suggested colors into an area before the darker ones. It's much easier to deepen a shade on top of something light than to lighten an area that's already gone too dark.",
+      },
+      {
+        heading: "The white base-layer trick for pastels",
+        body: "Pale pinks, soft yellows, and whites can look slightly see-through straight onto paper, especially over a printed number. Tap a white acrylic marker over the number first, let it dry for a few seconds, then color over it. That opaque base is what makes pastel sections look clean instead of washed out.",
+      },
+      {
+        heading: "Match your tip to the job",
+        body: "A 3mm chisel or medium tip clears large background areas fast. Swap to a 0.7mm fine tip the moment you're working a small numbered region, a tight corner, or fine detail — trying to do both jobs with one tip is the most common cause of messy edges.",
+      },
+      {
+        heading: "When two colors are suggested for one area, that's not an error",
+        body: "Your palette guide sometimes offers a creative alternative alongside the technical best match — that's intentional, not a mistake to puzzle over. It's there so you can add subtle variation or depth in skin tones, shadows, or fine details rather than flattening everything to a single shade.",
+      },
+      {
+        heading: "Damage control: fixing a stray line",
+        body: "Caught it while still wet? A slightly damp cotton swab or tissue, used immediately, lifts most small mistakes cleanly. Once it's dried, your best option is usually layering over it rather than trying to lift it — acrylic ink sets fast.",
+      },
+      {
+        heading: "Keep your markers performing between sessions",
+        body: "Store them lying flat so ink stays evenly distributed, snap caps shut the second you're done, and if a tip feels dry, a gentle shake plus a few presses on scrap paper usually brings it back before you assume it's dead.",
+      },
+    ],
+    cta: {
+      href: "/tips",
+      label: "See the full Tips & Tricks reference →",
+    },
+  },
 };
  
