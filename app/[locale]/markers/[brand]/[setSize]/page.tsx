@@ -108,13 +108,19 @@ export default async function MarkerSetPage({ params }: Params) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: `${ctx.brandName} ${ctx.setSize} Paint by Number Converter`,
-    applicationCategory: "DesignApplication",
-    operatingSystem: "Any",
+    "@type": "Product",
+    name: `${ctx.brandName} ${ctx.setSize} Custom Paint by Number`,
     description: ctx.description,
+    brand: { "@type": "Brand", name: "CreaBeaStudio" },
     url: `https://creabeastudio.com/${locale}/markers/${ctx.brand}/${ctx.setSize}`,
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "EUR",
+      lowPrice: "7",
+      highPrice: "11",
+      offerCount: "3",
+      url: `https://creabeastudio.com/${locale}/markers/${ctx.brand}/${ctx.setSize}`,
+    },
     publisher: { "@type": "Organization", name: "CreaBeaStudio", url: "https://creabeastudio.com" },
   };
 
