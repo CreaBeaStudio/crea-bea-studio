@@ -60,6 +60,7 @@
       "footerCreate": "Créer",
       "footerConverter": "Convertisseur de couleurs",
       "footerExamples": "Exemples",
+      "footerLegendConverter": "Convertisseur de légende",
       "footerTips": "Astuces & Conseils",
       "footerFaq": "FAQ",
       "footerTiktok": "TikTok",
@@ -73,6 +74,7 @@
       "guangna": "Guangna",
       "createGuangna": "Créer un Guangna by Number",
       "colorConverter": "Convertisseur de couleurs",
+      "legendConverter": "Convertisseur de légende",
       "examples": "Exemples",
       "tips": "Astuces & Conseils",
       "faq": "FAQ",
@@ -336,6 +338,7 @@
       },
       "photo": {
         "dropHint": "Dépose une photo ou clique pour parcourir",
+        "lightingTip": "Pour une correspondance optimale, photographiez sous une lumière naturelle et uniforme — les ombres ou l'éclairage intérieur jaunâtre peuvent fausser les couleurs et nuire à la précision.",
         "fileTypes": "JPG, PNG",
         "fileSelected": "✓ {fileName}",
         "dominantColorExtracted": "Couleur dominante extraite"
@@ -355,7 +358,71 @@
         "notInSetNotice": "💡 La meilleure correspondance Guangna ({code}) n'est pas dans ton set.",
         "orderPrompt": "Tu veux le commander ? →",
         "noOwnedMatch": "Aucun de tes feutres ne correspond — essaie d'ajouter d'autres sets ou codes supplémentaires."
+      },
+      "crossLink": {
+        "text": "Vous avez toute une légende de couleurs plutôt qu'une seule couleur ?",
+        "linkText": "Essayez le convertisseur de légende →"
+      },
+      "donate": {
+        "text": "Cela vous a fait gagner du temps ? Un café est toujours apprécié ☕",
+        "button": "Offrez-moi un café"
+      }
+    },
+    "LegendConverter": {
+      "title": "Légende vers palette Guangna",
+      "subtitle": "Téléchargez la légende des couleurs d'un coloriage, cliquez sur chaque pastille et obtenez un guide de marqueurs Guangna prêt à l'emploi.",
+      "crossLink": {
+        "text": "Besoin de vérifier une seule couleur ?",
+        "linkText": "Essayez le convertisseur de couleurs →"
+      },
+      "step1": {
+        "heading": "1 · Téléchargez la légende des couleurs",
+        "dropHint": "Déposez une photo ici ou cliquez pour télécharger",
+        "fileTypes": "JPG ou PNG",
+        "replacePhoto": "Utiliser une autre photo",
+        "lightingTip": "Pour des codes Guangna les plus précis possibles : photographiez la légende sous une lumière naturelle et uniforme — les ombres ou l'éclairage jaunâtre peuvent fausser les couleurs. Un scanner donne un résultat encore meilleur qu'une photo, si vous en avez un."
+      },
+      "step2": {
+        "heading": "2 · Combien de couleurs dans votre légende souhaitez-vous convertir ?",
+        "apply": "Valider"
+      },
+      "step3": {
+        "heading": "3 · Cliquez sur chaque pastille",
+        "prompt": "Cliquez sur la pastille {num} sur {total} de l'image",
+        "allDone": "Toutes les pastilles sont relevées — cliquez sur un numéro ci-dessous pour la refaire",
+        "editSwatch": "Cliquer pour refaire la pastille {num}",
+        "remaining": "{count} pastille(s) restante(s) — elles seront exclues de votre guide à moins que vous ne cliquiez dessus aussi.",
+        "howToTip": "Pour faire correspondre une couleur, clique sur le numéro 1 juste en dessous de ton image, puis clique sur la couleur de l'image que tu veux convertir en code Guangna. Répète cette étape pour chaque numéro suivant. Si tu as besoin de modifier une sélection, clique simplement à nouveau sur le numéro et choisis une nouvelle couleur sur l'image."
+      },
+      "myMarkers": {
+        "heading": "🗂️ Mes marqueurs",
+        "optional": "facultatif",
+        "description": "Sélectionnez votre set pour comparer uniquement avec vos marqueurs.",
+        "noneSelected": "— Aucun sélectionné —",
+        "extraCodesPlaceholder": "ex. 603, 648, 820"
+      },
+      "matching": "Comparaison en cours…",
+      "step4": {
+        "matchButton": "Comparer aux codes Guangna"
+      },
+      "results": {
+        "heading": "🎨 Guide de palette Guangna",
+        "downloadPdf": "Télécharger le PDF",
+        "screenDisclaimer": "⚠️ Pour préserver la fidélité de la palette Guangna, les couleurs à l'écran peuvent différer de la couleur réelle du marqueur.",
+        "notInSetHeading": "💡 De meilleures correspondances hors de votre set",
+        "notInSetSubheading": "Ces couleurs Guangna ne font pas partie de votre set sélectionné, mais sont la meilleure correspondance possible.",
+        "orderPrompt": "Souhaitez-vous le commander ? →"
+      },
+      "donate": {
+        "text": "Cela vous a fait gagner du temps ? Un café est toujours apprécié ☕",
+        "button": "Offrez-moi un café"
+      },
+      "pdf": {
+        "titleText": "Color Your Memories",
+        "subtitle": "Palette Guangna  ·  {count} couleurs",
+        "instructions": "Associez chaque pastille numérotée de votre légende au marqueur Guangna correspondant",
+        "columnInSet": "Meilleure Correspondance dans Votre Set",
+        "columnAvailable": "Meilleure Correspondance Guangna Disponible"
       }
     }
-  }
-  
+}

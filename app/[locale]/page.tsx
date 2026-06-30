@@ -466,10 +466,10 @@ export default function Home() {
             <p style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:16, color:"var(--pink)", marginBottom:4 }}>
               CreaBeaStudio
             </p>
-            <p style={{ fontSize:13, marginBottom:12 }}>{t("footerTagline")}</p>
             <div style={{ display:"flex", gap:20, flexWrap:"wrap", fontSize:13 }}>
               <a href="/create" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerCreate")}</a>
               <a href="/color-converter" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerConverter")}</a>
+              <a href="/legend-converter" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerLegendConverter")}</a>
               <a href="/examples" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerExamples")}</a>
               <a href="/Tips&Tricks" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTips")}</a>
               <a href="/faq" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerFaq")}</a>

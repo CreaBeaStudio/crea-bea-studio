@@ -59,6 +59,7 @@
     "footerTagline": "Kleur je herinneringen, één voor één. 🐾",
     "footerCreate": "Maken",
     "footerConverter": "Kleurenconverter",
+    "footerLegendConverter": "Legenda Converter",
     "footerExamples": "Voorbeelden",
     "footerTips": "Tips & Tricks",
     "footerFaq": "Veelgestelde vragen",
@@ -73,13 +74,14 @@
     "guangna": "Guangna",
     "createGuangna": "Maak Guangna by Number",
     "colorConverter": "Kleurenconverter",
+    "legendConverter": "Legenda Converter",
     "examples": "Voorbeelden",
     "tips": "Tips & Tricks",
     "faq": "Veelgestelde vragen",
     "tagline": "Kleur je herinneringen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact"
-  }, 
+  },
   "faq": {
     "title": "Veelgestelde Vragen",
     "subtitle": "Kleur je herinneringen",
@@ -312,12 +314,12 @@
 },
   "ColorConverter": {
     "title": "Guangna Kleurconverter",
-    "subtitle": "Voer een kleur in en vind de bijbehorende Guangna-stift, en optioneel ook de beste match uit je eigen collectie.",
+    "subtitle": "Voer een kleur in en vind de bijbehorende Guangna-marker, en optioneel ook de beste match uit je eigen collectie.",
     "myMarkers": {
-      "heading": "🗂️ Mijn stiften",
+      "heading": "🗂️ Mijn markers",
       "optional": "optioneel",
-      "description": "Selecteer je set om de beste match te krijgen uit de stiften die je al hebt.",
-      "setLabel": "Stiftenset",
+      "description": "Selecteer je set om de beste match te krijgen uit de markers die je al hebt.",
+      "setLabel": "Markerset",
       "noneSelected": "— Geen selectie —",
       "extraCodesLabel": "Extra codes",
       "extraCodesHint": "(3-cijferig, gescheiden door komma's of spaties)",
@@ -335,6 +337,7 @@
       "bLabel": "B (0–255)"
     },
     "photo": {
+      "lightingTip": "Voor het beste resultaat, neem de foto met natuurlijk, gelijkmatig daglicht — vermijd schaduw of gekleurd binnenlicht, dit kan de kleur beinvloeden en in een onjuiste match resulteren.",
       "dropHint": "Sleep een foto hierheen of klik om te zoeken",
       "fileTypes": "JPG, PNG",
       "fileSelected": "✓ {fileName}",
@@ -354,7 +357,72 @@
       "fromYourSet": "Uit jouw set",
       "notInSetNotice": "💡 De beste Guangna-match ({code}) zit niet in jouw set.",
       "orderPrompt": "Wil je deze bestellen? →",
-      "noOwnedMatch": "Geen van je stiften kwam overeen — voeg meer sets of extra codes toe."
+      "noOwnedMatch": "Geen van je markers kwam overeen — voeg meer sets of extra codes toe."
+    },
+    "crossLink": {
+      "text": "Heb je een hele kleurenlegenda in plaats van één kleur?",
+      "linkText": "Probeer dan de Legenda Converter →"
+    },
+    "donate": {
+      "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
+      "button": "Trakteer me op koffie"
+    }
+  },
+  "LegendConverter": {
+    "title": "Legenda naar Guangna palet",
+    "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare Guangna-stiftgids.",
+    "crossLink": {
+      "text": "Wil je gewoon één kleur checken?",
+      "linkText": "Probeer de Kleurenconverter →"
+    },
+    "step1": {
+      "heading": "1 · Upload de kleurenlegenda",
+      "dropHint": "Sleep hier een foto of klik om te uploaden",
+      "fileTypes": "JPG of PNG",
+      "replacePhoto": "Andere foto gebruiken",
+      "lightingTip": "Voor de meest nauwkeurige Guangna-codes: fotografeer de legenda in natuurlijk, gelijkmatig daglicht — schaduwen of geel binnenlicht kunnen de kleuren vervormen. Een scan werkt nog beter dan een foto, als je die mogelijkheid hebt."
+    },
+    "step2": {
+"heading": "2 · Hoeveel kleuren uit je legenda wil je omzetten?",
+"apply": "Instellen"
+},
+"step3": {
+"heading": "3 · Klik elk vlakje aan",
+"prompt": "Klik vlakje {num} van {total} aan op de afbeelding",
+"allDone": "Alle vlakjes aangeklikt — klik op een nummer hieronder om opnieuw te doen",
+"editSwatch": "Klik om vlakje {num} opnieuw te doen",
+"remaining": "Nog {count} vlakje(s) niet ingesteld — deze worden weggelaten uit je gids, tenzij je ze ook aanklikt.",
+"howToTip": "Om een kleur te matchen, klik je op nummer 1 direct onder je geüploade afbeelding. Klik vervolgens op de kleur in de afbeelding die je wilt omzetten in een Guangna-code. Herhaal dit voor elk volgende nummer. Als je een selectie wilt aanpassen, klik je gewoon opnieuw op dat nummer en kies je een nieuwe kleur uit de afbeelding."
+},
+    "myMarkers": {
+      "heading": "🗂️ Mijn markers",
+      "optional": "optioneel",
+      "description": "Selecteer je set om te matchen binnen de markers die je al hebt.",
+      "noneSelected": "— Niets geselecteerd —",
+      "extraCodesPlaceholder": "bijv. 603, 648, 820"
+    },
+    "matching": "Matchen…",
+    "step4": {
+      "matchButton": "Matchen met Guangna-codes"
+    },
+    "results": {
+      "heading": "🎨 Guangna kleurenpalet gids",
+      "downloadPdf": "PDF downloaden",
+      "screenDisclaimer": "⚠️ Om de juistheid van het Guangna-palet te waarborgen, kunnen de kleuren op het scherm afwijken van de werkelijke kleur van de marker.",
+      "notInSetHeading": "💡 Nog betere matches buiten jouw set",
+      "notInSetSubheading": "Deze Guangna-kleuren zitten niet in je geselecteerde set, maar zijn wel de best mogelijke match.",
+      "orderPrompt": "Bestel hem →"
+    },
+    "donate": {
+      "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
+      "button": "Trakteer me op koffie"
+    },
+    "pdf": {
+      "titleText": "Kleur je herinneringen",
+      "subtitle": "Guangna kleurenpalet  ·  {count} kleuren",
+      "instructions": "Match elk genummerd vlakje van je legenda met de bijbehorende Guangna-marker",
+      "columnInSet": "Beste Match in Jouw Set",
+      "columnAvailable": "Beste Beschikbare Guangna Match"
     }
   }
 }

@@ -60,6 +60,7 @@
       "footerCreate": "Erstellen",
       "footerConverter": "Farbkonverter",
       "footerExamples": "Beispiele",
+      "footerLegendConverter": "Legende-Konverter",
       "footerTips": "Tipps & Tricks",
       "footerFaq": "FAQ",
       "footerTiktok": "TikTok",
@@ -73,6 +74,7 @@
       "guangna": "Guangna",
       "createGuangna": "Guangna Malen-nach-Zahlen erstellen",
       "colorConverter": "Farbkonverter",
+      "legendConverter": "Legende-Konverter",
       "examples": "Beispiele",
       "tips": "Tipps & Tricks",
       "faq": "FAQ",
@@ -336,6 +338,7 @@
       },
       "photo": {
         "dropHint": "Foto hier ablegen oder klicken, um zu durchsuchen",
+        "lightingTip": "Für die genaueste Übereinstimmung: fotografiere bei natürlichem, gleichmäßigem Tageslicht — Schatten oder gelbliches Kunstlicht können die Farben verfälschen und die Genauigkeit beeinträchtigen.",
         "fileTypes": "JPG, PNG",
         "fileSelected": "✓ {fileName}",
         "dominantColorExtracted": "Dominante Farbe extrahiert"
@@ -355,7 +358,71 @@
         "notInSetNotice": "💡 Die beste Guangna-Übereinstimmung ({code}) ist nicht in deinem Set.",
         "orderPrompt": "Möchtest du ihn bestellen? →",
         "noOwnedMatch": "Keiner deiner Marker passt — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen."
+      },
+      "crossLink": {
+        "text": "Hast du eine ganze Farblegende statt einer einzelnen Farbe?",
+        "linkText": "Legende-Konverter ausprobieren →"
+      },
+      "donate": {
+        "text": "Hat dir das Zeit gespart? Ein Kaffee wird sehr geschätzt ☕",
+        "button": "Spendiere mir einen Kaffee"
+      }
+    },
+    "LegendConverter": {
+      "title": "Legende zu Guangna-Palette",
+      "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Guangna-Stiftguide.",
+      "crossLink": {
+        "text": "Möchtest du nur eine einzelne Farbe prüfen?",
+        "linkText": "Farbkonverter ausprobieren →"
+      },
+      "step1": {
+        "heading": "1 · Farblegende hochladen",
+        "dropHint": "Foto hier ablegen oder klicken zum Hochladen",
+        "fileTypes": "JPG oder PNG",
+        "replacePhoto": "Anderes Foto verwenden",
+        "lightingTip": "Für die genauesten Guangna-Codes: fotografiere die Legende bei natürlichem, gleichmäßigem Tageslicht — Schatten oder gelbliches Kunstlicht können die Farben verfälschen. Ein Scan funktioniert noch besser als ein Foto, falls verfügbar."
+      },
+      "step2": {
+"heading": "2 · Wie viele Farben aus deiner Legende möchtest du umwandeln?",
+"apply": "Übernehmen"
+},
+"step3": {
+"heading": "3 · Jedes Farbfeld anklicken",
+"prompt": "Klicke Farbfeld {num} von {total} auf dem Bild an",
+"allDone": "Alle Farbfelder erfasst — klicke unten auf eine Nummer, um sie neu zu setzen",
+"editSwatch": "Klicken, um Farbfeld {num} neu zu setzen",
+"remaining": "Noch {count} Farbfeld(er) nicht gesetzt — sie werden aus deinem Guide ausgeschlossen, es sei denn, du klickst sie auch noch an.",
+"howToTip": "Um eine Farbe abzugleichen, klicke auf Nummer 1 direkt unter deinem hochgeladenen Bild. Klicke anschließend auf die Farbe im Bild, die du in einen Guangna-Code umwandeln möchtest. Wiederhole diesen Vorgang für jede weitere Nummer. Wenn du eine Auswahl korrigieren möchtest, klicke einfach erneut auf die jeweilige Nummer und wähle eine neue Farbe aus dem Bild."
+},
+      "myMarkers": {
+        "heading": "🗂️ Meine Stifte",
+        "optional": "optional",
+        "description": "Wähle dein Set, um nur mit eigenen Stiften abzugleichen.",
+        "noneSelected": "— Keine Auswahl —",
+        "extraCodesPlaceholder": "z. B. 603, 648, 820"
+      },
+      "matching": "Wird abgeglichen…",
+      "step4": {
+        "matchButton": "Mit Guangna-Codes abgleichen"
+      },
+      "results": {
+        "heading": "🎨 Guangna-Farbpalette-Guide",
+        "downloadPdf": "PDF herunterladen",
+        "screenDisclaimer": "⚠️ Um die Genauigkeit der Guangna-Palette zu gewährleisten, können die Farben am Bildschirm von der tatsächlichen Stiftfarbe abweichen.",
+        "notInSetHeading": "💡 Noch bessere Treffer außerhalb deines Sets",
+        "notInSetSubheading": "Diese Guangna-Farben sind nicht in deinem ausgewählten Set enthalten, bieten aber die bestmögliche Übereinstimmung.",
+        "orderPrompt": "Jetzt bestellen →"
+      },
+      "donate": {
+        "text": "Hat dir das Zeit gespart? Ein Kaffee wird sehr geschätzt ☕",
+        "button": "Spendiere mir einen Kaffee"
+      },
+      "pdf": {
+        "titleText": "Color Your Memories",
+        "subtitle": "Guangna-Farbpalette  ·  {count} Farben",
+        "instructions": "Ordne jedes nummerierte Farbfeld deiner Legende dem passenden Guangna-Stift zu",
+        "columnInSet": "Beste Übereinstimmung in Deinem Set",
+        "columnAvailable": "Beste Verfügbare Guangna-Übereinstimmung"
       }
     }
-  }
-  
+}

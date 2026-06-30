@@ -180,6 +180,57 @@ export const GUIDES_DATA = {
       href: "/tips",
       label: "See the full Tips & Tricks reference →",
     },
+  },"convert-coloring-book-legend-to-guangna-markers": {
+    title: "Already Have a Coloring Book? Convert Its Color Legend to Guangna Markers",
+    description:
+      "Got a paint-by-number page from somewhere else, with its own numbered color legend? Here's how to turn that legend into a ready-to-use Guangna marker guide in minutes.",
+    intro:
+      "Not every paint-by-number page in your house came from CreaBeaStudio — and that's fine. Most coloring books and printed paint-by-number pages come with their own little color legend at the bottom: a row of swatches, each tied to a number. The Legend Converter takes that legend and tells you exactly which Guangna marker to use for each one, so you're not stuck guessing or buying a whole new set of pens to match someone else's color codes.",
+    sections: [
+      {
+        heading: "1. Upload a Photo of the Legend",
+        body: "Snap a clear, well-lit photo of the color legend printed on your page — the row or grid of numbered swatches, not the whole coloring page. Natural daylight works best; shadows and yellow indoor lighting can shift how the colors read and throw off the match. If you have access to a scanner, a scan will give you an even more accurate result than a phone photo.",
+      },
+      {
+        heading: "2. Tell It How Many Colors to Convert",
+        body: "Enter how many numbered swatches are in your legend. The tool will set up that many click targets for you to work through — you don't need to convert every single one in one sitting if you'd rather do it in batches.",
+      },
+      {
+        heading: "3. Click Each Swatch on Your Photo",
+        body: "Click the number below the photo to select which swatch you're working on, then click that exact color on the legend image itself. Repeat for each swatch. You don't have to go in order, and you can click any number again at any time to redo it if you misclick.",
+      },
+      {
+        heading: "4. Optionally Narrow It to the Markers You Own",
+        body: "If you select your specific Guangna set, the tool shows you the best match from markers you already own, alongside what the best possible match would be across the full Guangna lineup — so if a closer color exists outside your set, you'll see it and can decide whether it's worth picking up.",
+      },
+      {
+        heading: "5. Match, Download, and Color",
+        body: "Once every swatch is set, hit match and you'll get a clean, numbered palette guide on screen — and a downloadable PDF version styled the same way as the Guangna Color Palette Guide that comes with every custom order. Print it, set it next to your coloring page, and you're ready to go.",
+      },
+      {
+        heading: "Frequently Asked Questions: Legend Converter",
+      },
+      {
+        heading: "Q: Does this work with any paint-by-number book, not just CreaBeaStudio pages?",
+        body: "Yes. The Legend Converter doesn't care where the coloring page came from — it only needs a clear photo of the color legend itself. Any printed page with a numbered color key works.",
+      },
+      {
+        heading: "Q: What if my legend has more than 70-something colors?",
+        body: "You can convert up to 72 swatches in a single legend. For anything larger, you'll get the best results splitting it into a couple of passes.",
+      },
+      {
+        heading: "Q: I only own a small marker set — will this still work?",
+        body: "Yes. Select your set and the converter restricts its primary recommendation to markers you actually own, while still showing you anything closer available outside your set, so you always know your options.",
+      },
+      {
+        heading: "Q: How is this different from the regular Color Converter?",
+        body: "The Color Converter matches one single color at a time — great for checking a single paint chip or photo. The Legend Converter is built for when you have a whole legend of colors to convert at once, with each one numbered and tracked through to a finished, downloadable guide.",
+      },
+    ],
+    cta: {
+      href: "/legend-converter",
+      label: "Try the Legend Converter →",
+    },
   },
 };
  

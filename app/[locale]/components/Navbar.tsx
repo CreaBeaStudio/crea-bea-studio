@@ -14,6 +14,7 @@ export default function Navbar() {
     { labelKey: "guangna", children: [
       ["createGuangna", "/create"],
       ["colorConverter", "/color-converter"],
+      ["legendConverter", "/legend-converter"],
     ]},
     ["examples", "/examples"],
     ["tips", "/tips"],

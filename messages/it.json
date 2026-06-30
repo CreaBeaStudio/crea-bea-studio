@@ -60,6 +60,7 @@
       "footerCreate": "Crea",
       "footerConverter": "Convertitore di colori",
       "footerExamples": "Esempi",
+      "footerLegendConverter": "Convertitore di legenda",
       "footerTips": "Consigli & Trucchi",
       "footerFaq": "FAQ",
       "footerTiktok": "TikTok",
@@ -74,6 +75,7 @@
       "createGuangna": "Crea Guangna by Number",
       "colorConverter": "Convertitore di colori",
       "examples": "Esempi",
+      "legendConverter": "Convertitore di legenda",
       "tips": "Consigli & Trucchi",
       "faq": "FAQ",
       "tagline": "Colora i tuoi ricordi",
@@ -311,31 +313,32 @@
       "createCta": "Crea il tuo Guangna by Number ora →"
     },
     "ColorConverter": {
-      "title": "Convertitore di colori Guangna",
-      "subtitle": "Inserisci un colore qualsiasi e trova il pennarello Guangna più vicino disponibile, e, se vuoi, anche dalla tua collezione.",
+      "title": "Guangna Convertitore Colori",
+      "subtitle": "Inserisci un colore qualsiasi e trova il pennarello Guangna più vicino disponibile, e facoltativamente anche dalla tua collezione.",
       "myMarkers": {
         "heading": "🗂️ I miei pennarelli",
         "optional": "opzionale",
         "description": "Seleziona il tuo set per vedere anche la migliore corrispondenza tra i pennarelli che possiedi.",
         "setLabel": "Set di pennarelli",
-        "noneSelected": "— Nessuna selezione —",
+        "noneSelected": "— Nessuno selezionato —",
         "extraCodesLabel": "Codici extra",
-        "extraCodesHint": "(3 cifre, separati da virgole o spazi)",
-        "extraCodesPlaceholder": "ad es. 603, 648, 820"
+        "extraCodesHint": "(3 cifre, separati da virgola o spazio)",
+        "extraCodesPlaceholder": "es. 603, 648, 820"
       },
       "modes": {
         "hex": "HEX",
         "rgb": "RGB",
-        "photo": "📸 Campione di colore da foto"
+        "photo": "📸 Campione Colore da Foto"
       },
       "hex": { "label": "Colore Hex" },
       "rgb": {
         "rLabel": "R (0–255)",
-        "gLabel": "V (0–255)",
+        "gLabel": "G (0–255)",
         "bLabel": "B (0–255)"
       },
       "photo": {
-        "dropHint": "Rilascia una foto o clicca per sfogliare",
+        "dropHint": "Trascina una foto qui o clicca per cercarla",
+        "lightingTip": "Per una corrispondenza più accurata, scatta la foto con luce naturale e uniforme — ombre o luce artificiale giallastra possono alterare i colori e ridurre la precisione.",
         "fileTypes": "JPG, PNG",
         "fileSelected": "✓ {fileName}",
         "dominantColorExtracted": "Colore dominante estratto"
@@ -346,16 +349,80 @@
       "results": {
         "heading": "Risultati",
         "emptyPrompt": "Inserisci un colore e clicca su Cerca",
-        "bestMatch": "Corrispondenza migliore",
+        "bestMatch": "Migliore corrispondenza",
         "guangnaBadge": "Guangna",
-        "screenDisclaimer": "⚠️ I colori a schermo possono differire dal pennarello reale. Prova sempre su carta.",
+        "screenDisclaimer": "⚠️ I colori sullo schermo possono differire dal pennarello reale. Testa sempre su carta.",
         "bestMatchOwned": "Migliore corrispondenza che possiedi",
-        "youHaveIt": "✓ Lo hai già!",
+        "youHaveIt": "✓ Ce l'hai già!",
         "fromYourSet": "Dal tuo set",
         "notInSetNotice": "💡 La migliore corrispondenza Guangna ({code}) non è nel tuo set.",
         "orderPrompt": "Vuoi ordinarlo? →",
         "noOwnedMatch": "Nessuno dei tuoi pennarelli corrisponde — prova ad aggiungere altri set o codici extra."
+      },
+      "crossLink": {
+        "text": "Hai un'intera legenda colori invece di un solo colore?",
+        "linkText": "Prova il convertitore di legenda →"
+      },
+      "donate": {
+        "text": "Ti ha fatto risparmiare tempo? Un caffè è sempre apprezzato ☕",
+        "button": "Offrimi un caffè"
+      }
+    },
+    "LegendConverter": {
+      "title": "Legenda verso palette Guangna",
+      "subtitle": "Carica la legenda colori di un disegno da colorare, clicca ogni tassello e ottieni una guida pronta ai pennarelli Guangna.",
+      "crossLink": {
+        "text": "Devi controllare solo un colore?",
+        "linkText": "Prova il convertitore di colori →"
+      },
+      "step1": {
+        "heading": "1 · Carica la legenda colori",
+        "dropHint": "Rilascia qui una foto o clicca per caricarla",
+        "fileTypes": "JPG o PNG",
+        "replacePhoto": "Usa un'altra foto",
+        "lightingTip": "Per i codici Guangna più accurati: fotografa la legenda con luce naturale e uniforme — ombre o luce artificiale giallastra possono alterare i colori. Una scansione funziona ancora meglio di una foto, se disponibile."
+      },
+     "step2": {
+"heading": "2 · Quanti colori della tua legenda vuoi convertire?",
+"apply": "Applica"
+},
+"step3": {
+"heading": "3 · Clicca ogni tassello",
+"prompt": "Clicca il tassello {num} di {total} sull'immagine",
+"allDone": "Tutti i tasselli campionati — clicca un numero qui sotto per ripeterlo",
+"editSwatch": "Clicca per ripetere il tassello {num}",
+"remaining": "{count} tassello/i non ancora impostato/i — saranno esclusi dalla tua guida a meno che non clicchi anche su di essi.",
+"howToTip": "Per abbinare un colore, fai clic sul numero 1 appena sotto la tua immagine caricata, quindi fai clic sul colore dell'immagine que desideri convertire in un codice Guangna. Ripeti questo processo per ogni numero successivo. Se hai bisogno di modificare una selezione, ti basta fare di nuovo clic su quel numero e selezionare un nuovo colore dall'immagine."
+},
+      "myMarkers": {
+        "heading": "🗂️ I miei pennarelli",
+        "optional": "opzionale",
+        "description": "Seleziona il tuo set per confrontare solo con i pennarelli che possiedi.",
+        "noneSelected": "— Nessuno selezionato —",
+        "extraCodesPlaceholder": "es. 603, 648, 820"
+      },
+      "matching": "Confronto in corso…",
+      "step4": {
+        "matchButton": "Confronta con i codici Guangna"
+      },
+      "results": {
+        "heading": "🎨 Guida palette colori Guangna",
+        "downloadPdf": "Scarica PDF",
+        "screenDisclaimer": "⚠️ Per tutelare la fedeltà della palette Guangna, i colori a schermo possono differire dal colore reale del pennarello.",
+        "notInSetHeading": "💡 Corrispondenze ancora migliori fuori dal tuo set",
+        "notInSetSubheading": "Questi colori Guangna non fanno parte del set selezionato, ma sono la corrispondenza migliore disponibile.",
+        "orderPrompt": "Ordinalo →"
+      },
+      "donate": {
+        "text": "Ti ha fatto risparmiare tempo? Un caffè è sempre apprezzato ☕",
+        "button": "Offrimi un caffè"
+      },
+      "pdf": {
+        "titleText": "Color Your Memories",
+        "subtitle": "Palette Guangna  ·  {count} colori",
+        "instructions": "Associa ogni tassello numerato della tua legenda al pennarello Guangna corrispondente",
+        "columnInSet": "Migliore Corrispondenza nel Tuo Set",
+        "columnAvailable": "Migliore Corrispondenza Guangna Disponibile"
       }
     }
   }
-  
