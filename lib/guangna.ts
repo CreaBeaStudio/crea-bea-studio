@@ -94,7 +94,7 @@ export const GN_COLORS: Record<string,[number,number,number,string]> = {
     "GN-864":[120,75,52,"Walnut brown"],"GN-865":[126,120,108,"Elegant brown"],"GN-866":[129,101,70,"Ebony palm"],
     "GN-867":[100,62,43,"Caramel brown"],"GN-868":[190,158,95,"Dry leaf brown"],"GN-869":[150,95,90,"Chocolate brown"],
     "GN-870":[153,141,134,"Clay brown"],"GN-871":[234,224,187,"Almond brown"],"GN-872":[235,193,200,"Rouge powder"],
-    "GN-873":[237,206,223,"Ballet pink / Bullet pink"],"GN-874":[232,218,179,"Light sand yellow"],"GN-875":[156,82,50,"Honey brown"],
+    "GN-873":[237,206,223,"Ballet pink"],"GN-874":[232,218,179,"Light sand yellow"],"GN-875":[156,82,50,"Honey brown"],
     "GN-876":[232,238,155,"Williow bud white"],"GN-877":[252,245,223,"Jasmine white"],"GN-878":[221,237,251,"Ice white"],
     "GN-879":[219,222,246,"Water white"],"GN-880":[233,227,238,"Purple mist white"],"GN-881":[247,227,231,"Makeup white"],
     "GN-882":[248,233,223,"Pink white"],"GN-883":[247,243,229,"Gardenia white"],"GN-884":[225,232,233,"Matte white"],

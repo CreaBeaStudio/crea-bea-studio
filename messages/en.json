@@ -80,7 +80,8 @@
     "faq": "FAQ",
     "tagline": "Color Your Memories",
     "taglineShort": "CreaBeaStudio",
-    "contactUs": "Contact us"
+    "contactUs": "Contact us",
+    "freeColoringPages": "Free Coloring Pages"
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -330,7 +331,9 @@
       "rgb": "RGB",
       "photo": "📸 Photo Color Sample"
     },
-    "hex": { "label": "Hex Colour" },
+    "hex": {
+      "label": "Hex Colour"
+    },
     "rgb": {
       "rLabel": "R (0–255)",
       "gLabel": "G (0–255)",
@@ -360,13 +363,13 @@
       "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes."
     },
     "crossLink": {
-  "text": "Got a whole color legend instead of one color?",
-  "linkText": "Try the Legend Converter →"
-},
-"donate": {
-  "text": "If this saved you time, a coffee is always appreciated ☕",
-  "button": "Buy me a coffee"
-}
+      "text": "Got a whole color legend instead of one color?",
+      "linkText": "Try the Legend Converter →"
+    },
+    "donate": {
+      "text": "If this saved you time, a coffee is always appreciated ☕",
+      "button": "Buy me a coffee"
+    }
   },
   "LegendConverter": {
     "title": "Legend to Guangna Palette",
@@ -383,12 +386,12 @@
       "apply": "Set"
     },
     "step3": {
-"heading": "3 · Click each swatch",
-"prompt": "Click swatch {num} of {total} on the image",
-"allDone": "All swatches sampled — click any number below to redo one",
-"editSwatch": "Click to redo swatch {num}",
-"remaining": "{count} swatch(es) not yet set — they'll be left out of your guide unless you go back and click them too.",
-"howToTip": "To match a color, click on number 1 just below your uploaded image, then click the color in the image you want to convert into a Guangna code. Repeat this process for each subsequent number. If you ever need to redo a selection, just click that number again and select a new color from the image."
+      "heading": "3 · Click each swatch",
+      "prompt": "Click swatch {num} of {total} on the image",
+      "allDone": "All swatches sampled — click any number below to redo one",
+      "editSwatch": "Click to redo swatch {num}",
+      "remaining": "{count} swatch(es) not yet set — they'll be left out of your guide unless you go back and click them too.",
+      "howToTip": "To match a color, click on number 1 just below your uploaded image, then click the color in the image you want to convert into a Guangna code. Repeat this process for each subsequent number. If you ever need to redo a selection, just click that number again and select a new color from the image."
     },
     "myMarkers": {
       "heading": "🗂️ My Markers",
@@ -403,12 +406,12 @@
     },
     "results": {
       "notInSetHeading": "💡 Even better matches outside your set",
-"notInSetSubheading": "These Guangna colors aren't in your selected set, but they're the closest possible match available.",
-"heading": "🎨 Guangna Color Palette Guide",
+      "notInSetSubheading": "These Guangna colors aren't in your selected set, but they're the closest possible match available.",
+      "heading": "🎨 Guangna Color Palette Guide",
       "downloadPdf": "Download PDF",
       "screenDisclaimer": "⚠️ To safeguard the integrity of Guangna Palette, the colors on screen may vary from the actual color of the marker.",
-"orderPrompt": "Would you like to Order it/them →"
-},
+      "orderPrompt": "Would you like to Order it/them →"
+    },
     "donate": {
       "text": "If this saved you time, a coffee is always appreciated ☕",
       "button": "Buy me a coffee"
@@ -422,8 +425,33 @@
       "columnAvailable": "Best Guangna Match Available"
     },
     "crossLink": {
-  "text": "Just need to check a single color?",
-  "linkText": "Try the Color Converter →"
-}
+      "text": "Just need to check a single color?",
+      "linkText": "Try the Color Converter →"
+    },
+    "nav": {
+      "freeColoringPages": "Free Coloring Pages"
+    },
+    "coloringPages": {
+      "metaTitle": "Free Coloring Pages | CreaBeaStudio",
+      "metaDescription": "Download free printable coloring pages from CreaBeaStudio. New designs added regularly — enjoy, and consider leaving a tip if you'd like to support future pages.",
+      "title": "Free Coloring Pages",
+      "subtitle": "Download and print these coloring pages for free. If you enjoy them, a small tip helps me keep making more.",
+      "downloadButton": "Download PDF",
+      "donate": {
+        "text": "Enjoying these free pages? A small tip helps me create more.",
+        "button": "Support on Ko-fi"
+      }
+    }
+  },
+  "coloringPages": {
+    "metaTitle": "Free Coloring Pages | CreaBeaStudio",
+    "metaDescription": "Download free printable coloring pages from CreaBeaStudio. New designs added regularly — enjoy, and consider leaving a tip if you'd like to support future pages.",
+    "title": "Free Coloring Pages",
+    "subtitle": "Download and print these coloring pages for free. If you enjoy them, a small tip helps me keep making more.",
+    "downloadButton": "Download PDF",
+    "donate": {
+      "text": "Enjoying these free pages? A small tip helps me create more.",
+      "button": "Support on Ko-fi"
+    }
   }
 }

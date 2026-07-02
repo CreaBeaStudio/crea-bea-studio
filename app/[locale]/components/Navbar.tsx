@@ -17,6 +17,7 @@ export default function Navbar() {
       ["legendConverter", "/legend-converter"],
     ]},
     ["examples", "/examples"],
+    ["freeColoringPages", "/free-coloring-pages"],
     ["tips", "/tips"],
     ["faq", "/faq"],
   ];
