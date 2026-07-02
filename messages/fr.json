@@ -437,6 +437,15 @@
     "donate": {
       "text": "Vous aimez ces coloriages gratuits ? Un petit pourboire m'aide à en créer davantage.",
       "button": "Soutenir sur Ko-fi"
+    },
+    "backToAll": "Retour à tous les coloriages",
+    "viewPage": "Voir",
+    "comingSoon": "Bientôt disponible",
+    "exampleLabel": "Exemple",
+    "previewLabel": "Aperçu",
+    "crossLink": {
+      "text": "Envie de transformer votre propre photo en peinture par numéros ?",
+      "linkText": "Essayez Crée ta page Guangna by Numberr →"
     }
   }
 }

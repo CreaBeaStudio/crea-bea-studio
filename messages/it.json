@@ -437,6 +437,15 @@
     "donate": {
       "text": "Ti piacciono questi disegni gratuiti? Una piccola mancia mi aiuta a crearne altri.",
       "button": "Sostienimi su Ko-fi"
+    },
+    "backToAll": "Torna a tutti i disegni",
+    "viewPage": "Visualizza",
+    "comingSoon": "Prossimamente",
+    "exampleLabel": "Esempio",
+    "previewLabel": "Anteprima",
+    "crossLink": {
+      "text": "Vuoi trasformare la tua foto in un dipinto per numeri?",
+      "linkText": "Prova Crea la tua pagina Guangna by Number →"
     }
   }
 }

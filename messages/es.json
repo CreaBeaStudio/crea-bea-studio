@@ -437,6 +437,15 @@
     "donate": {
       "text": "¿Disfrutas de estas páginas gratuitas? Una pequeña propina me ayuda a crear más.",
       "button": "Apóyame en Ko-fi"
+    },
+    "backToAll": "Volver a todas las páginas",
+    "viewPage": "Ver",
+    "comingSoon": "Próximamente",
+    "exampleLabel": "Ejemplo",
+    "previewLabel": "Vista previa",
+    "crossLink": {
+      "text": "¿Quieres convertir tu propia foto en una pintura por números?",
+      "linkText": "Prueba Crear Guangna by Number →"
     }
   }
 }

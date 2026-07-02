@@ -437,6 +437,15 @@
     "donate": {
       "text": "Geniet je van deze gratis kleurplaten? Een kleine fooi helpt me om er meer te maken.",
       "button": "Steun op Ko-fi"
+    },
+    "backToAll": "Terug naar alle kleurplaten",
+    "viewPage": "Bekijk",
+    "comingSoon": "Binnenkort beschikbaar",
+    "exampleLabel": "Voorbeeld",
+    "previewLabel": "Kleurplaat",
+    "crossLink": {
+      "text": "Wil je van je eigen foto een paint-by-number maken?",
+      "linkText": "Probeer Guangna by Number →"
     }
   }
 }

@@ -437,6 +437,15 @@
     "donate": {
       "text": "Gefallen dir diese kostenlosen Ausmalbilder? Ein kleines Trinkgeld hilft mir, mehr zu erstellen.",
       "button": "Unterstütze auf Ko-fi"
+    },
+    "backToAll": "Zurück zu allen Ausmalbildern",
+    "viewPage": "Ansehen",
+    "comingSoon": "Demnächst verfügbar",
+    "exampleLabel": "Beispiel",
+    "previewLabel": "Vorschau",
+    "crossLink": {
+      "text": "Möchtest du dein eigenes Foto in ein Paint-by-Number verwandeln?",
+      "linkText": "Guangna Malen-nach-Zahlen ausprobieren →"
     }
   }
 }

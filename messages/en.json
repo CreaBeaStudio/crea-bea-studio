@@ -452,6 +452,15 @@
     "donate": {
       "text": "Enjoying these free pages? A small tip helps me create more.",
       "button": "Support on Ko-fi"
+    },
+    "backToAll": "Back to all coloring pages",
+    "viewPage": "View",
+    "comingSoon": "Coming soon",
+    "exampleLabel": "Example",
+    "previewLabel": "Preview",
+    "crossLink": {
+      "text": "Want to turn your own photo into a paint-by-number?",
+      "linkText": "Try Create your own Guangna by Number →"
     }
   }
 }
