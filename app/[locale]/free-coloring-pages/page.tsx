@@ -28,7 +28,7 @@ export default async function FreeColoringPagesPage({ params }: Props) {
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "48px 24px 80px" }}>
       <div style={{ textAlign: "center", marginBottom: 12 }}>
         <Image
-          src="/Guangna_brush.png"
+          src="/marketing/Guangna_brush.png"
           alt="Guangna brush"
           width={120}
           height={84}

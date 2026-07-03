@@ -80,3 +80,43 @@ select:focus, input[type="text"]:focus, textarea:focus {
   padding: 24px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
+/* Homepage hero: slider + legends panel.
+   Desktop: three columns â€” simple legend | slider | Guangna legend.
+   Mobile: slider full-width on top, both legends side by side below.
+   Uses CSS Grid (not flex+order) because flex "order" can only reposition
+   items within a single row â€” it can't make one item take a full row while
+   two others share the row below it. Grid areas handle that natively. */
+   .hero-slider-panel {
+    display: grid;
+    grid-template-columns: minmax(100px, 100px) minmax(240px, 1fr) minmax(275px, 275px);
+    grid-template-areas: "simple slider guangna";
+    align-items: start;
+    justify-content: center;
+    gap: 24px;
+  }
+  .hero-legend-simple  { grid-area: simple; }
+  .hero-slider-image   { grid-area: slider; }
+  .hero-legend-guangna { grid-area: guangna; }
+  
+  @media (max-width: 768px) {
+    .hero-slider-panel {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      grid-template-areas:
+        "slider slider"
+        "simple guangna";
+    }
+    /* CSS Grid tracks have an invisible minimum size equal to their content's
+       natural width by default, even when set to 1fr â€” this is what was
+       still forcing horizontal overflow. min-width:0 removes that floor. */
+    .hero-slider-image,
+    .hero-legend-simple,
+    .hero-legend-guangna {
+      min-width: 0;
+      max-width: 100%;
+    }
+    .hero-legend-simple span,
+    .hero-legend-guangna span {
+      width: auto !important;
+      flex-shrink: 1 !important;
+    }
+  }

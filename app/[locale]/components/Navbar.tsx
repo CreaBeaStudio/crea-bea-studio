@@ -77,7 +77,7 @@ export default function Navbar() {
         }}>
           {/* Logo + tagline */}
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
-            <Image src="/cat-logo.png" alt="CreaBeaStudio" width={100} height={100}
+            <Image src="/marketing/cat-logo.png" alt="CreaBeaStudio" width={100} height={100}
               style={{ objectFit: "contain", alignSelf: "flex-end", width:"auto" }} />
             <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <span style={{ fontSize: 14, color: "var(--pink)" }}>♥</span>

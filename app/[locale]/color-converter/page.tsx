@@ -130,7 +130,7 @@ export default function ColorConverter() {
       <Navbar/>
       <main style={{padding:"40px 24px",maxWidth:960,margin:"0 auto"}}>
         <div style={{marginBottom:12}}>
-          <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{objectFit:"contain",height:"auto"}} />
+          <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{objectFit:"contain",height:"auto"}} />
         </div>
         <h1 style={{fontFamily:"Nunito, sans-serif",color:"var(--pink)",fontWeight:900,fontSize:"clamp(26px,4vw,40px)",marginBottom:8}}>
           {t("title")}

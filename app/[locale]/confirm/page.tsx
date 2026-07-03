@@ -128,7 +128,7 @@ function ConfirmContent() {
       <main style={{ padding:"60px 24px", maxWidth:640, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:32 }}>
         <div style={{ marginBottom:12 }}>
-  <Image src="/Guangna_brush.png" alt="Guangna brush" width={160} height={110}
+  <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={160} height={110}
     style={{ objectFit:"contain", height:"auto", display:"block", margin:"0 auto" }} />
 </div>
           <h1 style={{

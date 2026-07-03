@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import BeforeAfterSlider from "./components/BeforeAfterSlider";
 
 const FEATURES = [
   { icon: "📸", key: "featureCamera" },
@@ -17,9 +18,9 @@ const HOW = [
 ];
 
 const LEVELS = [
-  { nameKey: "levelBeginner", descKey: "levelBeginnerDesc", emoji: "🌱", img: "/detail-beginner.png" },
-  { nameKey: "levelIntermediate", descKey: "levelIntermediateDesc", emoji: "🌿", img: "/detail-int.png", popular: true },
-  { nameKey: "levelAdvanced", descKey: "levelAdvancedDesc", emoji: "🌲", img: "/detail-adv.png" },
+  { nameKey: "levelBeginner", descKey: "levelBeginnerDesc", emoji: "🌱", img: "/marketing/detail-beginner.png" },
+  { nameKey: "levelIntermediate", descKey: "levelIntermediateDesc", emoji: "🌿", img: "/marketing/detail-int.png", popular: true },
+  { nameKey: "levelAdvanced", descKey: "levelAdvancedDesc", emoji: "🌲", img: "/marketing/detail-adv.png" },
 ];
 
 const WHAT_YOU_GET = [
@@ -169,7 +170,7 @@ export default function Home() {
                 {FEATURES.map(f => (
                   <div key={f.key} className="feature-card">
                     {f.isGuangna
-                      ? <Image src="/guangna-marker.png" alt="Guangna marker" width={45} height={30} style={{ objectFit:"contain", marginBottom:6 }} />
+                      ? <Image src="/marketing/guangna-marker.png" alt="Guangna marker" width={45} height={30} style={{ objectFit:"contain", marginBottom:6 }} />
                       : <div style={{ fontSize:26, marginBottom:6 }}>{f.icon}</div>
                     }
                     <div style={{ fontWeight:700, fontSize:14 }}>{t(f.key)}</div>
@@ -180,17 +181,45 @@ export default function Home() {
 
             {/* Right: image panel */}
             <div className="hero-right" style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:20 }}>
-              <div style={{ position:"relative", display:"flex", flexDirection:"column", alignItems:"center", width:"100%" }}>
-                <div className="from-this-label" />
-                <div style={{
-                  background:"white", borderRadius:24, padding:16,
-                  boxShadow:"0 20px 60px rgba(244,96,122,0.15)",
-                  maxWidth:800, width:"100%"
-                }}>
-                 <Image src="/Dog_Legend4.png" alt="Sample PBN photo" width={800} height={800} loading="eager"
-                    style={{ borderRadius:16, objectFit:"cover", width:"100%", height:"600", minHeight:200, maxWidth:"100%" }} />
+              <div className="hero-slider-panel" style={{
+                background:"white", borderRadius:24, padding:20,
+                boxShadow:"0 20px 60px rgba(244,96,122,0.15)",
+                maxWidth:1550, width:"100%"
+              }}>
+                {/* Left legend: simple */}
+                <div className="hero-legend hero-legend-simple" style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
+                  <span style={{ fontSize:22, fontWeight:800, color:"var(--pink)", marginBottom:10, textAlign:"center", lineHeight:1.25, width:150, flexShrink:0 }}>
+                    From this:<br/>Simple legend
+                  </span>
+                  <div style={{ position:"relative", width:"100%", aspectRatio: "344 / 1320" }}>
+                    <Image src="/marketing/simple-legend.jpg" alt="Simple color legend"
+                      fill style={{ objectFit:"contain", borderRadius:8 }} />
+                  </div>
+                </div>
+
+                {/* Center: interactive slider */}
+                <div className="hero-slider-image">
+                  <BeforeAfterSlider
+                    beforeImage="/marketing/dog-reference.jpg"
+                    afterImage="/marketing/dog-outline.jpg"
+                    beforeLabel="Your Photo"
+                    afterLabel="PBN Outline"
+                    aspectRatio={0.58}
+                  />
+                </div>
+
+                {/* Right legend: Guangna */}
+                <div className="hero-legend hero-legend-guangna" style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
+                  <span style={{ fontSize:22, fontWeight:800, color:"var(--pink)", marginBottom:10, textAlign:"center", lineHeight:1.25, width:320, flexShrink:0 }}>
+                    To this:<br/>Guangna code <br/>and name
+                  </span>
+                  <div style={{ position:"relative", width:"100%", aspectRatio: "906 / 1320" }}>
+                    <Image src="/marketing/guangna-legend.jpg" alt="Guangna color codes and names"
+                      fill style={{ objectFit:"contain", borderRadius:8 }} />
+                  </div>
                 </div>
               </div>
+
               <div style={{
                 background:"var(--pink)", color:"white",
                 borderRadius:16, padding:"16px 28px",
@@ -201,8 +230,9 @@ export default function Home() {
                 <strong>{t("paletteBanner")}</strong>
               </div>
             </div>
-          </div>
+            </div>
         </section>
+
 
         {/* ── GUANGNA COLOR CONVERTER ── */}
         <section style={{
@@ -212,7 +242,7 @@ export default function Home() {
         }}>
           <div style={{ maxWidth:700, margin:"0 auto" }}>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
-              <Image src="/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
+              <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
               {t("converterTitle")}
             </h2>
             <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
@@ -321,7 +351,7 @@ export default function Home() {
               </p>
               <p style={{ fontSize:17, fontWeight:800, color:"var(--pink)" }}>
                 {t("paletteSlogan")}{" "}
-                <Image src="/guangna-marker.png" alt="Guangna marker" width={150} height={100} style={{ objectFit:"contain", marginBottom:6 }} />
+                <Image src="/marketing/guangna-marker.png" alt="Guangna marker" width={150} height={100} style={{ objectFit:"contain", marginBottom:6 }} />
               </p>
             </div>
 
@@ -339,7 +369,7 @@ export default function Home() {
                     overflow:"hidden", aspectRatio:"1.414 / 1", width:"100%",
                     transform:"rotate(-1.5deg)",
                   }}>
-                    <Image src="/GN_Palette_landscape.png" alt="Guangna Color Palette Guide"
+                    <Image src="/marketing/GN_Palette_landscape.png" alt="Guangna Color Palette Guide"
                       width={0} height={0} sizes="(max-width: 768px) 90vw, 50vw"
                       style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
                   </div>
@@ -480,7 +510,7 @@ export default function Home() {
              <a href="/refund" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerRefund")}</a>
               </div><p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>{t("footerRights", { year: new Date().getFullYear() })}</p>
           </div>
-          <Image src="/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
+          <Image src="/marketing/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
             style={{ height:"auto", width:"auto", maxHeight:120, maxWidth:160, objectFit:"contain" }} />
         </footer>
       </main>
