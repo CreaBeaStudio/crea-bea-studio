@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { coloringPages } from "@/lib/coloringPages";
 import Navbar from "../../components/Navbar";
+import BeforeAfterSlider from "../../components/BeforeAfterSlider";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -57,41 +58,56 @@ export default async function ColoringPageDetail({ params }: Props) {
         </p>
       )}
 
-      {(page.exampleImage || page.outlineImage) && (
-        <div style={{ display: "flex", gap: 16, marginBottom: 32, flexWrap: "wrap" }}>
-          {page.exampleImage && (
-            <div style={{ flex: "1 1 240px" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/coloring-pages/thumbs/${page.exampleImage}`}
-                alt={`${page.title} — colored example`}
-                style={{
-                  width: "100%", borderRadius: 12, border: "1px solid var(--border)",
-                  display: "block", objectFit: "cover", aspectRatio: "3 / 4",
-                }}
-              />
-            </div>
-          )}
-          {page.outlineImage && (
-            <div style={{ flex: "1 1 240px" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/coloring-pages/thumbs/${page.outlineImage}`}
-                alt={`${page.title} — coloring page preview`}
-                style={{
-                  width: "100%", borderRadius: 12, border: "1px solid var(--border)",
-                  display: "block", objectFit: "cover", aspectRatio: "3 / 4",
-                }}
-              />
-              <div style={{
-                textAlign: "center", fontSize: 11, color: "var(--muted)",
-                marginTop: 4,
-              }}>
-                {t("previewLabel")}
-              </div>
-            </div>
-          )}
+      {page.exampleImage && page.outlineImage ? (
+        // Both images present — interactive before/after slider.
+        <div style={{ marginBottom: 32 }}>
+          <BeforeAfterSlider
+            beforeImage={`/coloring-pages/thumbs/${page.exampleImage}`}
+            afterImage={`/coloring-pages/thumbs/${page.outlineImage}`}
+            beforeLabel="Reference"
+            afterLabel={t("previewLabel")}
+            aspectRatio={3 / 4}
+          />
         </div>
+      ) : (
+        // Fallback: only one image configured (e.g. a page still being set up) —
+        // show whichever single image exists, same as before.
+        (page.exampleImage || page.outlineImage) && (
+          <div style={{ display: "flex", gap: 16, marginBottom: 32, flexWrap: "wrap" }}>
+            {page.exampleImage && (
+              <div style={{ flex: "1 1 240px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/coloring-pages/thumbs/${page.exampleImage}`}
+                  alt={`${page.title} — Reference`}
+                  style={{
+                    width: "100%", borderRadius: 12, border: "1px solid var(--border)",
+                    display: "block", objectFit: "cover", aspectRatio: "3 / 4",
+                  }}
+                />
+              </div>
+            )}
+            {page.outlineImage && (
+              <div style={{ flex: "1 1 240px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/coloring-pages/thumbs/${page.outlineImage}`}
+                  alt={`${page.title} — coloring page preview`}
+                  style={{
+                    width: "100%", borderRadius: 12, border: "1px solid var(--border)",
+                    display: "block", objectFit: "cover", aspectRatio: "3 / 4",
+                  }}
+                />
+                <div style={{
+                  textAlign: "center", fontSize: 11, color: "var(--muted)",
+                  marginTop: 4,
+                }}>
+                  {t("previewLabel")}
+                </div>
+              </div>
+            )}
+          </div>
+        )
       )}
 
       {isPaid ? (

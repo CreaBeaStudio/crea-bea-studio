@@ -429,13 +429,13 @@
     }
   },
   "coloringPages": {
-    "metaTitle": "Páginas para Colorear Gratis | CreaBeaStudio",
-    "metaDescription": "Descarga páginas para colorear gratuitas e imprimibles de CreaBeaStudio. Nuevos diseños con regularidad — disfrútalos, y si quieres, deja una propina para apoyar futuros diseños.",
-    "title": "Páginas para Colorear Gratis",
-    "subtitle": "Descarga e imprime estas páginas para colorear gratis. ¿Te gustan? Una pequeña propina me ayuda a crear más.",
+    "metaTitle": "Páginas para Colorear GRATIS | CreaBeaStudio",
+    "metaDescription": "Descarga e imprime estos dibujos para colorear de forma gratuita. Cada descarga incluye tres guías de paletas de colores Guangna personalizadas que te ayudarán a seleccionar los rotuladores Guangna de tu estuche que mejor combinen.",
+    "title": "Páginas para Colorear GRATIS",
+    "subtitle": "Descarga e imprime estos dibujos para colorear de forma gratuita. Cada descarga incluye tres guías de paletas de colores Guangna personalizadas que te ayudarán a seleccionar los rotuladores Guangna de tu estuche que mejor combinen.",
     "downloadButton": "Descargar PDF",
     "donate": {
-      "text": "¿Disfrutas de estas páginas gratuitas? Una pequeña propina me ayuda a crear más.",
+      "text": "Si te gustan, invítame a un café para ayudarme a seguir creando más. ¡Feliz coloreado!",
       "button": "Apóyame en Ko-fi"
     },
     "backToAll": "Volver a todas las páginas",
@@ -445,7 +445,7 @@
     "previewLabel": "Vista previa",
     "crossLink": {
       "text": "¿Quieres convertir tu propia foto en una pintura por números?",
-      "linkText": "Prueba Crear Guangna by Number →"
+      "linkText": "Prueba a Crear Guangna by Number →"
     }
   }
 }

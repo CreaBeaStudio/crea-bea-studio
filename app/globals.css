@@ -120,3 +120,38 @@ select:focus, input[type="text"]:focus, textarea:focus {
       flex-shrink: 1 !important;
     }
   }
+  /* Free coloring pages: sidebar + grid browser.
+   Desktop: fixed-width sidebar always visible next to the grid.
+   Mobile: sidebar becomes a collapsible dropdown, toggled by
+   .coloring-mobile-toggle (hidden on desktop). */
+.coloring-browser {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.coloring-mobile-toggle {
+  display: none;
+}
+.coloring-filters {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .coloring-browser {
+    grid-template-columns: 1fr;
+  }
+  .coloring-mobile-toggle {
+    display: flex;
+  }
+  .coloring-filters {
+    display: none;
+    margin-bottom: 20px;
+  }
+  .coloring-filters.open {
+    display: block;
+  }
+}

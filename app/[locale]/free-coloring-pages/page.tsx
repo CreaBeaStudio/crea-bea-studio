@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { coloringPages } from "@/lib/coloringPages";
 import Navbar from "../components/Navbar";
+import ColoringPagesBrowser from "../components/ColoringPagesBrowser";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -25,7 +25,7 @@ export default async function FreeColoringPagesPage({ params }: Props) {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "48px 24px 80px" }}>
+      <main style={{ maxWidth: 1300, margin: "0 auto", padding: "48px 24px 80px" }}>
       <div style={{ textAlign: "center", marginBottom: 12 }}>
         <Image
           src="/marketing/Guangna_brush.png"
@@ -51,91 +51,12 @@ export default async function FreeColoringPagesPage({ params }: Props) {
         </a>
       </p>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-        gap: 24,
-      }}>
-        {coloringPages.map((page) => (
-          <Link
-            key={page.id}
-            href={`/free-coloring-pages/${page.id}`}
-            style={{
-              border: "1px solid var(--border)",
-              borderRadius: 16,
-              padding: 20,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-              background: "white",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            {(page.exampleImage || page.outlineImage) && (
-              <div style={{ display: "flex", gap: 8 }}>
-                {page.exampleImage && (
-                  <div style={{ flex: 1 }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`/coloring-pages/thumbs/${page.exampleImage}`}
-                      alt={`${page.title} — colored example`}
-                      style={{
-                        width: "100%", aspectRatio: "3 / 4", objectFit: "cover",
-                        borderRadius: 10, border: "1px solid var(--border)", display: "block",
-                      }}
-                    />
-                  </div>
-                )}
-                {page.outlineImage && (
-                  <div style={{ flex: 1 }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`/coloring-pages/thumbs/${page.outlineImage}`}
-                      alt={`${page.title} — coloring page preview`}
-                      style={{
-                        width: "100%", aspectRatio: "3 / 4", objectFit: "cover",
-                        borderRadius: 10, border: "1px solid var(--border)", display: "block",
-                        background: "white",
-                      }}
-                    />
-                    <div style={{
-                      textAlign: "center", fontSize: 10, color: "var(--muted)",
-                      marginTop: 3,
-                    }}>
-                      {t("previewLabel")}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            <div>
-              <h2 style={{ fontSize: 17, fontWeight: 700, marginBottom: 4, color: "var(--ink)" }}>
-                {page.title}
-              </h2>
-              {page.description && (
-                <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.5 }}>
-                  {page.description}
-                </p>
-              )}
-            </div>
-            <span
-              style={{
-                marginTop: "auto",
-                textAlign: "center",
-                padding: "10px 16px",
-                borderRadius: 10,
-                background: "var(--pink)",
-                color: "white",
-                fontWeight: 700,
-                fontSize: 14,
-              }}
-            >
-              {page.price ? t("viewPage") : t("downloadButton")}
-            </span>
-          </Link>
-        ))}
-      </div>
+      <ColoringPagesBrowser
+        pages={coloringPages}
+        previewLabel={t("previewLabel")}
+        downloadButtonLabel={t("downloadButton")}
+        viewPageLabel={t("viewPage")}
+      />
 
       {/* Donate */}
       <div style={{

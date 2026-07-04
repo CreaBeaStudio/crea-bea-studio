@@ -81,7 +81,7 @@
     "tagline": "Male deine Erinnerungen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Kontakt",
-    "freeColoringPages": "Kostenlose Ausmalbilder"
+    "freeColoringPages": "GRATIS Ausmalbilder"
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
@@ -429,14 +429,14 @@
     }
   },
   "coloringPages": {
-    "metaTitle": "Kostenlose Ausmalbilder | CreaBeaStudio",
-    "metaDescription": "Lade kostenlose, druckbare Ausmalbilder von CreaBeaStudio herunter. Regelmäßig neue Designs — viel Freude, und wenn du magst, unterstütze mit einem kleinen Trinkgeld weitere Ausmalbilder.",
-    "title": "Kostenlose Ausmalbilder",
+    "metaTitle": "GRATIS Ausmalbilder | CreaBeaStudio",
+    "metaDescription": "Lade diese Ausmalbilder kostenlos herunter und drucke sie aus. Jeder Download enthält drei maßgeschneiderte Guangna-Farbpaletten-Leitfäden, die dir dabei helfen, die am besten passenden Guangna-Marker aus deinem Set auszuwählen.",
+    "title": "GRATIS Ausmalbilder",
     "subtitle": "Lade diese Ausmalbilder kostenlos herunter und drucke sie aus. Gefallen sie dir? Ein kleines Trinkgeld hilft mir, mehr davon zu erstellen.",
     "downloadButton": "PDF herunterladen",
     "donate": {
-      "text": "Gefallen dir diese kostenlosen Ausmalbilder? Ein kleines Trinkgeld hilft mir, mehr zu erstellen.",
-      "button": "Unterstütze auf Ko-fi"
+      "text": "Wenn sie dir gefallen, freue ich mich over ein Trinkgeld auf Ko-fi, damit ich weiterhin neue Bilder erstellen kann. Viel Spaß beim Ausmalen!",
+      "button": "Trinkgeld auf Ko-fi"
     },
     "backToAll": "Zurück zu allen Ausmalbildern",
     "viewPage": "Ansehen",

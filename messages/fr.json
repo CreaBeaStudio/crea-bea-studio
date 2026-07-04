@@ -429,14 +429,14 @@
     }
   },
   "coloringPages": {
-    "metaTitle": "Coloriages Gratuits | CreaBeaStudio",
-    "metaDescription": "Téléchargez des coloriages imprimables gratuits de CreaBeaStudio. De nouveaux designs régulièrement — profitez-en, et envisagez un petit pourboire pour soutenir de futurs coloriages.",
-    "title": "Coloriages Gratuits",
-    "subtitle": "Téléchargez et imprimez ces coloriages gratuitement. Vous les aimez ? Un petit pourboire m'aide à en créer davantage.",
+    "metaTitle": "Coloriages GRATUITS | CreaBeaStudio",
+    "metaDescription": "Téléchargez et imprimez ces coloriages gratuitement. Chaque téléchargement comprend trois guides personnalisés de palettes de couleurs Guangna pour vous aider à sélectionner les feutres Guangna de votre set qui correspondent le mieux.",
+    "title": "Coloriages GRATUITS",
+    "subtitle": "Téléchargez et imprimez ces coloriages gratuitement. Chaque téléchargement comprend trois guides personnalisés de palettes de couleurs Guangna pour vous aider à sélectionner les feutres Guangna de votre set qui correspondent le mieux.",
     "downloadButton": "Télécharger le PDF",
     "donate": {
-      "text": "Vous aimez ces coloriages gratuits ? Un petit pourboire m'aide à en créer davantage.",
-      "button": "Soutenir sur Ko-fi"
+      "text": "Si vous les appréciez, offrez-moi un petit café pour m'aider à continuer d'en créer d'autres. Bon coloriage !",
+      "button": "Offre-moi un café sur Ko-fi"
     },
     "backToAll": "Retour à tous les coloriages",
     "viewPage": "Voir",

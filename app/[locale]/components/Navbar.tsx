@@ -113,14 +113,18 @@ export default function Navbar() {
                   </div>
                 );
               }
-              return (
-                <Link key={item[0]} href={item[1]} className="nav-link" style={{
-                  textDecoration: "none", color: "var(--ink)", fontSize: 15,
-                  fontWeight: 500, padding: "6px 12px", borderRadius: 8, whiteSpace: "nowrap",
-                }}>
-                  {t(item[0])}
-                </Link>
-              );
+              const isFreePages = item[0] === "freeColoringPages";
+return (
+  <Link key={item[0]} href={item[1]} className="nav-link" style={{
+    textDecoration: "none",
+    color: isFreePages ? "var(--pink)" : "var(--ink)",
+    fontSize: 15,
+    fontWeight: isFreePages ? 700 : 500,
+    padding: "6px 12px", borderRadius: 8, whiteSpace: "nowrap",
+  }}>
+    {t(item[0])}
+  </Link>
+);
             })}
 
             {/* Language switcher */}
@@ -191,12 +195,16 @@ export default function Navbar() {
                 </div>
               );
             }
-            return (
-              <Link key={item[0]} href={item[1]} onClick={() => setOpen(false)} style={{
-                textDecoration: "none", color: "var(--ink)", fontSize: 17,
-                fontWeight: 500, padding: "12px 8px", borderRadius: 8,
-              }}>{t(item[0])}</Link>
-            );
+            const isFreePagesMobile = item[0] === "freeColoringPages";
+return (
+  <Link key={item[0]} href={item[1]} onClick={() => setOpen(false)} style={{
+    textDecoration: "none",
+    color: isFreePagesMobile ? "var(--pink)" : "var(--ink)",
+    fontSize: 17,
+    fontWeight: isFreePagesMobile ? 700 : 500,
+    padding: "12px 8px", borderRadius: 8,
+  }}>{t(item[0])}</Link>
+);
           })}
 
           <div style={{ padding: "12px 8px" }}>
