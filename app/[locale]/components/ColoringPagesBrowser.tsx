@@ -50,18 +50,18 @@ export default function ColoringPagesBrowser({
   viewPageLabel,
 }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<CategoryId[]>([]);
+  // Single-select: only one category can be active at a time.
+  // Clicking the already-active category clears the selection.
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(null);
   const [markerSet, setMarkerSet] = useState<MarkerSetValue | "">("");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const toggleCategory = (id: CategoryId) => {
-    setSelectedCategories((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    );
+  const selectCategory = (id: CategoryId) => {
+    setSelectedCategory((prev) => (prev === id ? null : id));
   };
 
   const clearFilters = () => {
-    setSelectedCategories([]);
+    setSelectedCategory(null);
     setSearchQuery("");
     setMarkerSet("");
   };
@@ -70,8 +70,8 @@ export default function ColoringPagesBrowser({
     const q = searchQuery.trim().toLowerCase();
     return pages.filter((page) => {
       const matchesCategory =
-        selectedCategories.length === 0 ||
-        (page.categories || []).some((c) => selectedCategories.includes(c));
+        !selectedCategory ||
+        (page.categories || []).includes(selectedCategory);
 
       const matchesMarkerSet = !markerSet || pageMatchesMarkerSet(page, markerSet);
 
@@ -83,13 +83,13 @@ export default function ColoringPagesBrowser({
 
       return matchesCategory && matchesMarkerSet && matchesSearch;
     });
-  }, [pages, searchQuery, selectedCategories, markerSet]);
+  }, [pages, searchQuery, selectedCategory, markerSet]);
 
   const hasActiveFilters =
-    selectedCategories.length > 0 || searchQuery.trim().length > 0 || markerSet !== "";
+    selectedCategory !== null || searchQuery.trim().length > 0 || markerSet !== "";
 
   const activeFilterCount =
-    selectedCategories.length + (searchQuery ? 1 : 0) + (markerSet ? 1 : 0);
+    (selectedCategory ? 1 : 0) + (searchQuery ? 1 : 0) + (markerSet ? 1 : 0);
 
   const filterPanel = (
     <div
@@ -100,14 +100,33 @@ export default function ColoringPagesBrowser({
         padding: 20,
       }}
     >
-      <div style={sectionLabelStyle}>Categories</div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+        <div style={{ ...sectionLabelStyle, marginBottom: 0 }}>Categories</div>
+        {selectedCategory && (
+          <button
+            onClick={() => setSelectedCategory(null)}
+            style={{
+              fontSize: 12,
+              color: "var(--pink)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+              fontWeight: 600,
+            }}
+          >
+            Clear category
+          </button>
+        )}
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 18 }}>
         {CATEGORIES.map((cat) => {
-          const active = selectedCategories.includes(cat.id);
+          const active = selectedCategory === cat.id;
           return (
             <button
               key={cat.id}
-              onClick={() => toggleCategory(cat.id)}
+              onClick={() => selectCategory(cat.id)}
+              aria-pressed={active}
               style={{
                 ...controlBase,
                 textAlign: "left",
