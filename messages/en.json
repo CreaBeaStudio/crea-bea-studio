@@ -82,8 +82,9 @@
     "tagline": "Color Your Memories",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact us",
-    "freeColoringPages": "Free Coloring Pages"
-  },
+    "freeColoringPages": "Free Coloring Pages",
+    "guangnaReference": "Guangna Reference Guide"
+},
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Color Your Memories",
@@ -505,6 +506,31 @@
     "crossLinkLegend": {
       "text": "Got a whole color legend to convert instead?",
       "linkText": "Try the Legend Converter →"
+    },
+    "donate": {
+      "text": "If this saved you time, a coffee is always appreciated ☕",
+      "button": "Buy me a coffee"
+    }
+  },
+  "GuangnaReference": {
+    "title": "Guangna Reference Guide",
+    "subtitle": "Look up which sets a marker belongs to, or see every marker included in a given set.",
+    "byCode": {
+      "heading": "🔍 Find sets by marker code",
+      "description": "Enter a Guangna code to see every set that includes it.",
+      "placeholder": "e.g. 605",
+      "button": "Find sets",
+      "foundIn": "Found in {count} sets:",
+      "notInAnySet": "This code isn't part of any listed set."
+    },
+    "bySet": {
+      "heading": "📋 Find markers by set",
+      "description": "Choose a set to see every marker code it includes.",
+      "noneSelected": "— Select a set —",
+      "codeCount": "{count} markers in this set:"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" isn't a recognized Guangna code."
     },
     "donate": {
       "text": "If this saved you time, a coffee is always appreciated ☕",

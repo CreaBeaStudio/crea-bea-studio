@@ -82,7 +82,8 @@
     "tagline": "Male deine Erinnerungen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Kontakt",
-    "freeColoringPages": "GRATIS Ausmalbilder"
+    "freeColoringPages": "GRATIS Ausmalbilder",
+    "guangnaReference": "Guangna Referenz Guide"
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
@@ -495,5 +496,30 @@
     "text": "Wenn dir das Zeit gespart hat, freuen wir uns über einen Kaffee ☕",
     "button": "Spendiere mir einen Kaffee"
   }
-  }
+  },
+  "GuangnaReference": {
+    "title": "Guangna Referenz Guide",
+    "subtitle": "Schlage nach, zu welchen Sets ein Marker gehört, oder sieh dir alle Marker an, die in einem bestimmten Set enthalten sind.",
+    "byCode": {
+      "heading": "🔍 Sets nach Markercode finden",
+      "description": "Gib einen Guangna-Code ein, um jedes Set zu sehen, das ihn enthält.",
+      "placeholder": "z. B. 605",
+      "button": "Sets finden",
+      "foundIn": "In {count} Sets gefunden:",
+      "notInAnySet": "Dieser Code ist in keinem der aufgelisteten Sets enthalten."
+    },
+    "bySet": {
+      "heading": "📋 Marker nach Set finden",
+      "description": "Wähle ein Set aus, um alle darin enthaltenen Markercodes zu sehen.",
+      "noneSelected": "— Set auswählen —",
+      "codeCount": "{count} Marker in diesem Set:"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" ist kein anerkannter Guangna-Code."
+    },
+    "donate": {
+      "text": "Wenn dir das Zeit gespart hat, freue ich mich immer über einen Kaffee ☕",
+      "button": "Spendier mir einen Kaffee"
+    }
+}
 }

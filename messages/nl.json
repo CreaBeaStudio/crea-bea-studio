@@ -82,7 +82,8 @@
     "tagline": "Kleur je herinneringen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact",
-    "freeColoringPages": "Gratis Kleurplaten"
+    "freeColoringPages": "Gratis Kleurplaten",
+    "guangnaReference": "Guangna Referentie Guide"
   },
   "faq": {
     "title": "Veelgestelde Vragen",
@@ -495,5 +496,30 @@
     "text": "Als dit je tijd bespaarde, is een kopje koffie altijd welkom ☕",
     "button": "Trakteer me op koffie"
   }
+  },
+  "GuangnaReference": {
+    "title": "Guangna Referentiegids",
+    "subtitle": "Kijk in welke sets een bepaalde marker zit, of bekijk alle markers in een specifieke set.",
+    "byCode": {
+      "heading": "🔍 Vind sets op marker code",
+      "description": "Voer een Guangna-code in om elke set te zien die deze bevat.",
+      "placeholder": "bijv. 605",
+      "button": "Vind sets",
+      "foundIn": "Gevonden in {count} sets:",
+      "notInAnySet": "Deze code maakt geen deel uit van een van de vermelde sets."
+    },
+    "bySet": {
+      "heading": "📋 Zoek markers in een set",
+      "description": "Kies een set om alle codes te zien die deze bevat.",
+      "noneSelected": "— Selecteer een set —",
+      "codeCount": "{count} markers in deze set:"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" is geen herkende Guangna-code."
+    },
+    "donate": {
+      "text": "Als dit je tijd heeft bespaard, wordt een kopje koffie altijd gewaardeerd ☕",
+      "button": "Trakteer me op een kop koffie"
+    }
   }
 }

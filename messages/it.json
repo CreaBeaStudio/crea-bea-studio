@@ -82,7 +82,8 @@
     "tagline": "Colora i tuoi ricordi",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contattaci",
-    "freeColoringPages": "Disegni Gratis"
+    "freeColoringPages": "Disegni Gratis",
+    "guangnaReference": "Guida Guangna"
   },
   "faq": {
     "title": "Domande frequenti",
@@ -495,5 +496,30 @@
     "text": "Se questo ti ha fatto risparmiare tempo, un caffè è sempre gradito ☕",
     "button": "Offrimi un caffè"
   }
-  }
+  },
+  "GuangnaReference": {
+    "title": "Guida Guangna",
+    "subtitle": "Scopri a quali set appartiene un pennarello, oppure vedi tutti i pennarelli inclusi in un determinato set.",
+    "byCode": {
+      "heading": "🔍 Trova i set dal codice del pennarello",
+      "description": "Inserisci un codice Guangna per vedere tutti i set che lo includono.",
+      "placeholder": "es. 605",
+      "button": "Trova i set",
+      "foundIn": "Trovato in {count} set:",
+      "notInAnySet": "Questo codice non fa parte di nessun set in elenco."
+    },
+    "bySet": {
+      "heading": "📋 Trova i pennarelli per set",
+      "description": "Scegli un set per vedere tutti i codici dei pennarelli inclusi.",
+      "noneSelected": "— Seleziona un set —",
+      "codeCount": "{count} pennarelli in questo set:"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" non è un codice Guangna riconosciuto."
+    },
+    "donate": {
+      "text": "Se questo strumento ti ha fatto risparmiare tempo, un caffè è sempre gradito ☕",
+      "button": "Offrimi un caffè"
+    }
+}
 }

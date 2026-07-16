@@ -82,7 +82,8 @@
     "tagline": "Colorie tes souvenirs",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contactez-nous",
-    "freeColoringPages": "Coloriages Gratuits"
+    "freeColoringPages": "Coloriages Gratuits",
+    "guangnaReference": "Nuancier Guangna"
   },
   "faq": {
     "title": "Questions fréquentes",
@@ -495,5 +496,30 @@
     "text": "Si cela vous a fait gagner du temps, un café est toujours apprécié ☕",
     "button": "Offrez-moi un café"
   }
+},
+"GuangnaReference": {
+    "title": "Nuancier Guangna",
+    "subtitle": "Cherche à quels sets appartient un feutre, oder découvre tous les feutres inclus dans un set donné.",
+    "byCode": {
+      "heading": "🔍 Trouver des sets par code de feutre",
+      "description": "Saisis un code Guangna pour voir tous les sets qui le contiennent.",
+      "placeholder": "ex. 605",
+      "button": "Trouver les sets",
+      "foundIn": "Trouvé dans {count} sets :",
+      "notInAnySet": "Ce code ne fait partie d'aucun set répertorié."
+    },
+    "bySet": {
+      "heading": "📋 Trouver des feutres par set",
+      "description": "Choisis un set pour voir tous les codes de feutres qu'il contient.",
+      "noneSelected": "— Sélectionner un set —",
+      "codeCount": "{count} feutres dans ce set :"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" n'est pas un code Guangna reconnu."
+    },
+    "donate": {
+      "text": "Si cela t'a fait gagner du temps, un petit café est toujours apprécié ☕",
+      "button": "M'offrir un café"
+    }
 }
 }

@@ -16,6 +16,7 @@ export default function Navbar() {
       ["colorConverter", "/color-converter"],
       ["legendConverter", "/legend-converter"],
       ["languoConverter", "/languo-converter"],
+      ["guangnaReference", "/guangna-reference"],
     ]},
     ["examples", "/examples"],
     ["freeColoringPages", "/free-coloring-pages"],

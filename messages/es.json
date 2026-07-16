@@ -82,7 +82,8 @@
     "tagline": "Colorea tus recuerdos",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contáctanos",
-    "freeColoringPages": "Páginas Gratis"
+    "freeColoringPages": "Páginas Gratis",
+    "guangnaReference": "Guía Guangna"
   },
   "faq": {
     "title": "Preguntas frecuentes",
@@ -495,5 +496,30 @@
     "text": "Si esto te ahorró tiempo, un café siempre se agradece ☕",
     "button": "Invítame a un café"
   }
+},
+"GuangnaReference": {
+    "title": "Guía Guangna",
+    "subtitle": "Busca a qué sets pertenece un rotulador, o mira todos los rotuladores incluidos en un set determinado.",
+    "byCode": {
+      "heading": "🔍 Buscar sets por código de rotulador",
+      "description": "Introduce un código Guangna para ver todos los sets que lo incluyen.",
+      "placeholder": "ej. 605",
+      "button": "Buscar sets",
+      "foundIn": "Encontrado en {count} sets:",
+      "notInAnySet": "Este código no forma parte de ningún set de la lista."
+    },
+    "bySet": {
+      "heading": "📋 Buscar rotuladores por set",
+      "description": "Elige un set para ver todos los códigos de rotuladores que incluye.",
+      "noneSelected": "— Selecciona un set —",
+      "codeCount": "{count} rotuladores en este set:"
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" no es un código Guangna reconocido."
+    },
+    "donate": {
+      "text": "Si esto te ha ahorrado tiempo, un café siempre se agradece ☕",
+      "button": "Invítame a un café"
+    }
 }
 }
