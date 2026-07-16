@@ -71,10 +71,11 @@
   },
   "nav": {
     "home": "Home",
-    "guangna": "Guangna",
+    "tools": "Tools",
     "createGuangna": "Create Guangna by Number",
     "colorConverter": "Color Converter",
     "legendConverter": "Legend Converter",
+    "languoConverter": "Languo Converter",
     "examples": "Examples",
     "tips": "Tips & Tricks",
     "faq": "FAQ",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Guangna Color Converter",
     "subtitle": "Enter any color and find the closest Guangna marker available and, optionally, from your own collection.",
+    "disclaimer": "Matches are calculated by finding the closest Guangna marker to your input color, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
     "myMarkers": {
       "heading": "🗂️ My Markers",
       "optional": "optional",
@@ -374,6 +376,7 @@
   "LegendConverter": {
     "title": "Legend to Guangna Palette",
     "subtitle": "Upload a coloring page's color legend, click each swatch, and get a ready-made Guangna marker guide.",
+    "disclaimer": "Matches are calculated by sampling the colors you click in your uploaded legend and finding the closest Guangna marker to each, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
     "step1": {
       "lightingTip": "For the most accurate Guangna codes: photograph the legend in natural, even daylight — shadows or yellow indoor lighting can distort the colors. A flatbed scan works even better than a photo if you have one available.",
       "heading": "1 · Upload the color legend",
@@ -461,6 +464,51 @@
     "crossLink": {
       "text": "Want to turn your own photo into a paint-by-number?",
       "linkText": "Try Create your own Guangna by Number →"
+    }
+  },
+  "LanguoConverter": {
+    "title": "Languo to Guangna Converter",
+    "subtitle": "Enter a Languo Art 288 Acrylic code and find the 3 closest Guangna marker matches, optionally from your own collection.",
+    "disclaimer": "Matches are calculated by converting Languo's color values and finding the closest Guangna markers by color distance, using Delta E (CIE 1976). Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
+    "step1": {
+      "heading": "1 · Enter your Languo code",
+      "description": "Type a code, e.g. RY-06.",
+      "placeholder": "e.g. RY-06"
+    },
+    "myMarkers": {
+      "heading": "🗂️ My Markers",
+      "optional": "optional",
+      "description": "Select your set to also see the best matches from markers you own.",
+      "noneSelected": "— None selected —",
+      "extraCodesPlaceholder": "e.g. 603, 648, 820"
+    },
+    "matching": "Matching…",
+    "step2": {
+      "matchButton": "Find closest Guangna matches"
+    },
+    "results": {
+      "languoCodeLabel": "Languo code",
+      "heading": "Closest Guangna matches",
+      "ownedHeading": "Closest matches from your set",
+      "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes.",
+      "notInSetNotice": "There are better matches available.",
+      "orderPrompt": "Would you like to buy them? →",
+      "screenDisclaimer": "⚠️ Screen colors may differ from the actual marker. Always test on paper."
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" isn't a recognized Languo code. Check the spelling or pick one from the list."
+    },
+    "crossLink": {
+      "text": "Need to match a photo or single color instead?",
+      "linkText": "Try the Color Converter →"
+    },
+    "crossLinkLegend": {
+      "text": "Got a whole color legend to convert instead?",
+      "linkText": "Try the Legend Converter →"
+    },
+    "donate": {
+      "text": "If this saved you time, a coffee is always appreciated ☕",
+      "button": "Buy me a coffee"
     }
   }
 }

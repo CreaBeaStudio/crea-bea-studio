@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
@@ -32,12 +32,29 @@ function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number,
   return [Math.round(r / count), Math.round(g / count), Math.round(b / count)];
 }
 
+// Noise-overlay protection, same technique as ColorConverter's
+// ProtectedSwatch and LanguoConverter's Swatch, so a browser
+// eyedropper/color-picker samples noisy pixels instead of the exact
+// marker color. This page can render many result swatches at once (up
+// to `colorCount`, plus a second "not in set" grid), so each instance
+// gets its own filter id via useId() -- reusing a static id="noise"
+// across multiple <svg> elements on the same page is invalid HTML and
+// risks swatches referencing the wrong filter.
 function ResultSwatch({ rgb, size = 40 }: { rgb: [number, number, number]; size?: number }) {
+  const filterId = useId();
+  const hex = rgbToHex(rgb);
   return (
-    <div style={{
-      width: size, height: size, borderRadius: 8, flexShrink: 0,
-      background: rgbToHex(rgb), border: "2px solid rgba(0,0,0,0.1)",
-    }} />
+    <div style={{ position: "relative", width: size, height: size, borderRadius: 8, overflow: "hidden", flexShrink: 0, border: "2px solid rgba(0,0,0,0.1)" }}>
+      <div style={{ position: "absolute", inset: 0, background: hex }} />
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.18, pointerEvents: "none", userSelect: "none" }} xmlns="http://www.w3.org/2000/svg">
+        <filter id={filterId}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter={`url(#${filterId})`} />
+      </svg>
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(255,255,255,0.25) 0%,transparent 60%)", pointerEvents: "none" }} />
+    </div>
   );
 }
 
@@ -351,12 +368,21 @@ export default function LegendConverter() {
         <p style={{ color: "#666", marginBottom: 12 }}>
           {t("subtitle")}
         </p>
-        <p style={{ fontSize: 13, marginBottom: 36 }}>
+        <p style={{ fontSize: 13, marginBottom: 16 }}>
           {t("crossLink.text")}{" "}
           <a href={`/${locale}/color-converter`} style={{ color: "var(--pink)", fontWeight: 700 }}>
             {t("crossLink.linkText")}
           </a>
         </p>
+
+        {/* How-it-works / accuracy disclaimer, shown up front rather than
+            only after results — same pattern as LanguoConverter. */}
+        <div style={{
+          background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
+          fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
+        }}>
+          💡 {t("disclaimer")}
+        </div>
 
         {/* Step 1 — upload */}
         <div className="card" style={{ marginBottom: 20 }}>

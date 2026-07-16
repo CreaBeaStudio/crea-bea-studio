@@ -71,13 +71,14 @@
   },
   "nav": {
     "home": "Inicio",
-    "guangna": "Guangna",
+   "tools": "Herramientas",
+"languoConverter": "Conversor Languo",
     "createGuangna": "Crear Guangna by Number",
     "colorConverter": "Convertidor de colores",
     "legendConverter": "Conversor de leyenda",
     "examples": "Ejemplos",
     "tips": "Consejos y trucos",
-    "faq": "Preguntas frecuentes",
+    "faq": "FAQ",
     "tagline": "Colorea tus recuerdos",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contáctanos",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Convertidor de colores Guangna",
     "subtitle": "Introduce cualquier color y encuentra el marcador Guangna más cercano disponible, y, opcionalmente, de tu propia colección.",
+    "disclaimer": "Las coincidencias se calculan buscando el marcador Guangna más cercano a tu color introducido, usando la distancia de color Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
     "myMarkers": {
       "heading": "🗂️ Mis marcadores",
       "optional": "opcional",
@@ -374,6 +376,7 @@
   "LegendConverter": {
     "title": "Leyenda a paleta Guangna",
     "subtitle": "Sube la leyenda de colores de un dibujo para colorear, haz clic en cada muestra y obtén una guía de marcadores Guangna lista para usar.",
+    "disclaimer": "Las coincidencias se calculan muestreando los colores que haces clic en tu leyenda subida y buscando el marcador Guangna más cercano para cada uno, usando la distancia de color Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
     "crossLink": {
       "text": "¿Solo necesitas comprobar un color?",
       "linkText": "Prueba el conversor de colores →"
@@ -447,5 +450,50 @@
       "text": "¿Quieres convertir tu propia foto en una pintura por números?",
       "linkText": "Prueba a Crear Guangna by Number →"
     }
+  },
+  "LanguoConverter": {
+  "title": "Conversor de Languo a Guangna",
+  "subtitle": "Introduce un código Languo Art 288 Acrylic y encuentra las 3 coincidencias de marcador Guangna más cercanas, opcionalmente de tu propia colección.",
+  "disclaimer": "Las equivalencias se calculan matemáticamente buscando los rotuladores Guangna más cercanos a los colores de Languo mediante la distancia de color (Delta E CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
+  "step1": {
+    "heading": "1 · Introduce tu código Languo",
+    "description": "Escribe un código, p. ej. RY-06.",
+    "placeholder": "p. ej. RY-06"
+  },
+  "myMarkers": {
+    "heading": "🗂️ Mis marcadores",
+    "optional": "opcional",
+    "description": "Selecciona tu set para ver también las mejores coincidencias entre los marcadores que ya tienes.",
+    "noneSelected": "— Ninguno seleccionado —",
+    "extraCodesPlaceholder": "p. ej. 603, 648, 820"
+  },
+  "matching": "Buscando coincidencias…",
+  "step2": {
+    "matchButton": "Buscar las coincidencias Guangna más cercanas"
+  },
+  "results": {
+    "languoCodeLabel": "Código Languo",
+    "heading": "Coincidencias Guangna más cercanas",
+    "ownedHeading": "Coincidencias más cercanas de tu set",
+    "noOwnedMatch": "Ningún marcador propio coincidió — prueba a añadir más sets o códigos extra.",
+    "notInSetNotice": "Hay mejores coincidencias disponibles.",
+    "orderPrompt": "¿Quieres pedirlos? →",
+    "screenDisclaimer": "⚠️ Los colores en pantalla pueden diferir del marcador real. Prueba siempre sobre papel."
+  },
+  "errors": {
+    "codeNotFound": "\"{code}\" no es un código Languo reconocido. Comprueba la ortografía o elige uno de la lista."
+  },
+  "crossLink": {
+    "text": "¿Necesitas emparejar una foto o un solo color en su lugar?",
+    "linkText": "Prueba el Conversor de colores →"
+  },
+  "crossLinkLegend": {
+    "text": "¿Tienes toda una leyenda de colores para convertir?",
+    "linkText": "Prueba el Conversor de leyenda →"
+  },
+  "donate": {
+    "text": "Si esto te ahorró tiempo, un café siempre se agradece ☕",
+    "button": "Invítame a un café"
   }
+}
 }

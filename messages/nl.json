@@ -71,13 +71,14 @@
   },
   "nav": {
     "home": "Home",
-    "guangna": "Guangna",
     "createGuangna": "Maak Guangna by Number",
+    "tools": "Tools",
     "colorConverter": "Kleurenconverter",
     "legendConverter": "Legenda Converter",
+    "languoConverter": "Languo Converter",
     "examples": "Voorbeelden",
     "tips": "Tips & Tricks",
-    "faq": "Veelgestelde vragen",
+    "faq": "FAQ",
     "tagline": "Kleur je herinneringen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Guangna Kleurconverter",
     "subtitle": "Voer een kleur in en vind de bijbehorende Guangna-marker, en optioneel ook de beste match uit je eigen collectie.",
+    "disclaimer": "Matches worden berekend door de dichtstbijzijnde Guangna-marker bij jouw ingevoerde kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "myMarkers": {
       "heading": "🗂️ Mijn markers",
       "optional": "optioneel",
@@ -374,6 +376,7 @@
   "LegendConverter": {
     "title": "Legenda naar Guangna palet",
     "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare Guangna-stiftgids.",
+    "disclaimer": "Matches worden berekend door de kleuren die je aanklikt in je geüploade legenda en de dichtstbijzijnde Guangna-marker voor elke kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "crossLink": {
       "text": "Wil je gewoon één kleur checken?",
       "linkText": "Probeer de Kleurenconverter →"
@@ -447,5 +450,50 @@
       "text": "Wil je van je eigen foto een paint-by-number maken?",
       "linkText": "Probeer Guangna by Number →"
     }
+  },
+    "LanguoConverter": {
+  "title": "Languo naar Guangna Converter",
+  "subtitle": "Voer een Languo Art 288 Acrylic-code in en vind de 3 dichtstbijzijnde Guangna-markeermatches, optioneel uit je eigen collectie.",
+  "disclaimer": "De matches worden berekend door de kleurwaarden van Languo om te zetten en de dichtstbijzijnde Guangna-markers te vinden op basis van kleurafstand, met Delta E (CIE 1976). Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
+  "step1": {
+    "heading": "1 · Voer je Languo-code in",
+    "description": "Typ een code, bijv. RY-06.",
+    "placeholder": "bijv. RY-06"
+  },
+  "myMarkers": {
+    "heading": "🗂️ Mijn markers",
+    "optional": "optioneel",
+    "description": "Selecteer je set om ook de beste matches te zien uit markers die je al hebt.",
+    "noneSelected": "— Niets geselecteerd —",
+    "extraCodesPlaceholder": "bijv. 603, 648, 820"
+  },
+  "matching": "Bezig met matchen…",
+  "step2": {
+    "matchButton": "Vind dichtstbijzijnde Guangna-matches"
+  },
+  "results": {
+    "languoCodeLabel": "Languo-code",
+    "heading": "Dichtstbijzijnde Guangna-matches",
+    "ownedHeading": "Dichtstbijzijnde matches uit jouw set",
+    "noOwnedMatch": "Geen eigen markers gematcht — probeer meer sets of extra codes toe te voegen.",
+    "notInSetNotice": "Er zijn betere matches beschikbaar.",
+    "orderPrompt": "Wil je ze bestellen? →",
+    "screenDisclaimer": "⚠️ Schermkleuren kunnen afwijken van de echte marker. Test altijd op papier."
+  },
+  "errors": {
+    "codeNotFound": "\"{code}\" is geen herkende Languo-code. Controleer de spelling of kies er een uit de lijst."
+  },
+  "crossLink": {
+    "text": "Wil je liever een foto of losse kleur matchen?",
+    "linkText": "Probeer de Kleurconverter →"
+  },
+  "crossLinkLegend": {
+    "text": "Heb je een hele kleurenlegenda om te converteren?",
+    "linkText": "Probeer de Legenda-converter →"
+  },
+  "donate": {
+    "text": "Als dit je tijd bespaarde, is een kopje koffie altijd welkom ☕",
+    "button": "Trakteer me op koffie"
+  }
   }
 }

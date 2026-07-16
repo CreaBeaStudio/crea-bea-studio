@@ -1,5 +1,6 @@
 // Shared Guangna color data + matching logic.
-// Used by both ColorConverter (single color) and LegendConverter (multi-swatch legend).
+// Used by ColorConverter (single color), LegendConverter (multi-swatch legend),
+// and LanguoConverter (Languo code -> top-3 Guangna matches).
 // Moved here so the 366-color table and matching math only exist in one place.
 
 export const GN_COLORS: Record<string,[number,number,number,string]> = {
@@ -229,6 +230,27 @@ export function findClosest(rgb: [number, number, number], ids: string[]): Match
   }
   const c = GN_COLORS[bestId];
   return { code: bestId, name: c[3], rgb: [c[0], c[1], c[2]] };
+}
+
+// Returns the n closest Guangna matches to rgb, sorted nearest-first.
+// Used by LanguoConverter to show the top 3 candidates instead of a
+// single best guess -- useful when the true best match is a judgment
+// call between two or three close options, which happens often when
+// matching across different marker brands' color ranges.
+export function findClosestN(rgb: [number, number, number], ids: string[], n: number): MatchResult[] {
+  const labT = rgbToLab(rgb);
+  const scored: { id: string; d: number }[] = [];
+  for (const id of ids) {
+    const c = GN_COLORS[id];
+    if (!c) continue;
+    const d = deltaE(labT, rgbToLab([c[0], c[1], c[2]]));
+    scored.push({ id, d });
+  }
+  scored.sort((a, b) => a.d - b.d);
+  return scored.slice(0, n).map(({ id }) => {
+    const c = GN_COLORS[id];
+    return { code: id, name: c[3], rgb: [c[0], c[1], c[2]] as [number, number, number] };
+  });
 }
 
 export function hexToRgb(hex: string): [number, number, number] | null {

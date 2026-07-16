@@ -71,12 +71,13 @@
   },
   "nav": {
     "home": "Home",
-    "guangna": "Guangna",
-    "createGuangna": "Guangna Malen-nach-Zahlen erstellen",
+   "tools": "Werkzeuge",
+"languoConverter": "Languo-Konverter",
+    "createGuangna": "Guangna Malen-nach-Zahlen",
     "colorConverter": "Farbkonverter",
     "legendConverter": "Legende-Konverter",
     "examples": "Beispiele",
-    "tips": "Tipps & Tricks",
+    "tips": "Tipps",
     "faq": "FAQ",
     "tagline": "Male deine Erinnerungen",
     "taglineShort": "CreaBeaStudio",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Guangna Farbkonverter",
     "subtitle": "Gib eine beliebige Farbe ein und finde den nächstgelegenen verfügbaren Guangna Marker — optional auch aus deiner eigenen Sammlung.",
+    "disclaimer": "Die Treffer werden berechnet, indem der nächstgelegene Guangna-Marker zu deiner eingegebenen Farbe anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
     "myMarkers": {
       "heading": "🗂️ Meine Marker",
       "optional": "optional",
@@ -374,6 +376,7 @@
   "LegendConverter": {
     "title": "Legende zu Guangna-Palette",
     "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Guangna-Stiftguide.",
+    "disclaimer": "Die Treffer werden berechnet, indem die Farben, die du in deiner hochgeladenen Legende anklickst, erfasst und der jeweils nächstgelegene Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
     "crossLink": {
       "text": "Möchtest du nur eine einzelne Farbe prüfen?",
       "linkText": "Farbkonverter ausprobieren →"
@@ -447,5 +450,50 @@
       "text": "Möchtest du dein eigenes Foto in ein Paint-by-Number verwandeln?",
       "linkText": "Guangna Malen-nach-Zahlen ausprobieren →"
     }
+  },
+  "LanguoConverter": {
+  "title": "Languo-zu-Guangna-Konverter",
+  "subtitle": "Gib einen Languo Art 288 Acryl-Code ein und finde die 3 nächstgelegenen Guangna-Marker-Übereinstimmungen, optional aus deiner eigenen Sammlung.",
+  "disclaimer": "Die Übereinstimmungen werden berechnet, indem die Farbwerte von Languo umgerechnet und die nächstgelegenen Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt werden. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+  "step1": {
+    "heading": "1 · Gib deinen Languo-Code ein",
+    "description": "Gib einen Code ein, z. B. RY-06.",
+    "placeholder": "z. B. RY-06"
+  },
+  "myMarkers": {
+    "heading": "🗂️ Meine Marker",
+    "optional": "optional",
+    "description": "Wähle dein Set aus, um auch die besten Treffer aus Markern zu sehen, die du bereits besitzt.",
+    "noneSelected": "— Nichts ausgewählt —",
+    "extraCodesPlaceholder": "z. B. 603, 648, 820"
+  },
+  "matching": "Wird abgeglichen…",
+  "step2": {
+    "matchButton": "Nächstgelegene Guangna-Treffer finden"
+  },
+  "results": {
+    "languoCodeLabel": "Languo-Code",
+    "heading": "Nächstgelegene Guangna-Treffer",
+    "ownedHeading": "Nächstgelegene Treffer aus deinem Set",
+    "noOwnedMatch": "Keine eigenen Marker gefunden — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen.",
+    "notInSetNotice": "Es sind bessere Treffer verfügbar.",
+    "orderPrompt": "Möchtest du sie bestellen? →",
+    "screenDisclaimer": "⚠️ Bildschirmfarben können vom tatsächlichen Marker abweichen. Teste immer auf Papier."
+  },
+  "errors": {
+    "codeNotFound": "\"{code}\" ist kein bekannter Languo-Code. Überprüfe die Schreibweise oder wähle einen aus der Liste."
+  },
+  "crossLink": {
+    "text": "Möchtest du stattdessen ein Foto oder eine einzelne Farbe abgleichen?",
+    "linkText": "Zum Farbkonverter →"
+  },
+  "crossLinkLegend": {
+    "text": "Hast du eine ganze Farblegende zum Umwandeln?",
+    "linkText": "Zum Legenden-Konverter →"
+  },
+  "donate": {
+    "text": "Wenn dir das Zeit gespart hat, freuen wir uns über einen Kaffee ☕",
+    "button": "Spendiere mir einen Kaffee"
+  }
   }
 }

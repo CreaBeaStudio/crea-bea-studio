@@ -60,7 +60,7 @@
     "footerCreate": "Créer",
     "footerConverter": "Convertisseur de couleurs",
     "footerExamples": "Exemples",
-    "footerLegendConverter": "Convertisseur de légende",
+    "footerLegendConverter": "Convertisseur de Nuancier",
     "footerTips": "Astuces & Conseils",
     "footerFaq": "FAQ",
     "footerTiktok": "TikTok",
@@ -71,10 +71,11 @@
   },
   "nav": {
     "home": "Accueil",
-    "guangna": "Guangna",
-    "createGuangna": "Créer un Guangna by Number",
+    "tools": "Outils",
+"languoConverter": "Convertisseur Languo",
+    "createGuangna": "un Guangna by Number",
     "colorConverter": "Convertisseur de couleurs",
-    "legendConverter": "Convertisseur de légende",
+    "legendConverter": "Convertisseur de Nuancier",
     "examples": "Exemples",
     "tips": "Astuces & Conseils",
     "faq": "FAQ",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Convertisseur de couleurs Guangna",
     "subtitle": "Saisis une couleur et trouve le feutre Guangna le plus proche disponible, et, si tu le souhaites, parmi ta propre collection.",
+    "disclaimer": "Les correspondances sont calculées en trouvant le marqueur Guangna le plus proche de votre couleur saisie, à l'aide du Delta E (CIE 1976). S'agissant d'une comparaison numérique, les résultats visuels varient selon votre écran, l'éclairage et le type de papier. Nos valeurs chromatiques mesurées peuvent légèrement différer de l'encre réelle, veuillez donc toujours tester vos feutres sur un brouillon. Considérez ces correspondances comme une bonne base de départ plutôt que comme une garantie absolue.",
     "myMarkers": {
       "heading": "🗂️ Mes feutres",
       "optional": "optionnel",
@@ -371,22 +373,23 @@
       "button": "Offrez-moi un café"
     }
   },
-  "LegendConverter": {
-    "title": "Légende vers palette Guangna",
-    "subtitle": "Téléchargez la légende des couleurs d'un coloriage, cliquez sur chaque pastille et obtenez un guide de marqueurs Guangna prêt à l'emploi.",
+ "LegendConverter": {
+    "title": "Nuancier vers palette Guangna",
+    "subtitle": "Téléchargez le nuancier d'un coloriage, cliquez sur chaque pastille et obtenez un guide de marqueurs Guangna prêt à l'emploi.",
+    "disclaimer": "Les correspondances sont calculées en échantillonnant les couleurs que vous cliquez dans votre nuancier importé et en trouvant le marqueur Guangna le plus proche pour chacune, à l'aide du Delta E (CIE 1976). S'agissant d'une comparaison numérique, les résultats visuels varient selon votre écran, l'éclairage et le type de papier. Nos valeurs chromatiques mesurées peuvent légèrement différer de l'encre réelle, veuillez donc toujours tester vos feutres sur un brouillon. Considérez ces correspondances comme une bonne base de départ plutôt que comme une garantie absolue.",
     "crossLink": {
       "text": "Besoin de vérifier une seule couleur ?",
       "linkText": "Essayez le convertisseur de couleurs →"
     },
     "step1": {
-      "heading": "1 · Téléchargez la légende des couleurs",
+      "heading": "1 · Téléchargez le nuancier des couleurs",
       "dropHint": "Déposez une photo ici ou cliquez pour télécharger",
       "fileTypes": "JPG ou PNG",
       "replacePhoto": "Utiliser une autre photo",
-      "lightingTip": "Pour des codes Guangna les plus précis possibles : photographiez la légende sous une lumière naturelle et uniforme — les ombres ou l'éclairage jaunâtre peuvent fausser les couleurs. Un scanner donne un résultat encore meilleur qu'une photo, si vous en avez un."
+      "lightingTip": "Pour des codes Guangna les plus précis possibles : photographiez le nuancier sous une lumière naturelle et uniforme — les ombres ou l'éclairage jaunâtre peuvent fausser les couleurs. Un scanner donne un résultat encore meilleur qu'une photo, si vous en avez un."
     },
-    "step2": {
-      "heading": "2 · Combien de couleurs dans votre légende souhaitez-vous convertir ?",
+   "step2": {
+      "heading": "2 · Combien de couleurs dans votre nuancier souhaitez-vous convertir ?",
       "apply": "Valider"
     },
     "step3": {
@@ -447,5 +450,50 @@
       "text": "Envie de transformer votre propre photo en peinture par numéros ?",
       "linkText": "Essayez Crée ta page Guangna by Numberr →"
     }
+  },
+  "LanguoConverter": {
+  "title": "Convertisseur Languo vers Guangna",
+  "subtitle": "Entrez un code Languo Art 288 Acrylic et trouvez les 3 correspondances Guangna les plus proches, éventuellement parmi votre propre collection.",
+  "disclaimer": "Avis de non-responsabilité : Les correspondances sont calculées mathématiquement en recherchant les feutres Guangna les plus proches des couleurs de Languo grâce à la distance de couleur (Delta E CIE 1976). S'agissant d'une comparaison numérique, les résultats visuels varient selon votre écran, l'éclairage et le type de papier. Nos valeurs chromatiques mesurées peuvent légèrement différer de l'encre réelle, veuillez donc toujours tester vos feutres sur un brouillon. Considérez ces correspondances comme une bonne base de départ plutôt que comme une garantie absolue.",
+  "step1": {
+    "heading": "1 · Entrez votre code Languo",
+    "description": "Saisissez un code, par ex. RY-06.",
+    "placeholder": "par ex. RY-06"
+  },
+  "myMarkers": {
+    "heading": "🗂️ Mes marqueurs",
+    "optional": "optionnel",
+    "description": "Sélectionnez votre set pour voir aussi les meilleures correspondances parmi les marqueurs que vous possédez.",
+    "noneSelected": "— Aucun sélectionné —",
+    "extraCodesPlaceholder": "par ex. 603, 648, 820"
+  },
+  "matching": "Recherche en cours…",
+  "step2": {
+    "matchButton": "Trouver les correspondances Guangna les plus proches"
+  },
+  "results": {
+    "languoCodeLabel": "Code Languo",
+    "heading": "Correspondances Guangna les plus proches",
+    "ownedHeading": "Correspondances les plus proches de votre set",
+    "noOwnedMatch": "Aucun marqueur possédé ne correspond — essayez d'ajouter d'autres sets ou codes supplémentaires.",
+    "notInSetNotice": "De meilleures correspondances sont disponibles.",
+    "orderPrompt": "Souhaitez-vous les commander ? →",
+    "screenDisclaimer": "⚠️ Les couleurs à l'écran peuvent différer du marqueur réel. Testez toujours sur papier."
+  },
+  "errors": {
+    "codeNotFound": "\"{code}\" n'est pas un code Languo reconnu. Vérifiez l'orthographe ou choisissez-en un dans la liste."
+  },
+  "crossLink": {
+    "text": "Besoin de faire correspondre une photo ou une seule couleur à la place ?",
+    "linkText": "Essayez le Convertisseur de couleurs →"
+  },
+  "crossLinkLegend": {
+    "text": "Vous avez tout un nuancier de couleurs à convertir ?",
+    "linkText": "Essayez le Convertisseur de nuancier →"
+  },
+  "donate": {
+    "text": "Si cela vous a fait gagner du temps, un café est toujours apprécié ☕",
+    "button": "Offrez-moi un café"
   }
+}
 }

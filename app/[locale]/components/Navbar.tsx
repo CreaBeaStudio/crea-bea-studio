@@ -11,10 +11,11 @@ export default function Navbar() {
 
   const LINKS = [
     ["home", "/"],
-    { labelKey: "guangna", children: [
-      ["createGuangna", "/create"],
+    ["createGuangna", "/create"],
+    { labelKey: "tools", children: [
       ["colorConverter", "/color-converter"],
       ["legendConverter", "/legend-converter"],
+      ["languoConverter", "/languo-converter"],
     ]},
     ["examples", "/examples"],
     ["freeColoringPages", "/free-coloring-pages"],

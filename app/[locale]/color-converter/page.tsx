@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image"
 import Navbar from "../components/Navbar";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_COLORS, GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
@@ -11,14 +11,33 @@ import {
 // lib/ lives at the project root (same convention as lib/payhip.ts),
 // so from app/[locale]/color-converter/page.tsx that's 3 levels up.
 
+// Plain, unprotected swatch — used for input-preview colors (the hex/rgb
+// echo, the extracted photo dominant color). These reflect what the
+// person themselves typed or photographed, not a matched marker, so
+// there's nothing here worth hiding from a color picker.
+function Swatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
+  const hex = rgbToHex(rgb);
+  return (
+    <div style={{width:size,height:size,borderRadius:10,flexShrink:0,background:hex,border:"2px solid rgba(0,0,0,0.1)"}}/>
+  );
+}
+
+// Noise-protected swatch — used only for the matched-marker "answer"
+// swatches in the Results column, so a browser eyedropper/color-picker
+// samples noisy pixels instead of the exact marker color. Each instance
+// gets its own filter id via useId() -- reusing a static id="noise"
+// across multiple <svg> elements on the same page is invalid HTML and
+// risks swatches referencing the wrong filter (this page can show two
+// ProtectedSwatch instances at once: best match + best match you own).
 function ProtectedSwatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
+  const filterId = useId();
   const hex = rgbToHex(rgb);
   return (
     <div style={{position:"relative",width:size,height:size,borderRadius:10,overflow:"hidden",flexShrink:0,border:"2px solid rgba(0,0,0,0.1)"}}>
       <div style={{position:"absolute",inset:0,background:hex}}/>
       <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.18,pointerEvents:"none",userSelect:"none"}} xmlns="http://www.w3.org/2000/svg">
-        <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-        <rect width="100%" height="100%" filter="url(#noise)"/>
+        <filter id={filterId}><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+        <rect width="100%" height="100%" filter={`url(#${filterId})`}/>
       </svg>
       <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(255,255,255,0.25) 0%,transparent 60%)",pointerEvents:"none"}}/>
     </div>
@@ -138,12 +157,21 @@ export default function ColorConverter() {
         <p style={{color:"#666",marginBottom:12}}>
           {t("subtitle")}
         </p>
-        <p style={{ fontSize: 13, marginBottom: 36 }}>
+        <p style={{ fontSize: 13, marginBottom: 16 }}>
           {t("crossLink.text")}{" "}
           <a href={`/${locale}/legend-converter`} style={{ color: "var(--pink)", fontWeight: 700 }}>
             {t("crossLink.linkText")}
           </a>
         </p>
+
+        {/* How-it-works / accuracy disclaimer, shown up front rather than
+            only after results — same pattern as LanguoConverter. */}
+        <div style={{
+          background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
+          fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
+        }}>
+          💡 {t("disclaimer")}
+        </div>
 
         <div className="converter-grid">
 
@@ -228,7 +256,7 @@ export default function ColorConverter() {
                   {photoName && <p style={{fontSize:12,color:"var(--muted)",marginTop:6}}>{t("photo.fileSelected", {fileName: photoName})}</p>}
                   {dominantRgb && (
                     <div style={{marginTop:12,padding:"10px 14px",borderRadius:10,background:"var(--cream)",display:"flex",alignItems:"center",gap:12}}>
-    <ProtectedSwatch rgb={dominantRgb} size={36}/>
+    <Swatch rgb={dominantRgb} size={36}/>
     <div style={{fontSize:13}}>
       <div style={{fontWeight:700}}>{t("photo.dominantColorExtracted")}</div>
     </div>
@@ -239,7 +267,7 @@ export default function ColorConverter() {
 
               {mode!=="photo" && (
                 <div style={{marginTop:20,padding:16,borderRadius:12,background:"var(--cream)",display:"flex",alignItems:"center",gap:16}}>
-                  <ProtectedSwatch rgb={currentRgb} size={56}/>
+                  <Swatch rgb={currentRgb} size={56}/>
                   <div>
                     <div style={{fontWeight:700,fontSize:15}}>{t("yourColour")}</div>
                     <div style={{color:"var(--muted)",fontSize:13}}>{rgbToHex(currentRgb)} · rgb({currentRgb.join(", ")})</div>

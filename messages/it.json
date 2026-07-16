@@ -71,7 +71,8 @@
   },
   "nav": {
     "home": "Home",
-    "guangna": "Guangna",
+    "tools": "Strumenti",
+"languoConverter": "Convertitore Languo",
     "createGuangna": "Crea Guangna by Number",
     "colorConverter": "Convertitore di colori",
     "examples": "Esempi",
@@ -316,6 +317,7 @@
   "ColorConverter": {
     "title": "Guangna Convertitore Colori",
     "subtitle": "Inserisci un colore qualsiasi e trova il pennarello Guangna più vicino disponibile, e facoltativamente anche dalla tua collezione.",
+    "disclaimer": "Le corrispondenze vengono calcolate campionando i colori che clicchi nella legenda caricata e trovando il marker Guangna più vicino per ciascuno, usando la distanza cromatica Delta E (CIE 1976). Trattandosi di un confronto digitale, i risultati visivi varieranno in base allo schermo, all'illuminazione e al tipo di carta. I valori cromatici da noi misurati potrebbero differire leggermente dall'inchiostro effettivo, quindi ti consigliamo di provare sempre i pennarelli su un foglio di prova. Considera queste corrispondenze come un utile punto di partenza e nao come una garanzia assoluta.",
     "myMarkers": {
       "heading": "🗂️ I miei pennarelli",
       "optional": "opzionale",
@@ -374,6 +376,7 @@
   "LegendConverter": {
     "title": "Legenda verso palette Guangna",
     "subtitle": "Carica la legenda colori di un disegno da colorare, clicca ogni tassello e ottieni una guida pronta ai pennarelli Guangna.",
+    "disclaimer": "Le corrispondenze vengono calcolate campionando i colori che clicchi nella legenda caricata e trovando il marker Guangna più vicino per ciascuno, usando la distanza cromatica Delta E (CIE 1976). Trattandosi di un confronto digitale, i risultati visivi varieranno in base allo schermo, all'illuminazione e al tipo di carta. I valori cromatici da noi misurati potrebbero differire leggermente dall'inchiostro effettivo, quindi ti consigliamo di provare sempre i pennarelli su un foglio di prova. Considera queste corrispondenze come un utile punto di partenza e nao come una garanzia assoluta.",
     "crossLink": {
       "text": "Devi controllare solo un colore?",
       "linkText": "Prova il convertitore di colori →"
@@ -447,5 +450,50 @@
       "text": "Vuoi trasformare la tua foto in un dipinto per numeri?",
       "linkText": "Prova Crea la tua pagina Guangna by Number →"
     }
+    },
+    "LanguoConverter": {
+  "title": "Convertitore da Languo a Guangna",
+  "subtitle": "Inserisci un codice Languo Art 288 Acrylic e trova le 3 corrispondenze Guangna più vicine, facoltativamente dalla tua collezione.",
+  "disclaimer": "Le corrispondenze sono calcolate matematicamente trovando i pennarelli Guangna più vicini ai colori di Languo tramite la distanza colore (Delta E CIE 1976). Trattandosi di un confronto digitale, i risultati visivi varieranno in base allo schermo, all'illuminazione e al tipo di carta. I valori cromatici da noi misurati potrebbero differire leggermente dall'inchiostro effettivo, quindi ti consigliamo di provare sempre i pennarelli su un foglio di prova. Considera queste corrispondenze come un utile punto di partenza e nao come una garanzia assoluta.",
+  "step1": {
+    "heading": "1 · Inserisci il tuo codice Languo",
+    "description": "Digita un codice, ad es. RY-06.",
+    "placeholder": "ad es. RY-06"
+  },
+  "myMarkers": {
+    "heading": "🗂️ I miei marker",
+    "optional": "opzionale",
+    "description": "Seleziona il tuo set per vedere anche le migliori corrispondenze tra i marker che possiedi.",
+    "noneSelected": "— Nessuno selezionato —",
+    "extraCodesPlaceholder": "ad es. 603, 648, 820"
+  },
+  "matching": "Ricerca in corso…",
+  "step2": {
+    "matchButton": "Trova le corrispondenze Guangna più vicine"
+  },
+  "results": {
+    "languoCodeLabel": "Codice Languo",
+    "heading": "Corrispondenze Guangna più vicine",
+    "ownedHeading": "Corrispondenze più vicine dal tuo set",
+    "noOwnedMatch": "Nessun marker posseduto corrisponde — prova ad aggiungere altri set o codici extra.",
+    "notInSetNotice": "Sono disponibili corrispondenze migliori.",
+    "orderPrompt": "Vuoi ordinarli? →",
+    "screenDisclaimer": "⚠️ I colori sullo schermo potrebbero differire dal marker reale. Verifica sempre su carta."
+  },
+  "errors": {
+    "codeNotFound": "\"{code}\" non è un codice Languo riconosciuto. Controlla l'ortografia o scegline uno dall'elenco."
+  },
+  "crossLink": {
+    "text": "Devi invece abbinare una foto o un singolo colore?",
+    "linkText": "Prova il Convertitore di colori →"
+  },
+  "crossLinkLegend": {
+    "text": "Hai un'intera legenda di colori da convertire?",
+    "linkText": "Prova il Convertitore di legenda →"
+  },
+  "donate": {
+    "text": "Se questo ti ha fatto risparmiare tempo, un caffè è sempre gradito ☕",
+    "button": "Offrimi un caffè"
+  }
   }
 }
