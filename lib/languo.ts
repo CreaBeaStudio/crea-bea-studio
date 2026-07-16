@@ -10,10 +10,10 @@
 // what caused the original Guangna matching bugs; do not match Languo's
 // raw Adobe RGB values directly against GN_COLORS (which are sRGB).
 //
-// Known data issue: AG-251's source Adobe RGB was (260,155,90) -- 260 is
-// out of range (max 255), almost certainly a typo in the source file.
-// Clamped to (255,155,90) for now. Flagged 2026-07-15; fix at the source
-// and regenerate this file once the correct value is confirmed.
+// AG-251 correction (2026-07-16): the source file's (260,155,90) was
+// confirmed a typo -- the correct Adobe RGB value is (160,155,95).
+// Converted through the same Adobe RGB (1998) -> XYZ (D65) -> sRGB
+// pipeline as the rest of this file: sRGB (163,156,91).
  
 export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "GB-401":[255,255,255],"BR-702":[228,221,211],"BR-706":[179,151,125],"CB-906":[109,74,68],"RY-09":[160,100,84],"RY-07":[156,52,52],
@@ -59,7 +59,7 @@ export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "DS-186":[205,151,119],"DS-181":[252,245,230],"LC-197":[252,245,230],"LC-196":[255,236,231],"AG-252":[129,136,75],"BL-257":[235,235,235],
   "DB-1611":[147,177,182],"AG-176":[147,161,140],"YE-1212":[180,167,124],"YE-1211":[205,191,133],"YE-1210":[233,226,174],"AG-179":[172,151,134],
   "AG-178":[199,172,156],"AG-177":[203,196,181],"LC-1110":[230,216,211],"LC-199":[245,245,240],"LC-198":[250,250,230],"LC-191":[255,255,230],
-  "AG-251":[187,145,82],"BL-258":[228,221,226],"AG-171":[211,211,211],"AG-172":[189,196,196],"AG-173":[192,206,206],"DB-1610":[142,172,197],
+  "AG-251":[163,156,91],"BL-258":[228,221,226],"AG-171":[211,211,211],"AG-172":[189,196,196],"AG-173":[192,206,206],"DB-1610":[142,172,197],
   "DB-1612":[114,165,182],"GR-1010":[113,167,182],"GR-1013":[87,186,160],"AG-175":[158,201,170],"AG-174":[157,172,145],"GR-1011":[180,201,104],
   "GR-1012":[199,206,138],"LC-192":[238,245,225],"AG-250":[197,177,134],"BL-259":[194,201,232],"PC-817":[243,172,202],"PC-818":[224,74,122],
   "PU-319":[127,79,133],"BL-215":[27,136,204],"PU-320":[100,100,137],"PU-318":[154,161,187],"PU-321":[169,177,192],"PU-317":[187,187,208],
