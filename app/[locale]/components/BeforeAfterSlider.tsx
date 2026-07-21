@@ -20,6 +20,15 @@ interface BeforeAfterSliderProps {
   className?: string;
 }
 
+// FIX (2026-07-17): both <Image fill> usages below were missing `sizes`,
+// which triggers a Next.js console warning and can cause it to fetch a
+// larger source image than the box actually displays. Now that the
+// examples page wraps this component in a max-width:420px container
+// (see examples/page.tsx's .examples-slider-wrap), "420px" is a good
+// upper bound for the sizes hint; below the 640px breakpoint the box is
+// full-width instead, hence the two-part value.
+const IMAGE_SIZES = "(max-width: 640px) 100vw, 420px";
+
 export default function BeforeAfterSlider({
   beforeImage,
   afterImage,
@@ -72,6 +81,7 @@ export default function BeforeAfterSlider({
           src={beforeImage}
           alt={beforeLabel}
           fill
+          sizes={IMAGE_SIZES}
           className="object-contain pointer-events-none"
           draggable={false}
         />
@@ -91,6 +101,7 @@ export default function BeforeAfterSlider({
           src={afterImage}
           alt={afterLabel}
           fill
+          sizes={IMAGE_SIZES}
           className="object-contain pointer-events-none"
           draggable={false}
         />

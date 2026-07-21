@@ -2,7 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-initialized -- see lib/email.ts for the full explanation. In
+// short: constructing `new Resend(...)` at module scope crashes the
+// whole build during "Collecting page data" if RESEND_API_KEY is
+// empty/unset in that environment, even though this route only ever
+// needs it once an actual webhook POST arrives.
+let resend: Resend | null = null;
+function getResend(): Resend {
+  if (!resend) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY is not set");
+    }
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 function verifySignature(rawBody: string, signature: string, secret: string): boolean {
   const hmac = crypto.createHmac("sha256", secret);
@@ -48,7 +62,7 @@ export async function POST(request: NextRequest) {
   try {
     // Confirmation email to customer — sent only now, after payment succeeded.
     // (Your own order notification was already sent on submit, with the photo attached.)
-    await resend.emails.send({
+    await getResend().emails.send({
       from:    "CreaBea Studio <orders@creabeastudio.com>",
       to:      customerEmail,
       subject: `💖 Thank you for your order #${orderId}!`,

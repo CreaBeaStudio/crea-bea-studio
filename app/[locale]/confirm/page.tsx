@@ -185,7 +185,7 @@ function ConfirmContent() {
         {/* Grand total */}
         <div style={{
           background:"var(--pink)", borderRadius:14,
-          padding:"16px 22px", marginBottom:24,
+          padding:"16px 22px", marginBottom:12,
           display:"flex", justifyContent:"space-between", alignItems:"center",
         }}>
           <span style={{ color:"white", fontWeight:700, fontSize:16 }}>
@@ -193,6 +193,18 @@ function ConfirmContent() {
           </span>
           <span style={{ color:"white", fontWeight:900, fontSize:22 }}>{grandTotal}€</span>
         </div>
+
+        {/* ── DELIVERY DISCLOSURE (2026-07-17): upfront notice that
+            delivery links expire, per the "clear disclosure before
+            purchase" practice discussed for the 30-day signed GCS
+            links (see lib/fulfillOrder.ts). Sits right after the price,
+            before the payment buttons, so it's seen before the customer
+            commits to paying -- not just buried in the delivery email
+            afterward. ── */}
+        <p style={{ fontSize:12.5, color:"var(--muted)", textAlign:"center", marginBottom:24, lineHeight:1.5 }}>
+          📦 Once your order is complete, your files will be available to download for 30 days.
+          Missed the window? Just email hello@creabeastudio.com and we'll send you a fresh link.
+        </p>
 
         {checkoutError && (
           <div style={{ background:"#FFF0F0", border:"1.5px solid var(--pink)", borderRadius:12, padding:14, color:"#c62828", fontSize:14, marginBottom:16 }}>

@@ -1,11 +1,82 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import { Storage } from "@google-cloud/storage";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// ── GCS: writes the photo + order params this order needs later, at
+// /generate-full time (webservice/main.py). Mirrors that file's own
+// bucket default exactly, so a missing GCS_ORDERS_BUCKET env var here
+// still lands in the same place main.py would look. ─────────────────
+const GCS_BUCKET_NAME = process.env.GCS_ORDERS_BUCKET || "crea-bea-pbn-orders";
 
+// Lazily built (not at module load) so a missing/malformed credential
+// only breaks requests that actually need GCS, rather than crashing
+// this route's cold start for every request including ones that would
+// otherwise fail validation first (no image / no email).
+function getStorageClient(): Storage {
+  const b64 = process.env.GCS_SERVICE_ACCOUNT_KEY_BASE64;
+  if (!b64) {
+    throw new Error("GCS_SERVICE_ACCOUNT_KEY_BASE64 is not configured");
+  }
+  let credentials: any;
+  try {
+    credentials = JSON.parse(Buffer.from(b64, "base64").toString("utf-8"));
+  } catch {
+    throw new Error("GCS_SERVICE_ACCOUNT_KEY_BASE64 could not be decoded/parsed -- check it was base64-encoded before pasting into Vercel");
+  }
+  return new Storage({ credentials, projectId: credentials.project_id });
+}
+
+// Mirrors LEVEL_TO_DIFFICULTY in create/page.tsx exactly -- the create
+// page only ever sends "level" ("15"/"24"/"36") in its form data, not
+// "difficulty" directly, but webservice/main.py's /generate-full reads
+// order.json's "difficulty" field ("beginner"/"standard"/"advanced").
+// This is the one place that translation needs to happen, since this
+// route is what actually writes order.json.
+const LEVEL_TO_DIFFICULTY: Record<string, string> = {
+  "15": "beginner",
+  "24": "standard",
+  "36": "advanced",
+};
+
+// Determines the file extension /generate-full will look for
+// (orders/{orderId}/photo.{ext}) -- prefers the uploaded filename's own
+// extension (normalizing "jpeg" to "jpg" to match what's actually used
+// elsewhere in this project), falling back to the browser-reported MIME
+// type if the filename has no usable extension.
+function extFromFile(file: File): string {
+  const nameExt = file.name.split(".").pop()?.toLowerCase();
+  if (nameExt && /^[a-z0-9]+$/.test(nameExt) && nameExt.length <= 5) {
+    return nameExt === "jpeg" ? "jpg" : nameExt;
+  }
+  const mimeMap: Record<string, string> = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp",
+    "image/heic": "heic",
+  };
+  return mimeMap[file.type] || "jpg";
+}
+
+// ── EMAIL ARCHITECTURE (2026-07-17): this route used to also send an
+// internal pre-payment Resend notification, carrying the raw photo as
+// an attachment. That existed for ONE reason -- before /generate-full
+// automation existed, that email + attachment was Mirjam's only way to
+// get the photo out in order to convert it manually. Now that
+// /generate-full (webservice/main.py) does the conversion automatically
+// once triggered, that email is redundant and has been removed.
+//
+// The photo + order.json GCS write below stays exactly as it was --
+// explicitly kept as a backup route in case the automated conversion
+// ever fails and manual intervention is needed again.
+//
+// The actual customer-facing order/payment confirmation still comes
+// from LemonSqueezy/Payhip directly, as it already does. The NEW
+// post-purchase delivery email (purchased files + upsell markers +
+// optional free full-guide link) lives in lib/email.ts +
+// lib/fulfillOrder.ts, and fires once the (not-yet-wired) payment
+// webhook calls fulfillOrder(orderId) -- not from this route.
 export async function POST(req: NextRequest) {
   console.log("=== SUBMIT ORDER CALLED ===");
-  console.log("Resend key:", process.env.RESEND_API_KEY ? "SET" : "MISSING");
+  console.log("GCS key:", process.env.GCS_SERVICE_ACCOUNT_KEY_BASE64 ? "SET" : "MISSING");
 
   try {
     const formData      = await req.formData();
@@ -16,118 +87,71 @@ export async function POST(req: NextRequest) {
     const indPens       = (formData.get("indPens") as string) || "";
     const allOrdersRaw  = (formData.get("allOrders") as string) || "[]";
     const grandTotal    = parseInt(formData.get("grandTotal") as string || "0", 10);
+    // ── FULL GUIDE (2026-07-17): opt-in checkbox on the create page's
+    // full366 upsell panel. Carried straight through into order.json;
+    // /generate-full reads it from there to decide whether to also
+    // build full-guide.pdf. ─────────────────────────────────────────
+    const wantsFullGuide = (formData.get("wantsFullGuide") as string) === "true";
 
     if (!imageFile)     return NextResponse.json({ error: "No image provided" }, { status: 400 });
     if (!customerEmail) return NextResponse.json({ error: "Email required" }, { status: 400 });
 
     const orderId    = `PBN-${Date.now()}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
-    const levelLabel = level === "15" ? "Beginner (7€)" : level === "24" ? "Intermediate (9€)" : "Advanced (11€)";
+    const difficulty = LEVEL_TO_DIFFICULTY[level] || "standard";
 
-    let allOrders = [];
-    try { allOrders = JSON.parse(allOrdersRaw); } catch {}
+    // allOrders/grandTotal are captured for potential future use (e.g. a
+    // future multi-order confirmation email) but aren't written into
+    // order.json today -- /generate-full only needs this one order's
+    // own generation params. Left validated here so a malformed payload
+    // still fails loudly rather than silently.
+    try { JSON.parse(allOrdersRaw); } catch {}
 
-    // Convert image to base64 for email attachment
     const bytes  = await imageFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const base64 = buffer.toString("base64");
 
-    const notifyEmail = process.env.NOTIFY_EMAIL!;
+    // ── GCS: save the photo + order params NOW, at submit time, so
+    // /generate-full has something to read once payment succeeds and
+    // the payment webhook fires -- and so the original photo is always
+    // recoverable as a manual-conversion backup if automation ever
+    // fails. Written BEFORE returning success: if this fails, we want a
+    // loud 500 and no "success" response, rather than confirming an
+    // order that can never actually be fulfilled. ──────────────────────
+    try {
+      const storage = getStorageClient();
+      const bucket = storage.bucket(GCS_BUCKET_NAME);
+      const photoExt = extFromFile(imageFile);
 
-    const multiOrderTable = allOrders.length > 1
-      ? `
-        <h3 style="color:#e75480;margin-top:24px;">🛒 All Orders (${allOrders.length} total)</h3>
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <thead>
-            <tr style="background:#FFF0F3;">
-              <th style="padding:8px;text-align:left;border:1px solid #f0d0d8;">#</th>
-              <th style="padding:8px;text-align:left;border:1px solid #f0d0d8;">Photo</th>
-              <th style="padding:8px;text-align:left;border:1px solid #f0d0d8;">Level</th>
-              <th style="padding:8px;text-align:left;border:1px solid #f0d0d8;">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(allOrders as any[]).map((o, i) => `
-              <tr>
-                <td style="padding:8px;border:1px solid #f0d0d8;">${i + 1}</td>
-                <td style="padding:8px;border:1px solid #f0d0d8;">${o.photoName}</td>
-                <td style="padding:8px;border:1px solid #f0d0d8;">${o.levelLabel}</td>
-                <td style="padding:8px;border:1px solid #f0d0d8;">${o.priceLabel}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-        <p style="font-size:16px;font-weight:bold;color:#e75480;margin-top:12px;">
-          Grand Total: ${grandTotal}€
-        </p>
-      `
-      : "";
+      await bucket.file(`orders/${orderId}/photo.${photoExt}`).save(buffer, {
+        contentType: imageFile.type || "image/jpeg",
+        resumable: false,
+      });
 
-    const { data, error } = await resend.emails.send({
-      from:       "CreaBeaStudio <orders@creabeastudio.com>",
-      to:         notifyEmail,
-      replyTo:    customerEmail,
-      subject:    `🎨 New Order #${orderId} from ${customerEmail} (awaiting payment)`,
-      attachments: [
-        {
-          filename:    imageFile.name,
-          content:     base64,
-          contentType: imageFile.type || "image/jpeg",
-        },
-      ],
-      html: `
-        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
-          <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-            <h1 style="color:white;margin:0;font-size:22px;">🎨 New Guangna by Number Order (Awaiting Payment)</h1>
-          </div>
-          <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
-            <table style="width:100%;border-collapse:collapse;font-size:15px;">
-              <tr>
-                <td style="padding:10px 0;color:#888;width:40%;">🔖 Order ID</td>
-                <td style="padding:10px 0;font-weight:600;">${orderId}</td>
-              </tr>
-              <tr style="background:#FFF0F3;">
-                <td style="padding:10px 0;color:#888;">📷 Photo</td>
-                <td style="padding:10px 0;font-weight:600;">${imageFile.name} (attached)</td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;color:#888;">🎯 Level</td>
-                <td style="padding:10px 0;font-weight:600;">${levelLabel}</td>
-              </tr>
-              <tr style="background:#FFF0F3;">
-                <td style="padding:10px 0;color:#888;">🖊️ Marker sets</td>
-                <td style="padding:10px 0;font-weight:600;">${sets || "Default palette"}</td>
-              </tr>
-              ${indPens ? `
-              <tr>
-                <td style="padding:10px 0;color:#888;">➕ Extra markers</td>
-                <td style="padding:10px 0;font-weight:600;">${indPens}</td>
-              </tr>` : ""}
-              <tr style="background:#FFF0F3;">
-                <td style="padding:10px 0;color:#888;">✉️ Customer email</td>
-                <td style="padding:10px 0;font-weight:600;">
-                  <a href="mailto:${customerEmail}" style="color:#e75480;">${customerEmail}</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;color:#888;">💰 Total</td>
-                <td style="padding:10px 0;font-weight:700;font-size:17px;color:#e75480;">${grandTotal}€</td>
-              </tr>
-            </table>
+      const orderJson = {
+        orderId,
+        photoExt,
+        sets,
+        indPens,
+        difficulty,
+        level,
+        customerEmail,
+        grandTotal,
+        wantsFullGuide,
+        submittedAt: new Date().toISOString(),
+      };
+      await bucket.file(`orders/${orderId}/order.json`).save(
+        JSON.stringify(orderJson, null, 2),
+        { contentType: "application/json", resumable: false },
+      );
 
-            ${multiOrderTable}
+      console.log("GCS write successful, orderId:", orderId);
+    } catch (gcsErr: any) {
+      console.error("GCS write error:", gcsErr.message);
+      return NextResponse.json(
+        { error: "Something went wrong saving your order. Please try again or contact hello@creabeastudio.com." },
+        { status: 500 },
+      );
+    }
 
-            <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
-              💡 This is a pre-payment notification. The customer will receive their confirmation email once they pay via LemonSqueezy.
-            </div>
-          </div>
-        </div>
-      `,
-    });
-
-    console.log("Resend response:", JSON.stringify({ data, error }));
-    if (error) throw new Error(JSON.stringify(error));
-
-    console.log("Email sent successfully, orderId:", orderId);
     return NextResponse.json({ success: true, orderId });
 
   } catch (e: any) {
