@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import ClarityInit from './clarity-init';
+import ConsentGatedScripts from './components/ConsentGatedScripts';
+import CookieConsentBanner from './components/CookieConsentBanner';
 import { locales } from '../../i18n';
 
 export function generateStaticParams() {
@@ -53,10 +53,10 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
-          <ClarityInit />
+          <ConsentGatedScripts />
+          <CookieConsentBanner />
           <Analytics />
           <SpeedInsights />
-          <GoogleAnalytics gaId="G-PFXB1CJ13C" />
         </NextIntlClientProvider>
       </body>
     </html>

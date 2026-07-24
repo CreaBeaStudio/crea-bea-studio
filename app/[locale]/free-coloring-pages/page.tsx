@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { coloringPages } from "@/lib/coloringPages";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import ColoringPagesBrowser from "../components/ColoringPagesBrowser";
 
 type Props = {
@@ -85,6 +86,7 @@ export default async function FreeColoringPagesPage({ params }: Props) {
         </a>
       </div>
     </main>
+    <Footer />
     </>
   );
 }

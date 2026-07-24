@@ -1,62 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getGuangnaByNumberVariant } from "@/lib/lemonSqueezyPricing";
+import type { PaperSize } from "@/lib/lemonSqueezyPricing";
 
-// Single-item variants (LIVE mode IDs)
-const LEVEL_TO_VARIANT_ID: Record<string, string> = {
-  "15": "1827481", // Beginner
-  "24": "1827482", // Intermediate
-  "36": "1827483", // Advanced
-};
-
-// Combo variants — key is the sorted, comma-joined list of levels in the cart.
-// e.g. two Beginners = "15,15", one of each = "15,24,36"
-const COMBO_TO_VARIANT_ID: Record<string, string> = {
-  "15,15":     "1827484", // 2x Beginner (€14)
-  "15,24":     "1827486", // Beginner + Intermediate (€16)
-  "15,36":     "1827487", // Beginner + Advanced (€18)
-  "24,24":     "1827488", // 2x Intermediate (€18)
-  "24,36":     "1827489", // Intermediate + Advanced (€20)
-  "36,36":     "1827490", // 2x Advanced (€22)
-  "15,15,15":  "1827491", // 3x Beginner (€21)
-  "15,15,24":  "1827492", // 2x Beginner + 1x Intermediate (€23)
-  "15,15,36":  "1827493", // 2x Beginner + 1x Advanced (€25)
-  "15,24,24":  "1827494", // 1x Beginner + 2x Intermediate (€25)
-  "15,24,36":  "1827485", // Beginner + Intermediate + Advanced (€27)
-  "15,36,36":  "1827495", // 1x Beginner + 2x Advanced (€29)
-  "24,24,24":  "1827496", // 3x Intermediate (€27)
-  "24,24,36":  "1827497", // 2x Intermediate + 1x Advanced (€29)
-  "24,36,36":  "1827498", // 1x Intermediate + 2x Advanced (€31)
-  "36,36,36":  "1827499", // 3x Advanced (€33)
-};
-
-function comboKey(levels: string[]): string {
-  return [...levels].sort().join(",");
-}
+// Save this file as app/api/create-checkout/route.ts
+//
+// UPDATED (2026-07-23): pricing is now flat by paper size (A4/US
+// Letter) instead of by difficulty tier -- difficulty is still picked
+// by the customer and still affects generation, but no longer changes
+// price, so the old LEVEL_TO_VARIANT_ID / COMBO_TO_VARIANT_ID tables
+// are gone. Cart bundling (multiple photos in one checkout) is dropped
+// for now per Mirjam's call -- one checkout = one order. If `levels`
+// has more than one entry, this returns the same kind of friendly
+// "contact us" error the old combo table used for unmapped
+// combinations, rather than silently picking one.
 
 export async function POST(req: NextRequest) {
   try {
-    const { levels, email, orderId, levelLabel } = await req.json();
+    const { levels, paperSize, email, orderId, levelLabel } = await req.json();
 
     if (!Array.isArray(levels) || levels.length === 0) {
       return NextResponse.json({ error: "No levels provided" }, { status: 400 });
     }
-
-    let variantId: string | undefined;
-
-    if (levels.length === 1) {
-      variantId = LEVEL_TO_VARIANT_ID[levels[0]];
-    } else {
-      const key = comboKey(levels);
-      variantId = COMBO_TO_VARIANT_ID[key];
-      if (!variantId) {
-        return NextResponse.json({
-          error: `No combo variant set up yet for this cart (${key}). Please contact hello@creabeastudio.com to complete your order, or remove an item to use a single checkout.`,
-        }, { status: 400 });
-      }
+    if (levels.length > 1) {
+      return NextResponse.json({
+        error: "Ordering multiple photos in one checkout isn't supported yet -- please complete this order first, then start a new one for your next photo, or contact hello@creabeastudio.com to combine them manually.",
+      }, { status: 400 });
+    }
+    if (paperSize !== "a4" && paperSize !== "letter") {
+      return NextResponse.json({ error: "Missing or invalid paperSize" }, { status: 400 });
     }
 
-    if (!variantId) {
-      return NextResponse.json({ error: "Unknown level/combo" }, { status: 400 });
-    }
+    const variant = getGuangnaByNumberVariant(paperSize as PaperSize);
 
     const apiKey  = process.env.LEMONSQUEEZY_API_KEY;
     const storeId = process.env.LEMONSQUEEZY_STORE_ID;
@@ -81,10 +55,11 @@ export async function POST(req: NextRequest) {
               custom: {
                 order_id: orderId || "",
                 level_label: levelLabel || "",
+                product: "guangna-by-number",
               },
             },
             product_options: {
-              enabled_variants: [parseInt(variantId, 10)],
+              enabled_variants: [parseInt(variant.variantId, 10)],
             },
           },
           relationships: {
@@ -92,7 +67,7 @@ export async function POST(req: NextRequest) {
               data: { type: "stores", id: storeId.toString() },
             },
             variant: {
-              data: { type: "variants", id: variantId.toString() },
+              data: { type: "variants", id: variant.variantId.toString() },
             },
           },
         },

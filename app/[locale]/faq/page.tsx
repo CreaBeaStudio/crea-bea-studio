@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useTranslations } from "next-intl";
 
 const FAQ_KEYS = [1,2,3,4,5,6,7,8,9,10,11,12];
@@ -26,6 +27,7 @@ export default function FAQ() {
           </a>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -37,6 +37,20 @@ const WEBSERVICE_API_KEY  = process.env.PBN_SERVICE_API_KEY!;  // matches an ent
 // see the gsutil command in the accompanying chat message.
 const SIGNED_URL_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000;
 
+// ── ATTACHMENTS (2026-07-24): conservative cap on total REAL (pre-
+// Base64) attachment bytes for the delivery email. Base64 encoding
+// inflates a file by ~33% in transit, and Gmail/Yahoo cap a received
+// email at ~25MB encoded -- so ~25MB encoded only actually holds about
+// 18MB of real file content. Outlook/iCloud cap lower still (~20MB
+// encoded, ~15MB real). Staying at 18MB total keeps this working across
+// every major provider without needing per-provider detection. A single
+// order (outline.pdf + preview-guide.pdf + optional full-guide.pdf)
+// should sit comfortably under this in normal use -- this cap exists
+// for the rare unusually-detailed/large-canvas photo, not because
+// multi-order carts are a concern (cart bundling is currently disabled;
+// one checkout is one order).
+const MAX_TOTAL_ATTACHMENT_BYTES = 18 * 1024 * 1024;
+
 function getStorageClient(): Storage {
   const b64 = process.env.GCS_SERVICE_ACCOUNT_KEY_BASE64;
   if (!b64) {
@@ -57,6 +71,47 @@ async function getSignedUrl(storage: Storage, path: string): Promise<string> {
     expires: Date.now() + SIGNED_URL_EXPIRY_MS,
   });
   return url;
+}
+
+// Reads a file's real size straight from GCS metadata (not by guessing,
+// and not by HEAD-requesting the signed URL -- a GET-scoped V4 signed
+// URL isn't guaranteed to also authorize HEAD, so this goes through the
+// already-authenticated Storage client instead). Returns null if the
+// size can't be determined for any reason -- callers should treat that
+// as "skip this attachment, keep the link" rather than guessing, since
+// under-counting here is what could actually push an email over a
+// provider's real limit.
+async function getFileSize(storage: Storage, path: string): Promise<number | null> {
+  try {
+    const [metadata] = await storage.bucket(GCS_BUCKET_NAME).file(path).getMetadata();
+    return metadata.size != null ? parseInt(String(metadata.size), 10) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Decides which of the order's files actually get attached to the
+// delivery email, on top of the download links (which are always in
+// the email body regardless -- attachments are a convenience addition,
+// never a replacement). Candidates are tried in the order given, so
+// callers should list the files every customer gets (outline,
+// preview-guide) before optional extras (full-guide) -- on a rare
+// oversized order, it's the optional extra that gets dropped to a
+// link-only, not one of the two files everyone actually paid for.
+async function selectAttachments(
+  storage: Storage,
+  candidates: { path: string; filename: string }[],
+): Promise<{ url: string; filename: string }[]> {
+  const attachments: { url: string; filename: string }[] = [];
+  let totalBytes = 0;
+  for (const c of candidates) {
+    const size = await getFileSize(storage, c.path);
+    if (size === null) continue; // couldn't verify size -- skip, link stays in the email body
+    if (totalBytes + size > MAX_TOTAL_ATTACHMENT_BYTES) continue; // would push the email over budget -- skip, link stays
+    totalBytes += size;
+    attachments.push({ url: await getSignedUrl(storage, c.path), filename: c.filename });
+  }
+  return attachments;
 }
 
 type GenerateFullResponse = {
@@ -123,6 +178,18 @@ async function buildAndSendEmail(
     ? await getSignedUrl(storage, fulfillment.fullGuidePdfPath)
     : null;
 
+  // ── ATTACHMENTS (2026-07-24): outline + preview-guide tried first
+  // (every order gets these), full-guide last (optional) -- see
+  // selectAttachments' docstring for why the order matters.
+  const attachmentCandidates = [
+    { path: fulfillment.outlinePdfPath, filename: `outline-${orderId}.pdf` },
+    { path: fulfillment.previewGuidePdfPath, filename: `preview-guide-${orderId}.pdf` },
+    ...(fulfillment.fullGuidePdfPath
+      ? [{ path: fulfillment.fullGuidePdfPath, filename: `full-guide-${orderId}.pdf` }]
+      : []),
+  ];
+  const attachments = await selectAttachments(storage, attachmentCandidates);
+
   await sendOrderConfirmationEmail({
     orderId,
     customerEmail: orderData.customerEmail,
@@ -133,6 +200,7 @@ async function buildAndSendEmail(
     previewGuideUrl,
     fullGuideUrl,
     upsellMarkers: fulfillment.upsell || [],
+    attachments,
   });
 }
 
@@ -180,17 +248,18 @@ export async function fulfillOrder(orderId: string): Promise<void> {
   );
 
   // 3. Read order.json for the customer/order details the email needs,
-  // then build fresh signed links and send.
+  // then build fresh signed links (+ attachments) and send.
   const orderData = await readOrderJson(storage, orderId);
   await buildAndSendEmail(storage, orderId, orderData, fulfillment);
 }
 
 /**
  * Manual re-issue: re-sends the delivery email with freshly-signed
- * links, WITHOUT calling /generate-full again. Requires the order to
- * have already been fulfilled once (fulfillment.json must exist) --
- * throws a clear error otherwise, since there's nothing to re-send yet.
- * Called from app/api/admin/resend-links/route.ts.
+ * links (and re-evaluates attachments the same way), WITHOUT calling
+ * /generate-full again. Requires the order to have already been
+ * fulfilled once (fulfillment.json must exist) -- throws a clear error
+ * otherwise, since there's nothing to re-send yet. Called from
+ * app/api/admin/resend-links/route.ts.
  */
 export async function resendOrderEmail(orderId: string): Promise<void> {
   const storage = getStorageClient();
@@ -210,6 +279,12 @@ export async function resendOrderEmail(orderId: string): Promise<void> {
 // once per order, roughly 21 days after fulfillment, for orders that
 // haven't necessarily downloaded their files yet. Called daily by
 // app/api/cron/send-reminders/route.ts (Vercel Cron).
+//
+// Deliberately link-only, no attachments (2026-07-24) -- unlike the
+// original delivery email, this one exists specifically because the
+// customer may not have engaged with the first email at all, so
+// re-sending a large attachment on a guess is more cost than the
+// nudge is worth; the links (already the primary path today) cover it.
 //
 // Scans every fulfillment.json under orders/ -- fine at current order
 // volume. If this ever becomes slow at higher volume, the fix is a

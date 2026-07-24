@@ -6,6 +6,35 @@ import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { GUANGNA_BY_NUMBER, parseEuroPrice, toUsdEstimate } from "@/lib/lemonSqueezyPricing";
+import type { PaperSize } from "@/lib/lemonSqueezyPricing";
+import { saveDraft, loadDraft, fileToBase64, base64ToFile } from "@/lib/createDraft";
+
+// UPDATED (2026-07-24): paper size choice moved here from /confirm as a
+// new Step 4 ("Your Guangna Marker Sets" -> preview -> paper size ->
+// email, which is now Step 5). Confirm no longer lets you pick paper
+// size -- it just displays what was chosen here (read-only) and lets
+// you go "back to make changes" if you want a different one. Order
+// summary card now shows the paper size + resulting price too, so the
+// summary is complete before checkout instead of only showing price at
+// /confirm.
+//
+// UPDATED (2026-07-23): pricing text throughout now reflects flat
+// paper-size pricing (see lib/lemonSqueezyPricing.ts's GUANGNA_BY_NUMBER)
+// instead of the old per-difficulty 7€/9€/11€ tiers -- difficulty is
+// still selected (via the Step 3 "bigger areas / more detail" buttons)
+// and still drives generation, it just no longer changes price, so the
+// price shown everywhere is the flat base (A4) price. The actual paper
+// choice -- and therefore the final price -- still only happens on
+// /confirm, same as before.
+//
+// Also fixes the "total so far: NaN€" cart bug: prevOrders (built by
+// confirm-page.tsx's orderAnother()) no longer carries a numeric
+// `price` field -- pricing moved from per-order difficulty tiers to a
+// paper-size choice made ON /confirm, so each previous order's real
+// price only exists as its `priceLabel` string, set at the point that
+// order actually went through checkout. totalSoFar now parses that
+// string instead of reading a `price` field that no longer exists.
 
 const MARKER_SETS = [
   { label:"Classic brush-366", value:"GN-8101-366" },
@@ -44,25 +73,27 @@ const MARKER_SETS = [
   { label:"Macaron",                  value:"GN.8201M-24" },
 ];
 
+// Labels only now -- price no longer varies by level, see GUANGNA_BY_NUMBER.
 const LEVELS = [
-  { label:"🌱 Beginner",     value:"15", price:7,  priceLabel:"7 €",  desc:"Fewer colors, larger areas." },
-  { label:"🌿 Intermediate", value:"24", price:9,  priceLabel:"9 €",  desc:"Balanced mix of effort and detail.", popular:true },
-  { label:"🌲 Advanced",     value:"36", price:11, priceLabel:"11 €", desc:"Wide color range, detailed." },
+  { label:"🌱 Beginner",     value:"15", desc:"Fewer colors, larger areas." },
+  { label:"🌿 Intermediate", value:"24", desc:"Balanced mix of effort and detail.", popular:true },
+  { label:"🌲 Advanced",     value:"36", desc:"Wide color range, detailed." },
 ];
 
 const DEFAULT_LEVEL = "24";
 
-const LEVEL_TO_VARIANT: Record<string, string> = {
-  "15": "1797148",
-  "24": "1797163",
-  "36": "1797167",
+const PAPER_LABELS: Record<PaperSize, string> = {
+  a4: "A4",
+  letter: "US Letter",
 };
 
-// Maps the create page's existing price-tier levels onto the
-// generation service's region-cap difficulty tiers (see webservice's
-// DIFFICULTY_PRESETS, 2026-07-11). Prices/variant IDs above are
-// unchanged -- only what each level triggers server-side has changed,
-// from a fixed color-count to a percentage-of-natural-regions cap.
+function priceFor(p: PaperSize) {
+  return GUANGNA_BY_NUMBER[p === "letter" ? "us" : "a4"].price;
+}
+
+// Maps the create page's level selector onto the generation service's
+// region-cap difficulty tiers (see webservice's DIFFICULTY_PRESETS,
+// 2026-07-11).
 const LEVEL_TO_DIFFICULTY: Record<string, string> = {
   "15": "beginner",
   "24": "standard",
@@ -70,15 +101,9 @@ const LEVEL_TO_DIFFICULTY: Record<string, string> = {
 };
 
 // ── QUALITY FLOOR: reject uploads below this on the shorter side.
-// Below this, upscaling to our 1800px preview / 3000px purchase
-// resolutions produces visibly soft edges and mushy region detection
-// (see pbn-generation-pipeline notes on preview/purchase resolutions).
 const MIN_PHOTO_DIMENSION = 1200;
 
 // ── CROP: aspect ratio presets shown as quick-select buttons ──────────────
-// Feature flag — set to true to re-enable these buttons later, once
-// the Render service is upgraded off the free tier. Code stays intact,
-// just not rendered while this is false.
 const BG_TOOLS_ENABLED = false;
 
 const ASPECT_PRESETS = [
@@ -88,11 +113,17 @@ const ASPECT_PRESETS = [
   { label: "16:9", value: 16 / 9 },
 ];
 
+// Matches confirm-page.tsx's OrderItem shape exactly -- both pages
+// round-trip this through URL params via prevOrders, so they must
+// agree on what fields exist. paperSize is now chosen here (Step 4)
+// rather than on /confirm, but the field still lives on OrderItem
+// since /confirm is what actually builds each finished OrderItem when
+// pushing to prevOrders (see its orderAnother()).
 type OrderItem = {
   photoName:  string;
   level:      string;
   levelLabel: string;
-  price:      number;
+  paperSize:  PaperSize;
   priceLabel: string;
   sets:       string[];
   indPens:    string;
@@ -197,15 +228,6 @@ function toApiExtraCodes(raw: string): string {
     .join(",");
 }
 
-function FxTag({ eur, gbp }: { eur: number; gbp: number | null }) {
-  if (!gbp) return null;
-  return (
-    <span style={{ fontSize: 11, color: "#999", fontWeight: 400, marginLeft: 6 }}>
-      ≈ £{(eur * gbp).toFixed(0)}
-    </span>
-  );
-}
-
 // ── CROP: centers a crop box at the chosen aspect ratio when first opened
 // or when the aspect preset changes ─────────────────────────────────────
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
@@ -253,13 +275,13 @@ function CreateInner() {
   const [photoUrl, setPhotoUrl]     = useState("");
   const [email, setEmail]           = useState("");
   const [level, setLevel]           = useState(DEFAULT_LEVEL);
+  const [paperSize, setPaperSize]   = useState<PaperSize>("a4");
   const [selectedSets, setSelectedSets] = useState<string[]>([]);
   const [individualPens, setIndividualPens] = useState("");
   const [indPenError, setIndPenError]       = useState("");
   const [errorMsg, setErrorMsg]     = useState("");
   const [prevOrders, setPrevOrders] = useState<OrderItem[]>([]);
   const [submitting, setSubmitting] = useState(false);
-  const [gbpRate, setGbpRate]       = useState<number | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   // ── QUALITY FLOOR: set when a dropped/selected photo is smaller than
@@ -267,33 +289,42 @@ function CreateInner() {
   // set as the working photo) and this message shown instead. ─────────
   const [photoDimError, setPhotoDimError] = useState("");
 
+  // ── QUALITY FLOOR (2026-07-24): a too-small photo no longer blocks
+  // outright -- it's held here (not yet accepted as the working photo)
+  // while photoDimError's warning is shown with a "continue anyway?"
+  // choice, same pattern as showNoSetsWarning below. Cleared either by
+  // acceptPhoto() (continuing) or by discarding it (choosing a
+  // different photo).
+  const [pendingSmallPhoto, setPendingSmallPhoto] = useState<{ file: File; url: string; width: number; height: number } | null>(null);
+
   // ── FULL GUIDE (2026-07-17): opt-in checkbox on the full366 upsell
   // panel -- "also prepare my free complete palette guide". Unchecked
-  // by default. Only ever surfaced again in the post-purchase delivery
-  // email if accepted -- there's no earlier confirmation UI, per
-  // Mirjam's call to keep this out of the create-page flow itself. ────
+  // by default.
   const [wantsFullGuide, setWantsFullGuide] = useState(false);
 
-  // ── PREVIEW: required generation step before Submit unlocks ──────────
+  // ── PREVIEW: required generation step before Submit unlocks, unless
+  // skipped -- see SKIP PREVIEW below. ──────────────────────────────────
   const [previewResult, setPreviewResult]   = useState<PreviewResult | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [previewError, setPreviewError]     = useState("");
-  // True whenever photo/sets/codes/level changed since the last
-  // successful preview -- forces a fresh preview before submitting
-  // rather than letting a stale one (generated against different
-  // inputs) slip through.
   const [previewStale, setPreviewStale]     = useState(false);
-  // True while the "you haven't selected any sets" confirm box is
-  // showing, after the user hits Generate preview with zero sets and
-  // no individual codes entered.
   const [showNoSetsWarning, setShowNoSetsWarning] = useState(false);
-  // ── ADJUST: "Happy with this, or want changes?" flow. previousPreviewResult
-  // holds the pre-adjustment result so a single click can revert to it.
-  // adjustmentMade is true once the user has picked "bigger areas" or
-  // "more detail" at least once for the CURRENT preview -- while true,
-  // the two adjustment buttons are replaced with a single revert button. ──
   const [previousPreviewResult, setPreviousPreviewResult] = useState<PreviewResult | null>(null);
   const [adjustmentMade, setAdjustmentMade] = useState(false);
+
+  // ── SKIP PREVIEW (2026-07-23): lets a customer who already knows
+  // what they want order directly, without waiting on generation.
+  // Reset whenever a new photo is uploaded (a fresh photo deserves a
+  // fresh decision) and, like previewStale, doesn't need to be reset on
+  // every input change -- if they change their mind and skip again
+  // after tweaking sets/level, that's still a valid "I know what I
+  // want" choice.
+  const [previewSkipped, setPreviewSkipped] = useState(false);
+
+  // ── DRAFT PERSISTENCE: brief confirmation shown when the photo comes
+  // back from a restored draft (vs. a fresh upload), so it's clear
+  // what just happened rather than a photo silently appearing.
+  const [photoRestoredNotice, setPhotoRestoredNotice] = useState(false);
 
   // ── CROP: original upload kept separate from the (possibly cropped)
   // working version, so re-cropping always starts from full quality ──────
@@ -312,41 +343,117 @@ function CreateInner() {
   useEffect(() => {
     const pEmail      = params.get("email");
     const pLevel      = params.get("level");
+    const pPaperSize  = params.get("paperSize");
     const pSets       = params.get("sets");
     const pIndPens    = params.get("indPens");
     const pPrevOrders = params.get("prevOrders");
-    if (pEmail)   setEmail(pEmail);
-    setLevel(pLevel && pLevel !== "reset" ? pLevel : DEFAULT_LEVEL);
-    if (pSets)    setSelectedSets(pSets.split("|").filter(Boolean));
+
+    // confirm's two "back to /create" actions look almost identical in
+    // their params, but differ in one telling way: goBack() ("make
+    // changes") always includes `level`, since it's editing the order
+    // that's already fully filled out; orderAnother() deliberately
+    // omits it, since it's starting a fresh item. That's the existing
+    // signal (no new param needed) for whether landing here should
+    // restore the previous photo (editing) or not (a genuinely new
+    // item, where restoring the OLD photo would be actively wrong).
+    // Bare navigation with no params at all (e.g. back from /examples)
+    // restores everything, same as editing.
+    const cameFromConfirm = pEmail !== null || pSets !== null || pIndPens !== null || pPrevOrders !== null;
+    const isEditingExisting = pLevel !== null;
+    const restoreFromDraft = !cameFromConfirm || isEditingExisting;
+    const draft = restoreFromDraft ? loadDraft() : null;
+
+    setEmail(pEmail ?? draft?.email ?? "");
+    setLevel(pLevel && pLevel !== "reset" ? pLevel : (draft?.level ?? DEFAULT_LEVEL));
+    // paperSize restore is intentionally NOT gated by the
+    // editing-vs-new distinction above: whether you're editing an
+    // existing order or starting a fresh one via "order another",
+    // carrying over the last-chosen paper size is a reasonable
+    // default either way (same convenience as email/sets carrying
+    // over in orderAnother()). Falls back to the "a4" initial state
+    // when no paperSize param is present at all.
+    if (pPaperSize === "a4" || pPaperSize === "letter") setPaperSize(pPaperSize);
+    if (pSets) setSelectedSets(pSets.split("|").filter(Boolean));
+    else if (draft?.selectedSets) setSelectedSets(draft.selectedSets);
     if (pIndPens) setIndividualPens(pIndPens);
+    else if (draft?.individualPens) setIndividualPens(draft.individualPens);
     if (pPrevOrders) {
       try { setPrevOrders(JSON.parse(decodeURIComponent(pPrevOrders))); } catch {}
     }
+    if (draft?.wantsFullGuide) setWantsFullGuide(true);
+    if (draft?.previewSkipped) setPreviewSkipped(true);
+
+    // The photo is the one field that can NEVER arrive via URL params --
+    // this is the only path that restores it.
+    if (draft?.photoBase64 && draft.photoName) {
+      base64ToFile(draft.photoBase64, draft.photoName, draft.photoType || "image/jpeg")
+        .then(file => {
+          setPhoto(file);
+          setOriginalPhoto(file);
+          const url = URL.createObjectURL(file);
+          setPhotoUrl(url);
+          setOriginalPhotoUrl(url);
+          setPhotoRestoredNotice(true);
+          setTimeout(() => setPhotoRestoredNotice(false), 6000);
+        })
+        .catch(() => {});
+    }
   }, []);
 
+  // ── DRAFT PERSISTENCE: keeps sessionStorage in sync with the working
+  // state so a detour to /examples (which customers are actively
+  // encouraged to visit before finishing an order, to see the
+  // resolution comparison) or an accidental navigation away doesn't
+  // lose the upload. Split into two effects so typing in the email
+  // field doesn't re-encode the photo to base64 on every keystroke --
+  // that only happens when the photo itself actually changes; the
+  // cached result lives in photoDraftRef and gets reused by the
+  // lighter-weight effect below. ─────────────────────────────────────
+  const photoDraftRef = useRef<{ base64: string; name: string; type: string } | null>(null);
+
+  const persistDraft = () => {
+    saveDraft({
+      photoBase64: photoDraftRef.current?.base64,
+      photoName: photoDraftRef.current?.name,
+      photoType: photoDraftRef.current?.type,
+      email, level, selectedSets, individualPens, wantsFullGuide, previewSkipped,
+    });
+  };
+
   useEffect(() => {
-    fetch("https://open.er-api.com/v6/latest/EUR")
-      .then(r => r.json())
-      .then(data => {
-        if (data?.rates) {
-          setGbpRate(data.rates.GBP * 1.05);
-        }
-      })
-      .catch(() => {});
-  }, []);
+    let cancelled = false;
+    if (photo) {
+      fileToBase64(photo)
+        .then(base64 => {
+          if (cancelled) return;
+          photoDraftRef.current = { base64, name: photo.name, type: photo.type };
+          persistDraft();
+        })
+        .catch(() => {});
+    } else {
+      photoDraftRef.current = null;
+      persistDraft();
+    }
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photo]);
+
+  useEffect(() => {
+    persistDraft();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, level, selectedSets, individualPens, wantsFullGuide, previewSkipped]);
 
   // ── PREVIEW: any change to what would be generated invalidates the
   // last preview. Only fires once a preview actually exists -- doesn't
   // do anything on initial mount or while the user is still making
-  // their first round of choices. ──────────────────────────────────────
+  // their first round of choices. paperSize deliberately isn't in this
+  // list -- it doesn't affect generation, only the final PDF layout, so
+  // changing it shouldn't force a fresh preview. ───────────────────────
   useEffect(() => {
     if (previewResult) {
       setPreviewStale(true);
       setPreviousPreviewResult(null);
       setAdjustmentMade(false);
-      // A changed selection means a changed upsell/full366 result too --
-      // don't carry the opt-in forward against markers that no longer
-      // match what was actually shown.
       setWantsFullGuide(false);
     }
   }, [photo, selectedSets, individualPens, level]);
@@ -358,17 +465,12 @@ function CreateInner() {
     setPhotoDimError("");
     setPhoto(file);
     setPhotoUrl(url);
-    // ── CROP: remember the original so the user can re-crop from full
-    // quality later, and reset any in-progress crop UI ──────────────────
     setOriginalPhoto(file);
     setOriginalPhotoUrl(url);
     setShowCropper(false);
     setCrop(undefined);
     setCompletedCrop(undefined);
     setAspect(undefined);
-    // A new photo makes any existing preview meaningless immediately,
-    // not just "stale" -- clear it outright rather than waiting for the
-    // staleness effect (which would still show the old images briefly).
     setPreviewResult(null);
     setPreviewStale(false);
     setPreviewError("");
@@ -376,28 +478,26 @@ function CreateInner() {
     setPreviousPreviewResult(null);
     setAdjustmentMade(false);
     setWantsFullGuide(false);
+    setPreviewSkipped(false);
+    setPhotoRestoredNotice(false);
   };
 
-  // ── QUALITY FLOOR: reads the image's natural dimensions before
-  // accepting it. Photos under MIN_PHOTO_DIMENSION on the shorter side
-  // are rejected outright (not set as the working photo) rather than
-  // silently upscaled -- upscaling that far produces soft edges and
-  // mushy region detection at both our 1800px preview and 3000px
-  // purchase resolutions. Formats the browser can't decode client-side
-  // (e.g. HEIC in some Chrome builds) skip the check and are accepted
-  // as-is; the server-side generation step still handles them. ────────
   const handleFile = (file: File) => {
     if (!file.type.startsWith("image/")) return;
     setPhotoDimError("");
+    setPendingSmallPhoto(prev => {
+      if (prev) URL.revokeObjectURL(prev.url);
+      return null;
+    });
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
       const shortSide = Math.min(img.naturalWidth, img.naturalHeight);
       if (shortSide < MIN_PHOTO_DIMENSION) {
         setPhotoDimError(
-          `This photo is ${img.naturalWidth}×${img.naturalHeight}px — a bit small for a sharp result. Please upload a photo at least ${MIN_PHOTO_DIMENSION}px on the shorter side.`
+          `This photo is ${img.naturalWidth}×${img.naturalHeight}px — a bit small for a sharp result. We recommend at least ${MIN_PHOTO_DIMENSION}px on the shorter side, but you can continue with this one if you'd like.`
         );
-        URL.revokeObjectURL(url);
+        setPendingSmallPhoto({ file, url, width: img.naturalWidth, height: img.naturalHeight });
         return;
       }
       acceptPhoto(file, url);
@@ -406,6 +506,23 @@ function CreateInner() {
       acceptPhoto(file, url);
     };
     img.src = url;
+  };
+
+  // ── QUALITY FLOOR: user chose "continue anyway" on a below-recommended
+  // photo -- accept it as the working photo like any other. ───────────
+  const continueWithSmallPhoto = () => {
+    if (!pendingSmallPhoto) return;
+    acceptPhoto(pendingSmallPhoto.file, pendingSmallPhoto.url);
+    setPendingSmallPhoto(null);
+  };
+
+  // ── QUALITY FLOOR: user chose to pick a different photo instead --
+  // discard the pending one, clear the warning, nothing becomes the
+  // working photo. ─────────────────────────────────────────────────────
+  const discardSmallPhoto = () => {
+    if (pendingSmallPhoto) URL.revokeObjectURL(pendingSmallPhoto.url);
+    setPendingSmallPhoto(null);
+    setPhotoDimError("");
   };
 
   const onDrop = useCallback((e: React.DragEvent) => {
@@ -456,9 +573,7 @@ function CreateInner() {
   };
 
   // ── BACKGROUND TOOLS: calls our own /api/photo-tools route, which
-  // proxies to the separate Python service. Operates on whatever the
-  // CURRENT working photo is (post-crop, if cropped) — "Reset to
-  // original" still fully reverts to the pristine upload either way. ──
+  // proxies to the separate Python service. ────────────────────────────
   const applyBackgroundAction = async (action: "remove" | "blur") => {
     if (!photo) return;
     setBgProcessing(action);
@@ -507,8 +622,6 @@ function CreateInner() {
 
   const currentLevelInfo = LEVELS.find(l => l.value === level)!;
   const hasMarkersSelected = selectedSets.length > 0 || individualPens.trim().length > 0;
-  // Human-readable summary of what's selected, shown next to "Your markers"
-  // in the preview -- e.g. "Classic brush-408, 2 individual markers".
   const selectedMarkersLabel = (() => {
     const setLabels = selectedSets
       .map(v => MARKER_SETS.find(s => s.value === v)?.label)
@@ -518,22 +631,8 @@ function CreateInner() {
     if (extraCodes.length) parts.push(`${extraCodes.length} individual marker${extraCodes.length > 1 ? "s" : ""}`);
     return parts.join(", ");
   })();
-  // True once the user's selection already IS the full 366-color palette
-  // (either they explicitly checked that set, or the no-sets-selected
-  // warning flow confirmed it) -- in that case "Your markers" and "Full
-  // color palette" would be identical, so only one column is shown.
   const isFullPalette = selectedSets.includes("GN-8101-366");
 
-  // ── PREVIEW: calls our own /api/generate-preview route, which proxies
-  // to the Cloud Run generation service server-side (API key never
-  // touches the browser). Takes roughly 15-20s.
-  //
-  // If called with no marker sets selected and no individual codes
-  // entered, shows a confirm warning instead of generating -- unless
-  // overrideSets is passed (used by the "Yes, use full set" button),
-  // in which case it generates immediately against that set list and
-  // also updates selectedSets to match, so the rest of the page (order
-  // summary, submit) reflects what was actually generated. ────────────
   const generatePreview = async (overrideSets?: string[]) => {
     if (!photo || indPenError) return;
     const setsToUse = overrideSets ?? selectedSets;
@@ -562,7 +661,7 @@ function CreateInner() {
       }
       setPreviewResult(data);
       setPreviewStale(false);
-      // A brand-new generation starts a fresh adjustment cycle.
+      setPreviewSkipped(false);
       setPreviousPreviewResult(null);
       setAdjustmentMade(false);
     } catch (err) {
@@ -573,11 +672,20 @@ function CreateInner() {
     }
   };
 
-  // ── ADJUST: regenerates at a specific difficulty tier ("bigger areas" =
-  // beginner, "more detail, smaller areas" = advanced) using the SAME
-  // sets/codes already selected -- this does not touch the (currently
-  // hidden) Level card's `level` state, only this one regeneration.
-  // Stashes the current result so a single click can revert to it. ────
+  // ── SKIP PREVIEW: lets someone who already knows what they want order
+  // without waiting on generation. Still requires a photo + valid
+  // marker input, same as generating a preview would -- just doesn't
+  // require the actual preview call. ────────────────────────────────────
+  const skipPreview = () => {
+    if (!photo || indPenError) return;
+    if (selectedSets.length === 0 && !individualPens.trim()) {
+      setShowNoSetsWarning(true);
+      return;
+    }
+    setShowNoSetsWarning(false);
+    setPreviewSkipped(true);
+  };
+
   const regenerateWithDifficulty = async (difficulty: "beginner" | "advanced") => {
     if (!photo || indPenError || previewLoading || !previewResult) return;
     setPreviousPreviewResult(previewResult);
@@ -608,7 +716,6 @@ function CreateInner() {
     }
   };
 
-  // ── ADJUST: reverts to the result from before the last adjustment. ───
   const restorePrevious = () => {
     if (!previousPreviewResult) return;
     setPreviewResult(previousPreviewResult);
@@ -617,33 +724,23 @@ function CreateInner() {
   };
 
   const handleSubmit = async () => {
-    if (!photo || !email || indPenError || !previewResult || previewStale) return;
+    if (!photo || !email || indPenError) return;
+    if (!previewSkipped && (!previewResult || previewStale)) return;
     setSubmitting(true);
     setErrorMsg("");
     let orderId = "";
     try {
       const levelInfo  = LEVELS.find(l => l.value === level)!;
       const filledSets = selectedSets;
-      const thisOrder: OrderItem = {
-        photoName:  photo.name,
-        level,
-        levelLabel: levelInfo.label,
-        price:      levelInfo.price,
-        priceLabel: levelInfo.priceLabel,
-        sets:       filledSets,
-        indPens:    individualPens,
-      };
-      const allOrders  = [...prevOrders, thisOrder];
-      const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
       const formData = new FormData();
       formData.append("image",      photo);
       formData.append("email",      email);
       formData.append("level",      level);
+      formData.append("paperSize",  paperSize);
       formData.append("sets",       filledSets.join(", "));
       formData.append("indPens",    individualPens);
-      formData.append("allOrders",  JSON.stringify(allOrders));
-      formData.append("grandTotal", String(grandTotal));
       formData.append("wantsFullGuide", String(wantsFullGuide));
+      formData.append("previewSkipped", String(previewSkipped));
       const res  = await fetch("/api/submit-order", { method: "POST", body: formData });
       const data = await res.json();
 
@@ -662,6 +759,7 @@ function CreateInner() {
     const filledSets = selectedSets;
     const q = new URLSearchParams({
       email, level,
+      paperSize,
       photoName:  photo!.name,
       sets:       filledSets.join("|"),
       indPens:    individualPens,
@@ -672,8 +770,13 @@ function CreateInner() {
     router.push(`/confirm?${q.toString()}`);
   };
 
-  const canSubmit  = photo && email && !indPenError && previewResult && !previewStale;
-  const totalSoFar = prevOrders.reduce((acc, o) => acc + o.price, 0);
+  const canSubmit  = photo && email && !indPenError && (previewSkipped || (previewResult && !previewStale));
+  // Previous orders' real prices only ever exist as priceLabel strings
+  // (set once each order actually reached /confirm) -- parse those
+  // rather than relying on a numeric `price` field that no longer
+  // exists on OrderItem.
+  const totalSoFar = prevOrders.reduce((acc, o) => acc + parseEuroPrice(o.priceLabel), 0);
+  const selectedPrice = priceFor(paperSize); // reflects the paper size chosen in Step 4
 
   return (
     <>
@@ -721,6 +824,11 @@ function CreateInner() {
         .full-width {
           grid-column: 1 / -1;
         }
+        .email-input-big {
+          font-size: 17px !important;
+          padding: 14px 16px !important;
+          border-radius: 12px !important;
+        }
       `}</style>
       <Navbar />
       <main style={{padding:"40px 24px", maxWidth:1100, margin:"0 auto"}}>
@@ -734,13 +842,19 @@ function CreateInner() {
         {prevOrders.length > 0 && (
           <div style={{background:"#FFF0F3", border:"2px solid var(--pink)", borderRadius:14, padding:"14px 18px", marginTop:16, marginBottom:4}}>
             <p style={{fontWeight:700, fontSize:14, color:"var(--pink)", marginBottom:8}}>
-              🛒 You have {prevOrders.length} order{prevOrders.length > 1 ? "s" : ""} in your cart — total so far: <strong>{totalSoFar}€</strong>
+              🛒 You have {prevOrders.length} order{prevOrders.length > 1 ? "s" : ""} in your cart — total so far: <strong>{totalSoFar.toFixed(2).replace(".", ",")}€</strong>
             </p>
             {prevOrders.map((o, i) => (
               <p key={i} style={{fontSize:13, color:"#555", margin:"2px 0"}}>
-                #{i+1} · {o.photoName} · {o.levelLabel} · {o.priceLabel}
+                #{i+1} · {o.photoName} · {o.levelLabel} · {PAPER_LABELS[o.paperSize]} · {o.priceLabel}
               </p>
             ))}
+            <button
+              onClick={() => router.back()}
+              style={{marginTop:8, fontSize:12.5, fontWeight:600, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", padding:0}}
+            >
+              ← Back to my order
+            </button>
           </div>
         )}
 
@@ -836,8 +950,24 @@ function CreateInner() {
                   </div>
                   <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}}
                     onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }}/>
+                  {photoRestoredNotice && (
+                    <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:8}}>↺ Welcome back — restored your uploaded photo.</p>
+                  )}
                   {photoDimError && (
-                    <p style={{fontSize:12, color:"#c62828", marginTop:8}}>⚠️ {photoDimError}</p>
+                    <div style={{marginTop:8, padding:"12px 14px", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:10}}>
+                      <p style={{fontSize:12.5, color:"#8a6d1f", marginBottom:pendingSmallPhoto ? 8 : 0}}>⚠️ {photoDimError}</p>
+                      {pendingSmallPhoto && (
+                        <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
+                          <button onClick={continueWithSmallPhoto} className="btn-primary" style={{fontSize:13, padding:"8px 14px"}}>
+                            Yes, continue anyway
+                          </button>
+                          <button onClick={discardSmallPhoto}
+                            style={{fontSize:13, padding:"8px 14px", borderRadius:8, border:"2px solid var(--border)", background:"white", color:"#555", cursor:"pointer"}}>
+                            Choose a different photo
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )}
                   {photo && (
                     <div style={{marginTop:8, display:"flex", flexDirection:"column", gap:6}}>
@@ -869,7 +999,7 @@ function CreateInner() {
                               ↺ Reset to original
                             </button>
                           )}
-                          <button onClick={() => { setPhoto(null); setPhotoUrl(""); setOriginalPhoto(null); setOriginalPhotoUrl(""); setBgError(""); setPhotoDimError(""); setPreviewResult(null); setPreviewError(""); setShowNoSetsWarning(false); setPreviousPreviewResult(null); setAdjustmentMade(false); setWantsFullGuide(false); }} disabled={!!bgProcessing}
+                          <button onClick={() => { setPhoto(null); setPhotoUrl(""); setOriginalPhoto(null); setOriginalPhotoUrl(""); setBgError(""); setPhotoDimError(""); setPreviewResult(null); setPreviewError(""); setShowNoSetsWarning(false); setPreviousPreviewResult(null); setAdjustmentMade(false); setWantsFullGuide(false); setPreviewSkipped(false); setPhotoRestoredNotice(false); }} disabled={!!bgProcessing}
                             style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor:"pointer"}}>
                             Remove
                           </button>
@@ -888,50 +1018,6 @@ function CreateInner() {
                 </>
               )}
             </div>
-
-            {/* Level card -- temporarily hidden while Mirjam decides where the
-                price selector belongs. The Step 3 "bigger areas / more detail"
-                buttons now cover the difficulty-tier role this played; the
-                `level` state still defaults to "24" (Intermediate) and drives
-                pricing, LEVEL_TO_DIFFICULTY, and the order summary unchanged.
-                Flip `false` to `true` to bring this back. ── */}
-            {false && (
-            <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Select your level</h2>
-              <div style={{display:"flex", flexDirection:"column", gap:10}}>
-                {LEVELS.map(l => (
-                  <label key={l.value} style={{
-                    display:"flex", alignItems:"center", gap:14, cursor:"pointer",
-                    padding:"12px 16px", borderRadius:12,
-                    border:`2px solid ${level === l.value ? "var(--pink)" : "var(--border)"}`,
-                    background: level === l.value ? "#FFF0F3" : "white",
-                    transition:"all 0.15s", position:"relative",
-                  }}>
-                    <input type="radio" name="level" value={l.value}
-                      checked={level === l.value} onChange={() => setLevel(l.value)}
-                      style={{accentColor:"var(--pink)"}}/>
-                    <div style={{flex:1}}>
-                      <div style={{fontWeight:700, fontSize:15, display:"flex", alignItems:"center", gap:8, flexWrap:"wrap"}}>
-                        {l.label} — {l.priceLabel}
-                        <FxTag eur={l.price} gbp={gbpRate} />
-                        {l.popular && (
-                          <span style={{fontSize:11, fontWeight:700, background:"var(--pink)", color:"white", borderRadius:20, padding:"2px 8px", letterSpacing:"0.03em"}}>
-                            ★ Most Popular
-                          </span>
-                        )}
-                      </div>
-                      <div style={{color:"var(--muted)", fontSize:13}}>{l.desc}</div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-              <div style={{marginTop:16, padding:"10px 14px", background:"#f9f9f9", borderRadius:10, borderLeft:"3px solid var(--border)"}}>
-                <p style={{fontSize:11, color:"#999", margin:0, lineHeight:1.6}}>
-                  💱 Prices shown in EUR. The approximate equivalent in GBP is shown for indication only, based on indicative exchange rates. Your bank or card provider may apply different rates and fees.
-                </p>
-              </div>
-            </div>
-            )}
 
           {/* Step 2: Markers */}
           <div className="card" style={{display:"flex", flexDirection:"column"}}>
@@ -975,9 +1061,9 @@ function CreateInner() {
 
             {/* Step 3: Generate preview -- full width */}
             <div className="card full-width">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖼️ Free instant preview, high-res to your inbox for 9 € </h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖼️ Free instant preview</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-              Generate your free preview in 15-30 seconds and see exactly how it looks before you buy. Order the full high-res file for 9 € to receive it straight to your inbox.
+              Preview a free low-res draft in 20-40 seconds. Get the full high-resolution file sent straight to your inbox for {selectedPrice}.
               </p>
               <button
                 onClick={() => generatePreview()}
@@ -989,11 +1075,29 @@ function CreateInner() {
                 }}
               >
                 {previewLoading
-                  ? "⏳ Generating your preview… (~15-30s)"
+                  ? "⏳ Generating your preview… (~20-40s)"
                   : previewResult && !previewStale
                     ? "🔄 Regenerate preview"
                     : "🎨 Generate free preview"}
               </button>
+
+              {/* ── SKIP PREVIEW: only offered before a preview exists (or once
+                  the existing one's gone stale) -- once you HAVE a fresh
+                  preview, there's nothing left to skip. ── */}
+              {photo && !indPenError && (!previewResult || previewStale) && !previewSkipped && (
+                <button
+                  onClick={skipPreview}
+                  disabled={previewLoading}
+                  style={{marginTop:8, width:"100%", fontSize:13, fontWeight:600, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", padding:"4px", textAlign:"center"}}
+                >
+                  Skip the preview — I already know what I want →
+                </button>
+              )}
+              {previewSkipped && (
+                <p style={{fontSize:12.5, color:"var(--pink)", fontWeight:600, marginTop:8, textAlign:"center"}}>
+                  ✓ Preview skipped — you can still generate one below anytime before ordering.
+                </p>
+              )}
 
               {previewLoading && (
                 <div style={{marginTop:14}}>
@@ -1037,18 +1141,20 @@ function CreateInner() {
                     (() => {
                       const branch = previewResult.owned || previewResult.full366!;
                       return (
-                        <div>
-                          <BeforeAfterSlider
-                            beforeImage={`data:image/png;base64,${branch.preview_png_base64}`}
-                            afterImage={`data:image/png;base64,${branch.outline_png_base64}`}
-                            beforeLabel="Colored preview"
-                            afterLabel="Numbered outline"
-                            aspectRatio={4 / 3}
-                          />
-                          <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
-                            🎨 Matched to real Guangna markers — the colors you see are what you'll paint with.
-                          </p>
-                          <MarkerSwatches legend={branch.legend} />
+                        <div className="preview-compare-grid">
+                          <div>
+                            <BeforeAfterSlider
+                              beforeImage={`data:image/png;base64,${branch.preview_png_base64}`}
+                              afterImage={`data:image/png;base64,${branch.outline_png_base64}`}
+                              beforeLabel="Colored preview"
+                              afterLabel="Numbered outline"
+                              aspectRatio={4 / 3}
+                            />
+                            <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
+                              🎨 Matched to real Guangna markers — the colors you see are what you'll use.
+                            </p>
+                            <MarkerSwatches legend={branch.legend} />
+                          </div>
                         </div>
                       );
                     })()
@@ -1098,9 +1204,7 @@ function CreateInner() {
                             </>
                           );
                         })()}
-                        {/* ── FULL GUIDE: free opt-in, unchecked by default. Only
-                            reappears later in the delivery email if checked --
-                            nothing else on this page changes based on it. ── */}
+                        {/* ── FULL GUIDE: free opt-in, unchecked by default. ── */}
                         <label style={{display:"flex", alignItems:"flex-start", gap:8, marginTop:10, fontSize:12.5, color:"#555", cursor:"pointer"}}>
                           <input
                             type="checkbox"
@@ -1108,7 +1212,7 @@ function CreateInner() {
                             onChange={e => setWantsFullGuide(e.target.checked)}
                             style={{marginTop:2, accentColor:"var(--pink)"}}
                           />
-                          <span>📩 Please include my Free full color Palette Guide with my order, in case I want to add more markers later.</span>
+                          <span>📩 Please include my Full Color Palette Guide for free with my order, in case I want to add more markers later.</span>
                         </label>
                       </div>
                       
@@ -1129,7 +1233,8 @@ function CreateInner() {
 
                   {/* ── ADJUST: happy-with-this flow. Two buttons regenerate at a
                       different difficulty tier using the same sets/codes; once used,
-                      they're replaced by a single revert button. ── */}
+                      they're replaced by a single revert button. Prices removed --
+                      difficulty no longer affects price, see GUANGNA_BY_NUMBER. ── */}
                   <div style={{marginTop:14, padding:"14px 16px", background:"#FAFAFA", border:"1.5px solid var(--border)", borderRadius:12}}>
                     {!adjustmentMade ? (
                       <>
@@ -1143,7 +1248,7 @@ function CreateInner() {
                             disabled={previewLoading}
                             style={{flex:"1 1 200px", fontSize:14, padding:"12px", opacity: previewLoading ? 0.6 : 1}}
                           >
-                           Larger Coloring Areas (7 €)
+                           Larger Coloring Areas
                           </button>
                           <button
                             onClick={() => regenerateWithDifficulty("advanced")}
@@ -1151,7 +1256,7 @@ function CreateInner() {
                             disabled={previewLoading}
                             style={{flex:"1 1 200px", fontSize:14, padding:"12px", opacity: previewLoading ? 0.6 : 1}}
                           >
-                            Ultra Detailed Design (11 €)
+                            Ultra Detailed Design
                           </button>
                         </div>
                       </>
@@ -1171,11 +1276,51 @@ function CreateInner() {
               )}
             </div>
 
-            {/* Step 4: Email */}
+            {/* Step 4: Paper size */}
             <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: ✉️ Your email</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: 📄 Paper size</h2>
+              <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
+                Choose the size your finished PDF will be laid out for. You can still change this later.
+              </p>
+              <div style={{ display:"flex", gap:10 }}>
+                {(["a4", "letter"] as PaperSize[]).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPaperSize(p)}
+                    style={{
+                      flex:1, padding:"12px 16px", borderRadius:12,
+                      border: paperSize === p ? "2px solid var(--pink)" : "2px solid var(--border)",
+                      background: paperSize === p ? "var(--pink)" : "white",
+                      color: paperSize === p ? "white" : "var(--ink)",
+                      cursor:"pointer",
+                      display:"flex", flexDirection:"column", alignItems:"center", gap:2,
+                    }}
+                  >
+                    <span style={{ fontWeight:700, fontSize:13 }}>{PAPER_LABELS[p]}</span>
+                    {p === "letter" ? (
+                      <>
+                        <span style={{ fontWeight:900, fontSize:18, lineHeight:1.15 }}>
+                          {toUsdEstimate(priceFor(p))}
+                        </span>
+                        <span style={{ fontWeight:500, fontSize:11, opacity:0.75 }}>
+                          ≈ {priceFor(p)}
+                        </span>
+                      </>
+                    ) : (
+                      <span style={{ fontWeight:900, fontSize:18, lineHeight:1.15 }}>
+                        {priceFor(p)}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Step 5: Email */}
+            <div className="card">
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 5: ✉️ Your email</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com"/>
+              <input type="email" className="email-input-big" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{width:"100%"}}/>
             </div>
 
             {/* Order summary */}
@@ -1183,16 +1328,15 @@ function CreateInner() {
               <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
               <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
                 <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
-                <Row label="Level"       value={currentLevelInfo ? `${currentLevelInfo.label} — ${currentLevelInfo.priceLabel}` : "—"}/>
+                <Row label="Level"       value={currentLevelInfo ? currentLevelInfo.label : "—"}/>
                 <Row label="Marker sets" value={selectedSets.length ? `${selectedSets.length} selected` : "None selected"}/>
-                <Row label="Preview"     value={previewResult && !previewStale ? "✓ Generated" : "Not yet generated"}/>
+                <Row label="Preview"     value={previewResult && !previewStale ? "✓ Generated" : previewSkipped ? "Skipped" : "Not yet generated"}/>
+                <Row label="Paper size"  value={PAPER_LABELS[paperSize]}/>
+                <Row label="Price"       value={selectedPrice} highlight/>
                 {prevOrders.length > 0 && (
                   <>
                     <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
-                    <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar}€`}/>
-                    <Row label="This order" value={currentLevelInfo ? currentLevelInfo.priceLabel : "—"}/>
-                    <div style={{borderTop:"1.5px solid var(--pink)", margin:"4px 0"}}/>
-                    <Row label="🧾 New total" value={`${totalSoFar + (currentLevelInfo?.price ?? 0)}€`} highlight/>
+                    <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar.toFixed(2).replace(".", ",")}€`}/>
                   </>
                 )}
               </div>
@@ -1214,12 +1358,12 @@ function CreateInner() {
                   Upload a photo to get started
                 </p>
               )}
-              {photo && (!previewResult || previewStale) && (
+              {photo && !previewSkipped && (!previewResult || previewStale) && (
                 <p style={{textAlign:"center", fontSize:13, color:"var(--muted)"}}>
-                  Generate a preview to continue
+                  Generate a preview, or skip it, to continue
                 </p>
               )}
-              {!email && photo && previewResult && !previewStale && (
+              {!email && photo && (previewSkipped || (previewResult && !previewStale)) && (
                 <p style={{textAlign:"center", fontSize:13, color:"var(--muted)"}}>
                   Add your email to continue
                 </p>

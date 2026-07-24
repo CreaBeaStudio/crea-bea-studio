@@ -1,32 +1,57 @@
 "use client";
+// Save this file as app/[locale]/confirm/page.tsx
+//
+// UPDATED (2026-07-24):
+//  - Paper size is no longer chosen here -- it's picked on /create
+//    (Step 4) and arrives via the `paperSize` URL param. This page now
+//    just displays it (read-only); to change it, the customer goes
+//    "back to make changes" to /create. goBack()/orderAnother() both
+//    carry paperSize forward so it round-trips correctly either way.
+//  - USD estimate is now only shown for US Letter -- A4 shows the Euro
+//    price alone, since two prices next to each other read as
+//    confusing when the customer isn't paying in USD anyway. US Letter
+//    still shows USD large/prominent with EUR as the small actual-
+//    charge reference underneath, since that's the currency a US
+//    Letter buyer is thinking in.
+//
+// UPDATED (2026-07-23):
+//  - Pricing is now flat by paper size (A4/US Letter) instead of by
+//    difficulty tier -- difficulty is still customer-selected and
+//    still drives generation, but no longer affects price. See
+//    lib/lemonSqueezyPricing.ts's GUANGNA_BY_NUMBER for the two prices.
+//  - Payhip removed -- per the earlier decision to consolidate on
+//    LemonSqueezy only (full global Merchant of Record vs Payhip's
+//    EU/UK-only VAT coverage). The USD/EUR dual-currency button pair is
+//    gone along with it; LemonSqueezy handles currency itself.
+//  - Cart bundling (multiple photos in one checkout) isn't supported
+//    yet -- create-checkout returns a friendly error if you try to
+//    check out with more than one order in the cart. The "order
+//    another" flow is left in place below (so nothing breaks for
+//    someone using it), it'll just surface that message at checkout
+//    for now.
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { buildPayhipCheckoutUrl } from "../../../lib/payhip";
+import { GUANGNA_BY_NUMBER, toUsdEstimate } from "@/lib/lemonSqueezyPricing";
+import type { PaperSize } from "@/lib/lemonSqueezyPricing";
 
-// Flip this in Vercel's Environment Variables once you've tested the Payhip flow.
-// NEXT_PUBLIC_PAYHIP_ENABLED=true
-const PAYHIP_ENABLED = process.env.NEXT_PUBLIC_PAYHIP_ENABLED === "true";
-
-const LEVELS: Record<string, { label: string; price: number; priceLabel: string }> = {
-  "15": { label: "🌱 Beginner",     price: 7,  priceLabel: "7€"  },
-  "24": { label: "🌿 Intermediate", price: 9,  priceLabel: "9€"  },
-  "36": { label: "🌲 Advanced",     price: 11, priceLabel: "11€" },
+const LEVELS: Record<string, { label: string }> = {
+  "15": { label: "🌱 Beginner" },
+  "24": { label: "🌿 Intermediate" },
+  "36": { label: "🌲 Advanced" },
 };
 
-// USD prices for the Lemon Squeezy / "Pay in USD" button.
-const USD_PRICES: Record<string, number> = {
-  "15": 9,
-  "24": 12,
-  "36": 14,
+const PAPER_LABELS: Record<PaperSize, string> = {
+  a4: "A4",
+  letter: "US Letter",
 };
 
 type OrderItem = {
   photoName: string;
   level: string;
   levelLabel: string;
-  price: number;
+  paperSize: PaperSize;
   priceLabel: string;
   sets: string[];
   indPens: string;
@@ -35,8 +60,9 @@ type OrderItem = {
 function ConfirmContent() {
   const router  = useRouter();
   const params  = useSearchParams();
-  const [loadingProvider, setLoadingProvider] = useState<"lemonsqueezy" | "payhip" | null>(null);
+  const [loading, setLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
+  const [checkoutOpened, setCheckoutOpened] = useState(false);
 
   const email        = params.get("email")        ?? "";
   const levelValue   = params.get("level")        ?? "24";
@@ -45,9 +71,14 @@ function ConfirmContent() {
   const indPens      = params.get("indPens")      ?? "";
   const orderId      = params.get("orderId")      ?? "";
   const prevOrdersRaw = params.get("prevOrders")  ?? "[]";
+  // Chosen on /create (Step 4) now -- this page only displays it.
+  const paperSizeParam = params.get("paperSize");
+  const paperSize: PaperSize = paperSizeParam === "letter" ? "letter" : "a4";
+  const showUsd = paperSize === "letter";
 
-  const levelInfo = LEVELS[levelValue] ?? { label: "—", price: 0, priceLabel: "—" };
+  const levelInfo = LEVELS[levelValue] ?? { label: "—" };
   const sets      = setsRaw ? setsRaw.split("|").filter(Boolean) : [];
+  const variant   = GUANGNA_BY_NUMBER[paperSize === "letter" ? "us" : "a4"];
 
   let prevOrders: OrderItem[] = [];
   try { prevOrders = JSON.parse(decodeURIComponent(prevOrdersRaw)); } catch {}
@@ -56,18 +87,33 @@ function ConfirmContent() {
     photoName,
     level:      levelValue,
     levelLabel: levelInfo.label,
-    price:      levelInfo.price,
-    priceLabel: levelInfo.priceLabel,
+    paperSize,
+    priceLabel: variant.price,
     sets,
     indPens,
   };
   const allOrders  = [...prevOrders, thisOrder];
-  const grandTotal = allOrders.reduce((acc, o) => acc + o.price, 0);
-  const grandTotalUsd = allOrders.reduce((acc, o) => acc + (USD_PRICES[o.level] ?? 0), 0);
-  
-  const goToLemonSqueezyCheckout = async () => {
-    setLoadingProvider("lemonsqueezy");
+
+  const goToCheckout = async () => {
+    setLoading(true);
     setCheckoutError("");
+    setCheckoutOpened(false);
+    // Opened synchronously, before the await below -- browsers only
+    // reliably allow window.open() when it's called directly inside a
+    // click handler, not after an awaited async gap (which the fetch
+    // below is). Opening a blank tab now and pointing it at the real
+    // checkout URL once we have it avoids the popup blocker without
+    // needing the customer to leave this page.
+    // NOTE (2026-07-24 fix): deliberately NOT passing "noopener" here --
+    // when that flag is set, window.open() returns null in every modern
+    // browser, which meant checkoutWindow was always null below, always
+    // fell into the "popup blocked" fallback, and redirected the
+    // CURRENT tab instead -- while the visibly-opened blank tab just sat
+    // there with nothing ever pointed at it. The brief window.opener
+    // link this leaves is a non-issue: the tab navigates to
+    // LemonSqueezy (a different origin) immediately after, and browsers
+    // sever the opener reference on cross-origin navigation anyway.
+    const checkoutWindow = window.open("", "_blank");
     try {
       const allLevels = allOrders.map(o => o.level);
       const res = await fetch("/api/create-checkout", {
@@ -75,6 +121,7 @@ function ConfirmContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           levels: allLevels,
+          paperSize,
           email,
           orderId,
           levelLabel: levelInfo.label,
@@ -82,33 +129,32 @@ function ConfirmContent() {
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        setCheckoutError("Could not start checkout. Please try again or contact hello@creabeastudio.com.");
-        setLoadingProvider(null);
+        setCheckoutError(data.error || "Could not start checkout. Please try again or contact hello@creabeastudio.com.");
+        setLoading(false);
+        checkoutWindow?.close();
         return;
       }
-      window.location.href = data.url;
+      if (checkoutWindow) {
+        checkoutWindow.location.href = data.url;
+        setCheckoutOpened(true);
+        setLoading(false);
+      } else {
+        // Popup blocked despite the synchronous open attempt (some
+        // browsers/extensions block ALL window.open calls regardless of
+        // timing) -- fall back to redirecting this tab so checkout still
+        // works, just without the new-tab convenience.
+        window.location.href = data.url;
+      }
     } catch (e) {
       setCheckoutError("Something went wrong. Please try again or contact hello@creabeastudio.com.");
-      setLoadingProvider(null);
+      setLoading(false);
+      checkoutWindow?.close();
     }
-  };
-
-  const goToPayhipCheckout = () => {
-    setLoadingProvider("payhip");
-    setCheckoutError("");
-    const allLevels = allOrders.map(o => o.level);
-    const url = buildPayhipCheckoutUrl(allLevels);
-    if (!url) {
-      setCheckoutError("This combination isn't set up yet for EUR payment. Please contact hello@creabeastudio.com or use the USD option.");
-      setLoadingProvider(null);
-      return;
-    }
-    window.location.href = url;
   };
 
   const goBack = () => {
     const q = new URLSearchParams({
-      email, level: levelValue, sets: setsRaw, indPens,
+      email, level: levelValue, sets: setsRaw, indPens, paperSize,
       prevOrders: encodeURIComponent(JSON.stringify(prevOrders)),
     });
     router.push(`/create?${q.toString()}`);
@@ -116,7 +162,7 @@ function ConfirmContent() {
 
   const orderAnother = () => {
     const q = new URLSearchParams({
-      email, sets: setsRaw, indPens,
+      email, sets: setsRaw, indPens, paperSize,
       prevOrders: encodeURIComponent(JSON.stringify(allOrders)),
     });
     router.push(`/create?${q.toString()}`);
@@ -155,7 +201,7 @@ function ConfirmContent() {
                 fontSize:13, color:"#666", padding:"4px 0",
                 borderBottom: i < prevOrders.length - 1 ? "1px solid #f0f0f0" : "none",
               }}>
-                <span>#{i+1} · {o.photoName} · {o.levelLabel}</span>
+                <span>#{i+1} · {o.photoName} · {o.levelLabel} · {PAPER_LABELS[o.paperSize]}</span>
                 <span style={{ fontWeight:600 }}>{o.priceLabel}</span>
               </div>
             ))}
@@ -173,7 +219,25 @@ function ConfirmContent() {
             📦 Order #{allOrders.length}:
           </p>
           <SummaryRow label="📷 Photo submitted" value={photoName} />
-          <SummaryRow label="🎯 Level"           value={`${levelInfo.label} — ${levelInfo.priceLabel}`} />
+          <SummaryRow label="🎯 Difficulty"       value={levelInfo.label} />
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12 }}>
+            <span style={{ color:"var(--muted)", flexShrink:0 }}>📄 Paper size</span>
+            <span style={{ textAlign:"right" }}>
+              <div style={{ fontWeight:600, color:"#333" }}>{PAPER_LABELS[paperSize]}</div>
+              {showUsd ? (
+                <>
+                  <div style={{ fontWeight:900, fontSize:18, color:"#333", lineHeight:1.3 }}>
+                    {toUsdEstimate(variant.price)}
+                  </div>
+                  <div style={{ fontSize:11, color:"var(--muted)" }}>≈ {variant.price}</div>
+                </>
+              ) : (
+                <div style={{ fontWeight:900, fontSize:18, color:"#333", lineHeight:1.3 }}>
+                  {variant.price}
+                </div>
+              )}
+            </span>
+          </div>
           <SummaryRow label="🖊️ Marker set(s)"   value={sets.length ? sets.join(", ") : "Default palette"} />
           {indPens && <SummaryRow label="➕ Additional markers" value={indPens} />}
           <SummaryRow label="✉️ Email"            value={email} />
@@ -185,23 +249,34 @@ function ConfirmContent() {
         {/* Grand total */}
         <div style={{
           background:"var(--pink)", borderRadius:14,
-          padding:"16px 22px", marginBottom:12,
+          padding:"16px 22px", marginBottom:6,
           display:"flex", justifyContent:"space-between", alignItems:"center",
         }}>
           <span style={{ color:"white", fontWeight:700, fontSize:16 }}>
             🧾 {allOrders.length > 1 ? `Total for ${allOrders.length} orders` : "Total"}
           </span>
-          <span style={{ color:"white", fontWeight:900, fontSize:22 }}>{grandTotal}€</span>
+          {showUsd ? (
+            <span style={{ display:"flex", flexDirection:"column", alignItems:"flex-end" }}>
+              <span style={{ color:"white", fontWeight:900, fontSize:28, lineHeight:1.1 }}>
+                {toUsdEstimate(variant.price)}
+              </span>
+              <span style={{ color:"white", fontWeight:500, fontSize:12, opacity:0.85 }}>
+                ≈ {variant.price}
+              </span>
+            </span>
+          ) : (
+            <span style={{ color:"white", fontWeight:900, fontSize:26 }}>
+              {variant.price}
+            </span>
+          )}
         </div>
+        {showUsd && (
+          <p style={{ fontSize:11, color:"var(--muted)", textAlign:"center", marginBottom:12 }}>
+            estimate only, depends on the current exchange rate.
+          </p>
+        )}
 
-        {/* ── DELIVERY DISCLOSURE (2026-07-17): upfront notice that
-            delivery links expire, per the "clear disclosure before
-            purchase" practice discussed for the 30-day signed GCS
-            links (see lib/fulfillOrder.ts). Sits right after the price,
-            before the payment buttons, so it's seen before the customer
-            commits to paying -- not just buried in the delivery email
-            afterward. ── */}
-        <p style={{ fontSize:12.5, color:"var(--muted)", textAlign:"center", marginBottom:24, lineHeight:1.5 }}>
+        <p style={{ fontSize:12.5, color:"var(--muted)", textAlign:"center", marginTop: showUsd ? 0 : 12, marginBottom:24, lineHeight:1.5 }}>
           📦 Once your order is complete, your files will be available to download for 30 days.
           Missed the window? Just email hello@creabeastudio.com and we'll send you a fresh link.
         </p>
@@ -212,22 +287,16 @@ function ConfirmContent() {
           </div>
         )}
 
-        {/* Payment buttons */}
-        {PAYHIP_ENABLED && (
-          <>
-            <p style={{ fontSize:14, color:"var(--muted)", marginBottom:4, fontWeight:700, textAlign:"center" }}>
-              How would you like to pay?
-            </p>
-            <p style={{ fontSize:13, color:"var(--muted)", marginBottom:12, textAlign:"center" }}>
-              You'll be redirected to a secure payment provider to complete your purchase.
-            </p>
-          </>
+        {checkoutOpened && (
+          <div style={{ background:"#F0F7FF", border:"1.5px solid #B8D4F0", borderRadius:12, padding:14, color:"#2c5a8c", fontSize:14, marginBottom:16 }}>
+            🔗 Checkout opened in a new tab — complete your payment there. This page will still be here if you need it.
+          </div>
         )}
 
         <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
 
           <button onClick={goBack}
-            disabled={loadingProvider !== null}
+            disabled={loading}
             style={{
               width:"100%", fontSize:15, padding:"14px 24px", borderRadius:14,
               border:"2px solid var(--border)", background:"white", color:"#666",
@@ -240,7 +309,7 @@ function ConfirmContent() {
           </button>
 
           <button onClick={orderAnother}
-            disabled={loadingProvider !== null}
+            disabled={loading}
             style={{
               width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
               border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
@@ -252,26 +321,12 @@ function ConfirmContent() {
             🖼️ Order another Guangna by Number
           </button>
 
-          {PAYHIP_ENABLED && (
-            <button onClick={goToPayhipCheckout} className="btn-primary"
-              disabled={loadingProvider !== null}
-              style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
-                cursor: loadingProvider !== null ? "default" : "pointer",
-                opacity: loadingProvider !== null && loadingProvider !== "payhip" ? 0.6 : 1 }}>
-              {loadingProvider === "payhip" ? "⏳ Redirecting…" : `🇪🇺 Pay in EUR — ${grandTotal}€`}
-            </button>
-          )}
-
-          <button onClick={goToLemonSqueezyCheckout} className="btn-primary"
-            disabled={loadingProvider !== null}
+          <button onClick={goToCheckout} className="btn-primary"
+            disabled={loading}
             style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
-              cursor: loadingProvider !== null ? "default" : "pointer",
-              opacity: loadingProvider !== null && loadingProvider !== "lemonsqueezy" ? 0.6 : 1 }}>
-            {loadingProvider === "lemonsqueezy"
-              ? "⏳ Preparing checkout…"
-              : PAYHIP_ENABLED
-                  ? `🌍 Pay in USD — $${grandTotalUsd}`
-                : `🔒 Proceed to Payment — ${grandTotal}€`}
+              cursor: loading ? "default" : "pointer",
+              opacity: loading ? 0.6 : 1 }}>
+            {loading ? "⏳ Preparing checkout…" : `🔒 Proceed to Payment — ${variant.price}`}
           </button>
 
         </div>

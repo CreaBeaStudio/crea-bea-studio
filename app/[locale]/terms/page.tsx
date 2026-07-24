@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useTranslations } from "next-intl";
 
 const sectionHeading = {
@@ -122,6 +123,7 @@ export default function TermsPage() {
           {t("footerNote")}
         </p>
       </main>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useTranslations } from "next-intl";
 
 const sectionHeading = {
@@ -46,7 +47,8 @@ export default function RefundPage() {
 
         <h2 style={sectionHeading}>{t("s5Heading")}</h2>
         <p>{t.rich("s5Address", { br, email })}</p>
-      </main>
+        </main>
+      <Footer />
     </>
   );
 }

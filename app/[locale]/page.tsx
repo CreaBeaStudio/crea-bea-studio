@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -23,12 +24,14 @@ const LEVELS = [
   { nameKey: "levelAdvanced", descKey: "levelAdvancedDesc", emoji: "🌲", img: "/marketing/detail-adv.png" },
 ];
 
-const WHAT_YOU_GET = [
-  { featureKey: "wdygOutline", beginner: true, intermediate: true, advanced: true },
-  { featureKey: "wdygPalette", beginner: true, intermediate: true, advanced: true },
-  { featureKey: "wdygImpressionPdf", beginner: true, intermediate: true, advanced: true },
-  { featureKey: "wdygImpressionJpg", beginner: false, intermediate: true, advanced: true },
-  { featureKey: "wdygColoredOutline", beginner: false, intermediate: false, advanced: true },
+// Every order gets the same two files, regardless of skill level -- so
+// this is no longer a beginner/intermediate/advanced comparison, just a
+// simple "here's what's included" pair. wdygOutlineDesc/wdygPaletteDesc
+// are new keys (not in en.json yet) for the short description under each
+// title -- add them alongside your other wdyg* keys when you edit copy.
+const WHAT_YOU_GET_ITEMS = [
+  { icon: "📋", titleKey: "wdygOutline", descKey: "wdygOutlineDesc" },
+  { icon: "🎨", titleKey: "wdygPalette", descKey: "wdygPaletteDesc" },
 ];
 
 export default function Home() {
@@ -96,6 +99,20 @@ export default function Home() {
           box-shadow: 0 2px 12px rgba(0,0,0,0.06);
           flex: 1 1 130px;
         }
+        .wdyg-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+          max-width: 680px;
+          margin: 0 auto;
+        }
+        .wdyg-card {
+          background: white;
+          border-radius: 20px;
+          padding: 32px 28px;
+          box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+          text-align: left;
+        }
         @media (max-width: 768px) {
           .hero-grid {
             grid-template-columns: 1fr;
@@ -137,6 +154,9 @@ export default function Home() {
           }
           .feature-card {
             flex: 1 1 calc(50% - 10px);
+          }
+          .wdyg-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
@@ -385,99 +405,25 @@ export default function Home() {
         </section>
 
         {/* ── WHAT DO YOU GET? ── */}
+        {/* Same for every order regardless of skill level -- no more
+            tiered comparison. Just the two files, plainly stated. */}
         <section style={{ padding:"80px 24px", background:"var(--cream)" }}>
-          <style>{`
-            .wdyg-table { display: block; }
-            .wdyg-cards { display: none; }
-            @media (max-width: 768px) {
-              .wdyg-table { display: none; }
-              .wdyg-cards { display: flex; flex-direction: column; gap: 16px; }
-            }
-          `}</style>
-
           <div style={{ maxWidth:900, margin:"0 auto", textAlign:"center" }}>
             <p style={{ color:"var(--pink)", fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", fontSize:13, marginBottom:12 }}>{t("everyOrderLabel")}</p>
             <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(28px,4vw,40px)", marginBottom:48 }}>
               {t("wdygTitle")}
             </h2>
 
-            <div className="wdyg-table" style={{
-              background:"white", borderRadius:20,
-              boxShadow:"0 8px 40px rgba(0,0,0,0.08)",
-              overflow:"auto", maxWidth:780, margin:"0 auto 40px",
-            }}>
-              <table style={{ width:"100%", borderCollapse:"collapse", fontSize:15, minWidth:480 }}>
-                <thead>
-                  <tr>
-                    <th style={{ padding:"16px 20px", textAlign:"left", background:"#f5f5f5", fontWeight:700, color:"#444" }} />
-                    {[
-                      { key: "levelBeginner" },
-                      { key: "levelIntermediate" },
-                      { key: "levelAdvanced" },
-                    ].map(({ key }) => (
-                      <th key={key} style={{
-                        padding:"16px 12px", textAlign:"center",
-                        background:"var(--pink)", color:"white",
-                        fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:14,
-                      }}>{t(key)}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {WHAT_YOU_GET.map((row, i) => (
-                    <tr key={row.featureKey} style={{ borderTop: i === 0 ? "none" : "1px solid #eee" }}>
-                      <td style={{ padding:"14px 16px", textAlign:"left", fontWeight:600, color:"#333", background:"#fafafa", fontSize:13 }}>
-                        {t(row.featureKey)}
-                      </td>
-                      {(["beginner","intermediate","advanced"] as const).map(level => (
-                        <td key={level} style={{ padding:"14px 12px", textAlign:"center" }}>
-                          <input type="checkbox" checked={row[level]} readOnly
-                            aria-label={`${t(row.featureKey)} — ${level}`}
-                            style={{ width:20, height:20, accentColor:"var(--pink)", cursor:"default" }} />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="wdyg-cards">
-              {([
-                { level: "beginner" as const, nameKey: "levelBeginner", emoji: "🌱" },
-                { level: "intermediate" as const, nameKey: "levelIntermediate", emoji: "🌿", popular: true },
-                { level: "advanced" as const, nameKey: "levelAdvanced", emoji: "🌲" },
-              ]).map(({ level, nameKey, emoji, popular }) => (
-                <div key={nameKey} style={{
-                  background:"white", borderRadius:20,
-                  border: popular ? "2px solid var(--pink)" : "2px solid #eee",
-                  padding:"24px 20px", position:"relative", textAlign:"left",
-                }}>
-                  {popular && (
-                    <div style={{
-                      position:"absolute", top:-14, left:"50%", transform:"translateX(-50%)",
-                      background:"var(--pink)", color:"white",
-                      borderRadius:20, padding:"4px 14px", fontSize:12, fontWeight:700, whiteSpace:"nowrap",
-                    }}>{t("mostPopular")}</div>
-                  )}
-                  <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
-                    <span style={{ fontSize:28 }}>{emoji}</span>
-                    <span style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:22, color:"var(--ink)" }}>{t(nameKey)}</span>
-                  </div>
-                  <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-                    {WHAT_YOU_GET.map(row => (
-                      <div key={row.featureKey} style={{
-                        display:"flex", alignItems:"center", justifyContent:"space-between",
-                        padding:"10px 14px", borderRadius:12,
-                        background: row[level] ? "rgba(244,96,122,0.06)" : "#fafafa",
-                      }}>
-                        <span style={{ fontSize:14, fontWeight:600, color: row[level] ? "var(--ink)" : "#aaa" }}>
-                          {t(row.featureKey)}
-                        </span>
-                        <span style={{ fontSize:20, marginLeft:12 }}>{row[level] ? "✅" : "—"}</span>
-                      </div>
-                    ))}
-                  </div>
+            <div className="wdyg-grid">
+              {WHAT_YOU_GET_ITEMS.map(item => (
+                <div key={item.titleKey} className="wdyg-card">
+                  <div style={{ fontSize:32, marginBottom:12 }}>{item.icon}</div>
+                  <h3 style={{ fontFamily:"Nunito, sans-serif", fontWeight:800, fontSize:18, color:"var(--ink)", marginBottom:8 }}>
+                    {t(item.titleKey)}
+                  </h3>
+                  <p style={{ fontSize:14, color:"#666", lineHeight:1.6 }}>
+                    {t(item.descKey)}
+                  </p>
                 </div>
               ))}
             </div>
@@ -491,29 +437,8 @@ export default function Home() {
         </section>
 
         {/* ── FOOTER ── */}
-        <footer style={{ background:"var(--ink)", color:"#aaa", padding:"24px 24px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:16 }}>
-          <div>
-            <p style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:16, color:"var(--pink)", marginBottom:4 }}>
-              CreaBeaStudio
-            </p>
-            <div style={{ display:"flex", gap:20, flexWrap:"wrap", fontSize:13 }}>
-              <a href="/create" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerCreate")}</a>
-              <a href="/color-converter" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerConverter")}</a>
-              <a href="/legend-converter" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerLegendConverter")}</a>
-              <a href="/examples" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerExamples")}</a>
-              <a href="/Tips&Tricks" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTips")}</a>
-              <a href="/faq" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerFaq")}</a>
-            </div>
-            <a href="https://www.tiktok.com/@CreaBeaStudio" target="_blank" rel="noopener noreferrer" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTiktok")}</a><div style={{ display:"flex", gap:16, flexWrap:"wrap", fontSize:12, marginTop:8 }}>
-             <a href="/privacy" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerPrivacy")}</a>
-             <a href="/terms" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerTerms")}</a>
-             <a href="/refund" style={{ color:"#aaa", textDecoration:"none" }}>{t("footerRefund")}</a>
-              </div><p style={{ marginTop:12, fontSize:12, opacity:0.5 }}>{t("footerRights", { year: new Date().getFullYear() })}</p>
-          </div>
-          <Image src="/marketing/logo-full.png" alt="CreaBeaStudio" width={0} height={0} sizes="20vw"
-            style={{ height:"auto", width:"auto", maxHeight:120, maxWidth:160, objectFit:"contain" }} />
-        </footer>
-      </main>
+        </main>
+      <Footer />
     </>
   );
 }

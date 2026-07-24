@@ -83,6 +83,14 @@ export async function POST(req: NextRequest) {
     const imageFile     = formData.get("image") as File | null;
     const customerEmail = (formData.get("email") as string || "").trim();
     const level         = (formData.get("level") as string) || "24";
+    // ── PAPER SIZE (2026-07-24): chosen on /create's Step 4 now, sent
+    // straight through here as a backup record -- checkout itself
+    // (create-checkout) is what actually carries paperSize for pricing
+    // and fulfillment, this is just so the pre-payment backup record in
+    // GCS matches what the customer actually chose, in case anyone ever
+    // needs to look it up before/without a completed payment. ─────────
+    const paperSizeRaw  = (formData.get("paperSize") as string) || "a4";
+    const paperSize     = paperSizeRaw === "letter" ? "letter" : "a4";
     const sets          = (formData.get("sets") as string) || "";
     const indPens       = (formData.get("indPens") as string) || "";
     const allOrdersRaw  = (formData.get("allOrders") as string) || "[]";
@@ -133,6 +141,7 @@ export async function POST(req: NextRequest) {
         indPens,
         difficulty,
         level,
+        paperSize,
         customerEmail,
         grandTotal,
         wantsFullGuide,

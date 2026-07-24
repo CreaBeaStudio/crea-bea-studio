@@ -1,13 +1,75 @@
 "use client";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useState, useMemo, useRef, useId } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { GN_COLORS, GUANGNA_SETS, SET_OPTIONS, rgbToHex } from "../../../lib/guangna";
 // This file must be saved as app/[locale]/guangna-reference/page.tsx —
 // Next.js only turns it into a route at that exact path/filename.
 // lib/ lives at the project root, so that's 3 levels up from here, same
 // convention as color-converter/page.tsx and languo-converter/page.tsx.
+
+// ── METALLIC MARKERS (2026-07-21): kept local to this page rather than
+// added to lib/guangna.ts's GN_COLORS -- these 48 codes aren't part of
+// any GUANGNA_SETS array and aren't used by PBN generation or the
+// converter tools' color matching, so they don't belong in the shared
+// dataset those depend on. This page shows them purely for reference
+// (code lookup + browse), per Mirjam. sRGB values are converted from
+// indicative Adobe RGB swatch samples, not measured screen-color data
+// like GN_COLORS -- close enough for browsing/reference, not intended
+// for precise color matching.
+const METALLIC_COLORS: Record<string,[number,number,number,string]> = {
+  "330":[179,151,61,"Gold"],
+  "331":[195,195,195,"Silver"],
+  "332":[223,177,187,"Rose gold"],
+  "333":[209,167,121,"Champagne gold"],
+  "334":[218,191,174,"Flax gold"],
+  "335":[174,121,82,"Coffee gold"],
+  "336":[220,138,76,"Coppery"],
+  "337":[223,84,95,"Metal red"],
+  "338":[153,105,163,"Metal purple"],
+  "339":[14,177,228,"Metal blue"],
+  "340":[128,191,136,"Green mint"],
+  "341":[63,63,63,"Metal black"],
+  "342":[0,161,170,"Metal cyan"],
+  "343":[237,172,197,"Metal pink"],
+  "344":[236,216,214,"Pink white"],
+  "345":[144,126,173,"Violet"],
+  "346":[86,191,219,"Sky Blue"],
+  "347":[209,232,233,"Lake blue"],
+  "348":[8,169,146,"Turquoise"],
+  "349":[194,218,154,"Sprout green"],
+  "350":[208,184,128,"Milk tea gold"],
+  "351":[193,204,92,"Yellow green"],
+  "352":[187,146,152,"Pink brown"],
+  "353":[190,177,182,"Lineseed ash"],
+  "354":[233,186,142,"Light orange"],
+  "355":[169,209,199,"Lake green"],
+  "356":[217,231,210,"Light green"],
+  "357":[187,201,225,"Light violet"],
+  "358":[193,221,241,"Light blue"],
+  "359":[207,186,212,"Light purple"],
+  "360":[217,196,196,"Light pink"],
+  "361":[228,181,189,"Light red"],
+  "362":[238,191,207,"Linen pink"],
+  "363":[210,215,187,"Linen green"],
+  "364":[186,186,186,"Metal grey"],
+  "365":[135,139,193,"Royal purple"],
+  "366":[0,136,210,"Dark blue"],
+  "367":[186,134,178,"Rose violet"],
+  "368":[107,149,198,"Marine blue"],
+  "369":[234,129,37,"Metal Orange"],
+  "370":[216,95,132,"Rose red"],
+  "371":[154,161,113,"Olive gold"],
+  "372":[29,154,65,"Dark Green"],
+  "373":[104,186,179,"Peacock blue"],
+  "374":[116,187,83,"Metal Green"],
+  "375":[208,57,101,"Carminum"],
+  "376":[113,54,137,"Dark purple"],
+  "377":[62,82,164,"Royal blue"],
+};
+const METALLIC_CODES: string[] = Object.keys(METALLIC_COLORS).sort((a, b) => Number(a) - Number(b));
 
 const ALL_CODES: string[] = Object.keys(GN_COLORS).sort((a, b) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
@@ -44,6 +106,7 @@ type CodeResult = {
   name: string;
   rgb: [number, number, number];
   sets: string[];
+  isMetallic?: boolean;
 };
 
 // Prefixes a set's label with its base key -- e.g. "GN.8101-288 (288
@@ -56,8 +119,18 @@ function setDisplayLabel(s: { label: string; key: string }): string {
   return `${basePrefix} - ${s.label}`;
 }
 
+// The "408" set is the one place metallics genuinely belong: 360
+// regular colors + all 48 metallics. lib/guangna.ts's own
+// GUANGNA_SETS/SET_OPTIONS deliberately don't include the metallics in
+// that key (they're not real GN_COLORS entries, so putting them there
+// would risk color-matching code elsewhere silently treating them as
+// real matches) -- so this page builds the "effective" 408 set locally,
+// just for lookup/browse purposes.
+const SET_408 = SET_OPTIONS.find(s => s.key.startsWith("GN.8101-408"))!;
+
 export default function GuangnaReferenceGuide() {
   const t = useTranslations("GuangnaReference");
+  const locale = useLocale();
 
   // ── Code -> Sets ──────────────────────────────────────────────────
   const [codeInput, setCodeInput] = useState("");
@@ -71,30 +144,61 @@ export default function GuangnaReferenceGuide() {
   // which is exactly what we're avoiding here. Only shows a short
   // filtered slice, and only once the person has actually typed
   // something. ALL_CODES is pre-sorted ascending, so filter()
-  // preserves that order without any extra sort here.
+  // preserves that order without any extra sort here. Metallic codes
+  // are appended after regular matches, since they're a much smaller,
+  // secondary list. Metallic codes are display-prefixed with "GN-"
+  // here (they're stored bare in METALLIC_CODES/METALLIC_COLORS since
+  // they're not real GN_COLORS keys) so the dropdown looks consistent
+  // with the regular "GN-XXX" suggestions above them.
   const codeSuggestions = useMemo(() => {
     const q = codeInput.trim().toUpperCase();
     if (!q) return [];
-    return ALL_CODES.filter(code => code.includes(q)).slice(0, MAX_SUGGESTIONS);
+    const regular = ALL_CODES.filter(code => code.includes(q));
+    const metallic = METALLIC_CODES
+      .filter(code => code.includes(q))
+      .map(code => `GN-${code}`);
+    return [...regular, ...metallic].slice(0, MAX_SUGGESTIONS);
   }, [codeInput]);
 
   const lookupCode = (raw?: string) => {
     const typed = (raw ?? codeInput).trim().toUpperCase();
     if (!typed) return;
     // Accepts "605", "GN-605", or "gn605" -- normalizes to "GN-605",
-    // matching how codes are stored in GN_COLORS/GUANGNA_SETS.
-    const normalized = `GN-${typed.replace(/^GN-?/i, "")}`;
+    // matching how codes are stored in GN_COLORS/GUANGNA_SETS. Metallic
+    // codes (330-377) are never GN--prefixed in storage, so they're
+    // checked separately using the bare digits (stripped from whatever
+    // was typed/clicked, including the "GN-" the suggestion dropdown
+    // now shows for them).
+    const rawDigits = typed.replace(/^GN-?/i, "");
+    const normalized = `GN-${rawDigits}`;
     setCodeError(null);
+
     const entry = GN_COLORS[normalized];
-    if (!entry) {
-      setCodeError(t("errors.codeNotFound", { code: typed }));
-      setCodeResult(null);
+    if (entry) {
+      const sets = SET_OPTIONS
+        .filter(s => GUANGNA_SETS[s.key]?.includes(normalized))
+        .map(setDisplayLabel);
+      setCodeResult({ code: normalized, name: entry[3], rgb: [entry[0], entry[1], entry[2]], sets });
       return;
     }
-    const sets = SET_OPTIONS
-      .filter(s => GUANGNA_SETS[s.key]?.includes(normalized))
-      .map(setDisplayLabel);
-    setCodeResult({ code: normalized, name: entry[3], rgb: [entry[0], entry[1], entry[2]], sets });
+
+    const metallicEntry = METALLIC_COLORS[rawDigits];
+    if (metallicEntry) {
+      // A metallic code genuinely belongs to the 408 set -- treat it
+      // exactly like a regular code that's found in one set. Displayed
+      // as a full "GN-3XX" code, same format as regular codes.
+      setCodeResult({
+        code: `GN-${rawDigits}`,
+        name: metallicEntry[3],
+        rgb: [metallicEntry[0], metallicEntry[1], metallicEntry[2]],
+        sets: [setDisplayLabel(SET_408)],
+        isMetallic: true,
+      });
+      return;
+    }
+
+    setCodeError(t("errors.codeNotFound", { code: typed }));
+    setCodeResult(null);
   };
 
   const selectCodeSuggestion = (code: string) => {
@@ -105,31 +209,39 @@ export default function GuangnaReferenceGuide() {
 
   // ── Set -> Codes ──────────────────────────────────────────────────
   const [selectedSet, setSelectedSet] = useState("");
+  const isSet408 = selectedSet === SET_408.key;
+  // Regular codes only (sorted); metallics are appended as their own
+  // trailing group when the 408 set is selected, kept in plain
+  // ascending numeric order rather than the family-curated order used
+  // elsewhere -- this page is a flat reference list, not the swatch
+  // card builder.
   const setCodes = useMemo(() => {
     if (!selectedSet || !GUANGNA_SETS[selectedSet]) return [];
-    return [...GUANGNA_SETS[selectedSet]].sort((a, b) =>
+    const regular = [...GUANGNA_SETS[selectedSet]].sort((a, b) =>
       a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
     );
-  }, [selectedSet]);
+    return isSet408 ? [...regular, ...METALLIC_CODES] : regular;
+  }, [selectedSet, isSet408]);
+  const regularSetCodes = isSet408 ? setCodes.slice(0, setCodes.length - METALLIC_CODES.length) : setCodes;
 
   return (
     <>
       <style>{`
-        .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
-        @media (max-width: 768px) { .ref-grid { grid-template-columns: 1fr; } }
+        .ref-grid { display: flex; flex-direction: column; gap: 24px; }
         .ref-swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 10px; margin-top: 14px; }
       `}</style>
       <Navbar />
-      <main style={{ padding: "40px 24px", maxWidth: 960, margin: "0 auto" }}>
+      <main style={{ padding: "40px 24px", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: 12 }}>
           <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit: "contain", height: "auto" }} />
         </div>
         <h1 style={{ fontFamily: "Nunito, sans-serif", color: "var(--pink)", fontWeight: 900, fontSize: "clamp(26px,4vw,40px)", marginBottom: 8 }}>
           {t("title")}
         </h1>
-        <p style={{ color: "#666", marginBottom: 36 }}>
+        <p style={{ color: "#666", marginBottom: 12 }}>
           {t("subtitle")}
         </p>
+       
 
         <div className="ref-grid">
           {/* Code -> Sets */}
@@ -188,6 +300,11 @@ export default function GuangnaReferenceGuide() {
                     <div style={{ color: "#555", fontSize: 12 }}>{codeResult.name}</div>
                   </div>
                 </div>
+                {codeResult.isMetallic && (
+                  <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8, fontStyle: "italic" }}>
+                    ✨ Metallic marker — color shown is indicative.
+                  </p>
+                )}
                 {codeResult.sets.length > 0 ? (
                   <>
                     <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 8, fontWeight: 600 }}>
@@ -218,9 +335,10 @@ export default function GuangnaReferenceGuide() {
               <>
                 <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 14, marginBottom: 4, fontWeight: 600 }}>
                   {t("bySet.codeCount", { count: setCodes.length })}
+                  {isSet408 && ` (${regularSetCodes.length} + ${METALLIC_CODES.length} metallic)`}
                 </p>
                 <div className="ref-swatch-grid">
-                  {setCodes.map(code => {
+                  {regularSetCodes.map(code => {
                     const entry = GN_COLORS[code];
                     if (!entry) return null;
                     return (
@@ -231,11 +349,36 @@ export default function GuangnaReferenceGuide() {
                     );
                   })}
                 </div>
+
+                {isSet408 && (
+                  <>
+                    <p style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 18, marginBottom: 4 }}>
+                      ✨ Metallic ({METALLIC_CODES.length})
+                    </p>
+                    <div className="ref-swatch-grid">
+                      {METALLIC_CODES.map(code => {
+                        const entry = METALLIC_COLORS[code];
+                        return (
+                          <div key={code} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }} title={entry[3]}>
+                            <Swatch rgb={[entry[0], entry[1], entry[2]]} size={40} />
+                            <span style={{ fontSize: 10, color: "var(--muted)", fontWeight: 600 }}>GN-{code}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
         </div>
-
+    
+        <p style={{ fontSize: 13, marginBottom: 36 }}>
+          Want to organize or swatch your markers?{" "}
+          <a href={`/${locale}/swatch-creator`} style={{ color: "var(--pink)", fontWeight: 700 }}>
+            Try the Swatch Card Creator
+          </a>
+        </p>
         <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", textAlign: "center" }}>
           <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
           <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
@@ -246,7 +389,8 @@ export default function GuangnaReferenceGuide() {
             {t("donate.button")}
           </a>
         </div>
-      </main>
+        </main>
+      <Footer />
     </>
   );
 }

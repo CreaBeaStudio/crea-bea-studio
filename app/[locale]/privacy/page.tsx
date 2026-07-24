@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useTranslations } from "next-intl";
 
 const sectionHeading = {
@@ -81,37 +82,39 @@ export default function PrivacyPage() {
 
         <h2 style={sectionHeading}>{t("s5Heading")}</h2>
         <p>{t("s5Text")}</p>
-
         <h2 style={sectionHeading}>{t("s6Heading")}</h2>
         <p>{t("s6Text")}</p>
-
         <h2 style={sectionHeading}>{t("s7Heading")}</h2>
-        <p>{t.rich("s7Text1", { email })}</p>
-        <p>{t("s7Text2")}</p>
+        <p>{t("s7Text")}</p>
 
         <h2 style={sectionHeading}>{t("s8Heading")}</h2>
-        <p>{t("s8Text")}</p>
+        <p>{t.rich("s8Text1", { email })}</p>
+        <p>{t("s8Text2")}</p>
 
         <h2 style={sectionHeading}>{t("s9Heading")}</h2>
-        <p>{t.rich("s9Text", { email })}</p>
+        <p>{t("s9Text")}</p>
 
         <h2 style={sectionHeading}>{t("s10Heading")}</h2>
-        <p>{t("s10Text")}</p>
+        <p>{t.rich("s10Text", { email })}</p>
 
         <h2 style={sectionHeading}>{t("s11Heading")}</h2>
         <p>{t("s11Text")}</p>
 
         <h2 style={sectionHeading}>{t("s12Heading")}</h2>
-        <p>{t.rich("s12Address", { br, email })}</p>
-        <p>{t.rich("s12Rep", { email })}</p>
+        <p>{t("s12Text")}</p>
 
         <h2 style={sectionHeading}>{t("s13Heading")}</h2>
-        <p>{t.rich("s13Text", { email })}</p>
+        <p>{t.rich("s13Address", { br, email })}</p>
+        <p>{t.rich("s13Rep", { email })}</p>
+
+        <h2 style={sectionHeading}>{t("s14Heading")}</h2>
+        <p>{t.rich("s14Text", { email })}</p>
 
         <p style={{ marginTop: 32, fontSize: 13, color: "#999" }}>
           {t("footerNote")}
         </p>
-      </main>
+        </main>
+      <Footer />
     </>
   );
 }

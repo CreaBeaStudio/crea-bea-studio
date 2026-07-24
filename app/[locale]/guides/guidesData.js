@@ -111,11 +111,11 @@ export const GUIDES_DATA = {
     sections: [
       {
         heading: "What exactly are you paying for?",
-        body: "When you order, you're not buying a physical product — you're commissioning a digital conversion of your own photo. You receive three files: a printable Paint by Number Outline, a Custom Guangna Color Palette Guide matched to your exact marker set, and a Finished Artwork Impression so you can see roughly where you're headed before you pick up a pen. Nothing physical ships, and nothing generic is reused — every file is generated from your specific photo and your specific markers.",
+        body: "When you order, you're not buying a physical product — you're commissioning a digital conversion of your own photo. You receive two files: a printable Paint by Number Outline, a Custom Guangna Color Palette Guide matched to your exact marker set with a Finished Artwork Impression so you can see roughly where you're headed before you pick up a pen. Nothing physical ships, and nothing generic is reused — every file is generated from your specific photo and your specific markers.",
       },
       {
         heading: "How fast is 'fast,' really?",
-        body: "Files arrive within 24 hours of us receiving your photo, though most orders go out well before that. There's no queue you're stuck behind and no separate shipping wait — the moment the conversion is done, it's in your inbox.",
+        body: "Files arrive within 1-10 minutes after your payment is confirmed. There's no queue you're stuck behind and no separate shipping wait — the moment the conversion is done, it's in your inbox.",
       },
       {
         heading: "What if my markers don't perfectly match the guide?",
@@ -212,7 +212,7 @@ export const GUIDES_DATA = {
       },
       {
         heading: "Q: Does this work with any paint-by-number book, not just CreaBeaStudio pages?",
-        body: "Yes. The Legend Converter doesn't care where the coloring page came from — it only needs a clear photo of the color legend itself. Any printed page with a numbered color key works.",
+        body: "Yes. The Legend Converter doesn't care where the coloring page came from — it only needs a clear photo of the color legend itself. Any printed page with a numbered color key works, in fact it even works with all kind of images and pictures. You can also upload the finished preview image of your Mystery Cologing book.",
       },
       {
         heading: "Q: What if my legend has more than 70-something colors?",
@@ -232,5 +232,113 @@ export const GUIDES_DATA = {
       label: "Try the Legend Converter →",
     },
   },
+  "match-languo-markers-to-guangna-codes": {
+      title: "Own Languo Markers? Here's How to Find Their Closest Guangna Match",
+      description:
+        "Working from a Guangna-coded design but only have Languo markers on hand? The Languo to Guangna Converter finds the closest Guangna match for any Languo code, using real color-distance math instead of eyeballing swatches on a screen.",
+      intro:
+        "Languo and Guangna use completely different numbering systems, and neither publishes an official cross-reference between the two. If your painting guide calls for a Guangna code but your marker roll only has Languo codes printed on it, you're normally stuck guessing. The Languo to Guangna Converter removes the guesswork: type in a Languo code, and it tells you exactly which Guangna markers come closest — not by eye, but by measuring the actual color distance between them.",
+      sections: [
+        {
+          heading: "1. Enter Your Languo Code",
+          body: "Type the code exactly as it's printed on your marker, in the format used across the Languo Art 288 line — for example, RY-06. If a code isn't recognized, the converter tells you directly rather than silently returning nothing.",
+        },
+        {
+          heading: "2. Optionally Narrow It to Markers You Own",
+          body: "Under \"My Markers,\" select the Guangna set(s) you actually have, or list extra individual codes. This adds a second result showing the closest match from markers you already own, alongside the best match available across the full Guangna lineup — so you can see both what's technically closest and what's actually usable right now.",
+        },
+        {
+          heading: "3. Get Your Top 3 Matches",
+          body: "Rather than a single \"best guess,\" you get the three closest Guangna codes, ranked nearest-first. Sometimes the top result is an obvious winner; other times it's a genuine toss-up between two or three very close options. Seeing all three lets you make that judgment call yourself instead of trusting a single number blindly.",
+        },
+        {
+          heading: "How the Matching Actually Works",
+          body: "Every marker's color starts as a measured RGB value, but RGB alone isn't a reliable way to judge how different two colors actually look to a human eye — two colors can be numerically far apart but look nearly identical, or the reverse. To fix that, the converter first converts every color into Lab color space, which is built specifically so numeric distance lines up with visual distance much more closely than RGB does. It then measures the distance between colors using Delta E (CIE 1976), a standard formula for expressing how different two colors look as a single number — the smaller the number, the closer the visual match.",
+        },
+        {
+          heading: "Frequently Asked Questions: Languo to Guangna Converter",
+        },
+        {
+          heading: "Q: What is Delta E, in plain terms?",
+          body: "It's a standard way of measuring how different two colors look to the human eye, expressed as one number. A lower Delta E means the colors are closer visually — it's the same math color scientists and printers use to judge color accuracy.",
+        },
+        {
+          heading: "Q: Why do I get 3 matches instead of just 1?",
+          body: "Because sometimes the single best match is an obvious standout, and sometimes two or three markers are all extremely close. Showing three lets you decide for yourself rather than trusting one number when the real answer is closer to a tie.",
+        },
+        {
+          heading: "Q: Will the printed color match exactly?",
+          body: "It'll be very close, but not guaranteed pixel-perfect. Screen colors and printed ink under real lighting are never perfectly identical, and ink batches, paper type, and marker age all introduce small variations. Always test on scrap paper before committing to a large area.",
+        },
+        {
+          heading: "Q: What if I don't own any Guangna markers yet?",
+          body: "You'll still get the top 3 closest matches overall — the \"My Markers\" step is entirely optional and only adds a second, narrower result on top of that.",
+        },
+        {
+          heading: "Q: How is this different from the Color Converter?",
+          body: "The Color Converter matches a hex code, RGB value, or photographed color — any single color you give it. This tool is specifically for when you're starting from a Languo code and want its Guangna equivalent.",
+        },
+      ],
+      cta: {
+        href: "/languo-converter",
+        label: "Try the Languo to Guangna Converter →",
+      },
+    },
+    "create-custom-guangna-languo-swatch-cards": {
+      title: "Build Your Own Printable Swatch Cards for Guangna and Languo Markers",
+      description:
+        "A swatch card shows you exactly what each marker actually looks like on paper, organized so you can find the shade you want without uncapping twenty markers. Here's how to build your own, and how the color organization behind it actually works.",
+      intro:
+        "A swatch card is the simplest tool a marker artist owns: a physical reference showing what color each marker really lays down, organized so finding the right shade is a quick flip through the card instead of a hunt through unsorted swatches. The DIY Swatch Card Creator builds these for you — from any Guangna set, any Languo set, individual codes, or a whole color family — and turns them into print-ready PDF cards.",
+      sections: [
+        {
+          heading: "1. Choose Your Source",
+          body: "Five tabs let you pull colors in from wherever they live: a full Guangna set, individual Guangna codes by search, a full Languo set, individual Languo codes, or an entire color family regardless of brand. Drag colors into your selection or just click them — everything you add shows up grouped by family, with per-family download and delete controls, and undo if you remove something by mistake.",
+        },
+        {
+          heading: "2. Set Your Card Options",
+          body: "Choose filled swatches (showing the actual color) or blank outlines for hand-coloring your own reference. Add an optional punch hole to the card header — left, center, or right — so a stack of cards can be threaded onto a binder ring. Pick one color family per card, or pack multiple families onto a card with an inline label wherever the family changes. Then choose A4 or US Letter paper.",
+        },
+        {
+          heading: "3. Download and Print",
+          body: "Each card holds up to 12 swatches, 4 cards per landscape page. Every swatch includes a punch-hole guide in its center — not for binding, but so you can hold the real marker behind the card and compare it to the printed color directly through the hole. If a family doesn't divide evenly into full cards, the leftover space fills with blank spare swatches instead of being left empty.",
+        },
+        {
+          heading: "How the Color Families Were Built",
+          body: "The order colors appear in is the genuinely useful part of a swatch card — not just a grid of colored squares, but colors grouped the way your eye actually thinks about color. Every marker was sorted into one of nine families (White/Grey/Black, Brown/Earth, Pink, Red, Orange, Yellow, Green, Blue, Violet/Purple) through three passes: first, converting each color's RGB value into HSL to separate hue from lightness, which is what allows sorting light-to-dark within a family; second, cross-referencing those values against the brands' own original naming conventions, since a manufacturer's groupings often encode real intent; and third, a manual visual review to fix spots where pure math produced a technically correct but visually awkward order. Colors that genuinely sit between two families — a vibrant blue-green, for instance — are included in both, rather than forced into a single choice. Metallic markers are the one exception, left out of the family grouping since they work differently from standard ink.",
+        },
+        {
+          heading: "Printing and Assembling Your Cards",
+          body: "Use heavy cardstock, 200-300 gsm, matte or satin finish — regular copy paper will bleed and warp under heavy ink. Set print scaling to \"Actual Size\" or 100%, never \"Fit to Page,\" which distorts the cut guidelines, and disable any automatic color enhancement so printed color stays accurate. A metal ruler, craft knife, and cutting mat give the cleanest cut edges, though scissors work fine too. Use a hole punch to cleanly remove each swatch's center circle, and thread finished cards onto a binder ring if you added a header hole.",
+        },
+        {
+          heading: "Frequently Asked Questions: Swatch Card Creator",
+        },
+        {
+          heading: "Q: Why aren't the swatches just sorted mathematically by hue?",
+          body: "They started that way, but pure math can place two numerically close colors next to each other that look visually jarring side by side. The final visual review trades strict mathematical precision for a card that actually reads as a smooth gradient to the eye.",
+        },
+        {
+          heading: "Q: What are the blank spare swatches for?",
+          body: "When a color family doesn't divide evenly into full cards, the leftover space is filled with blank swatches rather than left empty — genuinely useful if you ever want to add a color of your own later.",
+        },
+        {
+          heading: "Q: What's the punch hole in the middle of each swatch for?",
+          body: "It's not for binding — it's so you can hold the actual marker behind the printed card and compare the real ink to the printed color directly through the hole.",
+        },
+        {
+          heading: "Q: Can I make a card with just one color family?",
+          body: "Yes — use the Color Family tab to pull in only the family you want, from either brand.",
+        },
+        {
+          heading: "Q: Do I have to build my own, or are there pre-made options?",
+          body: "Ready-made packs are available for the most popular Guangna and Languo set sizes, built using this same color-family system, each including a colored preset, a blank hand-coloring template, and a compact reference sheet.",
+        },
+      ],
+      cta: {
+        href: "/swatch-creator",
+        label: "Try the DIY Swatch Card Creator →",
+      },
+    },
 };
  

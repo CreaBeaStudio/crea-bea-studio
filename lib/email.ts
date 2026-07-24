@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-
+ 
 // Lazy-initialized: constructing `new Resend(...)` at module scope meant
 // Next.js would crash the whole build the moment it evaluated this file
 // during "Collecting page data" -- even for routes that never actually
@@ -17,7 +17,7 @@ function getResend(): Resend {
   }
   return resend;
 }
-
+ 
 // ── EMAIL ARCHITECTURE (2026-07-17): this is the NEW customer-facing
 // delivery email -- sent once /generate-full has actually produced the
 // files, not at submit time. LemonSqueezy/Payhip already handle the
@@ -30,14 +30,32 @@ function getResend(): Resend {
 // ASSUMPTION: the Guangna.eu link below points to https://guangna.eu --
 // flag if that's the wrong URL or needs UTM/referral params.
 const GUANGNA_EU_URL = "https://guangna.eu";
-
+ 
 export type UpsellMarker = {
   marker_id: string;
   marker_name: string;
   marker_rgb: number[];
   region_count: number;
+  // Which of the customer's currently-printed numbers this marker would
+  // affect (2026-07-24) -- e.g. buying GN-611 would touch #4 and #9 on
+  // the sheet they already have. Empty for "buy these to get started"
+  // orders with no owned set to compare against. Optional so this type
+  // still matches upsell data from before this field existed.
+  affected_numbers?: number[];
 };
-
+ 
+// ── ATTACHMENTS (2026-07-24): in addition to the download links (which
+// stay in the email body regardless -- some inboxes strip attachments,
+// and links are what the reminder email and manual re-issue both
+// already rely on), the files themselves can also ride along as real
+// attachments. fulfillOrder.ts decides WHICH files make the cut (based
+// on actual GCS file size, so the combined attachment payload stays
+// under every major provider's real limit) -- this file just takes
+// whatever it's given and hands it to Resend via the `path` attachment
+// type, which fetches the file from the URL directly rather than
+// needing the bytes buffered through this function first.
+export type EmailAttachment = { url: string; filename: string };
+ 
 export type OrderConfirmationEmailParams = {
   orderId: string;
   customerEmail: string;
@@ -50,32 +68,49 @@ export type OrderConfirmationEmailParams = {
   // where the opt-in doesn't apply -- see webservice/main.py).
   fullGuideUrl: string | null;
   upsellMarkers: UpsellMarker[];
+  // Files to attach directly, on top of the links above. Empty/omitted
+  // is fine -- the email is still fully functional via links alone.
+  attachments?: EmailAttachment[];
 };
-
+ 
+// ── UPSELL TABLE (2026-07-24): "Improves" column now shows the actual
+// printed number(s) a marker would replace (e.g. "#4, #9") instead of a
+// region count that was previously always "1" regardless of the photo
+// (it was counting legend rows post-merge, where each marker can only
+// ever appear once -- see compute_upsell_diff()'s docstring in
+// pbn_guangna_generate.py for the fix). Falls back to "New area" when
+// affected_numbers is empty -- either an older upsell payload without
+// this field, or a "buy these to get started" list with no owned sheet
+// to reference yet.
 function upsellMarkersTable(markers: UpsellMarker[]): string {
   if (markers.length === 0) return "";
-  const rows = markers.map(m => `
+  const rows = markers.map(m => {
+    const improves = m.affected_numbers && m.affected_numbers.length
+      ? m.affected_numbers.map(n => `#${n}`).join(", ")
+      : "New area";
+    return `
     <tr>
       <td style="padding:6px 8px;border:1px solid #f0d0d8;">
         <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:rgb(${m.marker_rgb[0]},${m.marker_rgb[1]},${m.marker_rgb[2]});border:1px solid rgba(0,0,0,0.15);vertical-align:middle;margin-right:6px;"></span>
         ${m.marker_id}
       </td>
       <td style="padding:6px 8px;border:1px solid #f0d0d8;">${m.marker_name}</td>
-      <td style="padding:6px 8px;border:1px solid #f0d0d8;">${m.region_count}</td>
+      <td style="padding:6px 8px;border:1px solid #f0d0d8;">${improves}</td>
     </tr>
-  `).join("");
+  `;
+  }).join("");
   return `
-    <h3 style="color:#e75480;margin-top:24px;">✨ Want to add more markers?</h3>
+    <h3 style="color:#e75480;margin-top:24px;">✨ Level up your color palette?</h3>
     <p style="font-size:14px;color:#555;">
-      These are the markers that would improve your design the most, with how many
-      areas each one would cover:
+      These are the markers that would improve your design the most, and which of your
+      numbered areas they'd replace:
     </p>
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr style="background:#FFF0F3;">
           <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Marker</th>
           <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Name</th>
-          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Areas</th>
+          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Improves</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
@@ -85,7 +120,7 @@ function upsellMarkersTable(markers: UpsellMarker[]): string {
     </p>
   `;
 }
-
+ 
 function fullGuideSection(fullGuideUrl: string | null): string {
   if (!fullGuideUrl) return "";
   return `
@@ -98,21 +133,27 @@ function fullGuideSection(fullGuideUrl: string | null): string {
     </div>
   `;
 }
-
+ 
 export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailParams) {
   const {
     orderId, customerEmail, levelLabel, sets, indPens,
     outlineUrl, previewGuideUrl, fullGuideUrl, upsellMarkers,
+    attachments = [],
   } = params;
-
+ 
   const { data, error } = await getResend().emails.send({
     from:    "CreaBeaStudio <orders@creabeastudio.com>",
     to:      customerEmail,
-    subject: `🎨 Your Guangna by Number is ready! (Order #${orderId})`,
+    subject: `🎨 Your Custom Guangna-by-Number is ready! (Order #${orderId})`,
+    // path fetches each file from its (signed) URL directly, rather
+    // than requiring the bytes to be downloaded/buffered through this
+    // function first -- fulfillOrder.ts already decided which files
+    // are safe to include based on real GCS file size.
+    attachments: attachments.map(a => ({ path: a.url, filename: a.filename })),
     html: `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
         <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-          <h1 style="color:white;margin:0;font-size:22px;">🎨 Your Guangna by Number is ready!</h1>
+          <h1 style="color:white;margin:0;font-size:22px;">🎨 Your Custom Guangna-by-Number is ready!</h1>
         </div>
         <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
           <table style="width:100%;border-collapse:collapse;font-size:15px;">
@@ -134,7 +175,7 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailP
               <td style="padding:10px 0;font-weight:600;">${indPens}</td>
             </tr>` : ""}
           </table>
-
+ 
           <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
             <p style="margin:0;">
               📄 <a href="${outlineUrl}" style="color:#e75480;font-weight:700;">Download your numbered outline (print-ready)</a>
@@ -143,10 +184,10 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailP
               🖼️ <a href="${previewGuideUrl}" style="color:#e75480;font-weight:700;">Download your color preview & marker guide</a>
             </p>
           </div>
-
+ 
           ${fullGuideSection(fullGuideUrl)}
           ${upsellMarkersTable(upsellMarkers)}
-
+ 
           <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
             💡 Questions about your order? Just reply to this email or reach us at hello@creabeastudio.com.
           </div>
@@ -154,11 +195,11 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailP
       </div>
     `,
   });
-
+ 
   if (error) throw new Error(JSON.stringify(error));
   return data;
 }
-
+ 
 // ── REMINDER EMAIL (2026-07-17): sent once, ~21 days after fulfillment,
 // for orders whose delivery links haven't necessarily been used yet.
 // Deliberately NOT click-tracked (no way to know if they actually
@@ -166,9 +207,10 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailP
 // haven't downloaded" message, since we can't honestly claim to know
 // that. Reuses the same signed links already built for the original
 // delivery email (fresh-signed by the caller, same as that email).
-// Called from lib/fulfillOrder.ts's sendPendingReminders(), which is
-// what the Vercel Cron job (app/api/cron/send-reminders/route.ts)
-// triggers daily.
+// Deliberately link-only, no attachments (2026-07-24) -- see
+// fulfillOrder.ts's sendPendingReminders() for the reasoning. Called
+// from lib/fulfillOrder.ts's sendPendingReminders(), which is what the
+// Vercel Cron job (app/api/cron/send-reminders/route.ts) triggers daily.
 export type ReminderEmailParams = {
   orderId: string;
   customerEmail: string;
@@ -177,10 +219,10 @@ export type ReminderEmailParams = {
   fullGuideUrl: string | null;
   daysRemaining: number;
 };
-
+ 
 export async function sendReminderEmail(params: ReminderEmailParams) {
   const { orderId, customerEmail, outlineUrl, previewGuideUrl, fullGuideUrl, daysRemaining } = params;
-
+ 
   const { data, error } = await getResend().emails.send({
     from:    "CreaBeaStudio <orders@creabeastudio.com>",
     to:      customerEmail,
@@ -196,7 +238,7 @@ export async function sendReminderEmail(params: ReminderEmailParams) {
             are ready and waiting -- with about <strong>${daysRemaining} days</strong> left before this
             download link expires.
           </p>
-
+ 
           <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
             <p style="margin:0;">
               📄 <a href="${outlineUrl}" style="color:#e75480;font-weight:700;">Download your numbered outline (print-ready)</a>
@@ -209,7 +251,7 @@ export async function sendReminderEmail(params: ReminderEmailParams) {
               🎁 <a href="${fullGuideUrl}" style="color:#e75480;font-weight:700;">Download your free complete palette guide</a>
             </p>` : ""}
           </div>
-
+ 
           <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
             💡 Missed this window entirely? Just reply to this email or reach us at hello@creabeastudio.com and we'll send you a fresh link.
           </div>
@@ -217,7 +259,8 @@ export async function sendReminderEmail(params: ReminderEmailParams) {
       </div>
     `,
   });
-
+ 
   if (error) throw new Error(JSON.stringify(error));
   return data;
 }
+ 

@@ -9,9 +9,18 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
 
+  // UPDATED (2026-07-23): "Create" is now a dropdown grouping the two
+  // paid-generation features (Guangna-by-Number, Swatch Card Creator's
+  // paywalled unlock) -- previously "Guangna-by-Number" was a bare
+  // top-level link and "Swatch Card Creator" lived under Tools
+  // alongside the genuinely free converters. Moving it out of Tools
+  // reflects that Tools = free, Create = paid.
   const LINKS = [
     ["home", "/"],
-    ["createGuangna", "/create"],
+    { labelKey: "create", children: [
+      ["createGuangna", "/create"],
+      ["swatchCreator", "/swatch-creator"],
+    ]},
     { labelKey: "tools", children: [
       ["colorConverter", "/color-converter"],
       ["legendConverter", "/legend-converter"],

@@ -1,0 +1,4756 @@
+{
+  "GN-600": {
+    "name": "White",
+    "srgb": [
+      255,
+      255,
+      255
+    ],
+    "adobe_rgb": [
+      255,
+      255,
+      255
+    ]
+  },
+  "GN-601": {
+    "name": "Sky blue",
+    "srgb": [
+      19,
+      167,
+      223
+    ],
+    "adobe_rgb": [
+      95,
+      165,
+      220
+    ]
+  },
+  "GN-602": {
+    "name": "Lake green",
+    "srgb": [
+      109,
+      196,
+      181
+    ],
+    "adobe_rgb": [
+      140,
+      195,
+      180
+    ]
+  },
+  "GN-603": {
+    "name": "Yellow",
+    "srgb": [
+      255,
+      236,
+      21
+    ],
+    "adobe_rgb": [
+      250,
+      235,
+      60
+    ]
+  },
+  "GN-604": {
+    "name": "Orange",
+    "srgb": [
+      236,
+      151,
+      25
+    ],
+    "adobe_rgb": [
+      215,
+      150,
+      45
+    ]
+  },
+  "GN-605": {
+    "name": "Red",
+    "srgb": [
+      212,
+      79,
+      68
+    ],
+    "adobe_rgb": [
+      185,
+      80,
+      70
+    ]
+  },
+  "GN-606": {
+    "name": "Rose red",
+    "srgb": [
+      218,
+      121,
+      173
+    ],
+    "adobe_rgb": [
+      195,
+      120,
+      170
+    ]
+  },
+  "GN-607": {
+    "name": "Lilac purple",
+    "srgb": [
+      86,
+      57,
+      149
+    ],
+    "adobe_rgb": [
+      80,
+      60,
+      145
+    ]
+  },
+  "GN-608": {
+    "name": "Royal blue",
+    "srgb": [
+      4,
+      57,
+      149
+    ],
+    "adobe_rgb": [
+      35,
+      60,
+      145
+    ]
+  },
+  "GN-609": {
+    "name": "Green",
+    "srgb": [
+      0,
+      136,
+      125
+    ],
+    "adobe_rgb": [
+      75,
+      135,
+      125
+    ]
+  },
+  "GN-610": {
+    "name": "Gray",
+    "srgb": [
+      174,
+      181,
+      176
+    ],
+    "adobe_rgb": [
+      175,
+      180,
+      175
+    ]
+  },
+  "GN-611": {
+    "name": "Black",
+    "srgb": [
+      18,
+      18,
+      18
+    ],
+    "adobe_rgb": [
+      25,
+      25,
+      25
+    ]
+  },
+  "GN-612": {
+    "name": "Pink",
+    "srgb": [
+      233,
+      161,
+      177
+    ],
+    "adobe_rgb": [
+      215,
+      160,
+      175
+    ]
+  },
+  "GN-613": {
+    "name": "Grape purple",
+    "srgb": [
+      116,
+      68,
+      149
+    ],
+    "adobe_rgb": [
+      105,
+      70,
+      145
+    ]
+  },
+  "GN-614": {
+    "name": "Emerald green",
+    "srgb": [
+      136,
+      196,
+      105
+    ],
+    "adobe_rgb": [
+      155,
+      195,
+      110
+    ]
+  },
+  "GN-615": {
+    "name": "Bright yellow",
+    "srgb": [
+      254,
+      221,
+      0
+    ],
+    "adobe_rgb": [
+      245,
+      220,
+      50
+    ]
+  },
+  "GN-616": {
+    "name": "Dazzle blue",
+    "srgb": [
+      0,
+      136,
+      188
+    ],
+    "adobe_rgb": [
+      75,
+      135,
+      185
+    ]
+  },
+  "GN-617": {
+    "name": "Ink blue",
+    "srgb": [
+      11,
+      84,
+      159
+    ],
+    "adobe_rgb": [
+      50,
+      85,
+      155
+    ]
+  },
+  "GN-618": {
+    "name": "Amber",
+    "srgb": [
+      224,
+      172,
+      71
+    ],
+    "adobe_rgb": [
+      210,
+      170,
+      80
+    ]
+  },
+  "GN-619": {
+    "name": "Carmine",
+    "srgb": [
+      202,
+      136,
+      147
+    ],
+    "adobe_rgb": [
+      185,
+      135,
+      145
+    ]
+  },
+  "GN-620": {
+    "name": "Coffee",
+    "srgb": [
+      157,
+      116,
+      99
+    ],
+    "adobe_rgb": [
+      145,
+      115,
+      100
+    ]
+  },
+  "GN-621": {
+    "name": "Indigo blue",
+    "srgb": [
+      0,
+      136,
+      204
+    ],
+    "adobe_rgb": [
+      70,
+      135,
+      200
+    ]
+  },
+  "GN-622": {
+    "name": "Pine green",
+    "srgb": [
+      93,
+      156,
+      135
+    ],
+    "adobe_rgb": [
+      115,
+      155,
+      135
+    ]
+  },
+  "GN-623": {
+    "name": "Wisteria",
+    "srgb": [
+      185,
+      151,
+      198
+    ],
+    "adobe_rgb": [
+      175,
+      150,
+      195
+    ]
+  },
+  "GN-624": {
+    "name": "Pomelo pink",
+    "srgb": [
+      251,
+      211,
+      216
+    ],
+    "adobe_rgb": [
+      240,
+      210,
+      215
+    ]
+  },
+  "GN-625": {
+    "name": "Cinnamon",
+    "srgb": [
+      248,
+      201,
+      186
+    ],
+    "adobe_rgb": [
+      235,
+      200,
+      185
+    ]
+  },
+  "GN-626": {
+    "name": "Rice white",
+    "srgb": [
+      255,
+      255,
+      193
+    ],
+    "adobe_rgb": [
+      255,
+      255,
+      195
+    ]
+  },
+  "GN-627": {
+    "name": "Mint green",
+    "srgb": [
+      190,
+      226,
+      195
+    ],
+    "adobe_rgb": [
+      200,
+      225,
+      195
+    ]
+  },
+  "GN-628": {
+    "name": "Milk blue",
+    "srgb": [
+      185,
+      221,
+      241
+    ],
+    "adobe_rgb": [
+      195,
+      220,
+      240
+    ]
+  },
+  "GN-629": {
+    "name": "Taro purple",
+    "srgb": [
+      174,
+      181,
+      217
+    ],
+    "adobe_rgb": [
+      175,
+      180,
+      215
+    ]
+  },
+  "GN-630": {
+    "name": "Bean paste pink",
+    "srgb": [
+      228,
+      201,
+      201
+    ],
+    "adobe_rgb": [
+      220,
+      200,
+      200
+    ]
+  },
+  "GN-631": {
+    "name": "Vermilion",
+    "srgb": [
+      194,
+      79,
+      38
+    ],
+    "adobe_rgb": [
+      170,
+      80,
+      45
+    ]
+  },
+  "GN-632": {
+    "name": "Apple red",
+    "srgb": [
+      217,
+      84,
+      31
+    ],
+    "adobe_rgb": [
+      190,
+      85,
+      40
+    ]
+  },
+  "GN-633": {
+    "name": "Haze blue",
+    "srgb": [
+      111,
+      156,
+      172
+    ],
+    "adobe_rgb": [
+      125,
+      155,
+      170
+    ]
+  },
+  "GN-634": {
+    "name": "Forest green",
+    "srgb": [
+      59,
+      146,
+      56
+    ],
+    "adobe_rgb": [
+      95,
+      145,
+      65
+    ]
+  },
+  "GN-635": {
+    "name": "Purple",
+    "srgb": [
+      183,
+      177,
+      212
+    ],
+    "adobe_rgb": [
+      180,
+      175,
+      210
+    ]
+  },
+  "GN-636": {
+    "name": "Bicheng blue",
+    "srgb": [
+      5,
+      105,
+      143
+    ],
+    "adobe_rgb": [
+      60,
+      105,
+      140
+    ]
+  },
+  "GN-637": {
+    "name": "Local green",
+    "srgb": [
+      157,
+      172,
+      145
+    ],
+    "adobe_rgb": [
+      160,
+      170,
+      145
+    ]
+  },
+  "GN-638": {
+    "name": "Curious mind",
+    "srgb": [
+      194,
+      201,
+      175
+    ],
+    "adobe_rgb": [
+      195,
+      200,
+      175
+    ]
+  },
+  "GN-639": {
+    "name": "Grounded red",
+    "srgb": [
+      198,
+      151,
+      130
+    ],
+    "adobe_rgb": [
+      185,
+      150,
+      130
+    ]
+  },
+  "GN-640": {
+    "name": "Spring green",
+    "srgb": [
+      145,
+      167,
+      90
+    ],
+    "adobe_rgb": [
+      150,
+      165,
+      95
+    ]
+  },
+  "GN-641": {
+    "name": "Celadon",
+    "srgb": [
+      150,
+      186,
+      166
+    ],
+    "adobe_rgb": [
+      160,
+      185,
+      165
+    ]
+  },
+  "GN-642": {
+    "name": "Verdant hills green",
+    "srgb": [
+      103,
+      110,
+      83
+    ],
+    "adobe_rgb": [
+      105,
+      110,
+      85
+    ]
+  },
+  "GN-643": {
+    "name": "Russet",
+    "srgb": [
+      117,
+      100,
+      75
+    ],
+    "adobe_rgb": [
+      110,
+      100,
+      75
+    ]
+  },
+  "GN-644": {
+    "name": "Clay colour",
+    "srgb": [
+      211,
+      151,
+      61
+    ],
+    "adobe_rgb": [
+      195,
+      150,
+      70
+    ]
+  },
+  "GN-645": {
+    "name": "Medieval yellow",
+    "srgb": [
+      233,
+      206,
+      165
+    ],
+    "adobe_rgb": [
+      225,
+      205,
+      165
+    ]
+  },
+  "GN-646": {
+    "name": "Hummus",
+    "srgb": [
+      231,
+      231,
+      210
+    ],
+    "adobe_rgb": [
+      230,
+      230,
+      210
+    ]
+  },
+  "GN-647": {
+    "name": "Bamboo shoot green",
+    "srgb": [
+      153,
+      181,
+      57
+    ],
+    "adobe_rgb": [
+      160,
+      180,
+      70
+    ]
+  },
+  "GN-648": {
+    "name": "Sprout green",
+    "srgb": [
+      190,
+      211,
+      97
+    ],
+    "adobe_rgb": [
+      195,
+      210,
+      105
+    ]
+  },
+  "GN-649": {
+    "name": "Light orange",
+    "srgb": [
+      246,
+      161,
+      91
+    ],
+    "adobe_rgb": [
+      225,
+      160,
+      95
+    ]
+  },
+  "GN-650": {
+    "name": "Blue",
+    "srgb": [
+      0,
+      146,
+      208
+    ],
+    "adobe_rgb": [
+      80,
+      145,
+      205
+    ]
+  },
+  "GN-651": {
+    "name": "Violet",
+    "srgb": [
+      139,
+      146,
+      203
+    ],
+    "adobe_rgb": [
+      140,
+      145,
+      200
+    ]
+  },
+  "GN-652": {
+    "name": "Primrose green",
+    "srgb": [
+      203,
+      196,
+      99
+    ],
+    "adobe_rgb": [
+      200,
+      195,
+      105
+    ]
+  },
+  "GN-653": {
+    "name": "Bluish green",
+    "srgb": [
+      42,
+      186,
+      171
+    ],
+    "adobe_rgb": [
+      110,
+      185,
+      170
+    ]
+  },
+  "GN-654": {
+    "name": "Flesh color",
+    "srgb": [
+      228,
+      181,
+      166
+    ],
+    "adobe_rgb": [
+      215,
+      180,
+      165
+    ]
+  },
+  "GN-655": {
+    "name": "Rose",
+    "srgb": [
+      248,
+      151,
+      183
+    ],
+    "adobe_rgb": [
+      225,
+      150,
+      180
+    ]
+  },
+  "GN-656": {
+    "name": "Earthy yellow",
+    "srgb": [
+      252,
+      206,
+      115
+    ],
+    "adobe_rgb": [
+      240,
+      205,
+      120
+    ]
+  },
+  "GN-657": {
+    "name": "Bishan green",
+    "srgb": [
+      115,
+      177,
+      51
+    ],
+    "adobe_rgb": [
+      135,
+      175,
+      65
+    ]
+  },
+  "GN-658": {
+    "name": "Light pink",
+    "srgb": [
+      224,
+      172,
+      197
+    ],
+    "adobe_rgb": [
+      210,
+      170,
+      195
+    ]
+  },
+  "GN-659": {
+    "name": "Dark blue",
+    "srgb": [
+      20,
+      100,
+      184
+    ],
+    "adobe_rgb": [
+      60,
+      100,
+      180
+    ]
+  },
+  "GN-660": {
+    "name": "Heartbeat pink",
+    "srgb": [
+      237,
+      116,
+      168
+    ],
+    "adobe_rgb": [
+      210,
+      115,
+      165
+    ]
+  },
+  "GN-661": {
+    "name": "Vibrant red",
+    "srgb": [
+      236,
+      121,
+      99
+    ],
+    "adobe_rgb": [
+      210,
+      120,
+      100
+    ]
+  },
+  "GN-662": {
+    "name": "Vibrant green",
+    "srgb": [
+      139,
+      191,
+      87
+    ],
+    "adobe_rgb": [
+      155,
+      190,
+      95
+    ]
+  },
+  "GN-663": {
+    "name": "Reddish orange",
+    "srgb": [
+      232,
+      105,
+      20
+    ],
+    "adobe_rgb": [
+      205,
+      105,
+      35
+    ]
+  },
+  "GN-664": {
+    "name": "Bright red",
+    "srgb": [
+      222,
+      30,
+      30
+    ],
+    "adobe_rgb": [
+      190,
+      35,
+      35
+    ]
+  },
+  "GN-665": {
+    "name": "Leaf green",
+    "srgb": [
+      90,
+      172,
+      84
+    ],
+    "adobe_rgb": [
+      120,
+      170,
+      90
+    ]
+  },
+  "GN-666": {
+    "name": "Purplish red",
+    "srgb": [
+      213,
+      68,
+      133
+    ],
+    "adobe_rgb": [
+      185,
+      70,
+      130
+    ]
+  },
+  "GN-667": {
+    "name": "Thin red",
+    "srgb": [
+      237,
+      110,
+      110
+    ],
+    "adobe_rgb": [
+      210,
+      110,
+      110
+    ]
+  },
+  "GN-668": {
+    "name": "Stone cyan",
+    "srgb": [
+      33,
+      172,
+      84
+    ],
+    "adobe_rgb": [
+      100,
+      170,
+      90
+    ]
+  },
+  "GN-669": {
+    "name": "Grass green",
+    "srgb": [
+      155,
+      206,
+      118
+    ],
+    "adobe_rgb": [
+      170,
+      205,
+      122
+    ]
+  },
+  "GN-670": {
+    "name": "Rattan",
+    "srgb": [
+      122,
+      151,
+      208
+    ],
+    "adobe_rgb": [
+      130,
+      150,
+      205
+    ]
+  },
+  "GN-671": {
+    "name": "Wine red",
+    "srgb": [
+      192,
+      46,
+      91
+    ],
+    "adobe_rgb": [
+      165,
+      50,
+      90
+    ]
+  },
+  "GN-672": {
+    "name": "Brownish red",
+    "srgb": [
+      165,
+      74,
+      68
+    ],
+    "adobe_rgb": [
+      145,
+      75,
+      70
+    ]
+  },
+  "GN-673": {
+    "name": "Klein blue",
+    "srgb": [
+      30,
+      30,
+      133
+    ],
+    "adobe_rgb": [
+      35,
+      35,
+      130
+    ]
+  },
+  "GN-674": {
+    "name": "Strong brown",
+    "srgb": [
+      162,
+      63,
+      74
+    ],
+    "adobe_rgb": [
+      141,
+      65,
+      75
+    ]
+  },
+  "GN-675": {
+    "name": "Sauce purple",
+    "srgb": [
+      133,
+      79,
+      106
+    ],
+    "adobe_rgb": [
+      120,
+      80,
+      105
+    ]
+  },
+  "GN-676": {
+    "name": "Dark green",
+    "srgb": [
+      9,
+      141,
+      63
+    ],
+    "adobe_rgb": [
+      80,
+      140,
+      70
+    ]
+  },
+  "GN-677": {
+    "name": "Peach red",
+    "srgb": [
+      249,
+      172,
+      172
+    ],
+    "adobe_rgb": [
+      230,
+      170,
+      170
+    ]
+  },
+  "GN-678": {
+    "name": "Dark purple",
+    "srgb": [
+      50,
+      35,
+      118
+    ],
+    "adobe_rgb": [
+      50,
+      40,
+      115
+    ]
+  },
+  "GN-679": {
+    "name": "Greyish red",
+    "srgb": [
+      97,
+      90,
+      90
+    ],
+    "adobe_rgb": [
+      95,
+      90,
+      90
+    ]
+  },
+  "GN-680": {
+    "name": "Stone gray",
+    "srgb": [
+      61,
+      68,
+      74
+    ],
+    "adobe_rgb": [
+      65,
+      70,
+      75
+    ]
+  },
+  "GN-681": {
+    "name": "Group cyan",
+    "srgb": [
+      121,
+      167,
+      177
+    ],
+    "adobe_rgb": [
+      135,
+      165,
+      175
+    ]
+  },
+  "GN-682": {
+    "name": "Bamboo green",
+    "srgb": [
+      100,
+      146,
+      56
+    ],
+    "adobe_rgb": [
+      115,
+      145,
+      65
+    ]
+  },
+  "GN-683": {
+    "name": "Creamy white",
+    "srgb": [
+      255,
+      231,
+      200
+    ],
+    "adobe_rgb": [
+      250,
+      230,
+      200
+    ]
+  },
+  "GN-684": {
+    "name": "Apricot yellow",
+    "srgb": [
+      248,
+      201,
+      149
+    ],
+    "adobe_rgb": [
+      235,
+      200,
+      150
+    ]
+  },
+  "GN-685": {
+    "name": "Onion green",
+    "srgb": [
+      124,
+      201,
+      165
+    ],
+    "adobe_rgb": [
+      150,
+      200,
+      165
+    ]
+  },
+  "GN-686": {
+    "name": "Light gray",
+    "srgb": [
+      206,
+      206,
+      206
+    ],
+    "adobe_rgb": [
+      205,
+      205,
+      205
+    ]
+  },
+  "GN-687": {
+    "name": "Bright green",
+    "srgb": [
+      89,
+      161,
+      66
+    ],
+    "adobe_rgb": [
+      115,
+      160,
+      75
+    ]
+  },
+  "GN-688": {
+    "name": "Dark cyan",
+    "srgb": [
+      13,
+      63,
+      117
+    ],
+    "adobe_rgb": [
+      40,
+      65,
+      115
+    ]
+  },
+  "GN-689": {
+    "name": "Porcelain blue",
+    "srgb": [
+      129,
+      181,
+      222
+    ],
+    "adobe_rgb": [
+      145,
+      180,
+      220
+    ]
+  },
+  "GN-690": {
+    "name": "Green blue",
+    "srgb": [
+      124,
+      161,
+      161
+    ],
+    "adobe_rgb": [
+      135,
+      160,
+      160
+    ]
+  },
+  "GN-691": {
+    "name": "Coral powder",
+    "srgb": [
+      240,
+      131,
+      120
+    ],
+    "adobe_rgb": [
+      215,
+      130,
+      120
+    ]
+  },
+  "GN-692": {
+    "name": "Purple light",
+    "srgb": [
+      239,
+      136,
+      141
+    ],
+    "adobe_rgb": [
+      215,
+      135,
+      140
+    ]
+  },
+  "GN-693": {
+    "name": "Blue grey",
+    "srgb": [
+      85,
+      116,
+      132
+    ],
+    "adobe_rgb": [
+      95,
+      115,
+      130
+    ]
+  },
+  "GN-694": {
+    "name": "Soft jade",
+    "srgb": [
+      37,
+      110,
+      121
+    ],
+    "adobe_rgb": [
+      70,
+      110,
+      120
+    ]
+  },
+  "GN-695": {
+    "name": "French green",
+    "srgb": [
+      28,
+      126,
+      131
+    ],
+    "adobe_rgb": [
+      75,
+      125,
+      130
+    ]
+  },
+  "GN-696": {
+    "name": "Fruit green",
+    "srgb": [
+      121,
+      167,
+      0
+    ],
+    "adobe_rgb": [
+      135,
+      165,
+      20
+    ]
+  },
+  "GN-697": {
+    "name": "Pine green",
+    "srgb": [
+      74,
+      105,
+      78
+    ],
+    "adobe_rgb": [
+      85,
+      105,
+      80
+    ]
+  },
+  "GN-698": {
+    "name": "Sweat purple",
+    "srgb": [
+      215,
+      201,
+      227
+    ],
+    "adobe_rgb": [
+      210,
+      200,
+      225
+    ]
+  },
+  "GN-699": {
+    "name": "Felongrass purple",
+    "srgb": [
+      192,
+      151,
+      193
+    ],
+    "adobe_rgb": [
+      180,
+      150,
+      190
+    ]
+  },
+  "GN-700": {
+    "name": "Cream yellow",
+    "srgb": [
+      219,
+      226,
+      102
+    ],
+    "adobe_rgb": [
+      220,
+      225,
+      110
+    ]
+  },
+  "GN-701": {
+    "name": "Light apricot",
+    "srgb": [
+      253,
+      226,
+      200
+    ],
+    "adobe_rgb": [
+      245,
+      225,
+      200
+    ]
+  },
+  "GN-702": {
+    "name": "Pomelo",
+    "srgb": [
+      250,
+      191,
+      117
+    ],
+    "adobe_rgb": [
+      235,
+      190,
+      120
+    ]
+  },
+  "GN-703": {
+    "name": "Ivory orange",
+    "srgb": [
+      255,
+      226,
+      221
+    ],
+    "adobe_rgb": [
+      250,
+      225,
+      220
+    ]
+  },
+  "GN-704": {
+    "name": "Red lips",
+    "srgb": [
+      248,
+      177,
+      177
+    ],
+    "adobe_rgb": [
+      230,
+      175,
+      175
+    ]
+  },
+  "GN-705": {
+    "name": "Cornel purple",
+    "srgb": [
+      158,
+      79,
+      95
+    ],
+    "adobe_rgb": [
+      140,
+      80,
+      95
+    ]
+  },
+  "GN-706": {
+    "name": "White cyan",
+    "srgb": [
+      232,
+      245,
+      240
+    ],
+    "adobe_rgb": [
+      235,
+      245,
+      240
+    ]
+  },
+  "GN-707": {
+    "name": "Magnolia",
+    "srgb": [
+      212,
+      226,
+      200
+    ],
+    "adobe_rgb": [
+      215,
+      225,
+      200
+    ]
+  },
+  "GN-708": {
+    "name": "Sooty red",
+    "srgb": [
+      102,
+      74,
+      51
+    ],
+    "adobe_rgb": [
+      95,
+      75,
+      55
+    ]
+  },
+  "GN-709": {
+    "name": "Brown black",
+    "srgb": [
+      84,
+      63,
+      63
+    ],
+    "adobe_rgb": [
+      80,
+      65,
+      65
+    ]
+  },
+  "GN-710": {
+    "name": "Changchun",
+    "srgb": [
+      235,
+      84,
+      106
+    ],
+    "adobe_rgb": [
+      205,
+      85,
+      105
+    ]
+  },
+  "GN-711": {
+    "name": "Lipstick pink",
+    "srgb": [
+      226,
+      105,
+      127
+    ],
+    "adobe_rgb": [
+      200,
+      105,
+      125
+    ]
+  },
+  "GN-712": {
+    "name": "Fluorescent rose",
+    "srgb": [
+      236,
+      151,
+      188
+    ],
+    "adobe_rgb": [
+      215,
+      150,
+      185
+    ]
+  },
+  "GN-713": {
+    "name": "Nelumbo red",
+    "srgb": [
+      223,
+      90,
+      122
+    ],
+    "adobe_rgb": [
+      195,
+      90,
+      120
+    ]
+  },
+  "GN-714": {
+    "name": "Blackish red",
+    "srgb": [
+      208,
+      57,
+      96
+    ],
+    "adobe_rgb": [
+      180,
+      60,
+      95
+    ]
+  },
+  "GN-715": {
+    "name": "Scarlet",
+    "srgb": [
+      232,
+      52,
+      69
+    ],
+    "adobe_rgb": [
+      200,
+      55,
+      70
+    ]
+  },
+  "GN-716": {
+    "name": "Peach pink",
+    "srgb": [
+      250,
+      191,
+      197
+    ],
+    "adobe_rgb": [
+      235,
+      190,
+      195
+    ]
+  },
+  "GN-717": {
+    "name": "Shallow camel",
+    "srgb": [
+      238,
+      211,
+      180
+    ],
+    "adobe_rgb": [
+      230,
+      210,
+      180
+    ]
+  },
+  "GN-718": {
+    "name": "Tumeric",
+    "srgb": [
+      248,
+      221,
+      180
+    ],
+    "adobe_rgb": [
+      240,
+      220,
+      180
+    ]
+  },
+  "GN-719": {
+    "name": "Cheese yellow",
+    "srgb": [
+      255,
+      236,
+      210
+    ],
+    "adobe_rgb": [
+      250,
+      235,
+      210
+    ]
+  },
+  "GN-720": {
+    "name": "Bean yellow",
+    "srgb": [
+      249,
+      236,
+      215
+    ],
+    "adobe_rgb": [
+      245,
+      235,
+      215
+    ]
+  },
+  "GN-721": {
+    "name": "Water pink",
+    "srgb": [
+      251,
+      231,
+      226
+    ],
+    "adobe_rgb": [
+      245,
+      230,
+      225
+    ]
+  },
+  "GN-722": {
+    "name": "Turquoise blue",
+    "srgb": [
+      0,
+      181,
+      176
+    ],
+    "adobe_rgb": [
+      100,
+      180,
+      175
+    ]
+  },
+  "GN-723": {
+    "name": "Sakura",
+    "srgb": [
+      253,
+      226,
+      236
+    ],
+    "adobe_rgb": [
+      245,
+      225,
+      235
+    ]
+  },
+  "GN-724": {
+    "name": "Light beige",
+    "srgb": [
+      255,
+      236,
+      215
+    ],
+    "adobe_rgb": [
+      250,
+      235,
+      215
+    ]
+  },
+  "GN-725": {
+    "name": "Fresh orange",
+    "srgb": [
+      241,
+      126,
+      23
+    ],
+    "adobe_rgb": [
+      215,
+      125,
+      40
+    ]
+  },
+  "GN-726": {
+    "name": "Imperial purple",
+    "srgb": [
+      186,
+      46,
+      133
+    ],
+    "adobe_rgb": [
+      160,
+      50,
+      130
+    ]
+  },
+  "GN-727": {
+    "name": "Willow green",
+    "srgb": [
+      170,
+      206,
+      66
+    ],
+    "adobe_rgb": [
+      180,
+      205,
+      80
+    ]
+  },
+  "GN-728": {
+    "name": "Viridity",
+    "srgb": [
+      3,
+      151,
+      86
+    ],
+    "adobe_rgb": [
+      85,
+      150,
+      90
+    ]
+  },
+  "GN-729": {
+    "name": "Grey yellow",
+    "srgb": [
+      228,
+      221,
+      147
+    ],
+    "adobe_rgb": [
+      225,
+      220,
+      150
+    ]
+  },
+  "GN-730": {
+    "name": "Jade white",
+    "srgb": [
+      227,
+      240,
+      210
+    ],
+    "adobe_rgb": [
+      230,
+      240,
+      210
+    ]
+  },
+  "GN-731": {
+    "name": "Sand dust",
+    "srgb": [
+      210,
+      196,
+      154
+    ],
+    "adobe_rgb": [
+      205,
+      195,
+      155
+    ]
+  },
+  "GN-732": {
+    "name": "Velvet yellow",
+    "srgb": [
+      255,
+      250,
+      167
+    ],
+    "adobe_rgb": [
+      255,
+      250,
+      170
+    ]
+  },
+  "GN-733": {
+    "name": "Light yellow",
+    "srgb": [
+      254,
+      240,
+      146
+    ],
+    "adobe_rgb": [
+      250,
+      240,
+      150
+    ]
+  },
+  "GN-734": {
+    "name": "Pink purple",
+    "srgb": [
+      225,
+      191,
+      217
+    ],
+    "adobe_rgb": [
+      215,
+      190,
+      215
+    ]
+  },
+  "GN-735": {
+    "name": "Pea green",
+    "srgb": [
+      150,
+      201,
+      118
+    ],
+    "adobe_rgb": [
+      165,
+      200,
+      122
+    ]
+  },
+  "GN-736": {
+    "name": "Pale white",
+    "srgb": [
+      222,
+      236,
+      241
+    ],
+    "adobe_rgb": [
+      225,
+      235,
+      240
+    ]
+  },
+  "GN-737": {
+    "name": "Bluish green",
+    "srgb": [
+      138,
+      206,
+      186
+    ],
+    "adobe_rgb": [
+      160,
+      205,
+      185
+    ]
+  },
+  "GN-738": {
+    "name": "Onyx",
+    "srgb": [
+      239,
+      226,
+      216
+    ],
+    "adobe_rgb": [
+      235,
+      225,
+      215
+    ]
+  },
+  "GN-739": {
+    "name": "Ormosia",
+    "srgb": [
+      155,
+      95,
+      127
+    ],
+    "adobe_rgb": [
+      140,
+      95,
+      125
+    ]
+  },
+  "GN-740": {
+    "name": "Verdant",
+    "srgb": [
+      44,
+      167,
+      72
+    ],
+    "adobe_rgb": [
+      100,
+      165,
+      80
+    ]
+  },
+  "GN-741": {
+    "name": "Dull green",
+    "srgb": [
+      135,
+      172,
+      78
+    ],
+    "adobe_rgb": [
+      145,
+      170,
+      85
+    ]
+  },
+  "GN-742": {
+    "name": "Flower purple",
+    "srgb": [
+      107,
+      109,
+      176
+    ],
+    "adobe_rgb": [
+      105,
+      110,
+      170
+    ]
+  },
+  "GN-743": {
+    "name": "Aubergine",
+    "srgb": [
+      112,
+      84,
+      159
+    ],
+    "adobe_rgb": [
+      105,
+      85,
+      155
+    ]
+  },
+  "GN-744": {
+    "name": "Lavender",
+    "srgb": [
+      211,
+      211,
+      232
+    ],
+    "adobe_rgb": [
+      210,
+      210,
+      230
+    ]
+  },
+  "GN-745": {
+    "name": "Light rattan",
+    "srgb": [
+      145,
+      181,
+      222
+    ],
+    "adobe_rgb": [
+      155,
+      180,
+      220
+    ]
+  },
+  "GN-746": {
+    "name": "Fotou blue",
+    "srgb": [
+      44,
+      68,
+      117
+    ],
+    "adobe_rgb": [
+      55,
+      70,
+      115
+    ]
+  },
+  "GN-747": {
+    "name": "Quetou blue",
+    "srgb": [
+      124,
+      131,
+      157
+    ],
+    "adobe_rgb": [
+      125,
+      130,
+      155
+    ]
+  },
+  "GN-748": {
+    "name": "Tianqing blue",
+    "srgb": [
+      64,
+      131,
+      152
+    ],
+    "adobe_rgb": [
+      90,
+      130,
+      150
+    ]
+  },
+  "GN-749": {
+    "name": "Qingming blue",
+    "srgb": [
+      68,
+      126,
+      173
+    ],
+    "adobe_rgb": [
+      90,
+      125,
+      170
+    ]
+  },
+  "GN-750": {
+    "name": "Kongqing blue",
+    "srgb": [
+      92,
+      131,
+      152
+    ],
+    "adobe_rgb": [
+      105,
+      130,
+      150
+    ]
+  },
+  "GN-751": {
+    "name": "Chalky white",
+    "srgb": [
+      233,
+      226,
+      216
+    ],
+    "adobe_rgb": [
+      230,
+      225,
+      215
+    ]
+  },
+  "GN-752": {
+    "name": "Lotus root gray",
+    "srgb": [
+      222,
+      201,
+      212
+    ],
+    "adobe_rgb": [
+      215,
+      200,
+      210
+    ]
+  },
+  "GN-753": {
+    "name": "Jade color",
+    "srgb": [
+      210,
+      196,
+      176
+    ],
+    "adobe_rgb": [
+      205,
+      195,
+      175
+    ]
+  },
+  "GN-754": {
+    "name": "Pinkish red",
+    "srgb": [
+      218,
+      191,
+      186
+    ],
+    "adobe_rgb": [
+      210,
+      190,
+      185
+    ]
+  },
+  "GN-755": {
+    "name": "Xianchi red",
+    "srgb": [
+      215,
+      161,
+      151
+    ],
+    "adobe_rgb": [
+      200,
+      160,
+      150
+    ]
+  },
+  "GN-756": {
+    "name": "Light red",
+    "srgb": [
+      197,
+      133,
+      120
+    ],
+    "adobe_rgb": [
+      180,
+      132,
+      120
+    ]
+  },
+  "GN-757": {
+    "name": "Chestnut brown",
+    "srgb": [
+      179,
+      151,
+      119
+    ],
+    "adobe_rgb": [
+      170,
+      150,
+      120
+    ]
+  },
+  "GN-758": {
+    "name": "Agilawood",
+    "srgb": [
+      172,
+      131,
+      109
+    ],
+    "adobe_rgb": [
+      160,
+      130,
+      110
+    ]
+  },
+  "GN-759": {
+    "name": "Sandstone yellow",
+    "srgb": [
+      131,
+      110,
+      105
+    ],
+    "adobe_rgb": [
+      125,
+      110,
+      105
+    ]
+  },
+  "GN-760": {
+    "name": "Tomato red",
+    "srgb": [
+      222,
+      3,
+      18
+    ],
+    "adobe_rgb": [
+      190,
+      10,
+      25
+    ]
+  },
+  "GN-761": {
+    "name": "Lychee pink",
+    "srgb": [
+      236,
+      121,
+      131
+    ],
+    "adobe_rgb": [
+      210,
+      120,
+      130
+    ]
+  },
+  "GN-762": {
+    "name": "Vibrant pink",
+    "srgb": [
+      233,
+      136,
+      178
+    ],
+    "adobe_rgb": [
+      210,
+      135,
+      175
+    ]
+  },
+  "GN-763": {
+    "name": "Ink blue black",
+    "srgb": [
+      4,
+      57,
+      101
+    ],
+    "adobe_rgb": [
+      35,
+      60,
+      100
+    ]
+  },
+  "GN-764": {
+    "name": "Smoke purple black",
+    "srgb": [
+      70,
+      63,
+      117
+    ],
+    "adobe_rgb": [
+      70,
+      65,
+      115
+    ]
+  },
+  "GN-765": {
+    "name": "Happy yellow",
+    "srgb": [
+      254,
+      240,
+      42
+    ],
+    "adobe_rgb": [
+      250,
+      240,
+      70
+    ]
+  },
+  "GN-766": {
+    "name": "Jasmine yellow",
+    "srgb": [
+      250,
+      250,
+      183
+    ],
+    "adobe_rgb": [
+      250,
+      250,
+      185
+    ]
+  },
+  "GN-767": {
+    "name": "Cloud blue",
+    "srgb": [
+      80,
+      136,
+      162
+    ],
+    "adobe_rgb": [
+      100,
+      135,
+      160
+    ]
+  },
+  "GN-768": {
+    "name": "Mountain blue",
+    "srgb": [
+      137,
+      181,
+      187
+    ],
+    "adobe_rgb": [
+      150,
+      180,
+      185
+    ]
+  },
+  "GN-769": {
+    "name": "Volcanic brown",
+    "srgb": [
+      124,
+      90,
+      95
+    ],
+    "adobe_rgb": [
+      115,
+      90,
+      95
+    ]
+  },
+  "GN-770": {
+    "name": "Grayish purple",
+    "srgb": [
+      155,
+      121,
+      153
+    ],
+    "adobe_rgb": [
+      145,
+      120,
+      150
+    ]
+  },
+  "GN-771": {
+    "name": "Milk coffee",
+    "srgb": [
+      217,
+      196,
+      196
+    ],
+    "adobe_rgb": [
+      210,
+      195,
+      195
+    ]
+  },
+  "GN-772": {
+    "name": "Camelia",
+    "srgb": [
+      210,
+      131,
+      152
+    ],
+    "adobe_rgb": [
+      190,
+      130,
+      150
+    ]
+  },
+  "GN-773": {
+    "name": "Vintage purple",
+    "srgb": [
+      165,
+      151,
+      193
+    ],
+    "adobe_rgb": [
+      160,
+      150,
+      190
+    ]
+  },
+  "GN-774": {
+    "name": "Navy blue",
+    "srgb": [
+      37,
+      100,
+      122
+    ],
+    "adobe_rgb": [
+      65,
+      100,
+      120
+    ]
+  },
+  "GN-775": {
+    "name": "Spray green",
+    "srgb": [
+      187,
+      201,
+      175
+    ],
+    "adobe_rgb": [
+      190,
+      200,
+      175
+    ]
+  },
+  "GN-776": {
+    "name": "Brownish black",
+    "srgb": [
+      80,
+      52,
+      63
+    ],
+    "adobe_rgb": [
+      75,
+      55,
+      65
+    ]
+  },
+  "GN-777": {
+    "name": "Pure yellow",
+    "srgb": [
+      253,
+      242,
+      87
+    ],
+    "adobe_rgb": [
+      250,
+      245,
+      100
+    ]
+  },
+  "GN-778": {
+    "name": "Gentian violet",
+    "srgb": [
+      120,
+      46,
+      112
+    ],
+    "adobe_rgb": [
+      105,
+      50,
+      110
+    ]
+  },
+  "GN-779": {
+    "name": "Black coffee",
+    "srgb": [
+      109,
+      74,
+      85
+    ],
+    "adobe_rgb": [
+      100,
+      75,
+      85
+    ]
+  },
+  "GN-780": {
+    "name": "Maroon color",
+    "srgb": [
+      149,
+      57,
+      57
+    ],
+    "adobe_rgb": [
+      130,
+      60,
+      60
+    ]
+  },
+  "GN-781": {
+    "name": "Deep red",
+    "srgb": [
+      175,
+      30,
+      35
+    ],
+    "adobe_rgb": [
+      150,
+      35,
+      40
+    ]
+  },
+  "GN-782": {
+    "name": "Vivid red",
+    "srgb": [
+      231,
+      57,
+      21
+    ],
+    "adobe_rgb": [
+      200,
+      60,
+      30
+    ]
+  },
+  "GN-783": {
+    "name": "Orange red",
+    "srgb": [
+      235,
+      79,
+      25
+    ],
+    "adobe_rgb": [
+      205,
+      80,
+      35
+    ]
+  },
+  "GN-784": {
+    "name": "Dull red",
+    "srgb": [
+      145,
+      35,
+      41
+    ],
+    "adobe_rgb": [
+      125,
+      40,
+      45
+    ]
+  },
+  "GN-785": {
+    "name": "Vermilion",
+    "srgb": [
+      206,
+      84,
+      38
+    ],
+    "adobe_rgb": [
+      180,
+      85,
+      45
+    ]
+  },
+  "GN-786": {
+    "name": "Yellow orange",
+    "srgb": [
+      245,
+      167,
+      19
+    ],
+    "adobe_rgb": [
+      225,
+      165,
+      45
+    ]
+  },
+  "GN-787": {
+    "name": "Straw yellow",
+    "srgb": [
+      196,
+      196,
+      68
+    ],
+    "adobe_rgb": [
+      195,
+      195,
+      80
+    ]
+  },
+  "GN-788": {
+    "name": "Native yellow",
+    "srgb": [
+      159,
+      167,
+      102
+    ],
+    "adobe_rgb": [
+      160,
+      165,
+      105
+    ]
+  },
+  "GN-789": {
+    "name": "Brownish green",
+    "srgb": [
+      90,
+      90,
+      61
+    ],
+    "adobe_rgb": [
+      90,
+      90,
+      65
+    ]
+  },
+  "GN-790": {
+    "name": "Olive green",
+    "srgb": [
+      114,
+      121,
+      71
+    ],
+    "adobe_rgb": [
+      115,
+      120,
+      75
+    ]
+  },
+  "GN-791": {
+    "name": "Black green",
+    "srgb": [
+      35,
+      79,
+      50
+    ],
+    "adobe_rgb": [
+      55,
+      80,
+      55
+    ]
+  },
+  "GN-792": {
+    "name": "Old green",
+    "srgb": [
+      68,
+      126,
+      110
+    ],
+    "adobe_rgb": [
+      90,
+      125,
+      110
+    ]
+  },
+  "GN-793": {
+    "name": "Moss green",
+    "srgb": [
+      139,
+      146,
+      74
+    ],
+    "adobe_rgb": [
+      140,
+      145,
+      80
+    ]
+  },
+  "GN-794": {
+    "name": "Turquoise green",
+    "srgb": [
+      0,
+      136,
+      63
+    ],
+    "adobe_rgb": [
+      75,
+      135,
+      70
+    ]
+  },
+  "GN-795": {
+    "name": "Dark green",
+    "srgb": [
+      8,
+      95,
+      61
+    ],
+    "adobe_rgb": [
+      55,
+      95,
+      65
+    ]
+  },
+  "GN-796": {
+    "name": "Aquamarine",
+    "srgb": [
+      0,
+      110,
+      66
+    ],
+    "adobe_rgb": [
+      60,
+      110,
+      70
+    ]
+  },
+  "GN-797": {
+    "name": "Dark cyan",
+    "srgb": [
+      5,
+      105,
+      111
+    ],
+    "adobe_rgb": [
+      60,
+      105,
+      110
+    ]
+  },
+  "GN-798": {
+    "name": "Dark teal",
+    "srgb": [
+      0,
+      116,
+      173
+    ],
+    "adobe_rgb": [
+      65,
+      115,
+      170
+    ]
+  },
+  "GN-799": {
+    "name": "Peacock green",
+    "srgb": [
+      0,
+      156,
+      156
+    ],
+    "adobe_rgb": [
+      85,
+      155,
+      155
+    ]
+  },
+  "GN-800": {
+    "name": "Deepsea green",
+    "srgb": [
+      19,
+      110,
+      116
+    ],
+    "adobe_rgb": [
+      65,
+      110,
+      115
+    ]
+  },
+  "GN-801": {
+    "name": "Feather white",
+    "srgb": [
+      240,
+      240,
+      240
+    ],
+    "adobe_rgb": [
+      240,
+      240,
+      240
+    ]
+  },
+  "GN-802": {
+    "name": "Mango yellow",
+    "srgb": [
+      248,
+      177,
+      71
+    ],
+    "adobe_rgb": [
+      230,
+      175,
+      80
+    ]
+  },
+  "GN-803": {
+    "name": "Light cloud white",
+    "srgb": [
+      231,
+      231,
+      231
+    ],
+    "adobe_rgb": [
+      230,
+      230,
+      230
+    ]
+  },
+  "GN-804": {
+    "name": "Pewter",
+    "srgb": [
+      221,
+      221,
+      221
+    ],
+    "adobe_rgb": [
+      220,
+      220,
+      220
+    ]
+  },
+  "GN-805": {
+    "name": "Coal gray",
+    "srgb": [
+      161,
+      161,
+      156
+    ],
+    "adobe_rgb": [
+      160,
+      160,
+      155
+    ]
+  },
+  "GN-806": {
+    "name": "Faded red",
+    "srgb": [
+      57,
+      90,
+      117
+    ],
+    "adobe_rgb": [
+      70,
+      90,
+      115
+    ]
+  },
+  "GN-807": {
+    "name": "Cool black",
+    "srgb": [
+      52,
+      52,
+      58
+    ],
+    "adobe_rgb": [
+      55,
+      55,
+      60
+    ]
+  },
+  "GN-808": {
+    "name": "Grayish purple",
+    "srgb": [
+      91,
+      63,
+      91
+    ],
+    "adobe_rgb": [
+      85,
+      65,
+      90
+    ]
+  },
+  "GN-809": {
+    "name": "Hazy green",
+    "srgb": [
+      215,
+      236,
+      205
+    ],
+    "adobe_rgb": [
+      220,
+      235,
+      205
+    ]
+  },
+  "GN-810": {
+    "name": "Light grass yellow",
+    "srgb": [
+      217,
+      196,
+      116
+    ],
+    "adobe_rgb": [
+      210,
+      195,
+      120
+    ]
+  },
+  "GN-811": {
+    "name": "Straw yellow",
+    "srgb": [
+      195,
+      181,
+      106
+    ],
+    "adobe_rgb": [
+      190,
+      180,
+      110
+    ]
+  },
+  "GN-812": {
+    "name": "Khaki green",
+    "srgb": [
+      177,
+      156,
+      85
+    ],
+    "adobe_rgb": [
+      170,
+      155,
+      90
+    ]
+  },
+  "GN-813": {
+    "name": "Grass yellow",
+    "srgb": [
+      200,
+      167,
+      78
+    ],
+    "adobe_rgb": [
+      190,
+      165,
+      85
+    ]
+  },
+  "GN-814": {
+    "name": "Sandalwood yellow",
+    "srgb": [
+      213,
+      167,
+      102
+    ],
+    "adobe_rgb": [
+      200,
+      165,
+      105
+    ]
+  },
+  "GN-815": {
+    "name": "Canghuang",
+    "srgb": [
+      217,
+      177,
+      64
+    ],
+    "adobe_rgb": [
+      205,
+      175,
+      75
+    ]
+  },
+  "GN-816": {
+    "name": "Dark chartreuse",
+    "srgb": [
+      159,
+      131,
+      38
+    ],
+    "adobe_rgb": [
+      150,
+      130,
+      50
+    ]
+  },
+  "GN-817": {
+    "name": "Juyi yellow",
+    "srgb": [
+      201,
+      141,
+      18
+    ],
+    "adobe_rgb": [
+      185,
+      140,
+      40
+    ]
+  },
+  "GN-818": {
+    "name": "Water blue",
+    "srgb": [
+      190,
+      226,
+      231
+    ],
+    "adobe_rgb": [
+      200,
+      225,
+      230
+    ]
+  },
+  "GN-819": {
+    "name": "Crystal blue",
+    "srgb": [
+      124,
+      201,
+      222
+    ],
+    "adobe_rgb": [
+      150,
+      200,
+      220
+    ]
+  },
+  "GN-820": {
+    "name": "Peacock blue",
+    "srgb": [
+      52,
+      191,
+      222
+    ],
+    "adobe_rgb": [
+      115,
+      190,
+      220
+    ]
+  },
+  "GN-821": {
+    "name": "Ice blue",
+    "srgb": [
+      203,
+      231,
+      251
+    ],
+    "adobe_rgb": [
+      210,
+      230,
+      250
+    ]
+  },
+  "GN-822": {
+    "name": "Light blue",
+    "srgb": [
+      130,
+      206,
+      242
+    ],
+    "adobe_rgb": [
+      155,
+      205,
+      240
+    ]
+  },
+  "GN-823": {
+    "name": "Lake blue",
+    "srgb": [
+      60,
+      167,
+      203
+    ],
+    "adobe_rgb": [
+      105,
+      165,
+      200
+    ]
+  },
+  "GN-824": {
+    "name": "Midnight blue",
+    "srgb": [
+      12,
+      74,
+      143
+    ],
+    "adobe_rgb": [
+      45,
+      75,
+      140
+    ]
+  },
+  "GN-825": {
+    "name": "Purple smoke color",
+    "srgb": [
+      218,
+      211,
+      221
+    ],
+    "adobe_rgb": [
+      215,
+      210,
+      220
+    ]
+  },
+  "GN-826": {
+    "name": "Purple lotus",
+    "srgb": [
+      183,
+      177,
+      207
+    ],
+    "adobe_rgb": [
+      180,
+      175,
+      205
+    ]
+  },
+  "GN-827": {
+    "name": "Greyish purple",
+    "srgb": [
+      131,
+      131,
+      168
+    ],
+    "adobe_rgb": [
+      130,
+      130,
+      165
+    ]
+  },
+  "GN-828": {
+    "name": "Aster purple",
+    "srgb": [
+      103,
+      110,
+      176
+    ],
+    "adobe_rgb": [
+      105,
+      110,
+      170
+    ]
+  },
+  "GN-829": {
+    "name": "Sand purple",
+    "srgb": [
+      208,
+      201,
+      206
+    ],
+    "adobe_rgb": [
+      205,
+      200,
+      205
+    ]
+  },
+  "GN-830": {
+    "name": "Smoke purple",
+    "srgb": [
+      175,
+      196,
+      232
+    ],
+    "adobe_rgb": [
+      180,
+      195,
+      230
+    ]
+  },
+  "GN-831": {
+    "name": "Dusk purple",
+    "srgb": [
+      159,
+      131,
+      163
+    ],
+    "adobe_rgb": [
+      150,
+      130,
+      160
+    ]
+  },
+  "GN-832": {
+    "name": "Amethyst",
+    "srgb": [
+      147,
+      74,
+      154
+    ],
+    "adobe_rgb": [
+      130,
+      75,
+      150
+    ]
+  },
+  "GN-833": {
+    "name": "Rose purple",
+    "srgb": [
+      169,
+      116,
+      173
+    ],
+    "adobe_rgb": [
+      155,
+      115,
+      170
+    ]
+  },
+  "GN-834": {
+    "name": "Peach powder",
+    "srgb": [
+      240,
+      206,
+      206
+    ],
+    "adobe_rgb": [
+      230,
+      205,
+      205
+    ]
+  },
+  "GN-835": {
+    "name": "Satin grey powder",
+    "srgb": [
+      226,
+      206,
+      216
+    ],
+    "adobe_rgb": [
+      220,
+      205,
+      215
+    ]
+  },
+  "GN-836": {
+    "name": "Soft pink",
+    "srgb": [
+      254,
+      240,
+      246
+    ],
+    "adobe_rgb": [
+      250,
+      240,
+      245
+    ]
+  },
+  "GN-837": {
+    "name": "Rose pink",
+    "srgb": [
+      251,
+      231,
+      231
+    ],
+    "adobe_rgb": [
+      245,
+      230,
+      230
+    ]
+  },
+  "GN-838": {
+    "name": "Moonlit powder",
+    "srgb": [
+      250,
+      214,
+      226
+    ],
+    "adobe_rgb": [
+      240,
+      215,
+      220
+    ]
+  },
+  "GN-839": {
+    "name": "Moon white",
+    "srgb": [
+      228,
+      181,
+      181
+    ],
+    "adobe_rgb": [
+      215,
+      180,
+      180
+    ]
+  },
+  "GN-840": {
+    "name": "Ceramic powder",
+    "srgb": [
+      241,
+      201,
+      206
+    ],
+    "adobe_rgb": [
+      230,
+      200,
+      205
+    ]
+  },
+  "GN-841": {
+    "name": "Hazy blue",
+    "srgb": [
+      185,
+      221,
+      236
+    ],
+    "adobe_rgb": [
+      195,
+      220,
+      235
+    ]
+  },
+  "GN-842": {
+    "name": "Azure",
+    "srgb": [
+      141,
+      201,
+      212
+    ],
+    "adobe_rgb": [
+      160,
+      200,
+      210
+    ]
+  },
+  "GN-843": {
+    "name": "Smoke cyan",
+    "srgb": [
+      175,
+      211,
+      206
+    ],
+    "adobe_rgb": [
+      185,
+      210,
+      205
+    ]
+  },
+  "GN-844": {
+    "name": "Cold frost cyan",
+    "srgb": [
+      153,
+      181,
+      181
+    ],
+    "adobe_rgb": [
+      160,
+      180,
+      180
+    ]
+  },
+  "GN-845": {
+    "name": "Emerald green",
+    "srgb": [
+      43,
+      177,
+      64
+    ],
+    "adobe_rgb": [
+      105,
+      175,
+      75
+    ]
+  },
+  "GN-846": {
+    "name": "Wood green",
+    "srgb": [
+      117,
+      186,
+      63
+    ],
+    "adobe_rgb": [
+      140,
+      185,
+      75
+    ]
+  },
+  "GN-847": {
+    "name": "Willow yellow",
+    "srgb": [
+      204,
+      211,
+      65
+    ],
+    "adobe_rgb": [
+      205,
+      210,
+      80
+    ]
+  },
+  "GN-848": {
+    "name": "Grey frost green",
+    "srgb": [
+      216,
+      216,
+      180
+    ],
+    "adobe_rgb": [
+      215,
+      215,
+      180
+    ]
+  },
+  "GN-849": {
+    "name": "Wasabi green",
+    "srgb": [
+      161,
+      161,
+      31
+    ],
+    "adobe_rgb": [
+      160,
+      160,
+      50
+    ]
+  },
+  "GN-850": {
+    "name": "Turquoise green",
+    "srgb": [
+      124,
+      201,
+      196
+    ],
+    "adobe_rgb": [
+      150,
+      200,
+      195
+    ]
+  },
+  "GN-851": {
+    "name": "Nordic green",
+    "srgb": [
+      185,
+      206,
+      180
+    ],
+    "adobe_rgb": [
+      190,
+      205,
+      180
+    ]
+  },
+  "GN-852": {
+    "name": "Khaki green",
+    "srgb": [
+      157,
+      172,
+      59
+    ],
+    "adobe_rgb": [
+      160,
+      170,
+      70
+    ]
+  },
+  "GN-853": {
+    "name": "Rice grey",
+    "srgb": [
+      221,
+      221,
+      216
+    ],
+    "adobe_rgb": [
+      220,
+      220,
+      215
+    ]
+  },
+  "GN-854": {
+    "name": "Fluorescent pink",
+    "srgb": [
+      231,
+      146,
+      152
+    ],
+    "adobe_rgb": [
+      210,
+      145,
+      150
+    ]
+  },
+  "GN-855": {
+    "name": "Fluorescent yellow",
+    "srgb": [
+      236,
+      236,
+      106
+    ],
+    "adobe_rgb": [
+      235,
+      235,
+      115
+    ]
+  },
+  "GN-856": {
+    "name": "Fluorescent green",
+    "srgb": [
+      193,
+      221,
+      120
+    ],
+    "adobe_rgb": [
+      200,
+      220,
+      125
+    ]
+  },
+  "GN-857": {
+    "name": "Cement blue",
+    "srgb": [
+      132,
+      161,
+      182
+    ],
+    "adobe_rgb": [
+      140,
+      160,
+      180
+    ]
+  },
+  "GN-858": {
+    "name": "Wind chime grey",
+    "srgb": [
+      187,
+      201,
+      149
+    ],
+    "adobe_rgb": [
+      190,
+      200,
+      150
+    ]
+  },
+  "GN-859": {
+    "name": "Fluorescent orange",
+    "srgb": [
+      242,
+      151,
+      119
+    ],
+    "adobe_rgb": [
+      220,
+      150,
+      120
+    ]
+  },
+  "GN-860": {
+    "name": "Graphite ash",
+    "srgb": [
+      109,
+      122,
+      124
+    ],
+    "adobe_rgb": null
+  },
+  "GN-861": {
+    "name": "Mountain ash",
+    "srgb": [
+      184,
+      191,
+      191
+    ],
+    "adobe_rgb": [
+      185,
+      190,
+      190
+    ]
+  },
+  "GN-862": {
+    "name": "Rouge grey",
+    "srgb": [
+      234,
+      221,
+      226
+    ],
+    "adobe_rgb": [
+      230,
+      220,
+      225
+    ]
+  },
+  "GN-863": {
+    "name": "Cinnamon brown",
+    "srgb": [
+      167,
+      100,
+      61
+    ],
+    "adobe_rgb": [
+      150,
+      100,
+      65
+    ]
+  },
+  "GN-864": {
+    "name": "Walnut brown",
+    "srgb": [
+      134,
+      74,
+      45
+    ],
+    "adobe_rgb": [
+      120,
+      75,
+      50
+    ]
+  },
+  "GN-865": {
+    "name": "Elegant brown",
+    "srgb": [
+      128,
+      121,
+      110
+    ],
+    "adobe_rgb": [
+      125,
+      120,
+      110
+    ]
+  },
+  "GN-866": {
+    "name": "Ebony palm",
+    "srgb": [
+      141,
+      100,
+      66
+    ],
+    "adobe_rgb": [
+      130,
+      100,
+      70
+    ]
+  },
+  "GN-867": {
+    "name": "Caramel brown",
+    "srgb": [
+      112,
+      57,
+      40
+    ],
+    "adobe_rgb": [
+      100,
+      60,
+      45
+    ]
+  },
+  "GN-868": {
+    "name": "Dry leaf brown",
+    "srgb": [
+      202,
+      161,
+      91
+    ],
+    "adobe_rgb": [
+      190,
+      160,
+      95
+    ]
+  },
+  "GN-869": {
+    "name": "Chocolate brown",
+    "srgb": [
+      168,
+      95,
+      89
+    ],
+    "adobe_rgb": [
+      150,
+      95,
+      90
+    ]
+  },
+  "GN-870": {
+    "name": "Clay brown",
+    "srgb": [
+      162,
+      141,
+      136
+    ],
+    "adobe_rgb": [
+      155,
+      140,
+      135
+    ]
+  },
+  "GN-871": {
+    "name": "Almond brown",
+    "srgb": [
+      239,
+      226,
+      190
+    ],
+    "adobe_rgb": [
+      235,
+      225,
+      190
+    ]
+  },
+  "GN-872": {
+    "name": "Rouge powder",
+    "srgb": [
+      249,
+      196,
+      202
+    ],
+    "adobe_rgb": [
+      235,
+      195,
+      200
+    ]
+  },
+  "GN-873": {
+    "name": "Ballet pink",
+    "srgb": [
+      246,
+      206,
+      222
+    ],
+    "adobe_rgb": [
+      235,
+      205,
+      220
+    ]
+  },
+  "GN-874": {
+    "name": "Light sand yellow",
+    "srgb": [
+      234,
+      221,
+      180
+    ],
+    "adobe_rgb": [
+      230,
+      220,
+      180
+    ]
+  },
+  "GN-875": {
+    "name": "Honey brown",
+    "srgb": [
+      176,
+      79,
+      44
+    ],
+    "adobe_rgb": [
+      155,
+      80,
+      50
+    ]
+  },
+  "GN-876": {
+    "name": "Williow bud white",
+    "srgb": [
+      227,
+      240,
+      151
+    ],
+    "adobe_rgb": [
+      230,
+      240,
+      155
+    ]
+  },
+  "GN-877": {
+    "name": "Jasmine white",
+    "srgb": [
+      252,
+      245,
+      225
+    ],
+    "adobe_rgb": [
+      250,
+      245,
+      225
+    ]
+  },
+  "GN-878": {
+    "name": "Ice white",
+    "srgb": [
+      215,
+      236,
+      251
+    ],
+    "adobe_rgb": [
+      220,
+      235,
+      250
+    ]
+  },
+  "GN-879": {
+    "name": "Water white",
+    "srgb": [
+      221,
+      221,
+      246
+    ],
+    "adobe_rgb": [
+      220,
+      220,
+      245
+    ]
+  },
+  "GN-880": {
+    "name": "Purple mist white",
+    "srgb": [
+      239,
+      226,
+      241
+    ],
+    "adobe_rgb": [
+      235,
+      225,
+      240
+    ]
+  },
+  "GN-881": {
+    "name": "Makeup white",
+    "srgb": [
+      255,
+      226,
+      231
+    ],
+    "adobe_rgb": [
+      250,
+      225,
+      230
+    ]
+  },
+  "GN-882": {
+    "name": "Pink white",
+    "srgb": [
+      255,
+      236,
+      225
+    ],
+    "adobe_rgb": [
+      250,
+      235,
+      225
+    ]
+  },
+  "GN-883": {
+    "name": "Gardenia white",
+    "srgb": [
+      252,
+      245,
+      230
+    ],
+    "adobe_rgb": [
+      250,
+      245,
+      230
+    ]
+  },
+  "GN-884": {
+    "name": "Matte white",
+    "srgb": [
+      224,
+      231,
+      236
+    ],
+    "adobe_rgb": [
+      225,
+      230,
+      235
+    ]
+  },
+  "GN-885": {
+    "name": "Lanbai",
+    "srgb": [
+      173,
+      216,
+      201
+    ],
+    "adobe_rgb": [
+      185,
+      215,
+      200
+    ]
+  },
+  "GN-886": {
+    "name": "Snow green white",
+    "srgb": [
+      227,
+      240,
+      220
+    ],
+    "adobe_rgb": [
+      230,
+      240,
+      220
+    ]
+  },
+  "GN-887": {
+    "name": "Snowwhite",
+    "srgb": [
+      254,
+      240,
+      210
+    ],
+    "adobe_rgb": [
+      250,
+      240,
+      210
+    ]
+  },
+  "GN-888": {
+    "name": "Azure blue",
+    "srgb": [
+      131,
+      191,
+      222
+    ],
+    "adobe_rgb": [
+      150,
+      190,
+      220
+    ]
+  },
+  "GN-889": {
+    "name": "Cloud blue",
+    "srgb": [
+      82,
+      201,
+      237
+    ],
+    "adobe_rgb": [
+      130,
+      200,
+      235
+    ]
+  },
+  "GN-890": {
+    "name": "Sea wave blue",
+    "srgb": [
+      92,
+      181,
+      228
+    ],
+    "adobe_rgb": [
+      125,
+      180,
+      225
+    ]
+  },
+  "GN-891": {
+    "name": "Crystal blue",
+    "srgb": [
+      14,
+      177,
+      238
+    ],
+    "adobe_rgb": [
+      100,
+      175,
+      235
+    ]
+  },
+  "GN-892": {
+    "name": "Sea cyan",
+    "srgb": [
+      35,
+      161,
+      203
+    ],
+    "adobe_rgb": [
+      95,
+      160,
+      200
+    ]
+  },
+  "GN-893": {
+    "name": "Sapphire blue",
+    "srgb": [
+      3,
+      151,
+      218
+    ],
+    "adobe_rgb": [
+      85,
+      150,
+      215
+    ]
+  },
+  "GN-894": {
+    "name": "Classic blue",
+    "srgb": [
+      9,
+      141,
+      214
+    ],
+    "adobe_rgb": [
+      80,
+      140,
+      210
+    ]
+  },
+  "GN-895": {
+    "name": "Prusian blue",
+    "srgb": [
+      5,
+      105,
+      184
+    ],
+    "adobe_rgb": [
+      60,
+      105,
+      180
+    ]
+  },
+  "GN-896": {
+    "name": "Aegean Sea blue",
+    "srgb": [
+      20,
+      100,
+      158
+    ],
+    "adobe_rgb": [
+      60,
+      100,
+      155
+    ]
+  },
+  "GN-897": {
+    "name": "Nightfall blue",
+    "srgb": [
+      24,
+      41,
+      123
+    ],
+    "adobe_rgb": [
+      35,
+      45,
+      120
+    ]
+  },
+  "GN-898": {
+    "name": "Light ice blue",
+    "srgb": [
+      170,
+      206,
+      237
+    ],
+    "adobe_rgb": [
+      180,
+      205,
+      235
+    ]
+  },
+  "GN-899": {
+    "name": "Indigo purple",
+    "srgb": [
+      145,
+      167,
+      218
+    ],
+    "adobe_rgb": [
+      150,
+      165,
+      215
+    ]
+  },
+  "GN-900": {
+    "name": "Agate purple",
+    "srgb": [
+      126,
+      126,
+      183
+    ],
+    "adobe_rgb": [
+      125,
+      125,
+      180
+    ]
+  },
+  "GN-901": {
+    "name": "Cyanoze",
+    "srgb": [
+      63,
+      63,
+      149
+    ],
+    "adobe_rgb": [
+      65,
+      65,
+      145
+    ]
+  },
+  "GN-902": {
+    "name": "Morning glory purple",
+    "srgb": [
+      87,
+      52,
+      119
+    ],
+    "adobe_rgb": [
+      80,
+      55,
+      116
+    ]
+  },
+  "GN-903": {
+    "name": "Litmus red",
+    "srgb": [
+      252,
+      206,
+      216
+    ],
+    "adobe_rgb": [
+      240,
+      205,
+      215
+    ]
+  },
+  "GN-904": {
+    "name": "Glow red",
+    "srgb": [
+      237,
+      110,
+      163
+    ],
+    "adobe_rgb": [
+      210,
+      110,
+      160
+    ]
+  },
+  "GN-905": {
+    "name": "Lotus pink",
+    "srgb": [
+      239,
+      100,
+      163
+    ],
+    "adobe_rgb": [
+      210,
+      100,
+      160
+    ]
+  },
+  "GN-906": {
+    "name": "Redbud red",
+    "srgb": [
+      202,
+      63,
+      144
+    ],
+    "adobe_rgb": [
+      175,
+      65,
+      140
+    ]
+  },
+  "GN-907": {
+    "name": "Chinese rose red",
+    "srgb": [
+      215,
+      46,
+      102
+    ],
+    "adobe_rgb": [
+      185,
+      50,
+      100
+    ]
+  },
+  "GN-908": {
+    "name": "Magenta red",
+    "srgb": [
+      208,
+      105,
+      137
+    ],
+    "adobe_rgb": [
+      185,
+      105,
+      135
+    ]
+  },
+  "GN-909": {
+    "name": "Saffron red",
+    "srgb": [
+      204,
+      95,
+      164
+    ],
+    "adobe_rgb": [
+      180,
+      95,
+      160
+    ]
+  },
+  "GN-910": {
+    "name": "Crimson",
+    "srgb": [
+      207,
+      74,
+      106
+    ],
+    "adobe_rgb": [
+      180,
+      75,
+      105
+    ]
+  },
+  "GN-911": {
+    "name": "Cream orange",
+    "srgb": [
+      249,
+      216,
+      185
+    ],
+    "adobe_rgb": [
+      240,
+      215,
+      185
+    ]
+  },
+  "GN-912": {
+    "name": "Pomelo skin",
+    "srgb": [
+      252,
+      206,
+      191
+    ],
+    "adobe_rgb": [
+      240,
+      205,
+      190
+    ]
+  },
+  "GN-913": {
+    "name": "Jade pink",
+    "srgb": [
+      234,
+      181,
+      161
+    ],
+    "adobe_rgb": [
+      220,
+      180,
+      160
+    ]
+  },
+  "GN-914": {
+    "name": "Peach blush",
+    "srgb": [
+      251,
+      211,
+      175
+    ],
+    "adobe_rgb": [
+      240,
+      210,
+      175
+    ]
+  },
+  "GN-915": {
+    "name": "Dark skin brown",
+    "srgb": [
+      243,
+      172,
+      145
+    ],
+    "adobe_rgb": [
+      225,
+      170,
+      145
+    ]
+  },
+  "GN-916": {
+    "name": "Crab shell red",
+    "srgb": [
+      238,
+      167,
+      121
+    ],
+    "adobe_rgb": [
+      220,
+      165,
+      122
+    ]
+  },
+  "GN-917": {
+    "name": "Light coral",
+    "srgb": [
+      246,
+      217,
+      219
+    ],
+    "adobe_rgb": [
+      240,
+      215,
+      220
+    ]
+  },
+  "GN-918": {
+    "name": "Hawthorn red",
+    "srgb": [
+      234,
+      181,
+      187
+    ],
+    "adobe_rgb": [
+      220,
+      180,
+      185
+    ]
+  },
+  "GN-919": {
+    "name": "Faro red",
+    "srgb": [
+      194,
+      116,
+      121
+    ],
+    "adobe_rgb": [
+      175,
+      115,
+      120
+    ]
+  },
+  "GN-920": {
+    "name": "Sunset glow red",
+    "srgb": [
+      192,
+      95,
+      95
+    ],
+    "adobe_rgb": [
+      170,
+      95,
+      95
+    ]
+  },
+  "GN-921": {
+    "name": "Cocoa red",
+    "srgb": [
+      198,
+      95,
+      89
+    ],
+    "adobe_rgb": [
+      175,
+      95,
+      90
+    ]
+  },
+  "GN-922": {
+    "name": "Lava red",
+    "srgb": [
+      177,
+      74,
+      85
+    ],
+    "adobe_rgb": [
+      155,
+      75,
+      85
+    ]
+  },
+  "GN-923": {
+    "name": "Harrier crest",
+    "srgb": [
+      145,
+      41,
+      64
+    ],
+    "adobe_rgb": [
+      125,
+      45,
+      65
+    ]
+  },
+  "GN-924": {
+    "name": "Pale white",
+    "srgb": [
+      245,
+      245,
+      230
+    ],
+    "adobe_rgb": [
+      245,
+      245,
+      230
+    ]
+  },
+  "GN-925": {
+    "name": "Soy milk beige",
+    "srgb": [
+      224,
+      231,
+      174
+    ],
+    "adobe_rgb": [
+      225,
+      230,
+      175
+    ]
+  },
+  "GN-926": {
+    "name": "Lotus seed white",
+    "srgb": [
+      236,
+      216,
+      180
+    ],
+    "adobe_rgb": [
+      230,
+      215,
+      180
+    ]
+  },
+  "GN-927": {
+    "name": "Wheat hull beige",
+    "srgb": [
+      225,
+      191,
+      155
+    ],
+    "adobe_rgb": [
+      215,
+      190,
+      155
+    ]
+  },
+  "GN-928": {
+    "name": "Hump brown",
+    "srgb": [
+      212,
+      172,
+      118
+    ],
+    "adobe_rgb": [
+      200,
+      170,
+      120
+    ]
+  },
+  "GN-929": {
+    "name": "Almond yellow",
+    "srgb": [
+      244,
+      211,
+      148
+    ],
+    "adobe_rgb": [
+      235,
+      210,
+      150
+    ]
+  },
+  "GN-930": {
+    "name": "Ginkgo orange",
+    "srgb": [
+      242,
+      151,
+      14
+    ],
+    "adobe_rgb": [
+      220,
+      150,
+      40
+    ]
+  },
+  "GN-931": {
+    "name": "Suede brown",
+    "srgb": [
+      216,
+      131,
+      45
+    ],
+    "adobe_rgb": [
+      195,
+      130,
+      55
+    ]
+  },
+  "GN-932": {
+    "name": "Coconut brown",
+    "srgb": [
+      186,
+      126,
+      52
+    ],
+    "adobe_rgb": [
+      170,
+      125,
+      60
+    ]
+  },
+  "GN-933": {
+    "name": "Lemon yellow",
+    "srgb": [
+      252,
+      245,
+      86
+    ],
+    "adobe_rgb": [
+      250,
+      245,
+      100
+    ]
+  },
+  "GN-934": {
+    "name": "Papaya yellow",
+    "srgb": [
+      252,
+      206,
+      8
+    ],
+    "adobe_rgb": [
+      240,
+      205,
+      50
+    ]
+  },
+  "GN-935": {
+    "name": "Moonlight orange",
+    "srgb": [
+      248,
+      177,
+      0
+    ],
+    "adobe_rgb": [
+      230,
+      175,
+      40
+    ]
+  },
+  "GN-936": {
+    "name": "Glazed orange",
+    "srgb": [
+      249,
+      172,
+      78
+    ],
+    "adobe_rgb": [
+      230,
+      170,
+      85
+    ]
+  },
+  "GN-937": {
+    "name": "Vibrant orange",
+    "srgb": [
+      241,
+      126,
+      2
+    ],
+    "adobe_rgb": [
+      215,
+      125,
+      30
+    ]
+  },
+  "GN-938": {
+    "name": "Vanilla green",
+    "srgb": [
+      196,
+      196,
+      28
+    ],
+    "adobe_rgb": [
+      195,
+      195,
+      55
+    ]
+  },
+  "GN-939": {
+    "name": "Apple green",
+    "srgb": [
+      195,
+      216,
+      64
+    ],
+    "adobe_rgb": [
+      200,
+      215,
+      80
+    ]
+  },
+  "GN-940": {
+    "name": "Jade green",
+    "srgb": [
+      178,
+      206,
+      175
+    ],
+    "adobe_rgb": [
+      185,
+      205,
+      175
+    ]
+  },
+  "GN-941": {
+    "name": "Algae green",
+    "srgb": [
+      0,
+      146,
+      62
+    ],
+    "adobe_rgb": [
+      80,
+      145,
+      70
+    ]
+  },
+  "GN-942": {
+    "name": "Enamel green",
+    "srgb": [
+      0,
+      121,
+      65
+    ],
+    "adobe_rgb": [
+      65,
+      120,
+      70
+    ]
+  },
+  "GN-943": {
+    "name": "Silk yellow",
+    "srgb": [
+      192,
+      172,
+      71
+    ],
+    "adobe_rgb": [
+      185,
+      170,
+      80
+    ]
+  },
+  "GN-944": {
+    "name": "Reed green",
+    "srgb": [
+      192,
+      151,
+      0
+    ],
+    "adobe_rgb": [
+      180,
+      150,
+      35
+    ]
+  },
+  "GN-945": {
+    "name": "Dark cyan",
+    "srgb": [
+      100,
+      100,
+      55
+    ],
+    "adobe_rgb": [
+      100,
+      100,
+      60
+    ]
+  },
+  "GN-946": {
+    "name": "Pond green",
+    "srgb": [
+      130,
+      116,
+      59
+    ],
+    "adobe_rgb": [
+      125,
+      115,
+      65
+    ]
+  },
+  "GN-947": {
+    "name": "Turtle shell",
+    "srgb": [
+      121,
+      100,
+      61
+    ],
+    "adobe_rgb": [
+      115,
+      100,
+      65
+    ]
+  },
+  "GN-948": {
+    "name": "Palm green",
+    "srgb": [
+      100,
+      79,
+      56
+    ],
+    "adobe_rgb": [
+      95,
+      80,
+      60
+    ]
+  },
+  "GN-949": {
+    "name": "Frost white",
+    "srgb": [
+      226,
+      226,
+      226
+    ],
+    "adobe_rgb": [
+      225,
+      225,
+      225
+    ]
+  },
+  "GN-950": {
+    "name": "Moon shadow grey",
+    "srgb": [
+      196,
+      196,
+      196
+    ],
+    "adobe_rgb": [
+      195,
+      195,
+      195
+    ]
+  },
+  "GN-951": {
+    "name": "Cool gray",
+    "srgb": [
+      172,
+      186,
+      192
+    ],
+    "adobe_rgb": [
+      175,
+      185,
+      190
+    ]
+  },
+  "GN-952": {
+    "name": "Warship gray",
+    "srgb": [
+      152,
+      167,
+      182
+    ],
+    "adobe_rgb": [
+      155,
+      165,
+      180
+    ]
+  },
+  "GN-953": {
+    "name": "Smoke gray",
+    "srgb": [
+      132,
+      146,
+      136
+    ],
+    "adobe_rgb": [
+      135,
+      145,
+      135
+    ]
+  },
+  "GN-954": {
+    "name": "Crab shell cyan",
+    "srgb": [
+      140,
+      177,
+      192
+    ],
+    "adobe_rgb": [
+      150,
+      175,
+      190
+    ]
+  },
+  "GN-955": {
+    "name": "Sea foam green",
+    "srgb": [
+      214,
+      221,
+      211
+    ],
+    "adobe_rgb": [
+      215,
+      220,
+      210
+    ]
+  },
+  "GN-956": {
+    "name": "Matte gray",
+    "srgb": [
+      189,
+      196,
+      186
+    ],
+    "adobe_rgb": [
+      190,
+      195,
+      185
+    ]
+  },
+  "GN-957": {
+    "name": "Seagull gray",
+    "srgb": [
+      183,
+      177,
+      171
+    ],
+    "adobe_rgb": [
+      180,
+      175,
+      170
+    ]
+  },
+  "GN-958": {
+    "name": "Red gray",
+    "srgb": [
+      161,
+      133,
+      120
+    ],
+    "adobe_rgb": [
+      152,
+      132,
+      120
+    ]
+  },
+  "GN-959": {
+    "name": "Wild goose gray",
+    "srgb": [
+      116,
+      116,
+      116
+    ],
+    "adobe_rgb": [
+      115,
+      115,
+      115
+    ]
+  },
+  "GN-960": {
+    "name": "Latte brown",
+    "srgb": [
+      164,
+      110,
+      47
+    ],
+    "adobe_rgb": [
+      150,
+      110,
+      55
+    ]
+  },
+  "GN-961": {
+    "name": "Cloud moss",
+    "srgb": [
+      184,
+      191,
+      171
+    ],
+    "adobe_rgb": [
+      185,
+      190,
+      170
+    ]
+  },
+  "GN-962": {
+    "name": "Taro purple",
+    "srgb": [
+      175,
+      161,
+      203
+    ],
+    "adobe_rgb": [
+      170,
+      160,
+      200
+    ]
+  },
+  "GN-963": {
+    "name": "Sienna red",
+    "srgb": [
+      120,
+      46,
+      52
+    ],
+    "adobe_rgb": [
+      105,
+      50,
+      55
+    ]
+  },
+  "GN-964": {
+    "name": "Cocoa brown",
+    "srgb": [
+      159,
+      131,
+      93
+    ],
+    "adobe_rgb": [
+      150,
+      130,
+      95
+    ]
+  },
+  "GN-965": {
+    "name": "Cheek red",
+    "srgb": [
+      242,
+      177,
+      192
+    ],
+    "adobe_rgb": [
+      225,
+      175,
+      190
+    ]
+  }
+}

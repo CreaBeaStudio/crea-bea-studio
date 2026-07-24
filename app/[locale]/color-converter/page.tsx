@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image"
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
@@ -184,10 +185,13 @@ export default function ColorConverter() {
               <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>{t("myMarkers.description")}</p>
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.setLabel")}</label>
               <select value={mySet} onChange={e=>setMySet(e.target.value)}
-                style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:12}}>
+                style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:4}}>
                 <option value="">{t("myMarkers.noneSelected")}</option>
                 {SET_OPTIONS.map(s=><option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
+              <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
+                Note: Metallic markers are not included.
+              </p>
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.extraCodesLabel")} <span style={{fontWeight:400,color:"var(--muted)"}}>{t("myMarkers.extraCodesHint")}</span></label>
               <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{width:"100%"}}/>
@@ -357,6 +361,7 @@ export default function ColorConverter() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

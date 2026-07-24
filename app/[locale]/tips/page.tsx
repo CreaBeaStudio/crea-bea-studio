@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { useTranslations } from "next-intl";
 
 const SECTIONS = [
@@ -39,6 +40,7 @@ export default function TipsAndTricks() {
           </a>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
