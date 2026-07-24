@@ -22,6 +22,11 @@ import { reopenConsentBanner } from "@/lib/cookieConsent";
 // Adjust the `useTranslations` import if your Navbar uses a different
 // i18n setup -- this assumes next-intl's `t("key")` pattern, matching
 // how the original inline footer called t().
+//
+// FIX (2026-07-24): the Tips & Tricks link was pointing at
+// "/Tips&Tricks", which doesn't match the actual route -- the page
+// lives at app/[locale]/tips/page.tsx, same as every other footer link
+// here matches its real folder name. Changed to "/tips".
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -61,7 +66,7 @@ export default function Footer() {
           <a href="/guangna-reference" style={linkStyle}>{t("footerGuangnaReference")}</a>
           <a href="/languo-converter" style={linkStyle}>{t("footerLanguoConverter")}</a>
           <a href="/examples" style={linkStyle}>{t("footerExamples")}</a>
-          <a href="/Tips&Tricks" style={linkStyle}>{t("footerTips")}</a>
+          <a href="/tips" style={linkStyle}>{t("footerTips")}</a>
           <a href="/faq" style={linkStyle}>{t("footerFaq")}</a>
         </div>
         <a href="https://www.tiktok.com/@CreaBeaStudio" target="_blank" rel="noopener noreferrer" style={linkStyle}>
