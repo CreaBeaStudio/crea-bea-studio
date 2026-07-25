@@ -6,6 +6,7 @@ import {
   CATEGORIES,
   MARKER_SETS,
   pageMatchesMarkerSet,
+  coloringPageThumbUrl,
   type CategoryId,
   type ColoringPage,
   type MarkerSetValue,
@@ -263,7 +264,7 @@ export default function ColoringPagesBrowser({
                       <div style={{ flex: 1 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`/coloring-pages/thumbs/${page.exampleImage}`}
+                          src={coloringPageThumbUrl(page.exampleImage)}
                           alt={`${page.title} —  Reference`}
                           style={{
                             width: "100%", aspectRatio: "3 / 4", objectFit: "cover",
@@ -276,7 +277,7 @@ export default function ColoringPagesBrowser({
                       <div style={{ flex: 1 }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`/coloring-pages/thumbs/${page.outlineImage}`}
+                          src={coloringPageThumbUrl(page.outlineImage)}
                           alt={`${page.title} — coloring page preview`}
                           style={{
                             width: "100%", aspectRatio: "3 / 4", objectFit: "cover",

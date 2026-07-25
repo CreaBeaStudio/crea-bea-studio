@@ -2,23 +2,46 @@
 // Free coloring pages — add a new page by adding one object below.
 // Each page gets its own URL automatically: /free-coloring-pages/<id>
 //
+// ── PUBLIC ASSETS (2026-07-17): PDFs and thumbnail images now live in
+// the same public GCS bucket as the examples page (crea-bea-public-
+// assets), not /public -- see next.config.ts's images.remotePatterns
+// and examples/page.tsx for the same pattern applied there. Moved out
+// of /public to avoid growing git history with large binary files.
+//
 // To add a new page:
-//   1. Drop the PDF into /public/coloring-pages/  (e.g. cat.pdf)
-//   2. (Optional but recommended) drop two preview images into
-//      /public/coloring-pages/thumbs/ :
+//   1. Upload the PDF to gs://crea-bea-public-assets/coloring-pages/
+//      (e.g. cat.pdf) -- e.g.
+//        gcloud storage cp cat.pdf gs://crea-bea-public-assets/coloring-pages/
+//   2. (Optional but recommended) upload two preview images to
+//      gs://crea-bea-public-assets/coloring-pages/thumbs/ :
 //        - an "example" image: the colored/finished reference picture
 //        - an "outline" image: a preview of the actual blank page
 //      Crop these yourself, or ask Claude to crop them from a
 //      customer-guide PDF the same way the two placeholders below
 //      were made (page 1's photo, page 2's outline, both cropped
 //      clean of tables/legend/logo — rotated back upright if needed).
-//   3. Add an entry to the array below.
+//   3. Add an entry to the array below -- fileName/exampleImage/
+//      outlineImage are still just FILENAMES (not full URLs); the
+//      helper functions below turn them into full GCS URLs wherever
+//      they're actually used (ColoringPagesBrowser, the detail page).
 //
 // Titles/descriptions here are shown as-is (not translated per-locale) —
 // keeping this simple on purpose so adding a page never requires touching
 // messages/*.json. If you'd like titles translated later, this is the
 // place to extend (e.g. swap `title: string` for `title: Record<string,string>`).
 // ─────────────────────────────────────────────────────────────────
+
+const GCS_PUBLIC_BASE = "https://storage.googleapis.com/crea-bea-public-assets";
+
+/** Full URL for a coloring page's downloadable PDF. */
+export function coloringPageFileUrl(fileName: string): string {
+  return `${GCS_PUBLIC_BASE}/coloring-pages/${fileName}`;
+}
+
+/** Full URL for a coloring page's example/outline thumbnail. */
+export function coloringPageThumbUrl(imageName: string): string {
+  return `${GCS_PUBLIC_BASE}/coloring-pages/thumbs/${imageName}`;
+}
 
 /**
  * Fixed high-level buckets for category browsing/filtering.
@@ -156,11 +179,11 @@ export type ColoringPage = {
    * already branches on this (see the [slug]/page.tsx download section).
    */
   price?: number;
-  /** Filename only — the file must exist at /public/coloring-pages/<fileName> */
+  /** Filename only — resolve with coloringPageFileUrl() to get the full GCS URL. Must exist at gs://crea-bea-public-assets/coloring-pages/<fileName> */
   fileName: string;
-  /** Optional colored/finished reference image — filename only, must exist at /public/coloring-pages/thumbs/<exampleImage> */
+  /** Optional colored/finished reference image — filename only, resolve with coloringPageThumbUrl(). Must exist at gs://crea-bea-public-assets/coloring-pages/thumbs/<exampleImage> */
   exampleImage?: string;
-  /** Optional preview of the actual blank coloring page — filename only, must exist at /public/coloring-pages/thumbs/<outlineImage> */
+  /** Optional preview of the actual blank coloring page — filename only, resolve with coloringPageThumbUrl(). Must exist at gs://crea-bea-public-assets/coloring-pages/thumbs/<outlineImage> */
   outlineImage?: string;
 };
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { coloringPages } from "@/lib/coloringPages";
+import { coloringPages, coloringPageFileUrl, coloringPageThumbUrl } from "@/lib/coloringPages";
 import Navbar from "../../components/Navbar";
 import BeforeAfterSlider from "../../components/BeforeAfterSlider";
 
@@ -62,8 +62,8 @@ export default async function ColoringPageDetail({ params }: Props) {
         // Both images present — interactive before/after slider.
         <div style={{ marginBottom: 32 }}>
           <BeforeAfterSlider
-            beforeImage={`/coloring-pages/thumbs/${page.exampleImage}`}
-            afterImage={`/coloring-pages/thumbs/${page.outlineImage}`}
+            beforeImage={coloringPageThumbUrl(page.exampleImage)}
+            afterImage={coloringPageThumbUrl(page.outlineImage)}
             beforeLabel="Reference"
             afterLabel={t("previewLabel")}
             aspectRatio={3 / 4}
@@ -78,7 +78,7 @@ export default async function ColoringPageDetail({ params }: Props) {
               <div style={{ flex: "1 1 240px" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/coloring-pages/thumbs/${page.exampleImage}`}
+                  src={coloringPageThumbUrl(page.exampleImage)}
                   alt={`${page.title} — Reference`}
                   style={{
                     width: "100%", borderRadius: 12, border: "1px solid var(--border)",
@@ -91,7 +91,7 @@ export default async function ColoringPageDetail({ params }: Props) {
               <div style={{ flex: "1 1 240px" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/coloring-pages/thumbs/${page.outlineImage}`}
+                  src={coloringPageThumbUrl(page.outlineImage)}
                   alt={`${page.title} — coloring page preview`}
                   style={{
                     width: "100%", borderRadius: 12, border: "1px solid var(--border)",
@@ -122,7 +122,7 @@ export default async function ColoringPageDetail({ params }: Props) {
         </div>
       ) : (
         <a
-          href={`/coloring-pages/${page.fileName}`}
+          href={coloringPageFileUrl(page.fileName)}
           download
           style={{
             display: "block", textAlign: "center", padding: "14px 24px",
