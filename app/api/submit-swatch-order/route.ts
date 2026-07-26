@@ -7,6 +7,11 @@ import type { SwatchSelectionItem, SwatchSelectionJson } from "@/lib/swatchOrder
 
 // Save this file as app/api/submit-swatch-order/route.ts
 //
+// UPDATED (2026-07-27): returns error CODES ("NO_ITEMS",
+// "INVALID_PAPER_SIZE", "COLOR_COUNT_MISMATCH", "WITHIN_FREE_TIER",
+// "SAVE_FAILED") instead of hardcoded English sentences -- see
+// lib/apiErrors.ts.
+//
 // Pre-payment step for the Custom Swatch Card Set flow: persists the
 // customer's built selection (item codes + PDF options) to GCS under a
 // fresh order ID, so it can be re-loaded on /swatch-download once
@@ -38,17 +43,17 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as SubmitBody;
 
     if (!Array.isArray(body.items) || body.items.length === 0) {
-      return NextResponse.json({ error: "No items provided" }, { status: 400 });
+      return NextResponse.json({ error: "NO_ITEMS" }, { status: 400 });
     }
     if (!body.options || (body.options.paperSize !== "a4" && body.options.paperSize !== "letter")) {
-      return NextResponse.json({ error: "Missing or invalid paperSize" }, { status: 400 });
+      return NextResponse.json({ error: "INVALID_PAPER_SIZE" }, { status: 400 });
     }
     if (typeof body.colorCount !== "number" || body.colorCount !== body.items.length) {
-      return NextResponse.json({ error: "colorCount doesn't match items length" }, { status: 400 });
+      return NextResponse.json({ error: "COLOR_COUNT_MISMATCH" }, { status: 400 });
     }
     if (body.colorCount <= FREE_COLOR_LIMIT) {
       // Nothing to sell -- this selection is already free, no order needed.
-      return NextResponse.json({ error: `Selections of ${FREE_COLOR_LIMIT} colors or fewer are free -- no checkout needed.` }, { status: 400 });
+      return NextResponse.json({ error: "WITHIN_FREE_TIER" }, { status: 400 });
     }
 
     const orderId = makeOrderId();
@@ -69,6 +74,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ orderId });
   } catch (e: any) {
     console.error("submit-swatch-order error:", e.message);
-    return NextResponse.json({ error: e.message || "Failed to save selection" }, { status: 500 });
+    return NextResponse.json({ error: "SAVE_FAILED" }, { status: 500 });
   }
 }

@@ -4,6 +4,14 @@
 // ABOVE the DIY tool itself (moved 2026-07-24 -- SwatchCreator.tsx
 // renders this first, before its own intro/builder).
 //
+// v3 change (2026-07-25, i18n round 3 -- "go big" for FR): the last
+// remaining hardcoded strings on this component are now translated --
+// the "Checkout link not set up yet" tooltip, the "A4"/"US" label
+// prefixes, and the "Link needed" fallback text, all under new keys
+// in the "readyMadePacks" namespace (linkNotSetUp, a4Label, usLabel,
+// linkNeeded). Brand names ("Guangna", "Languo") stay hardcoded --
+// they're product names, not UI copy, so they don't get translated.
+//
 // v2 changes (2026-07-24):
 //   1. Collapsible (default open) -- click the heading row to
 //      collapse/expand, same pattern SwatchCreator.tsx now uses for its
@@ -138,14 +146,14 @@ function PackTile({ pack }: { pack: Pack }) {
             className="btn-primary"
             style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center" }}
           >
-            A4 · {pack.a4.price}
+            {t("a4Label")} · {pack.a4.price}
           </a>
         ) : (
           <span
-            title="Checkout link not set up yet"
+            title={t("linkNotSetUp")}
             style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
           >
-            A4 · Link needed
+            {t("a4Label")} · {t("linkNeeded")}
           </span>
         )}
         {/* US Letter: USD prominent, EUR small underneath -- same
@@ -161,15 +169,15 @@ function PackTile({ pack }: { pack: Pack }) {
               display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
             }}
           >
-            <span style={{ fontWeight: 800 }}>US · {toUsdEstimate(pack.us.price)}</span>
+            <span style={{ fontWeight: 800 }}>{t("usLabel")} · {toUsdEstimate(pack.us.price)}</span>
             <span style={{ fontSize: 9.5, opacity: 0.85 }}>≈ {pack.us.price}</span>
           </a>
         ) : (
           <span
-            title="Checkout link not set up yet"
+            title={t("linkNotSetUp")}
             style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
           >
-            US · Link needed
+            {t("usLabel")} · {t("linkNeeded")}
           </span>
         )}
       </div>

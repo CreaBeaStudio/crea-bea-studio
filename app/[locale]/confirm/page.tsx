@@ -1,6 +1,24 @@
 "use client";
 // Save this file as app/[locale]/confirm/page.tsx
 //
+// UPDATED (2026-07-27): checkout errors from /api/create-checkout are
+// now translated via the shared "apiErrors" namespace using the CODE
+// the route returns (see lib/apiErrors.ts), instead of
+// `data.error || t("errors.startCheckout")` -- that pattern never
+// actually hit the translated fallback since data.error was always a
+// truthy English string from the route, so checkout errors showed up
+// in English regardless of locale. The client-detected network-failure
+// case (caught in the `catch` block, never reached the route at all)
+// still uses confirm.errors.generic, since that's not a route response.
+//
+// UPDATED (2026-07-27, i18n pass): full i18n pass -- every visible
+// string now routes through t() under a new "confirm" namespace. Level
+// and paper size labels are NOT duplicated here -- they're pulled from
+// the existing "create" namespace (create.levels.*, create.paper.*)
+// via a second useTranslations("create") call, since /confirm shows
+// exactly the same values /create does and they should only be
+// translated once, in one place.
+//
 // UPDATED (2026-07-24):
 //  - Paper size is no longer chosen here -- it's picked on /create
 //    (Step 4) and arrives via the `paperSize` URL param. This page now
@@ -33,18 +51,18 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { useTranslations } from "next-intl";
 import { GUANGNA_BY_NUMBER, toUsdEstimate } from "@/lib/lemonSqueezyPricing";
 import type { PaperSize } from "@/lib/lemonSqueezyPricing";
+import { isApiErrorCode } from "@/lib/apiErrors";
 
-const LEVELS: Record<string, { label: string }> = {
-  "15": { label: "🌱 Beginner" },
-  "24": { label: "🌿 Intermediate" },
-  "36": { label: "🌲 Advanced" },
-};
-
-const PAPER_LABELS: Record<PaperSize, string> = {
-  a4: "A4",
-  letter: "US Letter",
+// Maps level values onto the shared create.levels.* label keys -- see
+// create/page.tsx's LEVEL_KEYS, which this mirrors exactly (both pages
+// must agree on what these three values mean).
+const LEVEL_LABEL_KEYS: Record<string, string> = {
+  "15": "levels.beginner",
+  "24": "levels.intermediate",
+  "36": "levels.advanced",
 };
 
 type OrderItem = {
@@ -58,11 +76,21 @@ type OrderItem = {
 };
 
 function ConfirmContent() {
+  const t       = useTranslations("confirm");
+  // Shared level/paper labels -- same values /create shows, translated
+  // once under the "create" namespace rather than duplicated here.
+  const tCreate = useTranslations("create");
+  const tApiErrors = useTranslations("apiErrors");
   const router  = useRouter();
   const params  = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
   const [checkoutOpened, setCheckoutOpened] = useState(false);
+
+  const PAPER_LABELS: Record<PaperSize, string> = {
+    a4: tCreate("paper.a4"),
+    letter: tCreate("paper.letter"),
+  };
 
   const email        = params.get("email")        ?? "";
   const levelValue   = params.get("level")        ?? "24";
@@ -76,7 +104,7 @@ function ConfirmContent() {
   const paperSize: PaperSize = paperSizeParam === "letter" ? "letter" : "a4";
   const showUsd = paperSize === "letter";
 
-  const levelInfo = LEVELS[levelValue] ?? { label: "—" };
+  const levelLabel = LEVEL_LABEL_KEYS[levelValue] ? tCreate(LEVEL_LABEL_KEYS[levelValue]) : "—";
   const sets      = setsRaw ? setsRaw.split("|").filter(Boolean) : [];
   const variant   = GUANGNA_BY_NUMBER[paperSize === "letter" ? "us" : "a4"];
 
@@ -86,7 +114,7 @@ function ConfirmContent() {
   const thisOrder: OrderItem = {
     photoName,
     level:      levelValue,
-    levelLabel: levelInfo.label,
+    levelLabel,
     paperSize,
     priceLabel: variant.price,
     sets,
@@ -124,12 +152,12 @@ function ConfirmContent() {
           paperSize,
           email,
           orderId,
-          levelLabel: levelInfo.label,
+          levelLabel,
         }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) {
-        setCheckoutError(data.error || "Could not start checkout. Please try again or contact hello@creabeastudio.com.");
+        setCheckoutError(isApiErrorCode(data.error) ? tApiErrors(data.error) : tApiErrors("generic"));
         setLoading(false);
         checkoutWindow?.close();
         return;
@@ -146,7 +174,7 @@ function ConfirmContent() {
         window.location.href = data.url;
       }
     } catch (e) {
-      setCheckoutError("Something went wrong. Please try again or contact hello@creabeastudio.com.");
+      setCheckoutError(t("errors.generic"));
       setLoading(false);
       checkoutWindow?.close();
     }
@@ -174,16 +202,16 @@ function ConfirmContent() {
       <main style={{ padding:"60px 24px", maxWidth:640, margin:"0 auto" }}>
         <div style={{ textAlign:"center", marginBottom:32 }}>
         <div style={{ marginBottom:12 }}>
-  <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={160} height={110}
+  <Image src="/marketing/Guangna_brush.png" alt={t("brushAlt")} width={160} height={110}
     style={{ objectFit:"contain", height:"auto", display:"block", margin:"0 auto" }} />
 </div>
           <h1 style={{
             fontFamily:"Nunito, sans-serif", color:"var(--pink)",
             fontWeight:900, fontSize:"clamp(22px,4vw,34px)", marginBottom:8,
           }}>
-            Is everything correct?
+            {t("pageTitle")}
           </h1>
-          <p style={{ color:"#666", fontSize:15 }}>Please review your order before proceeding.</p>
+          <p style={{ color:"#666", fontSize:15 }}>{t("pageSubtitle")}</p>
         </div>
 
         {/* Previous orders */}
@@ -193,7 +221,7 @@ function ConfirmContent() {
             borderRadius:16, padding:"18px 22px", marginBottom:16,
           }}>
             <p style={{ fontWeight:700, fontSize:14, color:"#555", marginBottom:10 }}>
-              🛒 Previous orders in your cart:
+              {t("previousOrdersHeading")}
             </p>
             {prevOrders.map((o, i) => (
               <div key={i} style={{
@@ -216,12 +244,12 @@ function ConfirmContent() {
           display:"flex", flexDirection:"column", gap:14, fontSize:15,
         }}>
           <p style={{ fontWeight:700, fontSize:14, color:"var(--pink)", margin:0 }}>
-            📦 Order #{allOrders.length}:
+            {t("orderNumber", { number: allOrders.length })}
           </p>
-          <SummaryRow label="📷 Photo submitted" value={photoName} />
-          <SummaryRow label="🎯 Difficulty"       value={levelInfo.label} />
+          <SummaryRow label={t("summary.photoSubmitted")} value={photoName} />
+          <SummaryRow label={t("summary.difficulty")}       value={levelLabel} />
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12 }}>
-            <span style={{ color:"var(--muted)", flexShrink:0 }}>📄 Paper size</span>
+            <span style={{ color:"var(--muted)", flexShrink:0 }}>{t("summary.paperSize")}</span>
             <span style={{ textAlign:"right" }}>
               <div style={{ fontWeight:600, color:"#333" }}>{PAPER_LABELS[paperSize]}</div>
               {showUsd ? (
@@ -238,11 +266,11 @@ function ConfirmContent() {
               )}
             </span>
           </div>
-          <SummaryRow label="🖊️ Marker set(s)"   value={sets.length ? sets.join(", ") : "Default palette"} />
-          {indPens && <SummaryRow label="➕ Additional markers" value={indPens} />}
-          <SummaryRow label="✉️ Email"            value={email} />
+          <SummaryRow label={t("summary.markerSets")}   value={sets.length ? sets.join(", ") : t("summary.defaultPalette")} />
+          {indPens && <SummaryRow label={t("summary.additionalMarkers")} value={indPens} />}
+          <SummaryRow label={t("summary.email")}            value={email} />
           {orderId && (
-            <SummaryRow label="🔖 Order ref" value={orderId} />
+            <SummaryRow label={t("summary.orderRef")} value={orderId} />
           )}
         </div>
 
@@ -253,7 +281,7 @@ function ConfirmContent() {
           display:"flex", justifyContent:"space-between", alignItems:"center",
         }}>
           <span style={{ color:"white", fontWeight:700, fontSize:16 }}>
-            🧾 {allOrders.length > 1 ? `Total for ${allOrders.length} orders` : "Total"}
+            {allOrders.length > 1 ? t("total.multiple", { count: allOrders.length }) : t("total.single")}
           </span>
           {showUsd ? (
             <span style={{ display:"flex", flexDirection:"column", alignItems:"flex-end" }}>
@@ -272,13 +300,12 @@ function ConfirmContent() {
         </div>
         {showUsd && (
           <p style={{ fontSize:11, color:"var(--muted)", textAlign:"center", marginBottom:12 }}>
-            estimate only, depends on the current exchange rate.
+            {t("total.estimateNote")}
           </p>
         )}
 
         <p style={{ fontSize:12.5, color:"var(--muted)", textAlign:"center", marginTop: showUsd ? 0 : 12, marginBottom:24, lineHeight:1.5 }}>
-          📦 Once your order is complete, your files will be available to download for 30 days.
-          Missed the window? Just email hello@creabeastudio.com and we'll send you a fresh link.
+          {t("deliveryNote")}
         </p>
 
         {checkoutError && (
@@ -289,7 +316,7 @@ function ConfirmContent() {
 
         {checkoutOpened && (
           <div style={{ background:"#F0F7FF", border:"1.5px solid #B8D4F0", borderRadius:12, padding:14, color:"#2c5a8c", fontSize:14, marginBottom:16 }}>
-            🔗 Checkout opened in a new tab — complete your payment there. This page will still be here if you need it.
+            {t("checkoutOpenedNotice")}
           </div>
         )}
 
@@ -305,7 +332,7 @@ function ConfirmContent() {
             onMouseEnter={e => (e.currentTarget.style.background = "#f9f9f9")}
             onMouseLeave={e => (e.currentTarget.style.background = "white")}
           >
-            ✏️ No, I want to make changes
+            {t("buttons.makeChanges")}
           </button>
 
           <button onClick={orderAnother}
@@ -318,7 +345,7 @@ function ConfirmContent() {
             onMouseEnter={e => (e.currentTarget.style.background = "#FFF0F3")}
             onMouseLeave={e => (e.currentTarget.style.background = "white")}
           >
-            🖼️ Order another Guangna by Number
+            {t("buttons.orderAnother")}
           </button>
 
           <button onClick={goToCheckout} className="btn-primary"
@@ -326,7 +353,7 @@ function ConfirmContent() {
             style={{ width:"100%", fontSize:16, padding:"16px 24px", borderRadius:14,
               cursor: loading ? "default" : "pointer",
               opacity: loading ? 0.6 : 1 }}>
-            {loading ? "⏳ Preparing checkout…" : `🔒 Proceed to Payment — ${variant.price}`}
+            {loading ? t("buttons.preparingCheckout") : t("buttons.checkout", { price: variant.price })}
           </button>
 
         </div>

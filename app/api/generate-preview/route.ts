@@ -16,14 +16,21 @@ export const preferredRegion = 'fra1';
 const PBN_SERVICE_URL = process.env.PBN_SERVICE_URL;
 const PBN_SERVICE_API_KEY = process.env.PBN_SERVICE_API_KEY;
 
+// UPDATED (2026-07-27): returns error CODES ("NO_IMAGE",
+// "NO_MARKERS_SELECTED", "SERVICE_UNAVAILABLE", "GENERATION_FAILED",
+// "NO_MATCH_FOUND") instead of hardcoded English sentences -- see
+// lib/apiErrors.ts. This also means the Python backend's own
+// `data.detail` text (FastAPI's default error shape) is no longer
+// forwarded to the client at all -- it's arbitrary, not guaranteed to
+// be customer-facing-appropriate wording, and definitely not
+// translated. It's still logged server-side via console.error so
+// nothing is lost for debugging; the customer just always sees a
+// translated GENERATION_FAILED instead.
 export async function POST(req: NextRequest) {
   try {
     if (!PBN_SERVICE_URL || !PBN_SERVICE_API_KEY) {
       console.error("PBN_SERVICE_URL / PBN_SERVICE_API_KEY not configured");
-      return NextResponse.json(
-        { error: "Preview service isn't configured yet. Please try again later." },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "SERVICE_UNAVAILABLE" }, { status: 500 });
     }
 
     const incoming = await req.formData();
@@ -33,13 +40,10 @@ export async function POST(req: NextRequest) {
     const difficulty = (incoming.get("difficulty") as string) || "standard";
 
     if (!imageFile) {
-      return NextResponse.json({ error: "No image provided" }, { status: 400 });
+      return NextResponse.json({ error: "NO_IMAGE" }, { status: 400 });
     }
     if (!sets.trim() && !extraCodes.trim()) {
-      return NextResponse.json(
-        { error: "Select at least one marker set or enter marker codes first." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "NO_MARKERS_SELECTED" }, { status: 400 });
     }
 
     // Cloud Run's /generate-three-way expects "file" (not "image"), plus
@@ -69,12 +73,10 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       // Cloud Run's own error shape is {"detail": "..."} (FastAPI's
-      // default), not {"error": "..."} -- normalize it here so the
-      // create page only ever has to look for one shape.
-      return NextResponse.json(
-        { error: data.detail || "Something went wrong generating your preview. Please try again." },
-        { status: res.status }
-      );
+      // default) -- logged for debugging only, never forwarded to the
+      // client (see note above).
+      console.error("generate-three-way backend error:", data.detail);
+      return NextResponse.json({ error: "GENERATION_FAILED" }, { status: res.status });
     }
 
     if (!data.owned) {
@@ -82,18 +84,12 @@ export async function POST(req: NextRequest) {
       // sets/extraCodes to be non-empty, so "owned" should always come
       // back populated. Defensive check in case matching genuinely
       // fails for some other reason.
-      return NextResponse.json(
-        { error: "We couldn't generate a preview with those markers. Try selecting a larger set." },
-        { status: 422 }
-      );
+      return NextResponse.json({ error: "NO_MATCH_FOUND" }, { status: 422 });
     }
 
     return NextResponse.json(data);
   } catch (e: any) {
     console.error("generate-preview error:", e);
-    return NextResponse.json(
-      { error: "Something went wrong generating your preview. Please try again." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "GENERATION_FAILED" }, { status: 500 });
   }
 }

@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Storage } from "@google-cloud/storage";
 
+// UPDATED (2026-07-27):
+//  - Returns error CODES ("NO_IMAGE", "EMAIL_REQUIRED", "SAVE_FAILED",
+//    "SUBMIT_FAILED") instead of hardcoded English sentences -- see
+//    lib/apiErrors.ts. The client translates the code; this route no
+//    longer decides what language the customer sees.
+//  - Persists `locale` into order.json, read from the create page's
+//    own URL segment and sent as a new `locale` form field. This is
+//    step one of threading the customer's language through to the
+//    post-purchase delivery email (fulfillOrder.ts / lib/email.ts) --
+//    those still need to be updated to actually read and use it.
+
 // ── GCS: writes the photo + order params this order needs later, at
 // /generate-full time (webservice/main.py). Mirrors that file's own
 // bucket default exactly, so a missing GCS_ORDERS_BUCKET env var here
@@ -100,9 +111,17 @@ export async function POST(req: NextRequest) {
     // /generate-full reads it from there to decide whether to also
     // build full-guide.pdf. ─────────────────────────────────────────
     const wantsFullGuide = (formData.get("wantsFullGuide") as string) === "true";
+    // ── LOCALE (2026-07-27): the customer's language, read from the
+    // create page's own URL segment ([locale]) and sent through as a
+    // plain form field. Persisted so fulfillOrder() can eventually pass
+    // it to the delivery email functions in lib/email.ts, which will
+    // use it to pick which language to send the email in. Falls back
+    // to "en" if somehow missing (shouldn't happen -- every page is
+    // under app/[locale]/, so a locale segment always exists).
+    const locale        = (formData.get("locale") as string) || "en";
 
-    if (!imageFile)     return NextResponse.json({ error: "No image provided" }, { status: 400 });
-    if (!customerEmail) return NextResponse.json({ error: "Email required" }, { status: 400 });
+    if (!imageFile)     return NextResponse.json({ error: "NO_IMAGE" }, { status: 400 });
+    if (!customerEmail) return NextResponse.json({ error: "EMAIL_REQUIRED" }, { status: 400 });
 
     const orderId    = `PBN-${Date.now()}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
     const difficulty = LEVEL_TO_DIFFICULTY[level] || "standard";
@@ -145,6 +164,7 @@ export async function POST(req: NextRequest) {
         customerEmail,
         grandTotal,
         wantsFullGuide,
+        locale,
         submittedAt: new Date().toISOString(),
       };
       await bucket.file(`orders/${orderId}/order.json`).save(
@@ -155,16 +175,13 @@ export async function POST(req: NextRequest) {
       console.log("GCS write successful, orderId:", orderId);
     } catch (gcsErr: any) {
       console.error("GCS write error:", gcsErr.message);
-      return NextResponse.json(
-        { error: "Something went wrong saving your order. Please try again or contact hello@creabeastudio.com." },
-        { status: 500 },
-      );
+      return NextResponse.json({ error: "SAVE_FAILED" }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, orderId });
 
   } catch (e: any) {
     console.error("Order submission error:", e.message);
-    return NextResponse.json({ error: e.message || "Submission failed" }, { status: 500 });
+    return NextResponse.json({ error: "SUBMIT_FAILED" }, { status: 500 });
   }
 }

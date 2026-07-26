@@ -4,6 +4,10 @@ import type { SwatchSelectionJson } from "@/lib/swatchOrder";
 
 // Save this file as app/api/swatch-order-status/route.ts
 //
+// UPDATED (2026-07-27): returns error CODES ("ORDER_ID_REQUIRED",
+// "INVALID_ORDER_ID", "ORDER_NOT_FOUND", "STATUS_CHECK_FAILED")
+// instead of hardcoded English sentences -- see lib/apiErrors.ts.
+//
 // Polled by /swatch-download?order=... after a customer returns from
 // LemonSqueezy checkout. Payment confirmation itself happens
 // asynchronously via the webhook (which writes paid.json) -- this route
@@ -13,11 +17,11 @@ import type { SwatchSelectionJson } from "@/lib/swatchOrder";
 export async function GET(req: NextRequest) {
   const orderId = req.nextUrl.searchParams.get("order");
   if (!orderId) {
-    return NextResponse.json({ error: "Missing order" }, { status: 400 });
+    return NextResponse.json({ error: "ORDER_ID_REQUIRED" }, { status: 400 });
   }
   // Basic shape check -- these are only ever our own generated IDs.
   if (!/^SWATCH-\d+-[a-f0-9]{6}$/.test(orderId)) {
-    return NextResponse.json({ error: "Invalid order id" }, { status: 400 });
+    return NextResponse.json({ error: "INVALID_ORDER_ID" }, { status: 400 });
   }
 
   try {
@@ -27,7 +31,7 @@ export async function GET(req: NextRequest) {
     const selectionFile = bucket.file(`swatch-orders/${orderId}/selection.json`);
     const [selectionExists] = await selectionFile.exists();
     if (!selectionExists) {
-      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+      return NextResponse.json({ error: "ORDER_NOT_FOUND" }, { status: 404 });
     }
 
     const paidFile = bucket.file(`swatch-orders/${orderId}/paid.json`);
@@ -43,6 +47,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ paid: true, selection });
   } catch (e: any) {
     console.error("swatch-order-status error:", e.message);
-    return NextResponse.json({ error: e.message || "Failed to check order status" }, { status: 500 });
+    return NextResponse.json({ error: "STATUS_CHECK_FAILED" }, { status: 500 });
   }
 }

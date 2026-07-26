@@ -512,7 +512,7 @@
 },
 "GuangnaReference": {
     "title": "Nuancier Guangna",
-    "subtitle": "Cherche à quels sets appartient un feutre, oder découvre tous les feutres inclus dans un set donné.",
+    "subtitle": "Cherche à quels sets appartient un feutre, ou découvre tous les feutres inclus dans un set donné.",
     "byCode": {
       "heading": "🔍 Trouver des sets par code de feutre",
       "description": "Saisis un code Guangna pour voir tous les sets qui le contiennent.",
@@ -553,10 +553,17 @@
     "colorCount": "{count} couleurs",
     "buy": "Acheter",
     "comingSoon": "Bientôt disponible",
-    "disclaimer": "Chaque pack comprend le modèle précoloré, le modèle vierge, la fiche de référence et les instructions d'impression et d'assemblage."
+    "disclaimer": "Chaque pack comprend le modèle précoloré, le modèle vierge, la fiche de référence et les instructions d'impression et d'assemblage.",
+    "linkNotSetUp": "Lien de paiement pas encore configuré",
+    "linkNeeded": "Lien manquant",
+    "a4Label": "A4",
+    "usLabel": "US"
   },
   "swatchCreator": {
+    "pageTitle": "Créateur de cartes de nuancier",
     "pageSubtitle": "Choisis un ensemble de cartes préorganisées ou crée tes propres cartes personnalisées à imprimer pour n'importe quelle collection de marqueurs Guangna ou Languo.",
+    "brushAlt": "Feutre pinceau Guangna",
+    "diyToggleTitle": "🎨 Cartes de nuancier personnalisées",
     "howToUse": {
       "title": "Comment utiliser cet outil ?",
       "intro": "Tu peux générer des cartes de nuancier personnalisées, spécialement conçues pour tes marqueurs pinceaux acryliques Guangna et Languo.",
@@ -586,6 +593,325 @@
       "closing": "L'ordre obtenu est délibérément pensé pour créer un dégradé fluide et agréable à l'œil, plutôt qu'une disposition strictement mathématique. Comme certaines couleurs se situent naturellement entre deux familles (comme un bleu-vert éclatant), elles sont incluses dans les deux afin que tu ne les manques pas.",
       "tip": "Vois ces cartes comme un point de départ expert et pratique — tu peux les personnaliser selon ta propre interprétation des couleurs !",
       "note": "Remarque : Les couleurs métalliques ne sont pas incluses dans le regroupement par familles de couleurs."
+    },
+    "tabs": {
+      "guangnaSet": "Set Guangna",
+      "guangnaCodes": "Codes Guangna",
+      "languoSet": "Set Languo",
+      "languoCodes": "Codes Languo",
+      "colorFamily": "Famille de couleurs"
+    },
+    "resetFilters": "↺ Réinitialiser les filtres",
+    "placeholders": {
+      "guangnaSetSearch": "Rechercher un set Guangna…",
+      "languoSetSearch": "Rechercher un set Languo…",
+      "guangnaCodeSearch": "Rechercher par code ou nom…",
+      "languoCodeSearch": "Rechercher par code Languo…"
+    },
+    "hints": {
+      "pickSet": "Choisis un set ci-dessus pour parcourir ses couleurs.",
+      "typeGuangnaCode": "Commence à taper pour rechercher des codes Guangna.",
+      "typeLanguoCode": "Commence à taper pour rechercher des codes Languo.",
+      "pickFamily": "Choisis une famille de couleurs ci-dessus pour parcourir ses couleurs."
+    },
+    "metallicNote": "Remarque : Les feutres métalliques ne sont pas inclus.",
+    "addAll": "Ajouter {count, plural, one {# couleur} other {# couleurs}}",
+    "selectFamilyPlaceholder": "— Sélectionner une famille de couleurs —",
+    "autocomplete": {
+      "clearSelection": "✕ Effacer la sélection",
+      "noMatches": "Aucun résultat"
+    },
+    "selectedColors": "Sélection ({count, plural, one {# couleur} other {# couleurs}})",
+    "selectedColorsWithFamilies": "Sélection ({count, plural, one {# couleur} other {# couleurs}}, {familyCount, plural, one {# famille de couleurs} other {# familles de couleurs}})",
+    "undo": "↺ Annuler",
+    "clearAll": "Tout effacer",
+    "dragHint": "💡 Glisse une couleur sur une autre au sein de sa famille pour la réorganiser.",
+    "emptySelection": "Glisse des couleurs ici, ou clique sur une pastille à gauche pour l'ajouter.",
+    "familyActions": {
+      "downloadFamily": "Télécharger uniquement cette famille de couleurs",
+      "downloadFamilyLocked": "Inclus dans le téléchargement complet une fois ton set débloqué ci-dessous",
+      "removeFamily": "Retirer cette famille de couleurs de la sélection"
+    },
+    "a11y": {
+      "removeFromFamily": "Retirer {code} de {family}",
+      "moveBack": "Remettre {code} à sa position d'origine"
+    },
+    "alsoIn": "aussi dans : {families}",
+    "toast": {
+      "added": "Ajouté à ta sélection",
+      "addedMany": "{count, plural, one {# couleur ajoutée à ta sélection} other {# couleurs ajoutées à ta sélection}}"
+    },
+    "undoLabels": {
+      "removedItem": "{label} supprimé",
+      "removedItemFromFamily": "{label} retiré de {family}",
+      "removedFamily": "{family} supprimée ({count, plural, one {# couleur} other {# couleurs}})",
+      "clearedAll": "Tout effacé ({count, plural, one {# couleur} other {# couleurs}})"
+    },
+    "options": {
+      "swatchStyle": "Style de pastille",
+      "swatchStyleFilled": "Remplie (affiche la couleur)",
+      "swatchStyleBlank": "Vide (contour seul, pour un nuançage manuel)",
+      "bundleHole": "Trou de regroupement (en-tête)",
+      "holeNone": "Aucun",
+      "holeLeft": "Gauche",
+      "holeCenter": "Centre",
+      "holeRight": "Droite",
+      "cardLayout": "Disposition des cartes",
+      "layoutPerFamily": "Une famille de couleurs par carte",
+      "layoutPacked": "Plusieurs familles par carte",
+      "paperSize": "Format de papier",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
+    },
+    "cardCountSummary": "{cardCount, plural, one {# carte} other {# cartes}} ({colorCount, plural, one {# pastille} other {# pastilles}}, jusqu'à 12 par carte, 4 par page paysage)",
+    "errors": {
+      "saveSelection": "Impossible d'enregistrer ta sélection. Réessaie ou contacte hello@creabeastudio.com.",
+      "startCheckout": "Impossible de lancer le paiement. Réessaie ou contacte hello@creabeastudio.com.",
+      "generic": "Une erreur s'est produite. Réessaie ou contacte hello@creabeastudio.com."
+    },
+    "checkoutOpened": {
+      "line1": "🔗 Le paiement s'est ouvert dans un nouvel onglet — termine ton paiement là-bas pour débloquer ton set. Ne t'inquiète pas, cette page reste ouverte ici.",
+      "line2": "📧 Téléchargement instantané : ton fichier se télécharge automatiquement après le paiement, et un lien de secours te sera envoyé par e-mail par Lemon Squeezy (notre prestataire de paiement).",
+      "orderReference": "Référence de commande : {id}"
+    },
+    "paywallStatus": "Tu as sélectionné {count, plural, one {# couleur} other {# couleurs}} — les {limit} premières (une page complète) sont gratuites. Débloque l'ensemble complet pour {price}.",
+    "actions": {
+      "downloadFreePreview": "Télécharger l'aperçu gratuit (les {limit} premières)",
+      "unlockFullSet": "Débloquer l'ensemble complet — {price}",
+      "downloadBlankTemplate": "Télécharger le modèle vierge",
+      "downloadAll": "Télécharger tout en PDF",
+      "generating": "Génération en cours…",
+      "redirecting": "Redirection…"
     }
+  },
+  "create": {
+    "pageTitle": "Crée ton Guangna by Number personnalisé",
+    "pageSubtitle": "Téléverse ta photo, choisis tes feutres Guangna, et prévisualise ton design gratuitement avant de commander.",
+    "cart": {
+      "summary": "{count, plural, one {🛒 Tu as # commande dans ton panier} other {🛒 Tu as # commandes dans ton panier}} — total pour l'instant : {total}",
+      "backToOrder": "← Retour à ma commande"
+    },
+    "step1": {
+      "title": "Étape 1 : 📸 Téléverse ta photo",
+      "dropHint": "Dépose ta photo ici",
+      "browseHint": "ou clique pour parcourir · JPG, PNG, HEIC",
+      "restoredNotice": "↺ Bon retour — ta photo téléversée a été restaurée.",
+      "dimWarning": "Cette photo fait {width}×{height}px — un peu petite pour un résultat net. Nous recommandons au moins {min}px sur le côté le plus court, mais tu peux continuer avec celle-ci si tu le souhaites.",
+      "continueAnyway": "Oui, continuer quand même",
+      "chooseDifferent": "Choisir une autre photo",
+      "cropLabel": "Recadrer",
+      "resetToOriginal": "↺ Revenir à l'original",
+      "remove": "Supprimer",
+      "removeBackground": "🪄 Supprimer l'arrière-plan",
+      "removingBackground": "⏳ Suppression…",
+      "blurBackground": "🌫️ Flouter l'arrière-plan",
+      "blurringBackground": "⏳ Flou en cours…",
+      "bgToolWakingUp": "Cela peut prendre jusqu'à une minute si l'outil photo vient tout juste de se réveiller — un peu de patience.",
+      "bgErrorDefault": "Une erreur s'est produite lors du traitement de ta photo. Réessaie.",
+      "cropper": {
+        "aspectFree": "Libre",
+        "apply": "✂️ Appliquer le recadrage",
+        "cancel": "Annuler"
+      }
+    },
+    "step2": {
+      "title": "Étape 2 : 🖊️ Tes sets de feutres Guangna",
+      "description": "Sélectionne chaque set que tu possèdes — nous construirons la palette à partir de tes feutres. Tu peux en choisir autant que tu veux, ou laisser ce champ vide pour prévisualiser avec la palette Guangna complète.",
+      "setsSelected": "{count, plural, one {# set sélectionné} other {# sets sélectionnés}}",
+      "additionalCodesTitle": "Codes de feutres supplémentaires",
+      "additionalCodesDescription": "Ajoute tes feutres individuels — codes GN (3 chiffres, séparés par des virgules ou des espaces). Les feutres métalliques ne sont pas inclus.",
+      "codesPlaceholder": "par ex. 603, 648, 712",
+      "invalidCodes": "Code(s) invalide(s) : {codes}. Doivent être des nombres à 3 chiffres entre 600 et 965."
+    },
+    "step3": {
+      "title": "Étape 3 : 🖼️ Aperçu instantané gratuit",
+      "description": "Prévisualise un brouillon gratuit basse résolution en 20 à 40 secondes. Reçois le fichier haute résolution complet directement dans ta boîte mail pour {price}.",
+      "generating": "⏳ Génération de ton aperçu… (~20-40s)",
+      "regenerate": "🔄 Régénérer l'aperçu",
+      "generate": "🎨 Générer l'aperçu gratuit",
+      "skipPreview": "Passer l'aperçu — je sais déjà ce que je veux →",
+      "previewSkippedNotice": "✓ Aperçu ignoré — tu peux quand même en générer un ci-dessous à tout moment avant de commander.",
+      "uploadFirst": "Téléverse d'abord une photo.",
+      "noSetsWarning": "Tu n'as sélectionné aucun set Guangna — veux-tu continuer avec la palette de couleurs complète ?",
+      "useFullSet": "Oui, utiliser le set complet",
+      "cancelPickSets": "Annuler, je choisis mes sets",
+      "genericError": "Une erreur s'est produite lors de la génération de ton aperçu. Réessaie.",
+      "connectionError": "Une erreur s'est produite lors de la génération de ton aperçu. Vérifie ta connexion et réessaie.",
+      "stalePreview": "Ta photo ou tes sélections ont changé — génère un nouvel aperçu avant de commander.",
+      "yourMarkers": "Tes feutres",
+      "fullColorPalette": "Palette de couleurs complète",
+      "matchedFullPalette": "🎨 Associé à de vrais feutres Guangna — les couleurs que tu vois sont celles que tu utiliseras.",
+      "matchedYourMarkers": "🎨 Associé à tes feutres Guangna — ce sont ceux que tu utiliseras en coloriant ton Guangna by Number.",
+      "addingMarkersHelps": "✨ Ajouter ces feutres aidera ton Guangna by Number à ressembler davantage à l'image originale téléversée.",
+      "includeFullGuide": "📩 Inclus gratuitement avec ma commande mon Guide de palette de couleurs complet, au cas où je voudrais ajouter d'autres feutres plus tard.",
+      "scaledDownNotice": "💡 Cet aperçu est réduit pour plus de rapidité, donc certains détails fins sont adoucis ici. Ton fichier acheté est généré en pleine résolution, avec des lignes plus nettes et des détails plus riches. Vois la différence par toi-même sur notre",
+      "examplesLink": "page d'exemples →",
+      "beforeLabel": "Aperçu colorié",
+      "afterLabel": "Contour numéroté",
+      "happyOrChange": "Ça te convient, ou souhaites-tu apporter des modifications ?",
+      "largerAreas": "Zones de coloriage plus grandes",
+      "ultraDetailed": "Design ultra détaillé",
+      "revertPrevious": "↺ Le précédent était mieux",
+      "individualMarkers": "{count, plural, one {# feutre individuel} other {# feutres individuels}}"
+    },
+    "step4": {
+      "title": "Étape 4 : 📄 Format de papier",
+      "description": "Choisis le format pour lequel ton PDF final sera mis en page. Tu pourras encore le changer plus tard."
+    },
+    "step5": {
+      "title": "Étape 5 : ✉️ Ton e-mail",
+      "description": "Ton fichier final sera envoyé directement à ton adresse e-mail."
+    },
+    "summary": {
+      "title": "📋 Résumé de la commande",
+      "photo": "Photo",
+      "level": "Niveau",
+      "markerSets": "Sets de feutres",
+      "preview": "Aperçu",
+      "paperSize": "Format de papier",
+      "price": "Prix",
+      "previousOrders": "Commandes précédentes ({count})",
+      "nSelected": "{count, plural, one {# sélectionné} other {# sélectionnés}}",
+      "noneSelected": "Aucun sélectionné",
+      "generated": "✓ Généré",
+      "skipped": "Ignoré",
+      "notYetGenerated": "Pas encore généré",
+      "none": "—"
+    },
+    "submit": {
+      "sending": "⏳ Envoi de ta commande…",
+      "order": "✨ Commander ton Guangna by Number personnalisé →",
+      "orderDisabled": "✨ Commander ton Guangna by Number personnalisé",
+      "uploadToStart": "Téléverse une photo pour commencer",
+      "generateOrSkip": "Génère un aperçu, ou passe cette étape, pour continuer",
+      "addEmail": "Ajoute ton e-mail pour continuer",
+      "genericError": "Une erreur s'est produite lors de l'envoi de ta commande. Réessaie ou contacte hello@creabeastudio.com."
+    },
+    "levels": {
+      "beginner": "🌱 Débutant",
+      "beginnerDesc": "Moins de couleurs, zones plus grandes.",
+      "intermediate": "🌿 Intermédiaire",
+      "intermediateDesc": "Bon équilibre entre effort et détail.",
+      "advanced": "🌲 Avancé",
+      "advancedDesc": "Palette de couleurs plus large, détaillé."
+    },
+    "paper": {
+      "a4": "A4",
+      "letter": "US Letter"
+    }
+  },
+  "confirm": {
+    "pageTitle": "Tout est correct ?",
+    "pageSubtitle": "Vérifie ta commande avant de continuer.",
+    "brushAlt": "Feutre pinceau Guangna",
+    "previousOrdersHeading": "🛒 Commandes précédentes dans ton panier :",
+    "orderNumber": "📦 Commande #{number} :",
+    "summary": {
+      "photoSubmitted": "📷 Photo envoyée",
+      "difficulty": "🎯 Difficulté",
+      "paperSize": "📄 Format de papier",
+      "markerSets": "🖊️ Set(s) de feutres",
+      "defaultPalette": "Palette par défaut",
+      "additionalMarkers": "➕ Feutres supplémentaires",
+      "email": "✉️ E-mail",
+      "orderRef": "🔖 Réf. commande"
+    },
+    "total": {
+      "single": "🧾 Total",
+      "multiple": "🧾 Total pour {count} commandes",
+      "estimateNote": "estimation seulement, dépend du taux de change actuel."
+    },
+    "deliveryNote": "📦 Une fois ta commande finalisée, tes fichiers seront disponibles au téléchargement pendant 30 jours. Tu as manqué le délai ? Envoie simplement un e-mail à hello@creabeastudio.com et nous t'enverrons un nouveau lien.",
+    "errors": {
+      "startCheckout": "Impossible de lancer le paiement. Réessaie ou contacte hello@creabeastudio.com.",
+      "generic": "Une erreur s'est produite. Réessaie ou contacte hello@creabeastudio.com."
+    },
+    "checkoutOpenedNotice": "🔗 Le paiement s'est ouvert dans un nouvel onglet — termine ton paiement là-bas. Cette page restera ici si tu en as besoin.",
+    "buttons": {
+      "makeChanges": "✏️ Non, je veux faire des modifications",
+      "orderAnother": "🖼️ Commander un autre Guangna by Number",
+      "checkout": "🔒 Procéder au paiement — {price}",
+      "preparingCheckout": "⏳ Préparation du paiement…"
+    }
+  },
+ "apiErrors": {
+    "NO_IMAGE": "Aucune image fournie.",
+    "EMAIL_REQUIRED": "Merci de saisir ton adresse e-mail.",
+    "SAVE_FAILED": "Une erreur s'est produite lors de l'enregistrement de ta commande. Réessaie ou contacte hello@creabeastudio.com.",
+    "SUBMIT_FAILED": "Une erreur s'est produite lors de l'envoi de ta commande. Réessaie ou contacte hello@creabeastudio.com.",
+    "SERVICE_UNAVAILABLE": "Le service d'aperçu n'est pas disponible pour le moment. Réessaie plus tard.",
+    "NO_MARKERS_SELECTED": "Sélectionne au moins un set de feutres ou saisis d'abord des codes de feutres.",
+    "GENERATION_FAILED": "Une erreur s'est produite lors de la génération de ton aperçu. Réessaie.",
+    "NO_MATCH_FOUND": "Nous n'avons pas pu générer d'aperçu avec ces feutres. Essaie de sélectionner un set plus large.",
+    "NO_LEVELS": "Aucun niveau sélectionné.",
+    "MULTI_ORDER_NOT_SUPPORTED": "Commander plusieurs photos en un seul paiement n'est pas encore possible — termine d'abord cette commande, puis démarre-en une nouvelle pour ta prochaine photo, ou contacte hello@creabeastudio.com pour les combiner manuellement.",
+    "INVALID_PAPER_SIZE": "Format de papier manquant ou invalide.",
+    "CHECKOUT_UNAVAILABLE": "Le paiement n'est pas disponible pour le moment. Réessaie plus tard ou contacte hello@creabeastudio.com.",
+    "CHECKOUT_FAILED": "Impossible de créer le paiement. Réessaie ou contacte hello@creabeastudio.com.",
+    "ORDER_ID_REQUIRED": "Référence de commande manquante.",
+    "COLOR_COUNT_REQUIRED": "Nombre de couleurs manquant.",
+    "WITHIN_FREE_TIER": "Cette sélection fait partie du niveau gratuit — aucun paiement n'est nécessaire.",
+    "SWATCH_VARIANT_UNAVAILABLE": "Cette option n'est pas disponible pour le moment. Contacte hello@creabeastudio.com.",
+    "NO_ITEMS": "Aucune couleur sélectionnée.",
+    "COLOR_COUNT_MISMATCH": "Un problème est survenu avec ta sélection. Réessaie.",
+    "INVALID_ORDER_ID": "Cette référence de commande ne semble pas valide.",
+    "ORDER_NOT_FOUND": "Nous n'avons pas trouvé cette commande.",
+    "STATUS_CHECK_FAILED": "Une erreur s'est produite lors de la vérification du statut de ta commande. Réessaie.",
+    "generic": "Une erreur s'est produite. Réessaie ou contacte hello@creabeastudio.com."
+  },
+  "emails": {
+    "orderConfirmation": {
+      "subject": "🎨 Ton Guangna by Number personnalisé est prêt ! (Commande #{orderId})",
+      "heading": "🎨 Ton Guangna by Number personnalisé est prêt !",
+      "orderIdLabel": "🔖 Numéro de commande",
+      "levelLabel": "🎯 Niveau",
+      "markerSetsLabel": "🖊️ Sets de feutres",
+      "defaultPalette": "Palette par défaut",
+      "extraMarkersLabel": "➕ Feutres supplémentaires",
+      "downloadOutline": "📄 Télécharger ton contour numéroté (prêt à imprimer)",
+      "downloadPreviewGuide": "🖼️ Télécharger ton aperçu colorié et ton guide de feutres",
+      "fullGuide": {
+        "title": "🎁 Ton guide de palette complet gratuit",
+        "body": "Utile si tu commandes d'autres feutres plus tard — ce lien reste actif pendant 30 jours.",
+        "link": "Télécharger ton guide gratuit →"
+      },
+      "upsell": {
+        "title": "✨ Envie d'enrichir ta palette de couleurs ?",
+        "intro": "Voici les feutres qui amélioreraient le plus ton design, et les zones numérotées qu'ils remplaceraient :",
+        "columnMarker": "Feutre",
+        "columnName": "Nom",
+        "columnImproves": "Améliore",
+        "newArea": "Nouvelle zone",
+        "shopLink": "Acheter des feutres Guangna →"
+      },
+      "footerNote": "💡 Des questions sur ta commande ? Réponds simplement à cet e-mail ou contacte-nous à hello@creabeastudio.com."
+    },
+    "reminder": {
+      "subject": "🎨 Petit rappel — tes fichiers Guangna by Number t'attendent (Commande #{orderId})",
+      "heading": "🎨 N'oublie pas tes fichiers !",
+      "intro": "Petit rappel amical : tes fichiers Guangna by Number de la commande <strong>{orderId}</strong> sont prêts et t'attendent — il te reste environ <strong>{days}</strong> jours avant l'expiration de ce lien de téléchargement.",
+      "downloadOutline": "📄 Télécharger ton contour numéroté (prêt à imprimer)",
+      "downloadPreviewGuide": "🖼️ Télécharger ton aperçu colorié et ton guide de feutres",
+      "downloadFullGuide": "🎁 Télécharger ton guide de palette complet gratuit",
+      "footerNote": "💡 Tu as complètement manqué ce délai ? Réponds simplement à cet e-mail ou contacte-nous à hello@creabeastudio.com et nous t'enverrons un nouveau lien."
+    }
+  },
+  "swatchDownload": {
+    "checkingTitle": "Confirmation de ton paiement…",
+    "checkingBody": "Cela prend généralement quelques secondes. Merci de ne pas fermer cette page.",
+    "readyTitle": "Tes cartes de nuancier sont prêtes ! 💖",
+    "readyBody": "Ton téléchargement devrait démarrer automatiquement. Si ce n'est pas le cas, utilise le bouton ci-dessous.",
+    "generating": "Génération en cours…",
+    "downloadButton": "Télécharger tes cartes de nuancier",
+    "orderReferenceNote": "Référence de commande : {orderId}. Garde-la au cas où tu aurais besoin de contacter hello@creabeastudio.com.",
+    "timedOutTitle": "Traitement en cours…",
+    "timedOutBody": "Ton paiement met plus de temps que d'habitude à être confirmé. Cela peut arriver occasionnellement — ta commande n'est pas perdue.",
+    "timedOutEmailPrefix": "Si cette page ne s'est pas mise à jour après quelques minutes, envoie un e-mail à",
+    "timedOutRefSuffix": "avec cette référence de commande :",
+    "errorTitle": "Une erreur s'est produite",
+    "errorEmailPrefix": "Nous n'avons pas pu trouver ou vérifier cette commande. Merci d'envoyer un e-mail à",
+    "errorRefSuffix": "avec cette référence de commande :",
+    "errorNoRefSuffix": "pour obtenir de l'aide.",
+    "pdfGenerationError": "Une erreur s'est produite lors de la génération de ton PDF. Réessaie, ou contacte hello@creabeastudio.com avec ta référence de commande."
   }
 }

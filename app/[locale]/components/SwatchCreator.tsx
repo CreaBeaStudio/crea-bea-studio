@@ -1,7 +1,32 @@
 "use client";
 
-// DIY Swatch Creator (v9)
+// DIY Swatch Creator (v11)
 // -------------------
+// v11 change (2026-07-27): unlockFullSet() now sends a `locale` field
+// to /api/create-swatch-checkout, read via useParams() the same way
+// create/page.tsx does -- this is what lets that route's redirect_url
+// send the customer back to /swatch-download in their own language
+// instead of always the app's default locale.
+//
+// v10 change: full i18n pass for French ("go big" per Mirjam -- every
+// visible string on this component now routes through t(), including
+// tab labels, placeholders, hints, tooltips/title attributes,
+// aria-labels, toasts, undo-stack labels, option dropdowns, paywall/
+// checkout copy, page H1, section heading, image alt) moved into new
+// swatchCreator/readyMadePacks JSON keys. Nothing on this component is
+// hardcoded English anymore except pure icon glyphs (⬇ 🗑 × ⇱ ↺ used
+// as decorative icons only) and brand/product names ("Guangna",
+// "Languo" -- not translated, they're product names). The
+// "🎨 Custom Swatch Cards" section toggle heading, previously left
+// hardcoded on purpose, is now translated too (t("diyToggleTitle")) --
+// same reasoning.
+//
+// Plural-sensitive strings (color/colors, family/families, card/cards,
+// swatch/swatches) now use next-intl's ICU plural syntax in the locale
+// JSON (`{count, plural, one {...} other {...}}`) instead of a
+// hardcoded English-shaped ternary, so French pluralization is
+// grammatically correct rather than just reusing the English pattern.
+//
 // v9 changes (2026-07-24):
 //   1. Ready-made packs section moved above the DIY intro/builder --
 //      per Mirjam, it should be the first thing visitors see.
@@ -57,6 +82,7 @@
 
 import { useMemo, useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { GN_COLORS, SET_OPTIONS, GUANGNA_SETS } from "@/lib/guangna";
 import { LANGUO_COLORS, LANGUO_IDS } from "@/lib/languo";
 import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
@@ -93,17 +119,6 @@ import { FREE_COLOR_LIMIT, getSwatchBand, toUsdEstimate } from "@/lib/lemonSquee
 import ReadyMadePacks from "./ReadyMadePacks";
 
 const FAMILY_ORDER = Object.keys(COLOR_FAMILY_LABELS) as ColorFamily[];
-
-const INTRO_TEXT = {
-  // Only the DIY-section toggle heading stays hardcoded -- everything
-  // else that used to live here (useTitle/useIntro/steps, pricingNote,
-  // and the whole "How the Color Families Are Created" method section)
-  // is now translated -- see t("howToUse.*"), t("pricingNote"), and
-  // t("colorFamilyMethod.*") below (2026-07-24, per Mirjam's second
-  // round: "the whole pink box text" + "how the color families were
-  // established" + the free/paid explanation).
-  sectionTitle: "🎨 Custom Swatch Cards",
-};
 
 // -- noise protection: a subtle turbulence overlay blended over every
 // swatch color so a screen color-picker samples a slightly perturbed
@@ -200,11 +215,15 @@ function SetAutocomplete({
   value,
   onChange,
   placeholder,
+  clearLabel,
+  noMatchesLabel,
 }: {
   options: { label: string; key: string }[];
   value: string;
   onChange: (key: string) => void;
   placeholder: string;
+  clearLabel: string;
+  noMatchesLabel: string;
 }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -238,10 +257,10 @@ function SetAutocomplete({
         <div style={styles.autocompleteList}>
           {value && (
             <div style={{ ...styles.autocompleteItem, color: "var(--pink)", fontWeight: 600 }} onClick={() => { onChange(""); setOpen(false); }}>
-              ✕ Clear selection
+              {clearLabel}
             </div>
           )}
-          {filtered.length === 0 && <div style={{ ...styles.autocompleteItem, color: "var(--muted)" }}>No matches</div>}
+          {filtered.length === 0 && <div style={{ ...styles.autocompleteItem, color: "var(--muted)" }}>{noMatchesLabel}</div>}
           {filtered.map((o) => (
             <div key={o.key} style={styles.autocompleteItem} onClick={() => { onChange(o.key); setOpen(false); }}>
               {o.label}
@@ -256,7 +275,9 @@ function SetAutocomplete({
 // One entry per delete action (single swatch -- either fully removed or
 // just hidden from one family, a whole family, or "Clear all"), most
 // recent last. Undo pops the last entry, re-adds any fully-removed items,
-// and un-hides any per-family exclusions.
+// and un-hides any per-family exclusions. `label` is now the fully
+// resolved, already-translated string (built at push-time using t()),
+// not a raw English template -- see pushUndo() call sites below.
 interface UndoAction {
   label: string;
   items: SwatchItem[];
@@ -265,11 +286,13 @@ interface UndoAction {
 const UNDO_STACK_LIMIT = 10;
 
 export default function SwatchCreator() {
-  // "How to Use This Tool?" block translated (2026-07-24) -- see
-  // t.raw("howToUse.steps") below for the nested step/subStep list,
-  // which reads the array structure straight from the locale JSON
-  // rather than the old hardcoded INTRO_TEXT.steps.
   const t = useTranslations("swatchCreator");
+  // Route-segment locale ([locale] in app/[locale]/swatch-creator/
+  // page.tsx) -- sent along with the unlock-full-set checkout request
+  // so create-swatch-checkout/route.ts can build a locale-correct
+  // redirect_url back to /swatch-download (2026-07-27).
+  const routeParams = useParams();
+  const locale = (Array.isArray(routeParams?.locale) ? routeParams.locale[0] : routeParams?.locale) as string || "en";
   const [selected, setSelected] = useState<SwatchItem[]>([]);
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
   const [undoStack, setUndoStack] = useState<UndoAction[]>([]);
@@ -326,7 +349,7 @@ export default function SwatchCreator() {
 
   const addItem = (item: SwatchItem) => {
     setSelected((prev) => (prev.some((p) => p.id === item.id) ? prev : [...prev, item]));
-    showToast("Added to your selection");
+    showToast(t("toast.added"));
   };
   const addMany = (items: SwatchItem[], opts?: { silent?: boolean }) => {
     setSelected((prev) => {
@@ -334,7 +357,7 @@ export default function SwatchCreator() {
       return [...prev, ...items.filter((i) => !existing.has(i.id))];
     });
     if (!opts?.silent && items.length > 0) {
-      showToast(`Added ${items.length} color${items.length === 1 ? "" : "s"} to your selection`);
+      showToast(t("toast.addedMany", { count: items.length }));
     }
   };
 
@@ -350,11 +373,11 @@ export default function SwatchCreator() {
       .map((m) => m.family)
       .filter((f) => !excluded.has(membershipKey(id, f)));
     if (activeFamilies.length <= 1) {
-      pushUndo(`Removed ${printLabel(item)}`, [item], []);
+      pushUndo(t("undoLabels.removedItem", { label: printLabel(item) }), [item], []);
       setSelected((prev) => prev.filter((p) => p.id !== id));
     } else {
       const key = membershipKey(id, family);
-      pushUndo(`Removed ${printLabel(item)} from ${COLOR_FAMILY_LABELS[family]}`, [], [key]);
+      pushUndo(t("undoLabels.removedItemFromFamily", { label: printLabel(item), family: COLOR_FAMILY_LABELS[family] }), [], [key]);
       setExcluded((prev) => new Set(prev).add(key));
     }
   };
@@ -376,7 +399,7 @@ export default function SwatchCreator() {
         toExcludeKeys.push(membershipKey(item.id, family));
       }
     }
-    pushUndo(`Removed ${COLOR_FAMILY_LABELS[family]} (${itemsInFamily.length} color${itemsInFamily.length === 1 ? "" : "s"})`, toFullyRemove, toExcludeKeys);
+    pushUndo(t("undoLabels.removedFamily", { family: COLOR_FAMILY_LABELS[family], count: itemsInFamily.length }), toFullyRemove, toExcludeKeys);
     if (toFullyRemove.length) {
       const removeIds = new Set(toFullyRemove.map((i) => i.id));
       setSelected((prev) => prev.filter((item) => !removeIds.has(item.id)));
@@ -391,7 +414,7 @@ export default function SwatchCreator() {
   };
   const clearAll = () => {
     if (selected.length === 0) return;
-    pushUndo(`Cleared all (${selected.length} colors)`, selected, []);
+    pushUndo(t("undoLabels.clearedAll", { count: selected.length }), selected, []);
     setSelected([]);
   };
   const undo = () => {
@@ -622,7 +645,7 @@ export default function SwatchCreator() {
       });
       const submitData = await submitRes.json();
       if (!submitRes.ok || !submitData.orderId) {
-        setUnlockError("Could not save your selection. Please try again or contact hello@creabeastudio.com.");
+        setUnlockError(t("errors.saveSelection"));
         setGenerating(null);
         checkoutWindow?.close();
         return;
@@ -631,11 +654,11 @@ export default function SwatchCreator() {
       const checkoutRes = await fetch("/api/create-swatch-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: submitData.orderId, colorCount: totalColors, paperSize }),
+        body: JSON.stringify({ orderId: submitData.orderId, colorCount: totalColors, paperSize, locale }),
       });
       const checkoutData = await checkoutRes.json();
       if (!checkoutRes.ok || !checkoutData.url) {
-        setUnlockError("Could not start checkout. Please try again or contact hello@creabeastudio.com.");
+        setUnlockError(t("errors.startCheckout"));
         setGenerating(null);
         checkoutWindow?.close();
         return;
@@ -650,7 +673,7 @@ export default function SwatchCreator() {
         window.location.href = checkoutData.url;
       }
     } catch {
-      setUnlockError("Something went wrong. Please try again or contact hello@creabeastudio.com.");
+      setUnlockError(t("errors.generic"));
       setGenerating(null);
       checkoutWindow?.close();
     }
@@ -758,7 +781,8 @@ export default function SwatchCreator() {
             Tool?" instead of as a bare heading above it -- this box
             (and its toggle) always renders; only its own content and
             the builder below it collapse together. Arrow leads on the
-            left (moved from the right, 2026-07-24). ── */}
+            left (moved from the right, 2026-07-24). Heading now
+            translated (2026-07-25) -- see t("diyToggleTitle"). ── */}
         <button
           onClick={() => setDiyOpen((o) => !o)}
           style={{
@@ -772,7 +796,7 @@ export default function SwatchCreator() {
             ▾
           </span>
           <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: 19, color: "var(--pink)", margin: 0 }}>
-            {INTRO_TEXT.sectionTitle}
+            {t("diyToggleTitle")}
           </h2>
         </button>
 
@@ -827,31 +851,38 @@ export default function SwatchCreator() {
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <div style={styles.tabRow}>
-              <button style={tabStyle(tab === "guangna-set")} onClick={() => setTab("guangna-set")}>Guangna set</button>
-              <button style={tabStyle(tab === "single")} onClick={() => setTab("single")}>Guangna codes</button>
-              <button style={tabStyle(tab === "languo-set")} onClick={() => setTab("languo-set")}>Languo set</button>
-              <button style={tabStyle(tab === "languo-single")} onClick={() => setTab("languo-single")}>Languo codes</button>
-              <button style={tabStyle(tab === "family")} onClick={() => setTab("family")}>Color Family</button>
+              <button style={tabStyle(tab === "guangna-set")} onClick={() => setTab("guangna-set")}>{t("tabs.guangnaSet")}</button>
+              <button style={tabStyle(tab === "single")} onClick={() => setTab("single")}>{t("tabs.guangnaCodes")}</button>
+              <button style={tabStyle(tab === "languo-set")} onClick={() => setTab("languo-set")}>{t("tabs.languoSet")}</button>
+              <button style={tabStyle(tab === "languo-single")} onClick={() => setTab("languo-single")}>{t("tabs.languoCodes")}</button>
+              <button style={tabStyle(tab === "family")} onClick={() => setTab("family")}>{t("tabs.colorFamily")}</button>
             </div>
           </div>
           <button
             onClick={resetFilters}
             style={{ border: "1px solid var(--border)", background: "white", color: "var(--muted)", borderRadius: 50, padding: "6px 14px", fontSize: 12.5, cursor: "pointer", marginBottom: 14 }}
           >
-            ↺ Reset filters
+            {t("resetFilters")}
           </button>
 
           {tab === "guangna-set" && (
             <>
-              <SetAutocomplete options={SET_OPTIONS} value={guangnaSetKey} onChange={setGuangnaSetKey} placeholder="Search a Guangna set…" />
+              <SetAutocomplete
+                options={SET_OPTIONS}
+                value={guangnaSetKey}
+                onChange={setGuangnaSetKey}
+                placeholder={t("placeholders.guangnaSetSearch")}
+                clearLabel={t("autocomplete.clearSelection")}
+                noMatchesLabel={t("autocomplete.noMatches")}
+              />
               <p style={{ fontSize: 11.5, color: "var(--muted)", marginTop: -6, marginBottom: 14 }}>
-                Note: Metallic markers are not included.
+                {t("metallicNote")}
               </p>
-              {!guangnaSetKey && <p style={styles.emptyHint}>Pick a set above to browse its colors.</p>}
+              {!guangnaSetKey && <p style={styles.emptyHint}>{t("hints.pickSet")}</p>}
               {guangnaSetKey && (
                 <>
                   <button className="btn-outline" style={{ marginBottom: 14, padding: "8px 20px", fontSize: 13 }} onClick={() => { addMany(guangnaSetPreview); setGuangnaSetKey(""); }}>
-                    Add all {guangnaSetPreview.length} colors
+                    {t("addAll", { count: guangnaSetPreview.length })}
                   </button>
                   <div style={styles.swatchGrid}>
                     {guangnaSetPreview.map((item) => (
@@ -868,8 +899,8 @@ export default function SwatchCreator() {
 
           {tab === "single" && (
             <>
-              <input type="text" style={styles.input} placeholder="Search by code or name…" value={singleSearch} onChange={(e) => setSingleSearch(e.target.value)} />
-              {!singleSearch && <p style={styles.emptyHint}>Start typing to search Guangna codes.</p>}
+              <input type="text" style={styles.input} placeholder={t("placeholders.guangnaCodeSearch")} value={singleSearch} onChange={(e) => setSingleSearch(e.target.value)} />
+              {!singleSearch && <p style={styles.emptyHint}>{t("hints.typeGuangnaCode")}</p>}
               <div style={styles.swatchGrid}>
                 {guangnaResults.map((item) => (
                   <div key={item.id} style={styles.swatchCard} draggable onDragStart={(e) => onSourceDragStart(e, item)} onClick={() => addItem(item)}>
@@ -883,12 +914,19 @@ export default function SwatchCreator() {
 
           {tab === "languo-set" && (
             <>
-              <SetAutocomplete options={LANGUO_SET_OPTIONS} value={languoSetKey} onChange={setLanguoSetKey} placeholder="Search a Languo set…" />
-              {!languoSetKey && <p style={styles.emptyHint}>Pick a set above to browse its colors.</p>}
+              <SetAutocomplete
+                options={LANGUO_SET_OPTIONS}
+                value={languoSetKey}
+                onChange={setLanguoSetKey}
+                placeholder={t("placeholders.languoSetSearch")}
+                clearLabel={t("autocomplete.clearSelection")}
+                noMatchesLabel={t("autocomplete.noMatches")}
+              />
+              {!languoSetKey && <p style={styles.emptyHint}>{t("hints.pickSet")}</p>}
               {languoSetKey && (
                 <>
                   <button className="btn-outline" style={{ marginBottom: 14, padding: "8px 20px", fontSize: 13 }} onClick={() => { addMany(languoSetPreview); setLanguoSetKey(""); }}>
-                    Add all {languoSetPreview.length} colors
+                    {t("addAll", { count: languoSetPreview.length })}
                   </button>
                   <div style={styles.swatchGrid}>
                     {languoSetPreview.map((item) => (
@@ -905,8 +943,8 @@ export default function SwatchCreator() {
 
           {tab === "languo-single" && (
             <>
-              <input type="text" style={styles.input} placeholder="Search by Languo code…" value={languoSearch} onChange={(e) => setLanguoSearch(e.target.value)} />
-              {!languoSearch && <p style={styles.emptyHint}>Start typing to search Languo codes.</p>}
+              <input type="text" style={styles.input} placeholder={t("placeholders.languoCodeSearch")} value={languoSearch} onChange={(e) => setLanguoSearch(e.target.value)} />
+              {!languoSearch && <p style={styles.emptyHint}>{t("hints.typeLanguoCode")}</p>}
               <div style={styles.swatchGrid}>
                 {languoResults.map((item) => (
                   <div key={item.id} style={styles.swatchCard} draggable onDragStart={(e) => onSourceDragStart(e, item)} onClick={() => addItem(item)}>
@@ -921,16 +959,16 @@ export default function SwatchCreator() {
           {tab === "family" && (
             <>
               <select style={{ marginBottom: 10 }} value={familyKey} onChange={(e) => setFamilyKey(e.target.value as ColorFamily | "")}>
-                <option value="">— Select a color family —</option>
+                <option value="">{t("selectFamilyPlaceholder")}</option>
                 {FAMILY_ORDER.map((f) => (
                   <option key={f} value={f}>{COLOR_FAMILY_LABELS[f]} ({getCodesInFamily(f).length})</option>
                 ))}
               </select>
-              {!familyKey && <p style={styles.emptyHint}>Pick a color family above to browse its colors.</p>}
+              {!familyKey && <p style={styles.emptyHint}>{t("hints.pickFamily")}</p>}
               {familyKey && (
                 <>
                   <button className="btn-outline" style={{ marginBottom: 14, padding: "8px 20px", fontSize: 13 }} onClick={() => { addMany(familyPreview); setFamilyKey(""); }}>
-                    Add all {familyPreview.length} colors
+                    {t("addAll", { count: familyPreview.length })}
                   </button>
                   <div style={styles.swatchGrid}>
                     {familyPreview.map((item) => (
@@ -950,7 +988,9 @@ export default function SwatchCreator() {
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <strong>
-              Selected ({totalColors} color{totalColors === 1 ? "" : "s"}{totalFamilies > 0 ? `, ${totalFamilies} color famil${totalFamilies === 1 ? "y" : "ies"}` : ""})
+              {totalFamilies > 0
+                ? t("selectedColorsWithFamilies", { count: totalColors, familyCount: totalFamilies })
+                : t("selectedColors", { count: totalColors })}
             </strong>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               {undoStack.length > 0 && (
@@ -959,12 +999,12 @@ export default function SwatchCreator() {
                   title={undoStack[undoStack.length - 1].label}
                   style={{ border: "none", background: "none", cursor: "pointer", color: "var(--pink)", fontSize: 13, fontWeight: 600 }}
                 >
-                  ↺ Undo
+                  {t("undo")}
                 </button>
               )}
               {selected.length > 0 && (
                 <button onClick={clearAll} style={{ border: "none", background: "none", cursor: "pointer", color: "var(--pink)", fontSize: 13, fontWeight: 600 }}>
-                  Clear all
+                  {t("clearAll")}
                 </button>
               )}
             </div>
@@ -972,14 +1012,14 @@ export default function SwatchCreator() {
 
           {selected.length > 0 && (
             <p style={{ fontSize: 11.5, color: "var(--muted)", marginTop: -6, marginBottom: 12 }}>
-              💡 Drag a color onto another within its family to reorder it.
+              {t("dragHint")}
             </p>
           )}
 
           <div style={styles.selectedDrop} onDragOver={(e) => e.preventDefault()} onDrop={onDropZoneDrop}>
             {selected.length === 0 && (
               <p style={{ color: "var(--muted)", fontSize: 13, textAlign: "center", marginTop: 30, marginBottom: 30 }}>
-                Drag colors here, or click a swatch on the left to add it.
+                {t("emptySelection")}
               </p>
             )}
             {grouped.map(({ family, items }) => {
@@ -995,7 +1035,7 @@ export default function SwatchCreator() {
                       {undoStack.length > 0 && (
                         <button
                           style={styles.familyActionBtn}
-                          title={`Undo: ${undoStack[undoStack.length - 1].label}`}
+                          title={undoStack[undoStack.length - 1].label}
                           onClick={undo}
                         >
                           ↺
@@ -1003,13 +1043,13 @@ export default function SwatchCreator() {
                       )}
                       <button
                         style={styles.familyActionBtn}
-                        title={overFreeLimit ? "Included in the full download once you unlock your set below" : "Download this color family only"}
+                        title={overFreeLimit ? t("familyActions.downloadFamilyLocked") : t("familyActions.downloadFamily")}
                         onClick={() => downloadFamily(family, items)}
                         disabled={generating !== null || overFreeLimit}
                       >
                         {generating === family ? "…" : "⬇"}
                       </button>
-                      <button style={styles.familyActionBtn} title="Remove this color family from selection" onClick={() => removeFamily(family)}>
+                      <button style={styles.familyActionBtn} title={t("familyActions.removeFamily")} onClick={() => removeFamily(family)}>
                         🗑
                       </button>
                     </div>
@@ -1034,19 +1074,19 @@ export default function SwatchCreator() {
                           onDrop={(e) => onMiniDrop(e, item, family, orderedIds)}
                         >
                           <Swatch rgb={item.rgb} height={40} />
-                          <button style={styles.miniRemove} onClick={() => removeItem(item.id, family)} aria-label={`Remove ${item.code} from ${COLOR_FAMILY_LABELS[family]}`}>×</button>
+                          <button style={styles.miniRemove} onClick={() => removeItem(item.id, family)} aria-label={t("a11y.removeFromFamily", { code: item.code, family: COLOR_FAMILY_LABELS[family] })}>×</button>
                           {wasManuallyMoved && (
                             <button
                               style={{ ...styles.miniRemove, left: 2, right: "auto" }}
                               onClick={() => resetItemPosition(item.id, family)}
-                              aria-label={`Move ${item.code} back to its original position`}
-                              title="Move back to original position"
+                              aria-label={t("a11y.moveBack", { code: item.code })}
+                              title={t("a11y.moveBack", { code: item.code })}
                             >
                               ⇱
                             </button>
                           )}
                           <div style={styles.miniLabel}>{item.code}</div>
-                          {others.length > 0 && <div style={styles.crossFamilyLabel}>also: {others.join(", ")}</div>}
+                          {others.length > 0 && <div style={styles.crossFamilyLabel}>{t("alsoIn", { families: others.join(", ") })}</div>}
                         </div>
                       );
                     })}
@@ -1061,39 +1101,39 @@ export default function SwatchCreator() {
       {/* -- options + generate -- */}
       <div style={styles.optionsRow}>
         <label style={styles.optionLabel}>
-          Swatch style
+          {t("options.swatchStyle")}
           <select value={swatchStyle} onChange={(e) => setSwatchStyle(e.target.value as SwatchStyle)}>
-            <option value="filled">Filled (shows the color)</option>
-            <option value="blank">Blank (outline only, for manual swatching)</option>
+            <option value="filled">{t("options.swatchStyleFilled")}</option>
+            <option value="blank">{t("options.swatchStyleBlank")}</option>
           </select>
         </label>
         <label style={styles.optionLabel}>
-          Bundle-hole (header)
+          {t("options.bundleHole")}
           <select value={headerHolePos} onChange={(e) => setHeaderHolePos(e.target.value as HeaderHolePos)}>
-            <option value="none">None</option>
-            <option value="left">Left</option>
-            <option value="center">Center</option>
-            <option value="right">Right</option>
+            <option value="none">{t("options.holeNone")}</option>
+            <option value="left">{t("options.holeLeft")}</option>
+            <option value="center">{t("options.holeCenter")}</option>
+            <option value="right">{t("options.holeRight")}</option>
           </select>
         </label>
         <label style={styles.optionLabel}>
-          Card layout
+          {t("options.cardLayout")}
           <select value={cardPacking} onChange={(e) => setCardPacking(e.target.value as CardPacking)}>
-            <option value="per-family">One color family per card</option>
-            <option value="packed">Pack multiple families per card</option>
+            <option value="per-family">{t("options.layoutPerFamily")}</option>
+            <option value="packed">{t("options.layoutPacked")}</option>
           </select>
         </label>
         <label style={styles.optionLabel}>
-          Paper size
+          {t("options.paperSize")}
           <select value={paperSize} onChange={(e) => setPaperSize(e.target.value as PaperSize)}>
-            <option value="a4">A4</option>
-            <option value="letter">US Letter</option>
+            <option value="a4">{t("options.paperA4")}</option>
+            <option value="letter">{t("options.paperLetter")}</option>
           </select>
         </label>
       </div>
 
       <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 16 }}>
-        {allCards.length} card{allCards.length === 1 ? "" : "s"} ({totalColors} swatches, up to 12 per card, 4 per landscape page)
+        {t("cardCountSummary", { cardCount: allCards.length, colorCount: totalColors })}
       </p>
 
       {unlockError && <div style={styles.checkoutError}>⚠️ {unlockError}</div>}
@@ -1101,16 +1141,14 @@ export default function SwatchCreator() {
       {checkoutOpened && (
         <div style={{ background: "#F0F7FF", border: "1.5px solid #B8D4F0", borderRadius: 12, padding: 14, color: "#2c5a8c", fontSize: 14, marginBottom: 12 }}>
           <p style={{ margin: 0 }}>
-            🔗 Checkout opened in a new tab — complete your payment there to unlock you set. Don't worry,
-            this page will stay right here.
+            {t("checkoutOpened.line1")}
           </p>
           <p style={{ margin: "10px 0 0" }}>
-            📧 Instant Download: Your file downloads automatically after checkout, plus a backup link
-            will be sent to your email by Lemon Squeezy (our payment processor)
+            {t("checkoutOpened.line2")}
           </p>
           {swatchOrderId && (
             <div style={{ marginTop: 10, fontSize: 12.5, opacity: 0.85 }}>
-              Order reference: {swatchOrderId}
+              {t("checkoutOpened.orderReference", { id: swatchOrderId })}
             </div>
           )}
         </div>
@@ -1119,28 +1157,27 @@ export default function SwatchCreator() {
       {overFreeLimit ? (
         <>
           <p style={{ fontSize: 13.5, color: "var(--ink)", marginBottom: 12 }}>
-            You've selected {totalColors} colors — the first {FREE_COLOR_LIMIT} (one full page) are free.
-            Unlock the complete set for {bandPriceDisplay}.
+            {t("paywallStatus", { count: totalColors, limit: FREE_COLOR_LIMIT, price: bandPriceDisplay ?? "" })}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button className="btn-outline" onClick={downloadFreePreview} disabled={generating !== null}>
-              {generating === "preview" ? "Generating…" : `Download free preview (first ${FREE_COLOR_LIMIT})`}
+              {generating === "preview" ? t("actions.generating") : t("actions.downloadFreePreview", { limit: FREE_COLOR_LIMIT })}
             </button>
             <button className="btn-primary" onClick={unlockFullSet} disabled={generating !== null}>
-              {generating === "unlock" ? "Redirecting…" : `Unlock full set — ${bandPriceDisplay}`}
+              {generating === "unlock" ? t("actions.redirecting") : t("actions.unlockFullSet", { price: bandPriceDisplay ?? "" })}
             </button>
             <button className="btn-outline" onClick={downloadBlankTemplate} disabled={generating !== null}>
-              {generating === "blank" ? "Generating…" : "Download blank template"}
+              {generating === "blank" ? t("actions.generating") : t("actions.downloadBlankTemplate")}
             </button>
           </div>
         </>
       ) : (
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button className="btn-primary" onClick={downloadAll} disabled={selected.length === 0 || generating !== null}>
-            {generating === "all" ? "Generating…" : "Download all as PDF"}
+            {generating === "all" ? t("actions.generating") : t("actions.downloadAll")}
           </button>
           <button className="btn-outline" onClick={downloadBlankTemplate} disabled={generating !== null}>
-            {generating === "blank" ? "Generating…" : "Download blank template"}
+            {generating === "blank" ? t("actions.generating") : t("actions.downloadBlankTemplate")}
           </button>
         </div>
       )}

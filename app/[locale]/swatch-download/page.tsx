@@ -1,9 +1,16 @@
 "use client";
 
 // Save this file as app/[locale]/swatch-download/page.tsx
-// (adjust the path/locale segment to match how your other [locale]
-// routes are structured -- see the NOTE in create-swatch-checkout's
-// redirectUrl about whether this needs a locale prefix)
+//
+// UPDATED (2026-07-27): full i18n pass -- this page previously had NO
+// next-intl integration at all. Every visible string now routes
+// through t() under a new "swatchDownload" namespace. The client-side
+// PDF generation failure (in triggerDownload's catch block) now uses
+// t("pdfGenerationError") instead of a hardcoded English string -- this
+// one isn't a route error code (lib/apiErrors.ts), since it's a local
+// jsPDF/rendering failure that never reaches an API route, so it stays
+// as its own key in this namespace rather than joining that shared
+// list.
 //
 // Where a customer lands after LemonSqueezy checkout for a paid Custom
 // Swatch Card Set order. Payment confirmation itself happens
@@ -16,6 +23,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Navbar from "../components/Navbar";
 import { guangnaItem, languoItem, buildCards, renderCards, type SwatchItem } from "@/lib/swatchPdf";
 import type { SwatchSelectionJson } from "@/lib/swatchOrder";
@@ -26,6 +34,7 @@ const MAX_POLLS = 24; // ~60s -- generous, since the webhook is usually near-ins
 type Status = "checking" | "ready" | "timedOut" | "error";
 
 function SwatchDownloadContent() {
+  const t = useTranslations("swatchDownload");
   const params = useSearchParams();
   const orderId = params.get("order") ?? "";
 
@@ -90,7 +99,7 @@ function SwatchDownloadContent() {
       const cards = buildCards(items, selection.options.cardPacking, excluded);
       await renderCards(cards, selection.options, "creabeastudio-swatch-cards-full.pdf");
     } catch {
-      setDownloadError("Something went wrong generating your PDF. Try the button again, or contact hello@creabeastudio.com with your order reference.");
+      setDownloadError(t("pdfGenerationError"));
     } finally {
       setDownloading(false);
     }
@@ -113,10 +122,10 @@ function SwatchDownloadContent() {
         {status === "checking" && (
           <>
             <h1 style={{ fontFamily: "Nunito, sans-serif", color: "var(--pink)", fontWeight: 900, fontSize: 24, marginBottom: 10 }}>
-              Confirming your payment…
+              {t("checkingTitle")}
             </h1>
             <p style={{ color: "#666", fontSize: 15 }}>
-              This usually takes just a few seconds. Please don't close this page.
+              {t("checkingBody")}
             </p>
           </>
         )}
@@ -124,10 +133,10 @@ function SwatchDownloadContent() {
         {status === "ready" && (
           <>
             <h1 style={{ fontFamily: "Nunito, sans-serif", color: "var(--pink)", fontWeight: 900, fontSize: 24, marginBottom: 10 }}>
-              Your swatch cards are ready! 💖
+              {t("readyTitle")}
             </h1>
             <p style={{ color: "#666", fontSize: 15, marginBottom: 20 }}>
-              Your download should start automatically. If it doesn't, use the button below.
+              {t("readyBody")}
             </p>
             {downloadError && (
               <div style={{ background: "#FFF0F0", border: "1.5px solid var(--pink)", borderRadius: 12, padding: 14, color: "#c62828", fontSize: 14, marginBottom: 16 }}>
@@ -135,10 +144,10 @@ function SwatchDownloadContent() {
               </div>
             )}
             <button className="btn-primary" onClick={triggerDownload} disabled={downloading} style={{ padding: "14px 28px", fontSize: 15 }}>
-              {downloading ? "Generating…" : "Download your swatch cards"}
+              {downloading ? t("generating") : t("downloadButton")}
             </button>
             <p style={{ marginTop: 20, fontSize: 12.5, color: "var(--muted)" }}>
-              Order reference: {orderId}. Keep this in case you need to contact hello@creabeastudio.com.
+              {t("orderReferenceNote", { orderId })}
             </p>
           </>
         )}
@@ -146,13 +155,13 @@ function SwatchDownloadContent() {
         {status === "timedOut" && (
           <>
             <h1 style={{ fontFamily: "Nunito, sans-serif", color: "var(--pink)", fontWeight: 900, fontSize: 24, marginBottom: 10 }}>
-              Still processing…
+              {t("timedOutTitle")}
             </h1>
             <p style={{ color: "#666", fontSize: 15, marginBottom: 8 }}>
-              Your payment is taking longer than usual to confirm. This can happen occasionally -- your order isn't lost.
+              {t("timedOutBody")}
             </p>
             <p style={{ color: "#666", fontSize: 14 }}>
-              If this page hasn't updated in a few minutes, email <a href="mailto:hello@creabeastudio.com" style={{ color: "var(--pink)" }}>hello@creabeastudio.com</a> with this order reference: <strong>{orderId}</strong>
+              {t("timedOutEmailPrefix")} <a href="mailto:hello@creabeastudio.com" style={{ color: "var(--pink)" }}>hello@creabeastudio.com</a> {t("timedOutRefSuffix")} <strong>{orderId}</strong>
             </p>
           </>
         )}
@@ -160,11 +169,11 @@ function SwatchDownloadContent() {
         {status === "error" && (
           <>
             <h1 style={{ fontFamily: "Nunito, sans-serif", color: "var(--pink)", fontWeight: 900, fontSize: 24, marginBottom: 10 }}>
-              Something went wrong
+              {t("errorTitle")}
             </h1>
             <p style={{ color: "#666", fontSize: 15 }}>
-              We couldn't find or check that order. Please email <a href="mailto:hello@creabeastudio.com" style={{ color: "var(--pink)" }}>hello@creabeastudio.com</a>
-              {orderId ? <> with this order reference: <strong>{orderId}</strong></> : " for help."}
+              {t("errorEmailPrefix")} <a href="mailto:hello@creabeastudio.com" style={{ color: "var(--pink)" }}>hello@creabeastudio.com</a>
+              {orderId ? <> {t("errorRefSuffix")} <strong>{orderId}</strong></> : ` ${t("errorNoRefSuffix")}`}
             </p>
           </>
         )}

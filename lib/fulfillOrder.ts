@@ -1,5 +1,5 @@
 import { Storage } from "@google-cloud/storage";
-import { sendOrderConfirmationEmail, sendReminderEmail, type UpsellMarker } from "./email";
+import { sendOrderConfirmationEmail, type UpsellMarker } from "./email";
 
 // ── ORCHESTRATION (2026-07-17): this is what a payment webhook calls
 // once payment is confirmed -- it isn't called from anywhere yet, since
@@ -21,6 +21,17 @@ import { sendOrderConfirmationEmail, sendReminderEmail, type UpsellMarker } from
 // fresh signed links, and re-sends the same email. See
 // app/api/admin/resend-links/route.ts for the admin-triggered entry
 // point that calls this.
+//
+// REMOVED (2026-07-27): the day-21 reminder-email feature
+// (sendPendingReminders, REMINDER_AFTER_MS, daysRemainingFromFulfillment,
+// the reminderSentAt field on FulfillmentJson, and the sendReminderEmail
+// import) -- discontinued per Mirjam's call, since the confirmation
+// email already attaches the files directly in most cases, making the
+// reminder redundant enough not to be worth keeping. You'll still need
+// to delete app/api/cron/send-reminders/route.ts yourself (Claude
+// doesn't have that file) and remove its daily cron entry from
+// vercel.json, or the cron job will keep firing against a function that
+// no longer exists.
 
 const GCS_BUCKET_NAME     = process.env.GCS_ORDERS_BUCKET || "crea-bea-pbn-orders";
 const WEBSERVICE_URL      = process.env.PBN_SERVICE_URL!;      // e.g. https://pbn-generator-xxxxx-ez.a.run.app
@@ -134,6 +145,13 @@ type OrderJson = {
   customerEmail: string;
   grandTotal: number;
   wantsFullGuide: boolean;
+  // The customer's locale, captured on /create and persisted by
+  // submit-order/route.ts. Threaded through to the delivery email so
+  // it sends in the customer's own language instead of always English.
+  // Optional so this type still matches orders placed before this
+  // field existed -- those fall back to English inside
+  // getEmailTranslator() rather than failing.
+  locale?: string;
   submittedAt: string;
 };
 
@@ -149,16 +167,6 @@ type FulfillmentJson = {
   upsell: UpsellMarker[];
   finalRegionCount: number;
   fulfilledAt: string;
-  // REMINDER (2026-07-17): null until the day-21 reminder has actually
-  // been sent, then set to that send timestamp -- this is what stops
-  // the same order from getting reminded twice on subsequent cron runs.
-  reminderSentAt: string | null;
-};
-
-const LEVEL_TO_LABEL: Record<string, string> = {
-  "15": "🌱 Beginner (7€)",
-  "24": "🌿 Intermediate (9€)",
-  "36": "🌲 Advanced (11€)",
 };
 
 async function readOrderJson(storage: Storage, orderId: string): Promise<OrderJson> {
@@ -193,7 +201,8 @@ async function buildAndSendEmail(
   await sendOrderConfirmationEmail({
     orderId,
     customerEmail: orderData.customerEmail,
-    levelLabel: LEVEL_TO_LABEL[orderData.level] || orderData.level,
+    level: orderData.level,
+    locale: orderData.locale || "en",
     sets: orderData.sets || "",
     indPens: orderData.indPens || "",
     outlineUrl,
@@ -240,7 +249,6 @@ export async function fulfillOrder(orderId: string): Promise<void> {
     upsell: genResult.upsell || [],
     finalRegionCount: genResult.final_region_count,
     fulfilledAt: new Date().toISOString(),
-    reminderSentAt: null,
   };
   await storage.bucket(GCS_BUCKET_NAME).file(`orders/${orderId}/fulfillment.json`).save(
     JSON.stringify(fulfillment, null, 2),
@@ -273,79 +281,4 @@ export async function resendOrderEmail(orderId: string): Promise<void> {
 
   const orderData = await readOrderJson(storage, orderId);
   await buildAndSendEmail(storage, orderId, orderData, fulfillment);
-}
-
-// ── REMINDER (2026-07-17): a time-based (not click-tracked) nudge sent
-// once per order, roughly 21 days after fulfillment, for orders that
-// haven't necessarily downloaded their files yet. Called daily by
-// app/api/cron/send-reminders/route.ts (Vercel Cron).
-//
-// Deliberately link-only, no attachments (2026-07-24) -- unlike the
-// original delivery email, this one exists specifically because the
-// customer may not have engaged with the first email at all, so
-// re-sending a large attachment on a guess is more cost than the
-// nudge is worth; the links (already the primary path today) cover it.
-//
-// Scans every fulfillment.json under orders/ -- fine at current order
-// volume. If this ever becomes slow at higher volume, the fix is a
-// small index file (e.g. orders/_pending-reminders.json) maintained by
-// fulfillOrder() instead of a full bucket scan, but that's premature
-// for now.
-const REMINDER_AFTER_MS = 21 * 24 * 60 * 60 * 1000;
-
-// How much longer the (30-day) delivery links are still valid, shown in
-// the reminder email so the customer knows their actual deadline.
-function daysRemainingFromFulfillment(fulfilledAt: string): number {
-  const expiresAt = new Date(fulfilledAt).getTime() + SIGNED_URL_EXPIRY_MS;
-  const msLeft = expiresAt - Date.now();
-  return Math.max(0, Math.round(msLeft / (24 * 60 * 60 * 1000)));
-}
-
-export async function sendPendingReminders(): Promise<{ checked: number; sent: number; errors: string[] }> {
-  const storage = getStorageClient();
-  const bucket = storage.bucket(GCS_BUCKET_NAME);
-  const [files] = await bucket.getFiles({ prefix: "orders/" });
-
-  const fulfillmentFiles = files.filter(f => f.name.endsWith("/fulfillment.json"));
-  const errors: string[] = [];
-  let sent = 0;
-
-  for (const file of fulfillmentFiles) {
-    // orders/{orderId}/fulfillment.json -> {orderId}
-    const orderId = file.name.split("/")[1];
-    try {
-      const [raw] = await file.download();
-      const fulfillment = JSON.parse(raw.toString("utf-8")) as FulfillmentJson;
-
-      if (fulfillment.reminderSentAt) continue; // already reminded once
-
-      const fulfilledAtMs = new Date(fulfillment.fulfilledAt).getTime();
-      const dueForReminder = Date.now() - fulfilledAtMs >= REMINDER_AFTER_MS;
-      if (!dueForReminder) continue;
-
-      const orderData = await readOrderJson(storage, orderId);
-      const outlineUrl = await getSignedUrl(storage, fulfillment.outlinePdfPath);
-      const previewGuideUrl = await getSignedUrl(storage, fulfillment.previewGuidePdfPath);
-      const fullGuideUrl = fulfillment.fullGuidePdfPath
-        ? await getSignedUrl(storage, fulfillment.fullGuidePdfPath)
-        : null;
-
-      await sendReminderEmail({
-        orderId,
-        customerEmail: orderData.customerEmail,
-        outlineUrl,
-        previewGuideUrl,
-        fullGuideUrl,
-        daysRemaining: daysRemainingFromFulfillment(fulfillment.fulfilledAt),
-      });
-
-      const updated: FulfillmentJson = { ...fulfillment, reminderSentAt: new Date().toISOString() };
-      await file.save(JSON.stringify(updated, null, 2), { contentType: "application/json", resumable: false });
-      sent++;
-    } catch (e: any) {
-      errors.push(`${orderId}: ${e.message}`);
-    }
-  }
-
-  return { checked: fulfillmentFiles.length, sent, errors };
 }

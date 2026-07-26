@@ -3,13 +3,45 @@ import Navbar from "../components/Navbar";
 import LoadingCat from "../components/LoadingCat";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
 import { useState, useRef, useCallback, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { GUANGNA_BY_NUMBER, parseEuroPrice, toUsdEstimate } from "@/lib/lemonSqueezyPricing";
 import type { PaperSize } from "@/lib/lemonSqueezyPricing";
 import { saveDraft, loadDraft, fileToBase64, base64ToFile } from "@/lib/createDraft";
+import { isApiErrorCode } from "@/lib/apiErrors";
 
+// UPDATED (2026-07-27):
+//  - Submit now sends a `locale` field (read from this page's own
+//    [locale] URL segment via useParams()) so submit-order/route.ts
+//    can persist it into order.json -- first step of threading the
+//    customer's language through to the post-purchase delivery email
+//    (fulfillOrder.ts / lib/email.ts still need to pick this up).
+//  - Errors coming back from our own API routes (submit-order,
+//    generate-preview) are now translated via the shared "apiErrors"
+//    namespace using the CODE the route returns (see lib/apiErrors.ts),
+//    instead of `data.error || t("...")` -- that pattern never actually
+//    hit the translated fallback since data.error was always a truthy
+//    English string from the route itself, so every error showed up in
+//    English regardless of locale. Client-detected failures (network
+//    errors caught in the `catch` blocks, never having reached a route
+//    at all) still use the existing create.step3.connectionError /
+//    create.submit.genericError copy, since those aren't route
+//    responses.
+//
+// UPDATED (2026-07-27, i18n pass): full i18n pass -- this page
+// previously had NO next-intl integration at all (no useTranslations,
+// no namespace). Per Mirjam's "go big for French" approach (same one
+// used on Swatch Creator), every visible string here now routes
+// through t() under a new "create" namespace -- step titles,
+// descriptions, warnings, error messages, button labels, the order
+// summary, and the Level labels/descriptions. MARKER_SETS (the 34
+// physical marker-set names) are deliberately left untranslated for
+// now -- flagged separately as an open question since some contain
+// plain English color words ("Blue", "Skin") rather than pure SKU
+// codes.
+//
 // UPDATED (2026-07-24): paper size choice moved here from /confirm as a
 // new Step 4 ("Your Guangna Marker Sets" -> preview -> paper size ->
 // email, which is now Step 5). Confirm no longer lets you pick paper
@@ -73,19 +105,17 @@ const MARKER_SETS = [
   { label:"Macaron",                  value:"GN.8201M-24" },
 ];
 
-// Labels only now -- price no longer varies by level, see GUANGNA_BY_NUMBER.
-const LEVELS = [
-  { label:"🌱 Beginner",     value:"15", desc:"Fewer colors, larger areas." },
-  { label:"🌿 Intermediate", value:"24", desc:"Balanced mix of effort and detail.", popular:true },
-  { label:"🌲 Advanced",     value:"36", desc:"Wide color range, detailed." },
-];
-
 const DEFAULT_LEVEL = "24";
 
-const PAPER_LABELS: Record<PaperSize, string> = {
-  a4: "A4",
-  letter: "US Letter",
+// Labels/descriptions now come from t("levels.*") -- see LEVEL_KEYS
+// below for the value/popular mapping this array still needs; the
+// display text itself is no longer stored here.
+const LEVEL_KEYS: Record<string, { labelKey: string; descKey: string; popular?: boolean }> = {
+  "15": { labelKey: "levels.beginner",     descKey: "levels.beginnerDesc" },
+  "24": { labelKey: "levels.intermediate", descKey: "levels.intermediateDesc", popular: true },
+  "36": { labelKey: "levels.advanced",     descKey: "levels.advancedDesc" },
 };
+const LEVEL_VALUES = ["15", "24", "36"];
 
 function priceFor(p: PaperSize) {
   return GUANGNA_BY_NUMBER[p === "letter" ? "us" : "a4"].price;
@@ -105,13 +135,6 @@ const MIN_PHOTO_DIMENSION = 1200;
 
 // ── CROP: aspect ratio presets shown as quick-select buttons ──────────────
 const BG_TOOLS_ENABLED = false;
-
-const ASPECT_PRESETS = [
-  { label: "Free", value: undefined },
-  { label: "1:1",  value: 1 },
-  { label: "4:3",  value: 4 / 3 },
-  { label: "16:9", value: 16 / 9 },
-];
 
 // Matches confirm-page.tsx's OrderItem shape exactly -- both pages
 // round-trip this through URL params via prevOrders, so they must
@@ -268,8 +291,31 @@ async function getCroppedBlob(
 }
 
 function CreateInner() {
+  const t = useTranslations("create");
+  const tApiErrors = useTranslations("apiErrors");
   const router = useRouter();
   const params = useSearchParams();
+  // Route-segment locale ([locale] in app/[locale]/create/page.tsx) --
+  // distinct from `params` above, which is the query-string reader.
+  // Sent along at submit time so submit-order/route.ts can persist it
+  // into order.json for the eventual delivery-email locale wiring.
+  const routeParams = useParams();
+  const locale = (Array.isArray(routeParams?.locale) ? routeParams.locale[0] : routeParams?.locale) as string || "en";
+
+  // Aspect preset labels: only "Free" is actual text (t("step1.cropper.aspectFree"));
+  // the ratio strings (1:1, 4:3, 16:9) are numeric notation, not language, so they
+  // stay as plain data here rather than translation keys.
+  const ASPECT_PRESETS = [
+    { label: t("step1.cropper.aspectFree"), value: undefined },
+    { label: "1:1",  value: 1 },
+    { label: "4:3",  value: 4 / 3 },
+    { label: "16:9", value: 16 / 9 },
+  ];
+
+  const PAPER_LABELS: Record<PaperSize, string> = {
+    a4: t("paper.a4"),
+    letter: t("paper.letter"),
+  };
 
   const [photo, setPhoto]           = useState<File|null>(null);
   const [photoUrl, setPhotoUrl]     = useState("");
@@ -495,7 +541,7 @@ function CreateInner() {
       const shortSide = Math.min(img.naturalWidth, img.naturalHeight);
       if (shortSide < MIN_PHOTO_DIMENSION) {
         setPhotoDimError(
-          `This photo is ${img.naturalWidth}×${img.naturalHeight}px — a bit small for a sharp result. We recommend at least ${MIN_PHOTO_DIMENSION}px on the shorter side, but you can continue with this one if you'd like.`
+          t("step1.dimWarning", { width: img.naturalWidth, height: img.naturalHeight, min: MIN_PHOTO_DIMENSION })
         );
         setPendingSmallPhoto({ file, url, width: img.naturalWidth, height: img.naturalHeight });
         return;
@@ -587,7 +633,7 @@ function CreateInner() {
       const res = await fetch("/api/photo-tools", { method: "POST", body: formData });
       if (!res.ok) {
         const data = await res.json().catch(() => ({} as any));
-        throw new Error(data.error || "Something went wrong processing your photo.");
+        throw new Error(data.error || t("step1.bgErrorDefault"));
       }
       const blob = await res.blob();
       const ext = action === "remove" ? "png" : "jpg";
@@ -596,7 +642,7 @@ function CreateInner() {
       setPhoto(newFile);
       setPhotoUrl(URL.createObjectURL(blob));
     } catch (err: any) {
-      setBgError(err?.message || "Something went wrong processing your photo. Please try again.");
+      setBgError(err?.message || t("step1.bgErrorDefault"));
     } finally {
       setBgProcessing(null);
     }
@@ -614,13 +660,13 @@ function CreateInner() {
     const codes = val.split(/[,\s]+/).filter(Boolean);
     const invalid = codes.filter(c => !validateGnCode(c));
     if (invalid.length > 0) {
-      setIndPenError(`Invalid code(s): ${invalid.join(", ")}. Must be 3-digit numbers between 600 and 965.`);
+      setIndPenError(t("step2.invalidCodes", { codes: invalid.join(", ") }));
     } else {
       setIndPenError("");
     }
   };
 
-  const currentLevelInfo = LEVELS.find(l => l.value === level)!;
+  const currentLevelInfo = LEVEL_KEYS[level];
   const hasMarkersSelected = selectedSets.length > 0 || individualPens.trim().length > 0;
   const selectedMarkersLabel = (() => {
     const setLabels = selectedSets
@@ -628,10 +674,17 @@ function CreateInner() {
       .filter(Boolean) as string[];
     const parts = [...setLabels];
     const extraCodes = toApiExtraCodes(individualPens).split(",").filter(Boolean);
-    if (extraCodes.length) parts.push(`${extraCodes.length} individual marker${extraCodes.length > 1 ? "s" : ""}`);
+    if (extraCodes.length) parts.push(t("step3.individualMarkers", { count: extraCodes.length }));
     return parts.join(", ");
   })();
   const isFullPalette = selectedSets.includes("GN-8101-366");
+
+  // Shared: translates a code the route returned via lib/apiErrors.ts's
+  // whitelist, falling back to a generic message for anything else
+  // (an older deploy of a route, or a code this list hasn't caught up
+  // with yet) -- never displays a raw route string directly.
+  const translateApiError = (code: unknown): string =>
+    isApiErrorCode(code) ? tApiErrors(code) : tApiErrors("generic");
 
   const generatePreview = async (overrideSets?: string[]) => {
     if (!photo || indPenError) return;
@@ -655,7 +708,7 @@ function CreateInner() {
       const data = await res.json();
 
       if (!res.ok) {
-        setPreviewError(data.error || "Something went wrong generating your preview. Please try again.");
+        setPreviewError(translateApiError(data.error));
         setPreviewResult(null);
         return;
       }
@@ -665,7 +718,7 @@ function CreateInner() {
       setPreviousPreviewResult(null);
       setAdjustmentMade(false);
     } catch (err) {
-      setPreviewError("Something went wrong generating your preview. Please check your connection and try again.");
+      setPreviewError(t("step3.connectionError"));
       setPreviewResult(null);
     } finally {
       setPreviewLoading(false);
@@ -702,14 +755,14 @@ function CreateInner() {
       const data = await res.json();
 
       if (!res.ok) {
-        setPreviewError(data.error || "Something went wrong generating your preview. Please try again.");
+        setPreviewError(translateApiError(data.error));
         setPreviousPreviewResult(null);
         return;
       }
       setPreviewResult(data);
       setAdjustmentMade(true);
     } catch (err) {
-      setPreviewError("Something went wrong generating your preview. Please check your connection and try again.");
+      setPreviewError(t("step3.connectionError"));
       setPreviousPreviewResult(null);
     } finally {
       setPreviewLoading(false);
@@ -730,7 +783,6 @@ function CreateInner() {
     setErrorMsg("");
     let orderId = "";
     try {
-      const levelInfo  = LEVELS.find(l => l.value === level)!;
       const filledSets = selectedSets;
       const formData = new FormData();
       formData.append("image",      photo);
@@ -741,18 +793,21 @@ function CreateInner() {
       formData.append("indPens",    individualPens);
       formData.append("wantsFullGuide", String(wantsFullGuide));
       formData.append("previewSkipped", String(previewSkipped));
+      // Customer's locale -- see submit-order/route.ts, which persists
+      // this into order.json for the delivery-email locale wiring.
+      formData.append("locale", locale);
       const res  = await fetch("/api/submit-order", { method: "POST", body: formData });
       const data = await res.json();
 
       if (!res.ok || !data.orderId) {
-        setErrorMsg(data.error || "Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com.");
+        setErrorMsg(translateApiError(data.error));
         setSubmitting(false);
         return;
       }
       orderId = data.orderId;
     } catch (err) {
       console.error("Failed to submit order:", err);
-      setErrorMsg("Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com.");
+      setErrorMsg(t("submit.genericError"));
       setSubmitting(false);
       return;
     }
@@ -833,16 +888,16 @@ function CreateInner() {
       <Navbar />
       <main style={{padding:"40px 24px", maxWidth:1100, margin:"0 auto"}}>
         <h1 style={{fontFamily:"Nunito, sans-serif", color:"var(--pink)", fontWeight:900, fontSize:"clamp(26px,4vw,40px)", marginBottom:6}}>
-          Create Your Custom Guangna by Number
+          {t("pageTitle")}
         </h1>
         <p style={{color:"#666", marginBottom:8}}>
-        Upload your photo, choose your Guangna markers, and preview your design for free before you order.
+          {t("pageSubtitle")}
         </p>
 
         {prevOrders.length > 0 && (
           <div style={{background:"#FFF0F3", border:"2px solid var(--pink)", borderRadius:14, padding:"14px 18px", marginTop:16, marginBottom:4}}>
             <p style={{fontWeight:700, fontSize:14, color:"var(--pink)", marginBottom:8}}>
-              🛒 You have {prevOrders.length} order{prevOrders.length > 1 ? "s" : ""} in your cart — total so far: <strong>{totalSoFar.toFixed(2).replace(".", ",")}€</strong>
+              {t("cart.summary", { count: prevOrders.length, total: `${totalSoFar.toFixed(2).replace(".", ",")}€` })}
             </p>
             {prevOrders.map((o, i) => (
               <p key={i} style={{fontSize:13, color:"#555", margin:"2px 0"}}>
@@ -853,7 +908,7 @@ function CreateInner() {
               onClick={() => router.back()}
               style={{marginTop:8, fontSize:12.5, fontWeight:600, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", padding:0}}
             >
-              ← Back to my order
+              {t("cart.backToOrder")}
             </button>
           </div>
         )}
@@ -862,7 +917,7 @@ function CreateInner() {
 
           {/* Step 1: Photo */}
           <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>Step 1: 📸 Upload your photo</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>{t("step1.title")}</h2>
 
               {/* ── CROP: cropper UI replaces the static preview while active ── */}
               {showCropper ? (
@@ -907,7 +962,7 @@ function CreateInner() {
                       className="btn-primary"
                       style={{flex:1, fontSize:14, padding:"10px"}}
                     >
-                      ✂️ Apply Crop
+                      {t("step1.cropper.apply")}
                     </button>
                     <button
                       onClick={cancelCrop}
@@ -917,7 +972,7 @@ function CreateInner() {
                         color:"#555", cursor:"pointer",
                       }}
                     >
-                      Cancel
+                      {t("step1.cropper.cancel")}
                     </button>
                   </div>
                 </div>
@@ -943,15 +998,15 @@ function CreateInner() {
                           style={{width:"100%", height:"auto", maxHeight:500, objectFit:"contain", borderRadius:12, display:"block", margin:"0 auto"}}/>
                       : <>
                           <div style={{fontSize:44, marginBottom:8}}>🖼️</div>
-                          <p style={{fontWeight:600, fontSize:15, marginBottom:4}}>Drop photo here</p>
-                          <p style={{color:"var(--muted)", fontSize:13}}>or click to browse · JPG, PNG, HEIC</p>
+                          <p style={{fontWeight:600, fontSize:15, marginBottom:4}}>{t("step1.dropHint")}</p>
+                          <p style={{color:"var(--muted)", fontSize:13}}>{t("step1.browseHint")}</p>
                         </>
                     }
                   </div>
                   <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}}
                     onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }}/>
                   {photoRestoredNotice && (
-                    <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:8}}>↺ Welcome back — restored your uploaded photo.</p>
+                    <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:8}}>{t("step1.restoredNotice")}</p>
                   )}
                   {photoDimError && (
                     <div style={{marginTop:8, padding:"12px 14px", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:10}}>
@@ -959,11 +1014,11 @@ function CreateInner() {
                       {pendingSmallPhoto && (
                         <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
                           <button onClick={continueWithSmallPhoto} className="btn-primary" style={{fontSize:13, padding:"8px 14px"}}>
-                            Yes, continue anyway
+                            {t("step1.continueAnyway")}
                           </button>
                           <button onClick={discardSmallPhoto}
                             style={{fontSize:13, padding:"8px 14px", borderRadius:8, border:"2px solid var(--border)", background:"white", color:"#555", cursor:"pointer"}}>
-                            Choose a different photo
+                            {t("step1.chooseDifferent")}
                           </button>
                         </div>
                       )}
@@ -977,7 +1032,7 @@ function CreateInner() {
                           {/* ── CROP: entry point button ── */}
                           <button onClick={() => setShowCropper(true)} disabled={!!bgProcessing}
                             style={{fontSize:16, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", fontWeight:700, display:"flex", alignItems:"center", gap:6}}>
-                            <span style={{fontSize:20}}>✂️</span> Crop
+                            <span style={{fontSize:20}}>✂️</span> {t("step1.cropLabel")}
                           </button>
                      
                          {/* ── BACKGROUND TOOLS: remove / blur — hidden via flag, code intact ── */}
@@ -985,23 +1040,23 @@ function CreateInner() {
                             <>
                               <button onClick={() => applyBackgroundAction("remove")} disabled={!!bgProcessing}
                                 style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "remove" ? 0.4 : 1}}>
-                                {bgProcessing === "remove" ? "⏳ Removing…" : "🪄 Remove Background"}
+                                {bgProcessing === "remove" ? t("step1.removingBackground") : t("step1.removeBackground")}
                               </button>
                               <button onClick={() => applyBackgroundAction("blur")} disabled={!!bgProcessing}
                                 style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor: bgProcessing ? "default" : "pointer", fontWeight:600, opacity: bgProcessing && bgProcessing !== "blur" ? 0.4 : 1}}>
-                                {bgProcessing === "blur" ? "⏳ Blurring…" : "🌫️ Blur Background"}
+                                {bgProcessing === "blur" ? t("step1.blurringBackground") : t("step1.blurBackground")}
                               </button>
                             </>
                           )}
                           {photo !== originalPhoto && (
                             <button onClick={resetToOriginal} disabled={!!bgProcessing}
                               style={{fontSize:12, color:"var(--muted)", background:"none", border:"none", cursor:"pointer"}}>
-                              ↺ Reset to original
+                              {t("step1.resetToOriginal")}
                             </button>
                           )}
                           <button onClick={() => { setPhoto(null); setPhotoUrl(""); setOriginalPhoto(null); setOriginalPhotoUrl(""); setBgError(""); setPhotoDimError(""); setPreviewResult(null); setPreviewError(""); setShowNoSetsWarning(false); setPreviousPreviewResult(null); setAdjustmentMade(false); setWantsFullGuide(false); setPreviewSkipped(false); setPhotoRestoredNotice(false); }} disabled={!!bgProcessing}
                             style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor:"pointer"}}>
-                            Remove
+                            {t("step1.remove")}
                           </button>
                         </div>
                       </div>
@@ -1010,7 +1065,7 @@ function CreateInner() {
                       )}
                       {BG_TOOLS_ENABLED && bgProcessing && (
                         <p style={{fontSize:11, color:"var(--muted)", margin:0}}>
-                          This can take up to a minute if the photo tool is just waking up — hang tight.
+                          {t("step1.bgToolWakingUp")}
                         </p>
                       )}
                     </div>
@@ -1021,9 +1076,9 @@ function CreateInner() {
 
           {/* Step 2: Markers */}
           <div className="card" style={{display:"flex", flexDirection:"column"}}>
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 2: 🖊️ Your Guangna Marker Sets</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step2.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-                Select every set you own — we'll build the palette from your markers. You can pick as many as you like, or leave this empty to preview against the full Guangna color palette.
+                {t("step2.description")}
               </p>
               <div className="marker-set-list" style={{flex:"1 1 auto", minHeight:200}}>
                 {MARKER_SETS.map(s => (
@@ -1040,18 +1095,18 @@ function CreateInner() {
               </div>
               {selectedSets.length > 0 && (
                 <p style={{fontSize:12, color:"var(--muted)", marginTop:8}}>
-                  {selectedSets.length} set{selectedSets.length > 1 ? "s" : ""} selected
+                  {t("step2.setsSelected", { count: selectedSets.length })}
                 </p>
               )}
               <div style={{marginTop:18}}>
-                <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>Additional Marker Codes</h3>
+                <h3 style={{fontWeight:700, fontSize:15, marginBottom:4}}>{t("step2.additionalCodesTitle")}</h3>
                 <p style={{fontSize:12, color:"var(--muted)", marginBottom:8}}>
-                  Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.
+                  {t("step2.additionalCodesDescription")}
                 </p>
                 <textarea
                   value={individualPens}
                   onChange={e => validateIndPens(e.target.value)}
-                  placeholder="e.g. 603, 648, 712"
+                  placeholder={t("step2.codesPlaceholder")}
                   rows={2}
                   style={{resize:"vertical", border: indPenError ? "2px solid #c62828" : "2px solid var(--border)"}}
                 />
@@ -1061,9 +1116,9 @@ function CreateInner() {
 
             {/* Step 3: Generate preview -- full width */}
             <div className="card full-width">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 3: 🖼️ Free instant preview</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step3.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-              Preview a free low-res draft in 20-40 seconds. Get the full high-resolution file sent straight to your inbox for {selectedPrice}.
+                {t("step3.description", { price: selectedPrice })}
               </p>
               <button
                 onClick={() => generatePreview()}
@@ -1075,10 +1130,10 @@ function CreateInner() {
                 }}
               >
                 {previewLoading
-                  ? "⏳ Generating your preview… (~20-40s)"
+                  ? t("step3.generating")
                   : previewResult && !previewStale
-                    ? "🔄 Regenerate preview"
-                    : "🎨 Generate free preview"}
+                    ? t("step3.regenerate")
+                    : t("step3.generate")}
               </button>
 
               {/* ── SKIP PREVIEW: only offered before a preview exists (or once
@@ -1090,12 +1145,12 @@ function CreateInner() {
                   disabled={previewLoading}
                   style={{marginTop:8, width:"100%", fontSize:13, fontWeight:600, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", padding:"4px", textAlign:"center"}}
                 >
-                  Skip the preview — I already know what I want →
+                  {t("step3.skipPreview")}
                 </button>
               )}
               {previewSkipped && (
                 <p style={{fontSize:12.5, color:"var(--pink)", fontWeight:600, marginTop:8, textAlign:"center"}}>
-                  ✓ Preview skipped — you can still generate one below anytime before ordering.
+                  {t("step3.previewSkippedNotice")}
                 </p>
               )}
 
@@ -1106,21 +1161,21 @@ function CreateInner() {
               )}
 
               {!photo && (
-                <p style={{fontSize:12, color:"var(--muted)", marginTop:8}}>Upload a photo first.</p>
+                <p style={{fontSize:12, color:"var(--muted)", marginTop:8}}>{t("step3.uploadFirst")}</p>
               )}
 
               {showNoSetsWarning && (
                 <div style={{marginTop:8, padding:"12px 14px", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:10}}>
                   <p style={{fontSize:13, fontWeight:700, color:"#8a6d1f", marginBottom:8}}>
-                    You haven't selected any Guangna sets — do you want to continue with the full color palette?
+                    {t("step3.noSetsWarning")}
                   </p>
                   <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
                     <button onClick={() => generatePreview(["GN-8101-366"])} className="btn-primary" style={{fontSize:13, padding:"8px 14px"}}>
-                      Yes, use full set
+                      {t("step3.useFullSet")}
                     </button>
                     <button onClick={() => setShowNoSetsWarning(false)}
                       style={{fontSize:13, padding:"8px 14px", borderRadius:8, border:"2px solid var(--border)", background:"white", color:"#555", cursor:"pointer"}}>
-                      Cancel, let me pick sets
+                      {t("step3.cancelPickSets")}
                     </button>
                   </div>
                 </div>
@@ -1131,7 +1186,7 @@ function CreateInner() {
               )}
               {previewStale && previewResult && (
                 <p style={{fontSize:12, color:"#b8860b", marginTop:8}}>
-                  Your photo or selections changed — generate a new preview before ordering.
+                  {t("step3.stalePreview")}
                 </p>
               )}
 
@@ -1146,12 +1201,12 @@ function CreateInner() {
                             <BeforeAfterSlider
                               beforeImage={`data:image/png;base64,${branch.preview_png_base64}`}
                               afterImage={`data:image/png;base64,${branch.outline_png_base64}`}
-                              beforeLabel="Colored preview"
-                              afterLabel="Numbered outline"
+                              beforeLabel={t("step3.beforeLabel")}
+                              afterLabel={t("step3.afterLabel")}
                               aspectRatio={4 / 3}
                             />
                             <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
-                              🎨 Matched to real Guangna markers — the colors you see are what you'll use.
+                              {t("step3.matchedFullPalette")}
                             </p>
                             <MarkerSwatches legend={branch.legend} />
                           </div>
@@ -1163,29 +1218,29 @@ function CreateInner() {
                     {previewResult.owned && (
                       <div>
                         <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>
-                          Your markers{selectedMarkersLabel ? ` — ${selectedMarkersLabel}` : ""}
+                          {t("step3.yourMarkers")}{selectedMarkersLabel ? ` — ${selectedMarkersLabel}` : ""}
                         </p>
                         <BeforeAfterSlider
                           beforeImage={`data:image/png;base64,${previewResult.owned.preview_png_base64}`}
                           afterImage={`data:image/png;base64,${previewResult.owned.outline_png_base64}`}
-                          beforeLabel="Colored preview"
-                          afterLabel="Numbered outline"
+                          beforeLabel={t("step3.beforeLabel")}
+                          afterLabel={t("step3.afterLabel")}
                           aspectRatio={4 / 3}
                         />
                         <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
-                          🎨 Matched to your Guangna markers — you'll be using these when coloring your Guangna-by-Number.
+                          {t("step3.matchedYourMarkers")}
                         </p>
                         <MarkerSwatches legend={previewResult.owned.legend} />
                       </div>
                     )}
                     {previewResult.full366 && (
                       <div>
-                        <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>Full color palette</p>
+                        <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>{t("step3.fullColorPalette")}</p>
                         <BeforeAfterSlider
                           beforeImage={`data:image/png;base64,${previewResult.full366.preview_png_base64}`}
                           afterImage={`data:image/png;base64,${previewResult.full366.outline_png_base64}`}
-                          beforeLabel="Colored preview"
-                          afterLabel="Numbered outline"
+                          beforeLabel={t("step3.beforeLabel")}
+                          afterLabel={t("step3.afterLabel")}
                           aspectRatio={4 / 3}
                         />
                         {(() => {
@@ -1197,7 +1252,7 @@ function CreateInner() {
                             <>
                               {full366Top.length > 0 && (
                                 <p style={{fontSize:12, color:"#8a6d1f", fontWeight:600, marginTop:4}}>
-                                  ✨ Adding these markers will help your Guangna-by-Number look closer to the original uploaded image.
+                                  {t("step3.addingMarkersHelps")}
                                 </p>
                               )}
                               <MarkerSwatches legend={previewResult.full366!.legend} exclude={excludeIds} />
@@ -1212,7 +1267,7 @@ function CreateInner() {
                             onChange={e => setWantsFullGuide(e.target.checked)}
                             style={{marginTop:2, accentColor:"var(--pink)"}}
                           />
-                          <span>📩 Please include my Full Color Palette Guide for free with my order, in case I want to add more markers later.</span>
+                          <span>{t("step3.includeFullGuide")}</span>
                         </label>
                       </div>
                       
@@ -1225,9 +1280,9 @@ function CreateInner() {
                     border: "1.5px solid var(--border)", borderRadius: 10,
                     fontSize: 14, color: "#444", lineHeight: 1.6,
                   }}>
-                    💡 This preview is scaled down for speed, so some fine detail is softened here. Your purchased file is generated at full resolution, with sharper lines and richer detail. See the difference for yourself on our{" "}
+                    {t("step3.scaledDownNotice")}{" "}
                     <a href="/examples" style={{ color: "var(--pink)", fontWeight: 700 }}>
-                      examples page →
+                      {t("step3.examplesLink")}
                     </a>
                   </div>
 
@@ -1239,7 +1294,7 @@ function CreateInner() {
                     {!adjustmentMade ? (
                       <>
                         <p style={{fontSize:14, fontWeight:700, marginBottom:10}}>
-                        Looks good, or would you like to make changes?
+                          {t("step3.happyOrChange")}
                         </p>
                         <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
                           <button
@@ -1248,7 +1303,7 @@ function CreateInner() {
                             disabled={previewLoading}
                             style={{flex:"1 1 200px", fontSize:14, padding:"12px", opacity: previewLoading ? 0.6 : 1}}
                           >
-                           Larger Coloring Areas
+                            {t("step3.largerAreas")}
                           </button>
                           <button
                             onClick={() => regenerateWithDifficulty("advanced")}
@@ -1256,7 +1311,7 @@ function CreateInner() {
                             disabled={previewLoading}
                             style={{flex:"1 1 200px", fontSize:14, padding:"12px", opacity: previewLoading ? 0.6 : 1}}
                           >
-                            Ultra Detailed Design
+                            {t("step3.ultraDetailed")}
                           </button>
                         </div>
                       </>
@@ -1268,7 +1323,7 @@ function CreateInner() {
                           border:"2px solid var(--pink)", background:"white", color:"var(--pink)",
                           cursor: previewLoading ? "default" : "pointer", opacity: previewLoading ? 0.6 : 1}}
                       >
-                        ↺ Previous one was better
+                        {t("step3.revertPrevious")}
                       </button>
                     )}
                   </div>
@@ -1278,9 +1333,9 @@ function CreateInner() {
 
             {/* Step 4: Paper size */}
             <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 4: 📄 Paper size</h2>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step4.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-                Choose the size your finished PDF will be laid out for. You can still change this later.
+                {t("step4.description")}
               </p>
               <div style={{ display:"flex", gap:10 }}>
                 {(["a4", "letter"] as PaperSize[]).map((p) => (
@@ -1318,25 +1373,25 @@ function CreateInner() {
 
             {/* Step 5: Email */}
             <div className="card">
-              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>Step 5: ✉️ Your email</h2>
-              <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>Your finished file will be sent straight to your email.</p>
+              <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step5.title")}</h2>
+              <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>{t("step5.description")}</p>
               <input type="email" className="email-input-big" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{width:"100%"}}/>
             </div>
 
             {/* Order summary */}
             <div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
-              <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>📋 Order summary</h3>
+              <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>{t("summary.title")}</h3>
               <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
-                <Row label="Photo"       value={photo ? `✓ ${photo.name}` : "—"}/>
-                <Row label="Level"       value={currentLevelInfo ? currentLevelInfo.label : "—"}/>
-                <Row label="Marker sets" value={selectedSets.length ? `${selectedSets.length} selected` : "None selected"}/>
-                <Row label="Preview"     value={previewResult && !previewStale ? "✓ Generated" : previewSkipped ? "Skipped" : "Not yet generated"}/>
-                <Row label="Paper size"  value={PAPER_LABELS[paperSize]}/>
-                <Row label="Price"       value={selectedPrice} highlight/>
+                <Row label={t("summary.photo")}       value={photo ? `✓ ${photo.name}` : t("summary.none")}/>
+                <Row label={t("summary.level")}       value={currentLevelInfo ? t(currentLevelInfo.labelKey) : t("summary.none")}/>
+                <Row label={t("summary.markerSets")} value={selectedSets.length ? t("summary.nSelected", { count: selectedSets.length }) : t("summary.noneSelected")}/>
+                <Row label={t("summary.preview")}     value={previewResult && !previewStale ? t("summary.generated") : previewSkipped ? t("summary.skipped") : t("summary.notYetGenerated")}/>
+                <Row label={t("summary.paperSize")}  value={PAPER_LABELS[paperSize]}/>
+                <Row label={t("summary.price")}       value={selectedPrice} highlight/>
                 {prevOrders.length > 0 && (
                   <>
                     <div style={{borderTop:"1.5px solid var(--border)", margin:"4px 0"}}/>
-                    <Row label={`Previous orders (${prevOrders.length})`} value={`${totalSoFar.toFixed(2).replace(".", ",")}€`}/>
+                    <Row label={t("summary.previousOrders", { count: prevOrders.length })} value={`${totalSoFar.toFixed(2).replace(".", ",")}€`}/>
                   </>
                 )}
               </div>
@@ -1350,22 +1405,22 @@ function CreateInner() {
                 disabled={!canSubmit || submitting}
                 style={{width:"100%", fontSize:17, padding:"16px", opacity:(canSubmit && !submitting) ? 1 : 0.5}}
               >
-                {submitting ? "⏳ Sending your order…" : canSubmit ? "✨ Order Your Custom Guangna by Number →" : "✨ Order Your Custom Guangna by Number"}
+                {submitting ? t("submit.sending") : canSubmit ? t("submit.order") : t("submit.orderDisabled")}
               </button>
 
               {!photo && (
                 <p style={{textAlign:"center", fontSize:13, color:"var(--muted)"}}>
-                  Upload a photo to get started
+                  {t("submit.uploadToStart")}
                 </p>
               )}
               {photo && !previewSkipped && (!previewResult || previewStale) && (
                 <p style={{textAlign:"center", fontSize:13, color:"var(--muted)"}}>
-                  Generate a preview, or skip it, to continue
+                  {t("submit.generateOrSkip")}
                 </p>
               )}
               {!email && photo && (previewSkipped || (previewResult && !previewStale)) && (
                 <p style={{textAlign:"center", fontSize:13, color:"var(--muted)"}}>
-                  Add your email to continue
+                  {t("submit.addEmail")}
                 </p>
               )}
               {errorMsg && (

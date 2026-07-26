@@ -553,10 +553,17 @@
     "colorCount": "{count} colors",
     "buy": "Buy",
     "comingSoon": "Coming soon",
-    "disclaimer": "Each pack includes the colored preset, blank template, reference sheet, and print/assembly instructions."
+    "disclaimer": "Each pack includes the colored preset, blank template, reference sheet, and print/assembly instructions.",
+    "linkNotSetUp": "Checkout link not set up yet",
+    "linkNeeded": "Link needed",
+    "a4Label": "A4",
+    "usLabel": "US"
   },
   "swatchCreator": {
+    "pageTitle": "Swatch Card Creator",
     "pageSubtitle": "Select a presorted swatch card set or design your own custom printable cards from any Guangna or Languo marker collection.",
+    "brushAlt": "Guangna brush",
+    "diyToggleTitle": "🎨 Custom Swatch Cards",
     "howToUse": {
       "title": "How to Use This Tool?",
       "intro": "You can generate custom swatch cards specifically for your Guangna and Languo acrylic brush markers.",
@@ -586,6 +593,325 @@
       "closing": "The resulting order is deliberately arranged to create a smooth, visually pleasing gradient rather than a forced, strictly mathematical layout. Because colors often sit naturally between two families (like a vibrant blue-green), they are included in both color families so you don't miss them.",
       "tip": "Think of these cards as a helpful, expert starting point — you can customize them to fit your own unique color interpretation!",
       "note": "Note: Metallic colors are not included in the color family grouping."
+    },
+    "tabs": {
+      "guangnaSet": "Guangna set",
+      "guangnaCodes": "Guangna codes",
+      "languoSet": "Languo set",
+      "languoCodes": "Languo codes",
+      "colorFamily": "Color Family"
+    },
+    "resetFilters": "↺ Reset filters",
+    "placeholders": {
+      "guangnaSetSearch": "Search a Guangna set…",
+      "languoSetSearch": "Search a Languo set…",
+      "guangnaCodeSearch": "Search by code or name…",
+      "languoCodeSearch": "Search by Languo code…"
+    },
+    "hints": {
+      "pickSet": "Pick a set above to browse its colors.",
+      "typeGuangnaCode": "Start typing to search Guangna codes.",
+      "typeLanguoCode": "Start typing to search Languo codes.",
+      "pickFamily": "Pick a color family above to browse its colors."
+    },
+    "metallicNote": "Note: Metallic markers are not included.",
+    "addAll": "Add all {count, plural, one {# color} other {# colors}}",
+    "selectFamilyPlaceholder": "— Select a color family —",
+    "autocomplete": {
+      "clearSelection": "✕ Clear selection",
+      "noMatches": "No matches"
+    },
+    "selectedColors": "Selected ({count, plural, one {# color} other {# colors}})",
+    "selectedColorsWithFamilies": "Selected ({count, plural, one {# color} other {# colors}}, {familyCount, plural, one {# color family} other {# color families}})",
+    "undo": "↺ Undo",
+    "clearAll": "Clear all",
+    "dragHint": "💡 Drag a color onto another within its family to reorder it.",
+    "emptySelection": "Drag colors here, or click a swatch on the left to add it.",
+    "familyActions": {
+      "downloadFamily": "Download this color family only",
+      "downloadFamilyLocked": "Included in the full download once you unlock your set below",
+      "removeFamily": "Remove this color family from selection"
+    },
+    "a11y": {
+      "removeFromFamily": "Remove {code} from {family}",
+      "moveBack": "Move {code} back to its original position"
+    },
+    "alsoIn": "also: {families}",
+    "toast": {
+      "added": "Added to your selection",
+      "addedMany": "{count, plural, one {Added # color to your selection} other {Added # colors to your selection}}"
+    },
+    "undoLabels": {
+      "removedItem": "Removed {label}",
+      "removedItemFromFamily": "Removed {label} from {family}",
+      "removedFamily": "Removed {family} ({count, plural, one {# color} other {# colors}})",
+      "clearedAll": "Cleared all ({count, plural, one {# color} other {# colors}})"
+    },
+    "options": {
+      "swatchStyle": "Swatch style",
+      "swatchStyleFilled": "Filled (shows the color)",
+      "swatchStyleBlank": "Blank (outline only, for manual swatching)",
+      "bundleHole": "Bundle-hole (header)",
+      "holeNone": "None",
+      "holeLeft": "Left",
+      "holeCenter": "Center",
+      "holeRight": "Right",
+      "cardLayout": "Card layout",
+      "layoutPerFamily": "One color family per card",
+      "layoutPacked": "Pack multiple families per card",
+      "paperSize": "Paper size",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
+    },
+    "cardCountSummary": "{cardCount, plural, one {# card} other {# cards}} ({colorCount, plural, one {# swatch} other {# swatches}}, up to 12 per card, 4 per landscape page)",
+    "errors": {
+      "saveSelection": "Could not save your selection. Please try again or contact hello@creabeastudio.com.",
+      "startCheckout": "Could not start checkout. Please try again or contact hello@creabeastudio.com.",
+      "generic": "Something went wrong. Please try again or contact hello@creabeastudio.com."
+    },
+    "checkoutOpened": {
+      "line1": "🔗 Checkout opened in a new tab — complete your payment there to unlock your set. Don't worry, this page will stay right here.",
+      "line2": "📧 Instant Download: Your file downloads automatically after checkout, plus a backup link will be sent to your email by Lemon Squeezy (our payment processor)",
+      "orderReference": "Order reference: {id}"
+    },
+    "paywallStatus": "You've selected {count, plural, one {# color} other {# colors}} — the first {limit} (one full page) are free. Unlock the complete set for {price}.",
+    "actions": {
+      "downloadFreePreview": "Download free preview (first {limit})",
+      "unlockFullSet": "Unlock full set — {price}",
+      "downloadBlankTemplate": "Download blank template",
+      "downloadAll": "Download all as PDF",
+      "generating": "Generating…",
+      "redirecting": "Redirecting…"
     }
+  },
+  "create": {
+    "pageTitle": "Create Your Custom Guangna by Number",
+    "pageSubtitle": "Upload your photo, choose your Guangna markers, and preview your design for free before you order.",
+    "cart": {
+      "summary": "{count, plural, one {🛒 You have # order in your cart} other {🛒 You have # orders in your cart}} — total so far: {total}",
+      "backToOrder": "← Back to my order"
+    },
+    "step1": {
+      "title": "Step 1: 📸 Upload your photo",
+      "dropHint": "Drop photo here",
+      "browseHint": "or click to browse · JPG, PNG, HEIC",
+      "restoredNotice": "↺ Welcome back — restored your uploaded photo.",
+      "dimWarning": "This photo is {width}×{height}px — a bit small for a sharp result. We recommend at least {min}px on the shorter side, but you can continue with this one if you'd like.",
+      "continueAnyway": "Yes, continue anyway",
+      "chooseDifferent": "Choose a different photo",
+      "cropLabel": "Crop",
+      "resetToOriginal": "↺ Reset to original",
+      "remove": "Remove",
+      "removeBackground": "🪄 Remove Background",
+      "removingBackground": "⏳ Removing…",
+      "blurBackground": "🌫️ Blur Background",
+      "blurringBackground": "⏳ Blurring…",
+      "bgToolWakingUp": "This can take up to a minute if the photo tool is just waking up — hang tight.",
+      "bgErrorDefault": "Something went wrong processing your photo. Please try again.",
+      "cropper": {
+        "aspectFree": "Free",
+        "apply": "✂️ Apply Crop",
+        "cancel": "Cancel"
+      }
+    },
+    "step2": {
+      "title": "Step 2: 🖊️ Your Guangna Marker Sets",
+      "description": "Select every set you own — we'll build the palette from your markers. You can pick as many as you like, or leave this empty to preview against the full Guangna color palette.",
+      "setsSelected": "{count, plural, one {# set selected} other {# sets selected}}",
+      "additionalCodesTitle": "Additional Marker Codes",
+      "additionalCodesDescription": "Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.",
+      "codesPlaceholder": "e.g. 603, 648, 712",
+      "invalidCodes": "Invalid code(s): {codes}. Must be 3-digit numbers between 600 and 965."
+    },
+    "step3": {
+      "title": "Step 3: 🖼️ Free instant preview",
+      "description": "Preview a free low-res draft in 20-40 seconds. Get the full high-resolution file sent straight to your inbox for {price}.",
+      "generating": "⏳ Generating your preview… (~20-40s)",
+      "regenerate": "🔄 Regenerate preview",
+      "generate": "🎨 Generate free preview",
+      "skipPreview": "Skip the preview — I already know what I want →",
+      "previewSkippedNotice": "✓ Preview skipped — you can still generate one below anytime before ordering.",
+      "uploadFirst": "Upload a photo first.",
+      "noSetsWarning": "You haven't selected any Guangna sets — do you want to continue with the full color palette?",
+      "useFullSet": "Yes, use full set",
+      "cancelPickSets": "Cancel, let me pick sets",
+      "genericError": "Something went wrong generating your preview. Please try again.",
+      "connectionError": "Something went wrong generating your preview. Please check your connection and try again.",
+      "stalePreview": "Your photo or selections changed — generate a new preview before ordering.",
+      "yourMarkers": "Your markers",
+      "fullColorPalette": "Full color palette",
+      "matchedFullPalette": "🎨 Matched to real Guangna markers — the colors you see are what you'll use.",
+      "matchedYourMarkers": "🎨 Matched to your Guangna markers — you'll be using these when coloring your Guangna-by-Number.",
+      "addingMarkersHelps": "✨ Adding these markers will help your Guangna-by-Number look closer to the original uploaded image.",
+      "includeFullGuide": "📩 Please include my Full Color Palette Guide for free with my order, in case I want to add more markers later.",
+      "scaledDownNotice": "💡 This preview is scaled down for speed, so some fine detail is softened here. Your purchased file is generated at full resolution, with sharper lines and richer detail. See the difference for yourself on our",
+      "examplesLink": "examples page →",
+      "beforeLabel": "Colored preview",
+      "afterLabel": "Numbered outline",
+      "happyOrChange": "Looks good, or would you like to make changes?",
+      "largerAreas": "Larger Coloring Areas",
+      "ultraDetailed": "Ultra Detailed Design",
+      "revertPrevious": "↺ Previous one was better",
+      "individualMarkers": "{count, plural, one {# individual marker} other {# individual markers}}"
+    },
+    "step4": {
+      "title": "Step 4: 📄 Paper size",
+      "description": "Choose the size your finished PDF will be laid out for. You can still change this later."
+    },
+    "step5": {
+      "title": "Step 5: ✉️ Your email",
+      "description": "Your finished file will be sent straight to your email."
+    },
+    "summary": {
+      "title": "📋 Order summary",
+      "photo": "Photo",
+      "level": "Level",
+      "markerSets": "Marker sets",
+      "preview": "Preview",
+      "paperSize": "Paper size",
+      "price": "Price",
+      "previousOrders": "Previous orders ({count})",
+      "nSelected": "{count, plural, one {# selected} other {# selected}}",
+      "noneSelected": "None selected",
+      "generated": "✓ Generated",
+      "skipped": "Skipped",
+      "notYetGenerated": "Not yet generated",
+      "none": "—"
+    },
+    "submit": {
+      "sending": "⏳ Sending your order…",
+      "order": "✨ Order Your Custom Guangna by Number →",
+      "orderDisabled": "✨ Order Your Custom Guangna by Number",
+      "uploadToStart": "Upload a photo to get started",
+      "generateOrSkip": "Generate a preview, or skip it, to continue",
+      "addEmail": "Add your email to continue",
+      "genericError": "Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com."
+    },
+    "levels": {
+      "beginner": "🌱 Beginner",
+      "beginnerDesc": "Fewer colors, larger areas.",
+      "intermediate": "🌿 Intermediate",
+      "intermediateDesc": "Balanced mix of effort and detail.",
+      "advanced": "🌲 Advanced",
+      "advancedDesc": "Wide color range, detailed."
+    },
+    "paper": {
+      "a4": "A4",
+      "letter": "US Letter"
+    }
+  },
+  "confirm": {
+    "pageTitle": "Is everything correct?",
+    "pageSubtitle": "Please review your order before proceeding.",
+    "brushAlt": "Guangna brush",
+    "previousOrdersHeading": "🛒 Previous orders in your cart:",
+    "orderNumber": "📦 Order #{number}:",
+    "summary": {
+      "photoSubmitted": "📷 Photo submitted",
+      "difficulty": "🎯 Difficulty",
+      "paperSize": "📄 Paper size",
+      "markerSets": "🖊️ Marker set(s)",
+      "defaultPalette": "Default palette",
+      "additionalMarkers": "➕ Additional markers",
+      "email": "✉️ Email",
+      "orderRef": "🔖 Order ref"
+    },
+    "total": {
+      "single": "🧾 Total",
+      "multiple": "🧾 Total for {count} orders",
+      "estimateNote": "estimate only, depends on the current exchange rate."
+    },
+    "deliveryNote": "📦 Once your order is complete, your files will be available to download for 30 days. Missed the window? Just email hello@creabeastudio.com and we'll send you a fresh link.",
+    "errors": {
+      "startCheckout": "Could not start checkout. Please try again or contact hello@creabeastudio.com.",
+      "generic": "Something went wrong. Please try again or contact hello@creabeastudio.com."
+    },
+    "checkoutOpenedNotice": "🔗 Checkout opened in a new tab — complete your payment there. This page will still be here if you need it.",
+    "buttons": {
+      "makeChanges": "✏️ No, I want to make changes",
+      "orderAnother": "🖼️ Order another Guangna by Number",
+      "checkout": "🔒 Proceed to Payment — {price}",
+      "preparingCheckout": "⏳ Preparing checkout…"
+    }
+  },
+  "apiErrors": {
+    "NO_IMAGE": "No image provided.",
+    "EMAIL_REQUIRED": "Please enter your email address.",
+    "SAVE_FAILED": "Something went wrong saving your order. Please try again or contact hello@creabeastudio.com.",
+    "SUBMIT_FAILED": "Something went wrong submitting your order. Please try again or contact hello@creabeastudio.com.",
+    "SERVICE_UNAVAILABLE": "The preview service isn't available right now. Please try again later.",
+    "NO_MARKERS_SELECTED": "Select at least one marker set or enter marker codes first.",
+    "GENERATION_FAILED": "Something went wrong generating your preview. Please try again.",
+    "NO_MATCH_FOUND": "We couldn't generate a preview with those markers. Try selecting a larger set.",
+    "NO_LEVELS": "No level selected.",
+    "MULTI_ORDER_NOT_SUPPORTED": "Ordering multiple photos in one checkout isn't supported yet — please complete this order first, then start a new one for your next photo, or contact hello@creabeastudio.com to combine them manually.",
+    "INVALID_PAPER_SIZE": "Missing or invalid paper size.",
+    "CHECKOUT_UNAVAILABLE": "Checkout isn't available right now. Please try again later or contact hello@creabeastudio.com.",
+    "CHECKOUT_FAILED": "Could not create checkout. Please try again or contact hello@creabeastudio.com.",
+    "ORDER_ID_REQUIRED": "Missing order reference.",
+    "COLOR_COUNT_REQUIRED": "Missing color count.",
+    "WITHIN_FREE_TIER": "This selection is within the free tier — no checkout needed.",
+    "SWATCH_VARIANT_UNAVAILABLE": "This option isn't available right now. Please contact hello@creabeastudio.com.",
+    "NO_ITEMS": "No colors selected.",
+    "COLOR_COUNT_MISMATCH": "Something didn't match up with your selection. Please try again.",
+    "INVALID_ORDER_ID": "That doesn't look like a valid order reference.",
+    "ORDER_NOT_FOUND": "We couldn't find that order.",
+    "STATUS_CHECK_FAILED": "Something went wrong checking your order status. Please try again.",
+    "generic": "Something went wrong. Please try again or contact hello@creabeastudio.com."
+  },
+  "emails": {
+    "orderConfirmation": {
+      "subject": "🎨 Your Custom Guangna-by-Number is ready! (Order #{orderId})",
+      "heading": "🎨 Your Custom Guangna-by-Number is ready!",
+      "orderIdLabel": "🔖 Order ID",
+      "levelLabel": "🎯 Level",
+      "markerSetsLabel": "🖊️ Marker sets",
+      "defaultPalette": "Default palette",
+      "extraMarkersLabel": "➕ Extra markers",
+      "downloadOutline": "📄 Download your numbered outline (print-ready)",
+      "downloadPreviewGuide": "🖼️ Download your color preview & marker guide",
+      "fullGuide": {
+        "title": "🎁 Your free complete palette guide",
+        "body": "Handy if you end up ordering more markers later — this link stays active for 30 days.",
+        "link": "Download your free guide →"
+      },
+      "upsell": {
+        "title": "✨ Level up your color palette?",
+        "intro": "These are the markers that would improve your design the most, and which of your numbered areas they'd replace:",
+        "columnMarker": "Marker",
+        "columnName": "Name",
+        "columnImproves": "Improves",
+        "newArea": "New area",
+        "shopLink": "Shop Guangna markers →"
+      },
+      "footerNote": "💡 Questions about your order? Just reply to this email or reach us at hello@creabeastudio.com."
+    },
+    "reminder": {
+      "subject": "🎨 Just checking in — your Guangna by Number files are waiting (Order #{orderId})",
+      "heading": "🎨 Don't forget your files!",
+      "intro": "Just a friendly reminder that your Guangna by Number files from order <strong>{orderId}</strong> are ready and waiting — with about <strong>{days}</strong> days left before this download link expires.",
+      "downloadOutline": "📄 Download your numbered outline (print-ready)",
+      "downloadPreviewGuide": "🖼️ Download your color preview & marker guide",
+      "downloadFullGuide": "🎁 Download your free complete palette guide",
+      "footerNote": "💡 Missed this window entirely? Just reply to this email or reach us at hello@creabeastudio.com and we'll send you a fresh link."
+    }
+  },
+    "swatchDownload": {
+    "checkingTitle": "Confirming your payment…",
+    "checkingBody": "This usually takes just a few seconds. Please don't close this page.",
+    "readyTitle": "Your swatch cards are ready! 💖",
+    "readyBody": "Your download should start automatically. If it doesn't, use the button below.",
+    "generating": "Generating…",
+    "downloadButton": "Download your swatch cards",
+    "orderReferenceNote": "Order reference: {orderId}. Keep this in case you need to contact hello@creabeastudio.com.",
+    "timedOutTitle": "Still processing…",
+    "timedOutBody": "Your payment is taking longer than usual to confirm. This can happen occasionally — your order isn't lost.",
+    "timedOutEmailPrefix": "If this page hasn't updated in a few minutes, email",
+    "timedOutRefSuffix": "with this order reference:",
+    "errorTitle": "Something went wrong",
+    "errorEmailPrefix": "We couldn't find or check that order. Please email",
+    "errorRefSuffix": "with this order reference:",
+    "errorNoRefSuffix": "for help.",
+    "pdfGenerationError": "Something went wrong generating your PDF. Try the button again, or contact hello@creabeastudio.com with your order reference."
   }
-}
+  }

@@ -1,35 +1,17 @@
 // Location: app/[locale]/swatch-creator/page.tsx
 //
-// ICON: your Legend/Languo converter pages show a small pink "Guangna"
-// marker icon above the heading. I don't have its actual source (an
-// <Image> path, or inline SVG?), so it's left as a TODO comment below --
-// paste me the icon markup from e.g. legend-converter/page.tsx and I'll
-// drop it in exactly.
+// UPDATED (2026-07-25, i18n round 3 -- "go big for FR"):
+//  - H1 title now translated via t("pageTitle") instead of hardcoded
+//    "Swatch Card Creator". Per Mirjam: for French specifically, she
+//    wants NOTHING left in English, including page titles and section
+//    headers, since French is a large market that's less
+//    English-tolerant than NL/DE (and Guangna is less popular in
+//    IT/ES, so those staying less complete is fine).
+//  - Image alt text now translated via t("brushAlt") instead of
+//    hardcoded "Guangna brush" (screen-reader-only text, but still
+//    English before this change).
 //
-// Heading style below matches what's visible in your screenshots:
-// Nunito, weight 900, var(--pink) -- same treatment as "Legend to
-// Guangna Palette" / "Languo to Guangna Converter".
-//
-// Ready-made Swatch Card packs now live INSIDE SwatchCreator.tsx
-// (rendered between the intro and the tool panels), not here -- no
-// change needed to this page's own layout.
-//
-// UPDATED (2026-07-24):
-//  - Title simplified to "Swatch Card Creator" (dropped "DIY").
-//  - Subtitle rewritten to her wording.
-//  - FIX: the subtitle paragraph had `maxWidth: 720` while the
-//    Presorted/DIY boxes below it span the full `<main>` width (960 -
-//    padding) -- that mismatch is what made the paragraph visibly
-//    narrower than the boxes underneath it. Removed the maxWidth so the
-//    paragraph now spans the same width as everything below it.
-
-// UPDATED (2026-07-24, round 2):
-//  - Subtitle now translated via the "swatchCreator" namespace
-//    (pageSubtitle key) instead of hardcoded English -- per Mirjam,
-//    this is the "subtext under Swatch Card Creator" she specifically
-//    wanted translated, alongside the "How to Use This Tool?" block
-//    inside SwatchCreator.tsx itself (see that file's t("howToUse.*")
-//    calls). The H1 title itself stays hardcoded -- not requested.
+// Everything else unchanged from the previous version.
 
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
@@ -53,10 +35,10 @@ export default async function SwatchCreatorPage({
       <Navbar />
       <main style={{ padding: "40px 24px", maxWidth: 960, margin: "0 auto" }}>
         <div style={{ marginBottom: 12 }}>
-          <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit: "contain", height: "auto" }} />
+          <Image src="/marketing/Guangna_brush.png" alt={t("brushAlt")} width={120} height={84} style={{ objectFit: "contain", height: "auto" }} />
         </div>
         <h1 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 900, fontSize: 40, color: "var(--pink)", marginBottom: 10 }}>
-          Swatch Card Creator
+          {t("pageTitle")}
         </h1>
         <p style={{ color: "var(--muted)", fontSize: 16, marginBottom: 24 }}>
           {t("pageSubtitle")}

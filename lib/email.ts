@@ -1,5 +1,7 @@
 import { Resend } from "resend";
- 
+import { getEmailTranslator } from "./emailI18n";
+import { LEVEL_LABEL_KEYS } from "./levelLabels";
+
 // Lazy-initialized: constructing `new Resend(...)` at module scope meant
 // Next.js would crash the whole build the moment it evaluated this file
 // during "Collecting page data" -- even for routes that never actually
@@ -17,7 +19,7 @@ function getResend(): Resend {
   }
   return resend;
 }
- 
+
 // ── EMAIL ARCHITECTURE (2026-07-17): this is the NEW customer-facing
 // delivery email -- sent once /generate-full has actually produced the
 // files, not at submit time. LemonSqueezy/Payhip already handle the
@@ -27,10 +29,19 @@ function getResend(): Resend {
 // full-palette guide. Called from lib/fulfillOrder.ts, which is what
 // the (not-yet-wired) payment webhook will eventually call.
 //
+// REMOVED (2026-07-27): sendReminderEmail() and its ReminderEmailParams
+// type -- the day-21 reminder email is discontinued (redundant enough,
+// per Mirjam's call, now that the confirmation email already attaches
+// the files directly in most cases). See lib/fulfillOrder.ts for the
+// matching removal of sendPendingReminders()/REMINDER_AFTER_MS/
+// daysRemainingFromFulfillment() -- you'll also need to delete
+// app/api/cron/send-reminders/route.ts and its entry in vercel.json
+// yourself, since Claude doesn't have those files.
+//
 // ASSUMPTION: the Guangna.eu link below points to https://guangna.eu --
 // flag if that's the wrong URL or needs UTM/referral params.
 const GUANGNA_EU_URL = "https://guangna.eu";
- 
+
 export type UpsellMarker = {
   marker_id: string;
   marker_name: string;
@@ -43,23 +54,31 @@ export type UpsellMarker = {
   // still matches upsell data from before this field existed.
   affected_numbers?: number[];
 };
- 
+
 // ── ATTACHMENTS (2026-07-24): in addition to the download links (which
 // stay in the email body regardless -- some inboxes strip attachments,
-// and links are what the reminder email and manual re-issue both
-// already rely on), the files themselves can also ride along as real
-// attachments. fulfillOrder.ts decides WHICH files make the cut (based
-// on actual GCS file size, so the combined attachment payload stays
-// under every major provider's real limit) -- this file just takes
-// whatever it's given and hands it to Resend via the `path` attachment
-// type, which fetches the file from the URL directly rather than
-// needing the bytes buffered through this function first.
+// and links are what manual re-issue relies on), the files themselves
+// can also ride along as real attachments. fulfillOrder.ts decides
+// WHICH files make the cut (based on actual GCS file size, so the
+// combined attachment payload stays under every major provider's real
+// limit) -- this file just takes whatever it's given and hands it to
+// Resend via the `path` attachment type, which fetches the file from
+// the URL directly rather than needing the bytes buffered through this
+// function first.
 export type EmailAttachment = { url: string; filename: string };
- 
+
 export type OrderConfirmationEmailParams = {
   orderId: string;
   customerEmail: string;
-  levelLabel: string;
+  // UPDATED (2026-07-27): was `levelLabel: string` (pre-formatted by
+  // the caller) -- now the raw level value ("15"/"24"/"36") plus
+  // `locale`, so this function resolves the translated label itself
+  // via the shared LEVEL_LABEL_KEYS mapping, the same source of truth
+  // create/page.tsx and confirm/page.tsx use. Fixes a real bug where
+  // fulfillOrder.ts's old LEVEL_TO_LABEL had stale pre-migration prices
+  // baked into the label text (e.g. "🌱 Beginner (7€)").
+  level: string;
+  locale: string;
   sets: string;
   indPens: string;
   outlineUrl: string;
@@ -72,22 +91,26 @@ export type OrderConfirmationEmailParams = {
   // is fine -- the email is still fully functional via links alone.
   attachments?: EmailAttachment[];
 };
- 
+
 // ── UPSELL TABLE (2026-07-24): "Improves" column now shows the actual
 // printed number(s) a marker would replace (e.g. "#4, #9") instead of a
 // region count that was previously always "1" regardless of the photo
 // (it was counting legend rows post-merge, where each marker can only
 // ever appear once -- see compute_upsell_diff()'s docstring in
-// pbn_guangna_generate.py for the fix). Falls back to "New area" when
-// affected_numbers is empty -- either an older upsell payload without
-// this field, or a "buy these to get started" list with no owned sheet
-// to reference yet.
-function upsellMarkersTable(markers: UpsellMarker[]): string {
+// pbn_guangna_generate.py for the fix). Falls back to a translated
+// "New area" when affected_numbers is empty -- either an older upsell
+// payload without this field, or a "buy these to get started" list
+// with no owned sheet to reference yet.
+//
+// UPDATED (2026-07-27): every static string here now comes from `t`
+// (the "emails.orderConfirmation" translator passed in by the caller)
+// instead of hardcoded English.
+function upsellMarkersTable(markers: UpsellMarker[], t: ReturnType<typeof getEmailTranslator>): string {
   if (markers.length === 0) return "";
   const rows = markers.map(m => {
     const improves = m.affected_numbers && m.affected_numbers.length
       ? m.affected_numbers.map(n => `#${n}`).join(", ")
-      : "New area";
+      : t("upsell.newArea");
     return `
     <tr>
       <td style="padding:6px 8px;border:1px solid #f0d0d8;">
@@ -100,51 +123,62 @@ function upsellMarkersTable(markers: UpsellMarker[]): string {
   `;
   }).join("");
   return `
-    <h3 style="color:#e75480;margin-top:24px;">✨ Level up your color palette?</h3>
+    <h3 style="color:#e75480;margin-top:24px;">${t("upsell.title")}</h3>
     <p style="font-size:14px;color:#555;">
-      These are the markers that would improve your design the most, and which of your
-      numbered areas they'd replace:
+      ${t("upsell.intro")}
     </p>
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr style="background:#FFF0F3;">
-          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Marker</th>
-          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Name</th>
-          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">Improves</th>
+          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">${t("upsell.columnMarker")}</th>
+          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">${t("upsell.columnName")}</th>
+          <th style="padding:6px 8px;text-align:left;border:1px solid #f0d0d8;">${t("upsell.columnImproves")}</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
     </table>
     <p style="font-size:14px;margin-top:10px;">
-      <a href="${GUANGNA_EU_URL}" style="color:#e75480;font-weight:700;">Shop Guangna markers →</a>
+      <a href="${GUANGNA_EU_URL}" style="color:#e75480;font-weight:700;">${t("upsell.shopLink")}</a>
     </p>
   `;
 }
- 
-function fullGuideSection(fullGuideUrl: string | null): string {
+
+// UPDATED (2026-07-27): fixed stale copy -- this said "stays active
+// for 7 days" from before the 2026-07-17 change that extended every
+// delivery link (including this one) to the same 30-day expiry as
+// everything else. Text now says 30 days, matching reality (and
+// matching lib/fulfillOrder.ts's SIGNED_URL_EXPIRY_MS).
+function fullGuideSection(fullGuideUrl: string | null, t: ReturnType<typeof getEmailTranslator>): string {
   if (!fullGuideUrl) return "";
   return `
     <div style="margin-top:20px;padding:16px 18px;background:#FFF8ED;border:1.5px solid #F0DFC0;border-radius:10px;">
-      <p style="font-size:14px;font-weight:700;color:#8a6d1f;margin:0 0 6px;">🎁 Your free complete palette guide</p>
+      <p style="font-size:14px;font-weight:700;color:#8a6d1f;margin:0 0 6px;">${t("fullGuide.title")}</p>
       <p style="font-size:13px;color:#8a6d1f;margin:0 0 10px;">
-        Handy if you end up ordering more markers later -- this link stays active for 7 days.
+        ${t("fullGuide.body")}
       </p>
-      <a href="${fullGuideUrl}" style="color:#e75480;font-weight:700;">Download your free guide →</a>
+      <a href="${fullGuideUrl}" style="color:#e75480;font-weight:700;">${t("fullGuide.link")}</a>
     </div>
   `;
 }
- 
+
 export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailParams) {
   const {
-    orderId, customerEmail, levelLabel, sets, indPens,
+    orderId, customerEmail, level, locale, sets, indPens,
     outlineUrl, previewGuideUrl, fullGuideUrl, upsellMarkers,
     attachments = [],
   } = params;
- 
+
+  const t = getEmailTranslator(locale, "emails.orderConfirmation");
+  // Level label resolved from the same "create" namespace levels.*
+  // keys create/page.tsx and confirm/page.tsx use -- see
+  // lib/levelLabels.ts.
+  const tCreate = getEmailTranslator(locale, "create");
+  const levelLabel = tCreate(LEVEL_LABEL_KEYS[level] || "levels.intermediate");
+
   const { data, error } = await getResend().emails.send({
     from:    "CreaBeaStudio <orders@creabeastudio.com>",
     to:      customerEmail,
-    subject: `🎨 Your Custom Guangna-by-Number is ready! (Order #${orderId})`,
+    subject: t("subject", { orderId }),
     // path fetches each file from its (signed) URL directly, rather
     // than requiring the bytes to be downloaded/buffered through this
     // function first -- fulfillOrder.ts already decided which files
@@ -153,114 +187,49 @@ export async function sendOrderConfirmationEmail(params: OrderConfirmationEmailP
     html: `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
         <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-          <h1 style="color:white;margin:0;font-size:22px;">🎨 Your Custom Guangna-by-Number is ready!</h1>
+          <h1 style="color:white;margin:0;font-size:22px;">${t("heading")}</h1>
         </div>
         <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
           <table style="width:100%;border-collapse:collapse;font-size:15px;">
             <tr>
-              <td style="padding:10px 0;color:#888;width:40%;">🔖 Order ID</td>
+              <td style="padding:10px 0;color:#888;width:40%;">${t("orderIdLabel")}</td>
               <td style="padding:10px 0;font-weight:600;">${orderId}</td>
             </tr>
             <tr style="background:#FFF0F3;">
-              <td style="padding:10px 0;color:#888;">🎯 Level</td>
+              <td style="padding:10px 0;color:#888;">${t("levelLabel")}</td>
               <td style="padding:10px 0;font-weight:600;">${levelLabel}</td>
             </tr>
             <tr>
-              <td style="padding:10px 0;color:#888;">🖊️ Marker sets</td>
-              <td style="padding:10px 0;font-weight:600;">${sets || "Default palette"}</td>
+              <td style="padding:10px 0;color:#888;">${t("markerSetsLabel")}</td>
+              <td style="padding:10px 0;font-weight:600;">${sets || t("defaultPalette")}</td>
             </tr>
             ${indPens ? `
             <tr style="background:#FFF0F3;">
-              <td style="padding:10px 0;color:#888;">➕ Extra markers</td>
+              <td style="padding:10px 0;color:#888;">${t("extraMarkersLabel")}</td>
               <td style="padding:10px 0;font-weight:600;">${indPens}</td>
             </tr>` : ""}
           </table>
- 
+
           <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
             <p style="margin:0;">
-              📄 <a href="${outlineUrl}" style="color:#e75480;font-weight:700;">Download your numbered outline (print-ready)</a>
+              <a href="${outlineUrl}" style="color:#e75480;font-weight:700;">${t("downloadOutline")}</a>
             </p>
             <p style="margin:0;">
-              🖼️ <a href="${previewGuideUrl}" style="color:#e75480;font-weight:700;">Download your color preview & marker guide</a>
+              <a href="${previewGuideUrl}" style="color:#e75480;font-weight:700;">${t("downloadPreviewGuide")}</a>
             </p>
           </div>
- 
-          ${fullGuideSection(fullGuideUrl)}
-          ${upsellMarkersTable(upsellMarkers)}
- 
+
+          ${fullGuideSection(fullGuideUrl, t)}
+          ${upsellMarkersTable(upsellMarkers, t)}
+
           <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
-            💡 Questions about your order? Just reply to this email or reach us at hello@creabeastudio.com.
+            ${t("footerNote")}
           </div>
         </div>
       </div>
     `,
   });
- 
+
   if (error) throw new Error(JSON.stringify(error));
   return data;
 }
- 
-// ── REMINDER EMAIL (2026-07-17): sent once, ~21 days after fulfillment,
-// for orders whose delivery links haven't necessarily been used yet.
-// Deliberately NOT click-tracked (no way to know if they actually
-// downloaded) -- this is a simple time-based nudge, not a "you still
-// haven't downloaded" message, since we can't honestly claim to know
-// that. Reuses the same signed links already built for the original
-// delivery email (fresh-signed by the caller, same as that email).
-// Deliberately link-only, no attachments (2026-07-24) -- see
-// fulfillOrder.ts's sendPendingReminders() for the reasoning. Called
-// from lib/fulfillOrder.ts's sendPendingReminders(), which is what the
-// Vercel Cron job (app/api/cron/send-reminders/route.ts) triggers daily.
-export type ReminderEmailParams = {
-  orderId: string;
-  customerEmail: string;
-  outlineUrl: string;
-  previewGuideUrl: string;
-  fullGuideUrl: string | null;
-  daysRemaining: number;
-};
- 
-export async function sendReminderEmail(params: ReminderEmailParams) {
-  const { orderId, customerEmail, outlineUrl, previewGuideUrl, fullGuideUrl, daysRemaining } = params;
- 
-  const { data, error } = await getResend().emails.send({
-    from:    "CreaBeaStudio <orders@creabeastudio.com>",
-    to:      customerEmail,
-    subject: `🎨 Just checking in — your Guangna by Number files are waiting (Order #${orderId})`,
-    html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;">
-        <div style="background:#e75480;padding:20px 24px;border-radius:12px 12px 0 0;">
-          <h1 style="color:white;margin:0;font-size:22px;">🎨 Don't forget your files!</h1>
-        </div>
-        <div style="background:#FFF8F9;padding:24px;border:1px solid #f0d0d8;border-top:none;border-radius:0 0 12px 12px;">
-          <p style="font-size:15px;color:#444;margin-top:0;">
-            Just a friendly reminder that your Guangna by Number files from order <strong>${orderId}</strong>
-            are ready and waiting -- with about <strong>${daysRemaining} days</strong> left before this
-            download link expires.
-          </p>
- 
-          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
-            <p style="margin:0;">
-              📄 <a href="${outlineUrl}" style="color:#e75480;font-weight:700;">Download your numbered outline (print-ready)</a>
-            </p>
-            <p style="margin:0;">
-              🖼️ <a href="${previewGuideUrl}" style="color:#e75480;font-weight:700;">Download your color preview & marker guide</a>
-            </p>
-            ${fullGuideUrl ? `
-            <p style="margin:0;">
-              🎁 <a href="${fullGuideUrl}" style="color:#e75480;font-weight:700;">Download your free complete palette guide</a>
-            </p>` : ""}
-          </div>
- 
-          <div style="margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:13px;color:#666;">
-            💡 Missed this window entirely? Just reply to this email or reach us at hello@creabeastudio.com and we'll send you a fresh link.
-          </div>
-        </div>
-      </div>
-    `,
-  });
- 
-  if (error) throw new Error(JSON.stringify(error));
-  return data;
-}
- 
