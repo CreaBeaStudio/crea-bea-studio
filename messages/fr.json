@@ -61,11 +61,11 @@
     "footerTagline": "Colorie tes souvenirs, un numéro à la fois. 🐾",
     "footerCreate": "Créer",
     "footerConverter": "Convertisseur de couleurs",
-    "footerExamples": "Exemples",
+    "footerSwatchCreator": "Créateur de cartes de Nuancier",
     "footerLegendConverter": "Convertisseur de Nuancier",
     "footerLanguoConverter": "Convertisseur Languo",
     "footerGuangnaReference": "Nuancier Guangna",
-    "footerSwatchCreator": "Générateur de Nuancier",
+    "footerExamples": "Exemples",
     "footerTips": "Astuces & Conseils",
     "footerFaq": "FAQ",
     "footerTiktok": "TikTok",
@@ -83,7 +83,7 @@
     "createGuangna": "un Guangna by Number",
     "colorConverter": "Convertisseur de couleurs",
     "legendConverter": "Convertisseur de Nuancier",
-    "swatchCreator": "Générateur de Nuancier",
+    "swatchCreator": "Créateur de cartes de Nuancier",
     "examples": "Exemples",
     "tips": "Astuces & Conseils",
     "faq": "FAQ",
@@ -333,14 +333,14 @@
     "subtitle": "Saisis une couleur et trouve le feutre Guangna le plus proche disponible, et, si tu le souhaites, parmi ta propre collection.",
     "disclaimer": "Les correspondances sont calculées en trouvant le marqueur Guangna le plus proche de votre couleur saisie, à l'aide du Delta E (CIE 1976). S'agissant d'une comparaison numérique, les résultats visuels varient selon votre écran, l'éclairage et le type de papier. Nos valeurs chromatiques mesurées peuvent légèrement différer de l'encre réelle, veuillez donc toujours tester vos feutres sur un brouillon. Considérez ces correspondances comme une bonne base de départ plutôt que comme une garantie absolue.",
     "myMarkers": {
-      "heading": "🗂️ Mes feutres",
-      "optional": "optionnel",
-      "description": "Sélectionne ton set pour voir aussi la meilleure correspondance parmi les feutres que tu possèdes.",
-      "setLabel": "Set de feutres",
-      "noneSelected": "— Aucune sélection —",
-      "extraCodesLabel": "Codes supplémentaires",
-      "extraCodesHint": "(3 chiffres, séparés par des virgules ou des espaces)",
-      "extraCodesPlaceholder": "par ex. 603, 648, 820"
+    "heading": "🗂️ Mes marqueurs",
+    "optional": "optionnel",
+    "description": "Sélectionnez votre set pour voir aussi les meilleures correspondances parmi les marqueurs que vous possédez.",
+    "noneSelected": "— Aucun sélectionné —",
+    "metallicNote": "Remarque : les marqueurs métallisés ne sont pas inclus.",
+    "extraCodesLabel": "Codes supplémentaires",
+    "extraCodesHint": "(3 chiffres, ou une lettre suivie de 2 chiffres, séparés par des virgules ou des espaces)",
+    "extraCodesPlaceholder": "par ex. 603, 648, Y01"
     },
     "modes": {
       "hex": "HEX",
@@ -416,11 +416,12 @@
     },
     "myMarkers": {
       "heading": "🗂️ Mes marqueurs",
-      "optional": "facultatif",
-      "description": "Sélectionnez votre set pour comparer uniquement avec vos marqueurs.",
+      "optional": "optionnel",
+      "description": "Sélectionnez votre set pour voir aussi les meilleures correspondances parmi les marqueurs que vous possédez.",
       "noneSelected": "— Aucun sélectionné —",
-      "extraCodesPlaceholder": "ex. 603, 648, 820"
-    },
+      "metallicNote": "Remarque : les marqueurs métallisés ne sont pas inclus.",
+    "extraCodesPlaceholder": "par ex. 603, 648, Y01"
+        },
     "matching": "Comparaison en cours…",
     "step4": {
       "matchButton": "Comparer aux codes Guangna"
@@ -479,8 +480,9 @@
     "optional": "optionnel",
     "description": "Sélectionnez votre set pour voir aussi les meilleures correspondances parmi les marqueurs que vous possédez.",
     "noneSelected": "— Aucun sélectionné —",
-    "extraCodesPlaceholder": "par ex. 603, 648, 820"
-  },
+    "metallicNote": "Remarque : les marqueurs métallisés ne sont pas inclus.",
+  "extraCodesPlaceholder": "par ex. 603, 648, Y01"
+      },
   "matching": "Recherche en cours…",
   "step2": {
     "matchButton": "Trouver les correspondances Guangna les plus proches"
@@ -514,19 +516,22 @@
     "title": "Nuancier Guangna",
     "subtitle": "Cherche à quels sets appartient un feutre, ou découvre tous les feutres inclus dans un set donné.",
     "byCode": {
-      "heading": "🔍 Trouver des sets par code de feutre",
-      "description": "Saisis un code Guangna pour voir tous les sets qui le contiennent.",
-      "placeholder": "ex. 605",
-      "button": "Trouver les sets",
-      "foundIn": "Trouvé dans {count} sets :",
-      "notInAnySet": "Ce code ne fait partie d'aucun set répertorié."
-    },
-    "bySet": {
-      "heading": "📋 Trouver des feutres par set",
-      "description": "Choisis un set pour voir tous les codes de feutres qu'il contient.",
-      "noneSelected": "— Sélectionner un set —",
-      "codeCount": "{count} feutres dans ce set :"
-    },
+  "heading": "🔍 Trouver des sets par code de feutre",
+  "description": "Saisis un code Guangna pour voir tous les sets qui le contiennent.",
+  "placeholder": "ex. 605",
+  "button": "Trouver les sets",
+  "foundIn": "Trouvé dans {count} sets :",
+  "notInAnySet": "Ce code ne fait partie d'aucun set répertorié.",
+  "metallicNote": "✨ Feutre métallisé — la couleur affichée est indicative.",
+  "hgNote": "✨ HG = set High Gloss."
+},
+"bySet": {
+  "heading": "📋 Trouver des feutres par set",
+  "description": "Choisis un set pour voir tous les codes de feutres qu'il contient.",
+  "noneSelected": "— Sélectionner un set —",
+  "codeCount": "{count} feutres dans ce set :",
+  "metallicHeading": "✨ Métallisé ({count})"
+},
     "errors": {
       "codeNotFound": "\"{code}\" n'est pas un code Guangna reconnu."
     },

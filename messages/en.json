@@ -332,15 +332,16 @@
     "subtitle": "Enter any color and find the closest Guangna marker available and, optionally, from your own collection.",
     "disclaimer": "Matches are calculated by finding the closest Guangna marker to your input color, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
     "myMarkers": {
-      "heading": "🗂️ My Markers",
-      "optional": "optional",
-      "description": "Select your set to also see the best match from markers you own.",
-      "setLabel": "Marker set",
-      "noneSelected": "— None selected —",
-      "extraCodesLabel": "Extra codes",
-      "extraCodesHint": "(3-digit, comma or space separated)",
-      "extraCodesPlaceholder": "e.g. 603, 648, 820"
-    },
+  "heading": "🗂️ My Markers",
+  "optional": "optional",
+  "description": "Select your set to also see the best match from markers you own.",
+  "setLabel": "Marker set",
+  "noneSelected": "— None selected —",
+  "metallicNote": "Note: Metallic markers are not included.",
+  "extraCodesLabel": "Extra codes",
+  "extraCodesHint": "(3-digit or letter and 2-digit, comma or space separated)",
+"extraCodesPlaceholder": "e.g. 603, 648, Y01"
+},
     "modes": {
       "hex": "HEX",
       "rgb": "RGB",
@@ -412,9 +413,12 @@
     "myMarkers": {
       "heading": "🗂️ My Markers",
       "optional": "optional",
-      "description": "Select your set to match within markers you own.",
+      "description": "Select your set to also see the best match from markers you own.",
+      "setLabel": "Marker set",
       "noneSelected": "— None selected —",
-      "extraCodesPlaceholder": "e.g. 603, 648, 820"
+      "metallicNote": "Note: Metallic markers are not included.",
+      "extraCodesLabel": "Extra codes",
+    "extraCodesPlaceholder": "e.g. 603, 648, Y01"
     },
     "matching": "Matching…",
     "step4": {
@@ -477,9 +481,12 @@
     "myMarkers": {
       "heading": "🗂️ My Markers",
       "optional": "optional",
-      "description": "Select your set to also see the best matches from markers you own.",
+      "description": "Select your set to also see the best match from markers you own.",
+      "setLabel": "Marker set",
       "noneSelected": "— None selected —",
-      "extraCodesPlaceholder": "e.g. 603, 648, 820"
+      "metallicNote": "Note: Metallic markers are not included.",
+      "extraCodesLabel": "Extra codes",
+    "extraCodesPlaceholder": "e.g. 603, 648, Y01"
     },
     "matching": "Matching…",
     "step2": {
@@ -513,20 +520,23 @@
   "GuangnaReference": {
     "title": "Guangna Reference Guide",
     "subtitle": "Look up which sets a marker belongs to, or see every marker included in a given set.",
-    "byCode": {
-      "heading": "🔍 Find sets by marker code",
-      "description": "Enter a Guangna code to see every set that includes it.",
-      "placeholder": "e.g. 605",
-      "button": "Find sets",
-      "foundIn": "Found in {count} sets:",
-      "notInAnySet": "This code isn't part of any listed set."
-    },
-    "bySet": {
-      "heading": "📋 Find markers by set",
-      "description": "Choose a set to see every marker code it includes.",
-      "noneSelected": "— Select a set —",
-      "codeCount": "{count} markers in this set:"
-    },
+   "byCode": {
+  "heading": "🔍 Find sets by marker code",
+  "description": "Enter a Guangna code to see every set that includes it.",
+  "placeholder": "e.g. 605",
+  "button": "Find sets",
+  "foundIn": "Found in {count} sets:",
+  "notInAnySet": "This code isn't part of any listed set.",
+  "metallicNote": "✨ Metallic marker — color shown is indicative.",
+  "hgNote": "✨ HG = High Gloss marker set."
+},
+"bySet": {
+  "heading": "📋 Find markers by set",
+  "description": "Choose a set to see every marker code it includes.",
+  "noneSelected": "— Select a set —",
+  "codeCount": "{count} markers in this set:",
+  "metallicHeading": "✨ Metallic ({count})"
+},
     "errors": {
       "codeNotFound": "\"{code}\" isn't a recognized Guangna code."
     },

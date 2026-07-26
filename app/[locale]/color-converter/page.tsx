@@ -2,11 +2,12 @@
 import Image from "next/image"
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_COLORS, GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
-  findClosest, hexToRgb, rgbToHex,
+  findClosest, hexToRgb, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "../../../lib/guangna";
 // lib/ lives at the project root (same convention as lib/payhip.ts),
@@ -107,10 +108,8 @@ export default function ColorConverter() {
       for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
     }
     for (const tok of extraCodes.split(/[\s,;]+/)) {
-      const t=tok.trim();
-      if (/^\d{3}$/.test(t)) {
-        const id=`GN-${t}`; if (GN_COLORS[id] && !ids.includes(id)) ids.push(id);
-      }
+      const id = normalizeExtraCode(tok);
+      if (id && !ids.includes(id)) ids.push(id);
     }
     return ids;
   };
@@ -184,14 +183,16 @@ export default function ColorConverter() {
               <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>{t("myMarkers.heading")} <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>{t("myMarkers.optional")}</span></h3>
               <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>{t("myMarkers.description")}</p>
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.setLabel")}</label>
-              <select value={mySet} onChange={e=>setMySet(e.target.value)}
-                style={{width:"100%",padding:"10px 12px",borderRadius:10,border:"2px solid var(--border)",fontSize:13,background:"white",marginBottom:4}}>
-                <option value="">{t("myMarkers.noneSelected")}</option>
-                {SET_OPTIONS.map(s=><option key={s.key} value={s.key}>{s.label}</option>)}
-              </select>
-              <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
-                Note: Metallic markers are not included.
-              </p>
+              <SetAutocomplete
+                value={mySet}
+                onChange={setMySet}
+                options={SET_OPTIONS}
+                noneLabel={t("myMarkers.noneSelected")}
+                style={{ marginBottom: 4 }}
+              />
+           <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
+               {t("myMarkers.metallicNote")}
+            </p>
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.extraCodesLabel")} <span style={{fontWeight:400,color:"var(--muted)"}}>{t("myMarkers.extraCodesHint")}</span></label>
               <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{width:"100%"}}/>
@@ -313,6 +314,11 @@ export default function ColorConverter() {
                   <p style={{fontSize:11,color:"var(--muted)",marginTop:10,lineHeight:1.5}}>
                     {t("results.screenDisclaimer")}
                   </p>
+                  {bestFull.code.startsWith("HG-") && (
+                    <p style={{fontSize:11,color:"var(--muted)",marginTop:4,fontStyle:"italic"}}>
+                      ✨ HG = High Gloss marker set.
+                    </p>
+                  )}
                 </div>
 
                 {hasOwned && bestOwned && (
@@ -336,6 +342,11 @@ export default function ColorConverter() {
                         <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
                           style={{color:"var(--pink)",fontWeight:700}}>{t("results.orderPrompt")}</a>
                       </div>
+                    )}
+                    {bestOwned.code.startsWith("HG-") && (
+                      <p style={{fontSize:11,color:"var(--muted)",marginTop:8,fontStyle:"italic"}}>
+                        ✨ HG = High Gloss marker set.
+                      </p>
                     )}
                   </div>
                 )}

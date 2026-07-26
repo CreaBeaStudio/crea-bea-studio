@@ -1,19 +1,32 @@
-// app/guides/[slug]/page.tsx
+// app/[locale]/guides/[slug]/page.tsx
 //
-// Individual guide article. Pre-rendered at build time for every key
-// in GUIDES_DATA. Add a new guide by adding an entry to guidesData.js —
-// no changes needed here.
+// Individual guide article. Pre-rendered at build time for every
+// locale x guide-slug combination. Add a new guide by adding an entry
+// to guidesData.js -- no changes needed here.
+//
+// Moved here (2026-07) from the old flat app/guides/[slug]/page.tsx so
+// this route is locale-prefixed like the rest of the site (/fr/guides/...
+// instead of an un-prefixed /guides/...) -- these are SEO articles, so a
+// French visitor's search results should actually point at a French URL,
+// not just French-flavored content sitting under an English-only path.
+//
+// Import paths below are UNCHANGED from the old flat route: this file
+// gained exactly one extra parent directory ([locale]), and Navbar
+// gained exactly one matching extra parent directory (it already lives
+// at app/[locale]/components/Navbar.tsx per the site's existing
+// convention), so the relative path up-two-levels-then-into-components
+// still resolves correctly.
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Navbar from "../../components/Navbar"; // two levels deep: app/guides/[slug]/page.tsx -> app/components/Navbar
-import { GUIDES_DATA } from "../guidesData";
+import Navbar from "../../components/Navbar"; // app/[locale]/guides/[slug]/page.tsx -> app/[locale]/components/Navbar
+import { getGuide, getAllSlugs } from "../guidesData";
 
 type Params = { params: Promise<{ slug: string; locale: string }> };
 
 // Shape of a single guide entry. Declared here (rather than relying on
 // TypeScript's inferred type from the plain .js data file) so that
-// indexing GUIDES_DATA by a dynamic string (the URL slug) type-checks.
+// indexing by a dynamic string (the URL slug) type-checks.
 type Guide = {
   title: string;
   description: string;
@@ -22,15 +35,19 @@ type Guide = {
   cta: { href: string; label: string };
 };
 
-const guidesData: Record<string, Guide> = GUIDES_DATA;
-
+// Only the new [slug] segment needs generating here -- the [locale]
+// segment above this route is already handled by the site's existing
+// top-level locale generateStaticParams (every other app/[locale]/...
+// page relies on the same parent-level mechanism rather than each page
+// re-declaring the locale list), so Next.js combines that with the
+// slugs returned here automatically.
 export function generateStaticParams() {
-  return Object.keys(GUIDES_DATA).map((slug) => ({ slug }));
+  return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Params) {
   const { slug, locale } = await params;
-  const guide = guidesData[slug];
+  const guide: Guide | null = getGuide(locale, slug);
   if (!guide) {
     return {
       title: "Guide | CreaBeaStudio",
@@ -54,7 +71,7 @@ export async function generateMetadata({ params }: Params) {
 
 export default async function GuidePage({ params }: Params) {
   const { slug, locale } = await params;
-  const guide = guidesData[slug];
+  const guide: Guide | null = getGuide(locale, slug);
 
   if (!guide) notFound();
 
@@ -111,7 +128,7 @@ export default async function GuidePage({ params }: Params) {
 
       <main style={{ padding: "40px 24px", maxWidth: 760, margin: "0 auto" }}>
         <p style={{ marginBottom: 14, fontSize: 13 }}>
-          <Link href="/guides" style={{ color: "var(--pink)" }}>
+          <Link href={`/${locale}/guides`} style={{ color: "var(--pink)" }}>
             ← All guides
           </Link>
         </p>

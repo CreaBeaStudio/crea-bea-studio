@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useMemo, useRef, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { GN_COLORS, GUANGNA_SETS, SET_OPTIONS, rgbToHex } from "../../../lib/guangna";
@@ -163,32 +164,44 @@ export default function GuangnaReferenceGuide() {
   const lookupCode = (raw?: string) => {
     const typed = (raw ?? codeInput).trim().toUpperCase();
     if (!typed) return;
-    // Accepts "605", "GN-605", or "gn605" -- normalizes to "GN-605",
-    // matching how codes are stored in GN_COLORS/GUANGNA_SETS. Metallic
-    // codes (330-377) are never GN--prefixed in storage, so they're
-    // checked separately using the bare digits (stripped from whatever
-    // was typed/clicked, including the "GN-" the suggestion dropdown
-    // now shows for them).
-    const rawDigits = typed.replace(/^GN-?/i, "");
-    const normalized = `GN-${rawDigits}`;
+    // Two code namespaces live in GN_COLORS: "GN-NNN" (classic-brush,
+    // digits only) and "HG-<letter><NN>" (High Gloss, one letter + 2
+    // digits). Accept the code with or without its prefix and detect
+    // which namespace it actually belongs to, rather than assuming
+    // everything is GN-numeric -- that assumption was the bug that
+    // made HG codes unrecognizable here even though they could be
+    // selected from the Set -> Codes browser.
+    const withoutGN = typed.replace(/^GN-?/i, "");
+    const withoutHG = typed.replace(/^HG-?/i, "");
     setCodeError(null);
 
-    const entry = GN_COLORS[normalized];
-    if (entry) {
+    let normalized: string | null = null;
+    if (/^\d+$/.test(withoutGN)) {
+      normalized = `GN-${withoutGN}`;
+    } else if (/^[A-Z]\d{2}$/.test(withoutHG)) {
+      normalized = `HG-${withoutHG}`;
+    }
+
+    const entry = normalized ? GN_COLORS[normalized] : undefined;
+    if (normalized && entry) {
       const sets = SET_OPTIONS
-        .filter(s => GUANGNA_SETS[s.key]?.includes(normalized))
+        .filter(s => GUANGNA_SETS[s.key]?.includes(normalized!))
         .map(setDisplayLabel);
       setCodeResult({ code: normalized, name: entry[3], rgb: [entry[0], entry[1], entry[2]], sets });
       return;
     }
 
-    const metallicEntry = METALLIC_COLORS[rawDigits];
+    // Metallic codes (330-377) are always plain digits, never GN--
+    // or HG--prefixed in storage, so they're checked separately using
+    // the GN--stripped digits (matches the digits a metallic code
+    // would actually be typed/clicked as).
+    const metallicEntry = METALLIC_COLORS[withoutGN];
     if (metallicEntry) {
       // A metallic code genuinely belongs to the 408 set -- treat it
       // exactly like a regular code that's found in one set. Displayed
       // as a full "GN-3XX" code, same format as regular codes.
       setCodeResult({
-        code: `GN-${rawDigits}`,
+        code: `GN-${withoutGN}`,
         name: metallicEntry[3],
         rgb: [metallicEntry[0], metallicEntry[1], metallicEntry[2]],
         sets: [setDisplayLabel(SET_408)],
@@ -202,7 +215,7 @@ export default function GuangnaReferenceGuide() {
   };
 
   const selectCodeSuggestion = (code: string) => {
-    setCodeInput(code.replace(/^GN-?/i, ""));
+    setCodeInput(code.replace(/^(GN|HG)-?/i, ""));
     setShowCodeSuggestions(false);
     lookupCode(code);
   };
@@ -223,6 +236,14 @@ export default function GuangnaReferenceGuide() {
     return isSet408 ? [...regular, ...METALLIC_CODES] : regular;
   }, [selectedSet, isSet408]);
   const regularSetCodes = isSet408 ? setCodes.slice(0, setCodes.length - METALLIC_CODES.length) : setCodes;
+
+  // Set dropdown -> autocomplete: options need the same setDisplayLabel()
+  // prefixing the old native <select> used, so the switch to
+  // SetAutocomplete doesn't change what's shown, just how it's picked.
+  const setOptionsForAutocomplete = useMemo(
+    () => SET_OPTIONS.map(s => ({ key: s.key, label: setDisplayLabel(s) })),
+    []
+  );
 
   return (
     <>
@@ -302,7 +323,12 @@ export default function GuangnaReferenceGuide() {
                 </div>
                 {codeResult.isMetallic && (
                   <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8, fontStyle: "italic" }}>
-                    ✨ Metallic marker — color shown is indicative.
+                    {t("byCode.metallicNote")}
+                  </p>
+                )}
+                {codeResult.code.startsWith("HG-") && (
+                  <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 8, fontStyle: "italic" }}>
+                    {t("byCode.hgNote")}
                   </p>
                 )}
                 {codeResult.sets.length > 0 ? (
@@ -325,11 +351,12 @@ export default function GuangnaReferenceGuide() {
           <div className="card">
             <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t("bySet.heading")}</h3>
             <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("bySet.description")}</p>
-            <select value={selectedSet} onChange={e => setSelectedSet(e.target.value)}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "2px solid var(--border)", fontSize: 13, background: "white" }}>
-              <option value="">{t("bySet.noneSelected")}</option>
-              {SET_OPTIONS.map(s => <option key={s.key} value={s.key}>{setDisplayLabel(s)}</option>)}
-            </select>
+            <SetAutocomplete
+              value={selectedSet}
+              onChange={setSelectedSet}
+              options={setOptionsForAutocomplete}
+              noneLabel={t("bySet.noneSelected")}
+            />
 
             {selectedSet && (
               <>
@@ -353,7 +380,7 @@ export default function GuangnaReferenceGuide() {
                 {isSet408 && (
                   <>
                     <p style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 18, marginBottom: 4 }}>
-                      ✨ Metallic ({METALLIC_CODES.length})
+                      {t("bySet.metallicHeading", { count: METALLIC_CODES.length })}
                     </p>
                     <div className="ref-swatch-grid">
                       {METALLIC_CODES.map(code => {

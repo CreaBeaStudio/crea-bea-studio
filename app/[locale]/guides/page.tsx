@@ -1,11 +1,13 @@
-// app/guides/page.tsx
+// app/[locale]/guides/page.tsx
 //
-// Hub/index page listing every guide. Purely additive — does not touch
-// your homepage, /create, or any existing layout.
+// Hub/index page listing every guide. Moved here (2026-07) from the old
+// flat app/guides/page.tsx so it's locale-prefixed like the rest of the
+// site. Purely additive otherwise — does not touch your homepage,
+// /create, or any existing layout.
 
 import Link from "next/link";
-import Navbar from "../components/Navbar"; // one level deep: app/guides/page.tsx -> app/components/Navbar
-import { GUIDES_DATA } from "./guidesData";
+import Navbar from "../components/Navbar"; // app/[locale]/guides/page.tsx -> app/[locale]/components/Navbar
+import { getGuidesForLocale } from "./guidesData";
 
 export const metadata = {
   title: "Paint by Number Guides | CreaBeaStudio",
@@ -14,8 +16,15 @@ export const metadata = {
   alternates: { canonical: "/guides" },
 };
 
-export default function GuidesHubPage() {
-  const guides = Object.entries(GUIDES_DATA);
+type Params = { params: Promise<{ locale: string }> };
+
+export default async function GuidesHubPage({ params }: Params) {
+  const { locale } = await params;
+  // Every guide slug, each resolved to that locale's translation if one
+  // exists yet, English otherwise -- see getGuidesForLocale() in
+  // guidesData.js. This means the hub page always shows the full guide
+  // list even for a locale that's only partway through translation.
+  const guides = getGuidesForLocale(locale);
 
   return (
     <>
@@ -41,7 +50,7 @@ export default function GuidesHubPage() {
           {guides.map(([slug, guide]) => (
             <Link
               key={slug}
-              href={`/guides/${slug}`}
+              href={`/${locale}/guides/${slug}`}
               className="card"
               style={{
                 display: "block",

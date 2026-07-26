@@ -2,11 +2,12 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useRef, useEffect, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
-  findClosest, rgbToHex,
+  findClosest, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "../../../lib/guangna";
 // This file must be saved as app/[locale]/legend-converter/page.tsx —
@@ -193,11 +194,8 @@ export default function LegendConverter() {
       for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
     }
     for (const tok of extraCodes.split(/[\s,;]+/)) {
-      const tt = tok.trim();
-      if (/^\d{3}$/.test(tt)) {
-        const id = `GN-${tt}`;
-        if (!ids.includes(id)) ids.push(id);
-      }
+      const id = normalizeExtraCode(tok);
+      if (id && !ids.includes(id)) ids.push(id);
     }
     return ids;
   };
@@ -470,14 +468,16 @@ export default function LegendConverter() {
                 {t("myMarkers.heading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
               </h3>
               <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("myMarkers.description")}</p>
-              <select value={mySet} onChange={e => { setMySet(e.target.value); setResults(null); }}
-                style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "2px solid var(--border)", fontSize: 13, background: "white", marginBottom: 4 }}>
-                <option value="">{t("myMarkers.noneSelected")}</option>
-                {SET_OPTIONS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
-              </select>
-              <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
-                Note: Metallic markers are not included.
-              </p>
+              <SetAutocomplete
+                value={mySet}
+                onChange={key => { setMySet(key); setResults(null); }}
+                options={SET_OPTIONS}
+                noneLabel={t("myMarkers.noneSelected")}
+                style={{ marginBottom: 4 }}
+              />
+          <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
+  {t("myMarkers.metallicNote")}
+</p>
               <input type="text" value={extraCodes} onChange={e => { setExtraCodes(e.target.value); setResults(null); }}
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{ width: "100%" }} />
             </div>
