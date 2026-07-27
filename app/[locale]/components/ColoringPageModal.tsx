@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import type { ColoringPage } from "@/lib/coloringPages";
+import { coloringPageThumbUrl, coloringPageFileUrl } from "@/lib/coloringPages";
 
 type Props = {
   page: ColoringPage;
@@ -78,8 +79,8 @@ export default function ColoringPageModal({
         {page.exampleImage && page.outlineImage && (
           <div style={{ marginBottom: 20 }}>
             <BeforeAfterSlider
-              beforeImage={`/coloring-pages/thumbs/${page.exampleImage}`}
-              afterImage={`/coloring-pages/thumbs/${page.outlineImage}`}
+              beforeImage={coloringPageThumbUrl(page.exampleImage)}
+              afterImage={coloringPageThumbUrl(page.outlineImage)}
               beforeLabel={"Reference"}
               afterLabel={previewLabel}
               aspectRatio={3 / 4}
@@ -96,7 +97,7 @@ export default function ColoringPageModal({
           </div>
         ) : (
           <a
-            href={`/coloring-pages/${page.fileName}`}
+            href={coloringPageFileUrl(page.fileName)}
             download
             style={{
               display: "block", textAlign: "center", padding: "12px 20px",
