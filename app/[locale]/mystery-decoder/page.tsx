@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import MysteryDecoderPacks from "../components/MysteryDecoderPacks";
+import MysteryDecoderPacks from "../components/MysteryDecoderPacksREAL";
 
 // Save as app/[locale]/mystery-decoder/page.tsx
 // Adjust the relative import paths above if your route folder is
