@@ -15,22 +15,40 @@ export default function Navbar() {
   // top-level link and "Swatch Card Creator" lived under Tools
   // alongside the genuinely free converters. Moving it out of Tools
   // reflects that Tools = free, Create = paid.
+  //
+  // UPDATED (earlier session): "mysteryDecoder" added as its own
+  // top-level link (not nested in the Create dropdown) -- a dedicated
+  // page for the Mystery Coloring Page Decoder, placed right after
+  // Create since it's another paid product, but standalone per her
+  // request. Its label is long ("Mystery Coloring Page Decoder" / FR
+  // equivalent) and is allowed to wrap to two lines on desktop -- see
+  // the width/whiteSpace override below, applied only to this link.
+  //
+  // UPDATED (2026-07-29): navbar was getting too long. Added a new
+  // "helpCenter" dropdown grouping Examples, Tips & Tricks, and FAQ
+  // (informational/support content) -- same pattern as the Tools
+  // dropdown. Mystery Decoder and Free Coloring Pages stay top-level
+  // (Free Coloring Pages is a conversion/lead-gen page, not a help
+  // page, per her call).
   const LINKS = [
     ["home", "/"],
     { labelKey: "create", children: [
       ["createGuangna", "/create"],
       ["swatchCreator", "/swatch-creator"],
     ]},
+    ["mysteryDecoder", "/mystery-decoder"],
     { labelKey: "tools", children: [
       ["colorConverter", "/color-converter"],
       ["legendConverter", "/legend-converter"],
       ["languoConverter", "/languo-converter"],
       ["guangnaReference", "/guangna-reference"],
     ]},
-    ["examples", "/examples"],
     ["freeColoringPages", "/free-coloring-pages"],
-    ["tips", "/tips"],
-    ["faq", "/faq"],
+    { labelKey: "helpCenter", children: [
+      ["examples", "/examples"],
+      ["tips", "/tips"],
+      ["faq", "/faq"],
+    ]},
   ];
 
   return (
@@ -125,13 +143,19 @@ export default function Navbar() {
                 );
               }
               const isFreePages = item[0] === "freeColoringPages";
+              // Long two-line label -- allowed to wrap instead of the
+              // usual single-line nowrap treatment every other
+              // top-level link uses.
+              const isMysteryDecoder = item[0] === "mysteryDecoder";
 return (
   <Link key={item[0]} href={item[1]} className="nav-link" style={{
     textDecoration: "none",
     color: isFreePages ? "var(--pink)" : "var(--ink)",
     fontSize: 15,
     fontWeight: isFreePages ? 700 : 500,
-    padding: "6px 12px", borderRadius: 8, whiteSpace: "nowrap",
+    padding: "6px 12px", borderRadius: 8,
+    whiteSpace: isMysteryDecoder ? "normal" : "nowrap",
+    ...(isMysteryDecoder ? { maxWidth: 120, textAlign: "center", lineHeight: 1.25 } : {}),
   }}>
     {t(item[0])}
   </Link>

@@ -58,31 +58,33 @@
     "finalCta": "Erstelle dein Guangna Malen-nach-Zahlen →"
   },
   "footer": {
-"footerTagline": "Male deine Erinnerungen, Nummer für Nummer. 🐾",
-"footerCreate": "Erstellen",
-"footerConverter": "Farbkonverter",
-"footerLegendConverter": "Legend-Konverter",
-"footerLanguoConverter": "Languokonverter",
-"footerGuangnaReference": "Guangna Referenz Guide",
-"footerSwatchCreator": "Farbkarten-Generator",
-"footerExamples": "Beispiele",
-"footerTips": "Tipps & Tricks",
-"footerFaq": "FAQ",
-"footerTiktok": "TikTok",
-"footerPrivacy": "Datenschutzerklärung",
-"footerTerms": "Allgemeine Geschäftsbedingungen",
-"footerRefund": "Rückerstattungsrichtlinie",
-"footerRights": "© {year} CreaBeaStudio. Alle Rechte vorbehalten.",
- "footerCookieSettings": "Cookie-Einstellungen"
-},
+    "footerTagline": "Male deine Erinnerungen, Nummer für Nummer. 🐾",
+    "footerCreate": "Erstellen",
+    "footerConverter": "Farbkonverter",
+    "footerLegendConverter": "Legend-Konverter",
+    "footerLanguoConverter": "Languokonverter",
+    "footerGuangnaReference": "Guangna Referenz Guide",
+    "footerSwatchCreator": "Farbkarten-Generator",
+    "footerExamples": "Beispiele",
+    "footerTips": "Tipps & Tricks",
+    "footerFaq": "FAQ",
+    "footerTiktok": "TikTok",
+    "footerPrivacy": "Datenschutzerklärung",
+    "footerTerms": "Allgemeine Geschäftsbedingungen",
+    "footerRefund": "Rückerstattungsrichtlinie",
+    "footerRights": "© {year} CreaBeaStudio. Alle Rechte vorbehalten.",
+    "footerCookieSettings": "Cookie-Einstellungen"
+  },
   "nav": {
     "home": "Home",
     "create": "Erstellen",
     "tools": "Werkzeuge",
     "languoConverter": "Languo-Konverter",
     "createGuangna": "Guangna Malen-nach-Zahlen",
+    "mysteryDecoder": "Mystery-Decoder",
     "colorConverter": "Farbkonverter",
     "legendConverter": "Legende-Konverter",
+    "helpCenter": "Hilfe-Center",
     "examples": "Beispiele",
     "tips": "Tipps",
     "faq": "FAQ",
@@ -124,73 +126,73 @@
     "contactUs": "Kontakt"
   },
   "privacy": {
-      "title": "Datenschutzerklärung",
-      "lastUpdated": "Zuletzt aktualisiert am 24. Juli 2026",
-      "intro1": "Diese Datenschutzerklärung für CreaBeaStudio (\"wir\", \"uns\" oder \"unser\") beschreibt, wie und warum wir auf Ihre personenbezogenen Daten zugreifen, diese erheben, speichern, verwenden und/oder weitergeben (\"verarbeiten\"), wenn Sie unsere Dienste (\"Dienste\") nutzen, einschließlich wenn Sie:",
-      "bullet1": "Unsere Website unter <website>www.creabeastudio.com</website> oder eine andere Website von uns besuchen, die auf diese Datenschutzerklärung verweist",
-      "bullet2": "Digitale Malvorlagen nutzen. CreaBeaStudio bietet einen Dienst an, mit dem Nutzer Fotos hochladen können, die verarbeitet und in individuelle Malvorlagen umgewandelt werden. Diese Dateien werden digital für den persönlichen Gebrauch geliefert.",
-      "bullet3": "Auf andere damit verbundene Weise mit uns interagieren, einschließlich Marketing oder Veranstaltungen",
-      "intro2": "Haben Sie Fragen oder Bedenken? Das Lesen dieser Datenschutzerklärung hilft Ihnen, Ihre Datenschutzrechte und -wahlmöglichkeiten zu verstehen. Wir sind dafür verantwortlich, Entscheidungen darüber zu treffen, wie Ihre personenbezogenen Daten verarbeitet werden. Wenn Sie mit unseren Richtlinien und Praktiken nicht einverstanden sind, nutzen Sie bitte unsere Dienste nicht. Wenn Sie weitere Fragen oder Bedenken haben, kontaktieren Sie uns bitte unter <email>hello@creabeastudio.com</email>.",
-      "summaryHeading": "Zusammenfassung der wichtigsten Punkte",
-      "sdpWhatQ": "Welche personenbezogenen Daten verarbeiten wir?",
-      "sdpWhatA": "Wenn Sie unsere Dienste besuchen, nutzen oder navigieren, können wir personenbezogene Daten verarbeiten, abhängig davon, wie Sie mit uns und den Diensten interagieren.",
-      "sdpSensitiveQ": "Verarbeiten wir sensible personenbezogene Daten?",
-      "sdpSensitiveA": "Wir verarbeiten keine sensiblen personenbezogenen Daten.",
-      "sdpThirdPartyQ": "Erfassen wir Informationen von Dritten?",
-      "sdpThirdPartyA": "Wir erfassen keine Informationen von Dritten.",
-      "sdpHowQ": "Wie verarbeiten wir Ihre Daten?",
-      "sdpHowA": "Wir verarbeiten Ihre Daten, um unsere Dienste bereitzustellen, zu verbessern und zu verwalten, um mit Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und um gesetzlichen Verpflichtungen nachzukommen.",
-      "sdpRightsQ": "Welche Rechte haben Sie?",
-      "sdpRightsA": "Abhängig von Ihrem geografischen Standort kann das geltende Datenschutzrecht Ihnen bestimmte Rechte in Bezug auf Ihre personenbezogenen Daten einräumen.",
-      "s1Heading": "1. Welche Informationen erfassen wir?",
-      "s1Intro": "Wir erfassen personenbezogene Daten, die Sie uns freiwillig zur Verfügung stellen, darunter:",
-      "s1Bullet1": "E-Mail-Adressen",
-      "s1Bullet2": "Hochgeladene Fotos. Wenn Sie unseren Foto-zu-Malvorlage-Dienst nutzen, erfassen wir die von Ihnen hochgeladenen Fotos. Diese können Bilder von Ihnen oder anderen identifizierbaren Personen enthalten.",
-      "s1SensitiveLabel": "Sensible Informationen.",
-      "s1SensitiveText": "Wir verarbeiten keine sensiblen Informationen.",
-      "s1PaymentLabel": "Zahlungsdaten.",
-      "s1PaymentText": "Wir können Daten erfassen, die zur Verarbeitung Ihrer Zahlung erforderlich sind, wenn Sie sich für einen Kauf entscheiden. Zahlungsdaten werden von Lemon Squeezy, unserem Zahlungsabwickler und eingetragenen Händler (Merchant of Record), verarbeitet und gespeichert. Die entsprechende Datenschutzerklärung finden Sie hier: <lemon>Datenschutzerklärung von Lemon Squeezy</lemon>.",
-      "s2Heading": "2. Wie verarbeiten wir Ihre Daten?",
-      "s1ProcessorsLabel": "Weitere Dienstleister.",
-      "s1ProcessorsText": "Ihre hochgeladenen Fotos und generierten Dateien werden auf der Infrastruktur der Google Cloud Platform in der Europäischen Union gespeichert. Wir nutzen Resend zum Versenden von bestell- und kontobezogenen E-Mails.",
-      "s2Text": "Wir verarbeiten Ihre personenbezogenen Daten, um unsere Dienste bereitzustellen, zu verbessern und zu verwalten – einschließlich der Nutzung Ihres hochgeladenen Fotos zur Erstellung (und, falls Sie eine Korrektur anfordern, zur manuellen Anpassung) der von Ihnen bestellten Datei –, um mit Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und um gesetzlichen Verpflichtungen nachzukommen. Wir können Ihre Daten auch verarbeiten, wenn dies notwendig ist, um lebenswichtige Interessen einer Person zu schützen, etwa um Schaden abzuwenden.",
-      "s3Heading": "3. Auf welche Rechtsgrundlagen stützen wir uns?",
-      "s3Intro": "Wenn Sie sich in der EU oder im Vereinigten Königreich befinden, stützen wir uns auf folgende Rechtsgrundlagen:",
-      "s3Bullet0Label": "Vertragserfüllung —",
-      "s3Bullet0Text": "um die von Ihnen erworbenen Dienste bereitzustellen, einschließlich der Umwandlung Ihres hochgeladenen Fotos in eine individuelle Malvorlage und der Bereitstellung Ihrer Dateien.",
-      "s3Bullet1Label": "Einwilligung —",
-      "s3Bullet1Text": "Sie können Ihre Einwilligung jederzeit widerrufen.",
-      "s3Bullet2Label": "Gesetzliche Verpflichtungen —",
-      "s3Bullet2Text": "zur Einhaltung von Strafverfolgungs- oder regulatorischen Anforderungen.",
-      "s3Bullet3Label": "Lebenswichtige Interessen —",
-      "s3Bullet3Text": "zum Schutz Ihrer lebenswichtigen Interessen oder der eines Dritten.",
-      "s4Heading": "4. Wann und mit wem teilen wir Ihre Daten?",
-      "s4Text": "Wir können Informationen im Zusammenhang mit oder während Verhandlungen über eine Fusion, den Verkauf von Unternehmensvermögen, eine Finanzierung oder den Erwerb unseres gesamten Unternehmens oder eines Teils davon durch ein anderes Unternehmen weitergeben.",
-      "s5Heading": "5. Wie lange speichern wir Ihre Daten?",
-      "s5Text": "Hochgeladene Fotos werden sicher gespeichert und ausschließlich zur Erstellung Ihrer personalisierten Dateien verwendet. Wir speichern sie maximal 37 Tage, damit Sie auf Ihre Ergebnisse zugreifen und sie herunterladen können und damit wir Ihnen bei Bedarf Ihren Zustellungslink erneut senden können. Danach werden sie dauerhaft gelöscht.",
-      "s6Heading": "6. Cookies und Tracking-Technologien",
-      "s6Text": "Wir verwenden Cookies und ähnliche Tracking-Technologien, um unsere Dienste zu betreiben und zu verbessern: Essenzielle Cookies, die für die Funktion der Website erforderlich sind (z. B. Sitzungssicherheit); Analyse-Cookies (Google Analytics 4), die verwendet werden, um die Websitenutzung zu verstehen; und Sitzungsaufzeichnungen (Microsoft Clarity), die verwendet werden, um zu verstehen, wie Besucher mit der Website interagieren (z. B. Klicks, Scrollen) – Clarity maskiert sensible Formulareingaben standardmäßig.",
-      "s7Heading": "7. Erfassen wir Daten von Minderjährigen?",
-      "s7Text": "Wir erfassen, erbitten oder vermarkten wissentlich keine Daten von Kindern unter 18 Jahren. Mit der Nutzung der Dienste erklären Sie, dass Sie mindestens 18 Jahre alt sind oder Elternteil bzw. Erziehungsberechtigter eines solchen Minderjährigen sind und dessen Nutzung der Dienste zustimmen.",
-      "s8Heading": "8. Welche Datenschutzrechte haben Sie?",
-      "s8Text1": "In einigen Regionen (EWR, Vereinigtes Königreich, Schweiz, Kanada) haben Sie Rechte, einschließlich des Rechts auf Zugang, Berichtigung oder Löschung Ihrer personenbezogenen Daten, Einschränkung der Verarbeitung und Datenübertragbarkeit. Kontaktieren Sie uns unter <email>hello@creabeastudio.com</email>, um diese Rechte auszuüben.",
-      "s8Text2": "Wenn Sie sich im EWR oder im Vereinigten Königreich befinden und glauben, dass wir Ihre Daten rechtswidrig verarbeiten, haben Sie das Recht, sich bei der Aufsichtsbehörde Ihres Mitgliedstaats oder des Vereinigten Königreichs zu beschweren. In der Schweiz können Sie sich an den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten wenden.",
-      "s9Heading": "9. Do-Not-Track-Signale",
-      "s9Text": "Wir reagieren derzeit nicht auf Do-Not-Track-Signale von Browsern, da noch kein einheitlicher Technologiestandard für die Erkennung solcher Signale festgelegt wurde.",
-      "s10Heading": "10. Datenschutzrechte für US-Bürger",
-      "s10Text": "Wenn Sie in Kalifornien, Colorado, Connecticut oder einem anderen aufgeführten US-Bundesstaat wohnen, haben Sie möglicherweise das Recht, auf Ihre personenbezogenen Daten zuzugreifen, sie zu korrigieren, zu löschen oder eine Kopie davon zu erhalten, sowie bestimmten Verarbeitungen zu widersprechen. Wir haben in den letzten 12 Monaten keine personenbezogenen Daten zu kommerziellen Zwecken an Dritte verkauft oder weitergegeben und werden dies auch zukünftig nicht tun. Um diese Rechte auszuüben, senden Sie eine E-Mail an <email>hello@creabeastudio.com</email>.",
-      "s11Heading": "11. Andere Regionen",
-      "s11Text": "Wir verarbeiten Daten in Übereinstimmung mit dem australischen Privacy Act 1988 und dem neuseeländischen Privacy Act 2020, soweit anwendbar.",
-      "s12Heading": "12. Aktualisierungen dieser Erklärung",
-      "s12Text": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren, was durch das oben angegebene Datum \"Zuletzt aktualisiert\" angezeigt wird.",
-      "s13Heading": "13. Kontaktieren Sie uns",
-      "s13Address": "CreaBeaStudio<br></br>Godfried van Rhenenlaan 27<br></br>Vollenhove, Overijssel 8325EV<br></br>Niederlande<br></br>E-Mail: <email>hello@creabeastudio.com</email>",
-      "s13Rep": "Vertreter für EWR/Schweiz: M van Veldhuizen — <email>hello@creabeastudio.com</email> — +31 631054925",
-      "s14Heading": "14. Ihre Daten einsehen, aktualisieren oder löschen",
-      "s14Text": "Um Zugang zu, Korrektur oder Löschung Ihrer personenbezogenen Daten zu beantragen, senden Sie uns bitte eine E-Mail an <email>hello@creabeastudio.com</email>.",
-      "footerNote": "Diese Datenschutzerklärung wurde mit dem Privacy Policy Generator von Termly erstellt."
-    },
-    "terms": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Zuletzt aktualisiert am 24. Juli 2026",
+    "intro1": "Diese Datenschutzerklärung für CreaBeaStudio (\"wir\", \"uns\" oder \"unser\") beschreibt, wie und warum wir auf Ihre personenbezogenen Daten zugreifen, diese erheben, speichern, verwenden und/oder weitergeben (\"verarbeiten\"), wenn Sie unsere Dienste (\"Dienste\") nutzen, einschließlich wenn Sie:",
+    "bullet1": "Unsere Website unter <website>www.creabeastudio.com</website> oder eine andere Website von uns besuchen, die auf diese Datenschutzerklärung verweist",
+    "bullet2": "Digitale Malvorlagen nutzen. CreaBeaStudio bietet einen Dienst an, mit dem Nutzer Fotos hochladen können, die verarbeitet und in individuelle Malvorlagen umgewandelt werden. Diese Dateien werden digital für den persönlichen Gebrauch geliefert.",
+    "bullet3": "Auf andere damit verbundene Weise mit uns interagieren, einschließlich Marketing oder Veranstaltungen",
+    "intro2": "Haben Sie Fragen oder Bedenken? Das Lesen dieser Datenschutzerklärung hilft Ihnen, Ihre Datenschutzrechte und -wahlmöglichkeiten zu verstehen. Wir sind dafür verantwortlich, Entscheidungen darüber zu treffen, wie Ihre personenbezogenen Daten verarbeitet werden. Wenn Sie mit unseren Richtlinien und Praktiken nicht einverstanden sind, nutzen Sie bitte unsere Dienste nicht. Wenn Sie weitere Fragen oder Bedenken haben, kontaktieren Sie uns bitte unter <email>hello@creabeastudio.com</email>.",
+    "summaryHeading": "Zusammenfassung der wichtigsten Punkte",
+    "sdpWhatQ": "Welche personenbezogenen Daten verarbeiten wir?",
+    "sdpWhatA": "Wenn Sie unsere Dienste besuchen, nutzen oder navigieren, können wir personenbezogene Daten verarbeiten, abhängig davon, wie Sie mit uns und den Diensten interagieren.",
+    "sdpSensitiveQ": "Verarbeiten wir sensible personenbezogene Daten?",
+    "sdpSensitiveA": "Wir verarbeiten keine sensiblen personenbezogenen Daten.",
+    "sdpThirdPartyQ": "Erfassen wir Informationen von Dritten?",
+    "sdpThirdPartyA": "Wir erfassen keine Informationen von Dritten.",
+    "sdpHowQ": "Wie verarbeiten wir Ihre Daten?",
+    "sdpHowA": "Wir verarbeiten Ihre Daten, um unsere Dienste bereitzustellen, zu verbessern und zu verwalten, um mit Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und um gesetzlichen Verpflichtungen nachzukommen.",
+    "sdpRightsQ": "Welche Rechte haben Sie?",
+    "sdpRightsA": "Abhängig von Ihrem geografischen Standort kann das geltende Datenschutzrecht Ihnen bestimmte Rechte in Bezug auf Ihre personenbezogenen Daten einräumen.",
+    "s1Heading": "1. Welche Informationen erfassen wir?",
+    "s1Intro": "Wir erfassen personenbezogene Daten, die Sie uns freiwillig zur Verfügung stellen, darunter:",
+    "s1Bullet1": "E-Mail-Adressen",
+    "s1Bullet2": "Hochgeladene Fotos. Wenn Sie unseren Foto-zu-Malvorlage-Dienst nutzen, erfassen wir die von Ihnen hochgeladenen Fotos. Diese können Bilder von Ihnen oder anderen identifizierbaren Personen enthalten.",
+    "s1SensitiveLabel": "Sensible Informationen.",
+    "s1SensitiveText": "Wir verarbeiten keine sensiblen Informationen.",
+    "s1PaymentLabel": "Zahlungsdaten.",
+    "s1PaymentText": "Wir können Daten erfassen, die zur Verarbeitung Ihrer Zahlung erforderlich sind, wenn Sie sich für einen Kauf entscheiden. Zahlungsdaten werden von Lemon Squeezy, unserem Zahlungsabwickler und eingetragenen Händler (Merchant of Record), verarbeitet und gespeichert. Die entsprechende Datenschutzerklärung finden Sie hier: <lemon>Datenschutzerklärung von Lemon Squeezy</lemon>.",
+    "s2Heading": "2. Wie verarbeiten wir Ihre Daten?",
+    "s1ProcessorsLabel": "Weitere Dienstleister.",
+    "s1ProcessorsText": "Ihre hochgeladenen Fotos und generierten Dateien werden auf der Infrastruktur der Google Cloud Platform in der Europäischen Union gespeichert. Wir nutzen Resend zum Versenden von bestell- und kontobezogenen E-Mails.",
+    "s2Text": "Wir verarbeiten Ihre personenbezogenen Daten, um unsere Dienste bereitzustellen, zu verbessern und zu verwalten – einschließlich der Nutzung Ihres hochgeladenen Fotos zur Erstellung (und, falls Sie eine Korrektur anfordern, zur manuellen Anpassung) der von Ihnen bestellten Datei –, um mit Ihnen zu kommunizieren, zur Sicherheit und Betrugsprävention und um gesetzlichen Verpflichtungen nachzukommen. Wir können Ihre Daten auch verarbeiten, wenn dies notwendig ist, um lebenswichtige Interessen einer Person zu schützen, etwa um Schaden abzuwenden.",
+    "s3Heading": "3. Auf welche Rechtsgrundlagen stützen wir uns?",
+    "s3Intro": "Wenn Sie sich in der EU oder im Vereinigten Königreich befinden, stützen wir uns auf folgende Rechtsgrundlagen:",
+    "s3Bullet0Label": "Vertragserfüllung —",
+    "s3Bullet0Text": "um die von Ihnen erworbenen Dienste bereitzustellen, einschließlich der Umwandlung Ihres hochgeladenen Fotos in eine individuelle Malvorlage und der Bereitstellung Ihrer Dateien.",
+    "s3Bullet1Label": "Einwilligung —",
+    "s3Bullet1Text": "Sie können Ihre Einwilligung jederzeit widerrufen.",
+    "s3Bullet2Label": "Gesetzliche Verpflichtungen —",
+    "s3Bullet2Text": "zur Einhaltung von Strafverfolgungs- oder regulatorischen Anforderungen.",
+    "s3Bullet3Label": "Lebenswichtige Interessen —",
+    "s3Bullet3Text": "zum Schutz Ihrer lebenswichtigen Interessen oder der eines Dritten.",
+    "s4Heading": "4. Wann und mit wem teilen wir Ihre Daten?",
+    "s4Text": "Wir können Informationen im Zusammenhang mit oder während Verhandlungen über eine Fusion, den Verkauf von Unternehmensvermögen, eine Finanzierung oder den Erwerb unseres gesamten Unternehmens oder eines Teils davon durch ein anderes Unternehmen weitergeben.",
+    "s5Heading": "5. Wie lange speichern wir Ihre Daten?",
+    "s5Text": "Hochgeladene Fotos werden sicher gespeichert und ausschließlich zur Erstellung Ihrer personalisierten Dateien verwendet. Wir speichern sie maximal 37 Tage, damit Sie auf Ihre Ergebnisse zugreifen und sie herunterladen können und damit wir Ihnen bei Bedarf Ihren Zustellungslink erneut senden können. Danach werden sie dauerhaft gelöscht.",
+    "s6Heading": "6. Cookies und Tracking-Technologien",
+    "s6Text": "Wir verwenden Cookies und ähnliche Tracking-Technologien, um unsere Dienste zu betreiben und zu verbessern: Essenzielle Cookies, die für die Funktion der Website erforderlich sind (z. B. Sitzungssicherheit); Analyse-Cookies (Google Analytics 4), die verwendet werden, um die Websitenutzung zu verstehen; und Sitzungsaufzeichnungen (Microsoft Clarity), die verwendet werden, um zu verstehen, wie Besucher mit der Website interagieren (z. B. Klicks, Scrollen) – Clarity maskiert sensible Formulareingaben standardmäßig.",
+    "s7Heading": "7. Erfassen wir Daten von Minderjährigen?",
+    "s7Text": "Wir erfassen, erbitten oder vermarkten wissentlich keine Daten von Kindern unter 18 Jahren. Mit der Nutzung der Dienste erklären Sie, dass Sie mindestens 18 Jahre alt sind oder Elternteil bzw. Erziehungsberechtigter eines solchen Minderjährigen sind und dessen Nutzung der Dienste zustimmen.",
+    "s8Heading": "8. Welche Datenschutzrechte haben Sie?",
+    "s8Text1": "In einigen Regionen (EWR, Vereinigtes Königreich, Schweiz, Kanada) haben Sie Rechte, einschließlich des Rechts auf Zugang, Berichtigung oder Löschung Ihrer personenbezogenen Daten, Einschränkung der Verarbeitung und Datenübertragbarkeit. Kontaktieren Sie uns unter <email>hello@creabeastudio.com</email>, um diese Rechte auszuüben.",
+    "s8Text2": "Wenn Sie sich im EWR oder im Vereinigten Königreich befinden und glauben, dass wir Ihre Daten rechtswidrig verarbeiten, haben Sie das Recht, sich bei der Aufsichtsbehörde Ihres Mitgliedstaats oder des Vereinigten Königreichs zu beschweren. In der Schweiz können Sie sich an den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten wenden.",
+    "s9Heading": "9. Do-Not-Track-Signale",
+    "s9Text": "Wir reagieren derzeit nicht auf Do-Not-Track-Signale von Browsern, da noch kein einheitlicher Technologiestandard für die Erkennung solcher Signale festgelegt wurde.",
+    "s10Heading": "10. Datenschutzrechte für US-Bürger",
+    "s10Text": "Wenn Sie in Kalifornien, Colorado, Connecticut oder einem anderen aufgeführten US-Bundesstaat wohnen, haben Sie möglicherweise das Recht, auf Ihre personenbezogenen Daten zuzugreifen, sie zu korrigieren, zu löschen oder eine Kopie davon zu erhalten, sowie bestimmten Verarbeitungen zu widersprechen. Wir haben in den letzten 12 Monaten keine personenbezogenen Daten zu kommerziellen Zwecken an Dritte verkauft oder weitergegeben und werden dies auch zukünftig nicht tun. Um diese Rechte auszuüben, senden Sie eine E-Mail an <email>hello@creabeastudio.com</email>.",
+    "s11Heading": "11. Andere Regionen",
+    "s11Text": "Wir verarbeiten Daten in Übereinstimmung mit dem australischen Privacy Act 1988 und dem neuseeländischen Privacy Act 2020, soweit anwendbar.",
+    "s12Heading": "12. Aktualisierungen dieser Erklärung",
+    "s12Text": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren, was durch das oben angegebene Datum \"Zuletzt aktualisiert\" angezeigt wird.",
+    "s13Heading": "13. Kontaktieren Sie uns",
+    "s13Address": "CreaBeaStudio<br></br>Godfried van Rhenenlaan 27<br></br>Vollenhove, Overijssel 8325EV<br></br>Niederlande<br></br>E-Mail: <email>hello@creabeastudio.com</email>",
+    "s13Rep": "Vertreter für EWR/Schweiz: M van Veldhuizen — <email>hello@creabeastudio.com</email> — +31 631054925",
+    "s14Heading": "14. Ihre Daten einsehen, aktualisieren oder löschen",
+    "s14Text": "Um Zugang zu, Korrektur oder Löschung Ihrer personenbezogenen Daten zu beantragen, senden Sie uns bitte eine E-Mail an <email>hello@creabeastudio.com</email>.",
+    "footerNote": "Diese Datenschutzerklärung wurde mit dem Privacy Policy Generator von Termly erstellt."
+  },
+  "terms": {
     "title": "Allgemeine Geschäftsbedingungen",
     "lastUpdated": "Zuletzt aktualisiert am 24. Juli 2026",
     "intro1": "Wir sind CreaBeaStudio (\"Unternehmen\", \"wir\", \"uns\", \"unser\"), ein in den Niederlanden registriertes Unternehmen mit Sitz in Godfried van Rhenenlaan 27, Vollenhove 8325EV.",
@@ -199,9 +201,11 @@
     "intro4": "Durch den Zugriff auf die Dienste haben Sie diese Geschäftsbedingungen gelesen, verstanden und stimmen zu, daran gebunden zu sein. Die Dienste sind für Nutzer ab 18 Jahren bestimmt.",
     "s1Heading": "1. Unsere Dienste",
     "s1Text": "Die Dienste sind nicht darauf ausgelegt, branchenspezifische Vorschriften (HIPAA, FISMA usw.) zu erfüllen. Sie dürfen die Dienste nicht in einer Weise nutzen, die gegen den Gramm-Leach-Bliley Act verstößt.",
-    "s2Heading": "2. Rechte am geistigen Eigentum",      "s2Text": "Wir besitzen oder lizenzieren alle Rechte am geistigen Eigentum an unseren Diensten, einschließlich Quellcode, Designs und Inhalten (\"Inhalte\") sowie Marken (\"Marken\"). Wir gewähren Ihnen eine nicht-exklusive, nicht übertragbare, widerrufbare Lizenz zur Nutzung der Dienste ausschließlich für den persönlichen, nicht-kommerziellen Gebrauch.",
+    "s2Heading": "2. Rechte am geistigen Eigentum",
+    "s2Text": "Wir besitzen oder lizenzieren alle Rechte am geistigen Eigentum an unseren Diensten, einschließlich Quellcode, Designs und Inhalten (\"Inhalte\") sowie Marken (\"Marken\"). Wir gewähren Ihnen eine nicht-exklusive, nicht übertragbare, widerrufbare Lizenz zur Nutzung der Dienste ausschließlich für den persönlichen, nicht-kommerziellen Gebrauch.",
     "s3Heading": "3. Zusicherungen des Nutzers",
-    "s3Text": "Durch die Nutzung der Dienste versichern Sie, dass: Sie rechtlich in der Lage sind, diesen Bedingungen zuzustimmen; Sie kein Minderjähriger sind; Sie nicht über automatisierte Mittel auf die Dienste zugreifen werden; und Ihre Nutzung dem geltenden Recht entspricht.",      "s4Heading": "4. Produkte",
+    "s3Text": "Durch die Nutzung der Dienste versichern Sie, dass: Sie rechtlich in der Lage sind, diesen Bedingungen zuzustimmen; Sie kein Minderjähriger sind; Sie nicht über automatisierte Mittel auf die Dienste zugreifen werden; und Ihre Nutzung dem geltenden Recht entspricht.",
+    "s4Heading": "4. Produkte",
     "s4Text": "Alle Produkte unterliegen der Verfügbarkeit. Wir behalten uns das Recht vor, ein Produkt jederzeit einzustellen. Preise können sich ändern.",
     "s5Heading": "5. Käufe und Zahlung",
     "s5Text": "Wir akzeptieren Zahlungen über Lemon Squeezy. Lemon Squeezy agiert als eingetragener Händler (Merchant of Record) für alle Käufe und ist verantwortlich für die Erhebung und Abführung der anwendbaren Umsatz- und Mehrwertsteuer. Die Preise werden in der Währung angezeigt, die für Ihre gewählte Zahlungsmethode gilt. Sie verpflichten sich, korrekte Rechnungsdaten anzugeben. Wir behalten uns das Recht vor, Bestellungen abzulehnen oder zu beschränken und Preisfehler auch nach erfolgter Zahlung zu korrigieren.",
@@ -324,7 +328,7 @@
     "previousExample": "Vorheriges Beispiel",
     "nextExample": "Nächstes Beispiel",
     "createCta": "Erstelle jetzt dein Guangna Malen-nach-Zahlen →"
-},
+  },
   "ColorConverter": {
     "title": "Guangna Farbkonverter",
     "subtitle": "Gib eine beliebige Farbe ein und finde den nächstgelegenen verfügbaren Guangna Marker — optional auch aus deiner eigenen Sammlung.",
@@ -463,49 +467,49 @@
     }
   },
   "LanguoConverter": {
-  "title": "Languo-zu-Guangna-Konverter",
-  "subtitle": "Gib einen Languo Art 288 Acryl-Code ein und finde die 3 nächstgelegenen Guangna-Marker-Übereinstimmungen, optional aus deiner eigenen Sammlung.",
-  "disclaimer": "Die Übereinstimmungen werden berechnet, indem die Farbwerte von Languo umgerechnet und die nächstgelegenen Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt werden. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
-  "step1": {
-    "heading": "1 · Gib deinen Languo-Code ein",
-    "description": "Gib einen Code ein, z. B. RY-06.",
-    "placeholder": "z. B. RY-06"
-  },
-  "myMarkers": {
-    "heading": "🗂️ Meine Marker",
-    "optional": "optional",
-    "description": "Wähle dein Set aus, um auch die besten Treffer aus Markern zu sehen, die du bereits besitzt.",
-    "noneSelected": "— Nichts ausgewählt —",
-    "extraCodesPlaceholder": "z. B. 603, 648, 820"
-  },
-  "matching": "Wird abgeglichen…",
-  "step2": {
-    "matchButton": "Nächstgelegene Guangna-Treffer finden"
-  },
-  "results": {
-    "languoCodeLabel": "Languo-Code",
-    "heading": "Nächstgelegene Guangna-Treffer",
-    "ownedHeading": "Nächstgelegene Treffer aus deinem Set",
-    "noOwnedMatch": "Keine eigenen Marker gefunden — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen.",
-    "notInSetNotice": "Es sind bessere Treffer verfügbar.",
-    "orderPrompt": "Möchtest du sie bestellen? →",
-    "screenDisclaimer": "⚠️ Bildschirmfarben können vom tatsächlichen Marker abweichen. Teste immer auf Papier."
-  },
-  "errors": {
-    "codeNotFound": "\"{code}\" ist kein bekannter Languo-Code. Überprüfe die Schreibweise oder wähle einen aus der Liste."
-  },
-  "crossLink": {
-    "text": "Möchtest du stattdessen ein Foto oder eine einzelne Farbe abgleichen?",
-    "linkText": "Zum Farbkonverter →"
-  },
-  "crossLinkLegend": {
-    "text": "Hast du eine ganze Farblegende zum Umwandeln?",
-    "linkText": "Zum Legenden-Konverter →"
-  },
-  "donate": {
-    "text": "Wenn dir das Zeit gespart hat, freuen wir uns über einen Kaffee ☕",
-    "button": "Spendiere mir einen Kaffee"
-  }
+    "title": "Languo-zu-Guangna-Konverter",
+    "subtitle": "Gib einen Languo Art 288 Acryl-Code ein und finde die 3 nächstgelegenen Guangna-Marker-Übereinstimmungen, optional aus deiner eigenen Sammlung.",
+    "disclaimer": "Die Übereinstimmungen werden berechnet, indem die Farbwerte von Languo umgerechnet und die nächstgelegenen Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt werden. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+    "step1": {
+      "heading": "1 · Gib deinen Languo-Code ein",
+      "description": "Gib einen Code ein, z. B. RY-06.",
+      "placeholder": "z. B. RY-06"
+    },
+    "myMarkers": {
+      "heading": "🗂️ Meine Marker",
+      "optional": "optional",
+      "description": "Wähle dein Set aus, um auch die besten Treffer aus Markern zu sehen, die du bereits besitzt.",
+      "noneSelected": "— Nichts ausgewählt —",
+      "extraCodesPlaceholder": "z. B. 603, 648, 820"
+    },
+    "matching": "Wird abgeglichen…",
+    "step2": {
+      "matchButton": "Nächstgelegene Guangna-Treffer finden"
+    },
+    "results": {
+      "languoCodeLabel": "Languo-Code",
+      "heading": "Nächstgelegene Guangna-Treffer",
+      "ownedHeading": "Nächstgelegene Treffer aus deinem Set",
+      "noOwnedMatch": "Keine eigenen Marker gefunden — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen.",
+      "notInSetNotice": "Es sind bessere Treffer verfügbar.",
+      "orderPrompt": "Möchtest du sie bestellen? →",
+      "screenDisclaimer": "⚠️ Bildschirmfarben können vom tatsächlichen Marker abweichen. Teste immer auf Papier."
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" ist kein bekannter Languo-Code. Überprüfe die Schreibweise oder wähle einen aus der Liste."
+    },
+    "crossLink": {
+      "text": "Möchtest du stattdessen ein Foto oder eine einzelne Farbe abgleichen?",
+      "linkText": "Zum Farbkonverter →"
+    },
+    "crossLinkLegend": {
+      "text": "Hast du eine ganze Farblegende zum Umwandeln?",
+      "linkText": "Zum Legenden-Konverter →"
+    },
+    "donate": {
+      "text": "Wenn dir das Zeit gespart hat, freuen wir uns über einen Kaffee ☕",
+      "button": "Spendiere mir einen Kaffee"
+    }
   },
   "GuangnaReference": {
     "title": "Guangna Referenz Guide",
@@ -532,27 +536,27 @@
       "button": "Spendier mir einen Kaffee"
     }
   },
-    "cookieConsent": {
-  "heading": "Cookies",
-  "body": "Wir verwenden Cookies, um diese Website zu betreiben und, wenn du es erlaubst, um zu verstehen, wie Besucher sie nutzen. Essenzielle Cookies sind immer aktiv.",
-  "essentialLabel": "Essenziell",
-  "essentialDesc": "Erforderlich, damit die Website funktioniert (z. B. Sitzungssicherheit). Immer aktiv.",
-  "analyticsLabel": "Analysen & Sitzungsaufzeichnung",
-  "analyticsDesc": "Google Analytics 4 und Microsoft Clarity, um zu verstehen, wie Besucher die Website nutzen.",
-  "acceptAll": "Alle akzeptieren",
-  "essentialOnly": "Nur essenzielle",
-  "managePreferences": "Einstellungen verwalten",
-  "savePreferences": "Einstellungen speichern"
-},
+  "cookieConsent": {
+    "heading": "Cookies",
+    "body": "Wir verwenden Cookies, um diese Website zu betreiben und, wenn du es erlaubst, um zu verstehen, wie Besucher sie nutzen. Essenzielle Cookies sind immer aktiv.",
+    "essentialLabel": "Essenziell",
+    "essentialDesc": "Erforderlich, damit die Website funktioniert (z. B. Sitzungssicherheit). Immer aktiv.",
+    "analyticsLabel": "Analysen & Sitzungsaufzeichnung",
+    "analyticsDesc": "Google Analytics 4 und Microsoft Clarity, um zu verstehen, wie Besucher die Website nutzen.",
+    "acceptAll": "Alle akzeptieren",
+    "essentialOnly": "Nur essenzielle",
+    "managePreferences": "Einstellungen verwalten",
+    "savePreferences": "Einstellungen speichern"
+  },
   "readyMadePacks": {
-  "heading": "🎨 Vorsortierte Farbkarten",
-  "description": "Erhalte ein komplettes Set, bereits nach Farbfamilie geordnet und von hell nach dunkel sortiert.",
-  "colorCount": "{count} Farben",
-  "buy": "Kaufen",
-  "comingSoon": "Demnächst verfügbar",
-  "disclaimer": "Jedes Paket enthält die farbige Vorlage, eine Blanko-Vorlage, ein Referenzblatt sowie Druck- und Zusammenbauanleitungen."
-},
-"swatchCreator": {
+    "heading": "🎨 Vorsortierte Farbkarten",
+    "description": "Erhalte ein komplettes Set, bereits nach Farbfamilie geordnet und von hell nach dunkel sortiert.",
+    "colorCount": "{count} Farben",
+    "buy": "Kaufen",
+    "comingSoon": "Demnächst verfügbar",
+    "disclaimer": "Jedes Paket enthält die farbige Vorlage, eine Blanko-Vorlage, ein Referenzblatt sowie Druck- und Zusammenbauanleitungen."
+  },
+  "swatchCreator": {
     "pageSubtitle": "Wähle ein vorsortiertes Farbkarten-Set oder gestalte deine eigenen, individuellen Druckvorlagen aus jeder Guangna- oder Languo-Markerkollektion.",
     "howToUse": {
       "title": "So verwendest du dieses Tool",
@@ -583,6 +587,32 @@
       "closing": "Die entstandene Reihenfolge ist bewusst so gestaltet, dass ein weicher, optisch ansprechender Verlauf entsteht, statt eines starren, rein mathematischen Layouts. Da manche Farben natürlicherweise zwischen zwei Familien liegen (z. B. ein kräftiges Blaugrün), sind sie in beiden Farbfamilien enthalten, damit du sie nicht verpasst.",
       "tip": "Betrachte diese Karten als hilfreichen, fachkundigen Ausgangspunkt — du kannst sie ganz nach deiner eigenen Farbinterpretation anpassen!",
       "note": "Hinweis: Metallic-Farben sind in der Farbfamilien-Gruppierung nicht enthalten."
+    }
+  },
+  "mysteryDecoder": {
+    "pageTitle": "Weniger Farben suchen, mehr Zeit zum Ausmalen",
+    "intro": "Wenn du Mystery-Malen-nach-Zahlen liebst, aber die Farbzuordnung nervt — oder du dir einfach nicht sicher bist, ob du die bestmöglichen Farbtöne gewählt hast — haben wir die Lösung für dich. Damit du mit deinen Guangna-Markern sofort die besten Ergebnisse erzielst, haben wir umfassende Farb-Decoder-PDFs für die beliebtesten Mystery-Malbücher erstellt, von Prinzessin bis zu den Klassikern.",
+    "whatsIncludedTitle": "Was ist in den Decoder-Dateien enthalten?",
+    "featureA4Letter": "Perfekt formatiert zum Ausdrucken auf A4 und US Letter.",
+    "featureDualCoding": "Doppelte Farbcodierung: Jede Seite zeigt sowohl die Original-Farbcodes als auch die passenden Guangna-Markercodes, damit du den richtigen Farbton ohne Rätselraten wählen kannst.",
+    "featureCompleteCoverage": "Vollständige Buchabdeckung: Decoder für alle 100 Mystery-Seiten pro Band.",
+    "featureFreePreviewLabel": "Vorab testen:",
+    "featureFreePreviewText": "lade den Decoder für die erste Seite kostenlos herunter.",
+    "priceNote": "Kompletter Band — vollständiger Decoder-Schlüssel für alle 100 Seiten — 7,50 €",
+    "selectBookLabel": "Wähle ein Buch",
+    "selectSetLabel": "Wähle dein Guangna-Set",
+    "freePreview": "Kostenlose Vorschau (Seite 1)",
+    "buy": "Kaufen",
+    "comingSoon": "Demnächst verfügbar",
+    "linkNotSetUp": "Bezahllink noch nicht eingerichtet",
+    "linkNeeded": "Link fehlt",
+    "metallicsNote": "Gleiche Zuordnung wie das 360er-Set — metallische Marker werden nicht verwendet.",
+    "disclaimer": "Unabhängige, von Fans erstellte Farbabgleich-Referenz. Keine Verbindung zu, Unterstützung durch oder Lizenzierung durch einen Malbuchverlag, Illustrator oder eine Marke.",
+    "books": {
+      "princess": "Prinzessin",
+      "greatClassicsVol1": "Die großen Klassiker Band 1",
+      "greatClassicsVol2": "Die großen Klassiker Band 2",
+      "greatClassicsVol3": "Die großen Klassiker Band 3"
     }
   }
 }

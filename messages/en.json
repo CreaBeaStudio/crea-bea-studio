@@ -79,10 +79,12 @@
     "tools": "Tools",
     "create": "Create",
     "createGuangna": "Guangna by Number",
+    "mysteryDecoder": "Mystery Decoder",
     "colorConverter": "Color Converter",
     "legendConverter": "Legend Converter",
     "languoConverter": "Languo Converter",
     "swatchCreator": "Swatch Card Creator",
+    "helpCenter": "Help Center",
     "examples": "Examples",
     "tips": "Tips & Tricks",
     "faq": "FAQ",
@@ -906,7 +908,7 @@
       "footerNote": "💡 Missed this window entirely? Just reply to this email or reach us at hello@creabeastudio.com and we'll send you a fresh link."
     }
   },
-    "swatchDownload": {
+  "swatchDownload": {
     "checkingTitle": "Confirming your payment…",
     "checkingBody": "This usually takes just a few seconds. Please don't close this page.",
     "readyTitle": "Your swatch cards are ready! 💖",
@@ -923,5 +925,31 @@
     "errorRefSuffix": "with this order reference:",
     "errorNoRefSuffix": "for help.",
     "pdfGenerationError": "Something went wrong generating your PDF. Try the button again, or contact hello@creabeastudio.com with your order reference."
+  },
+  "mysteryDecoder": {
+    "pageTitle": "Less Time Matching, More Time Coloring",
+    "intro": "If you love mystery coloring-by-number but don't like the color matching — or you're just not sure you've picked the best possible shades — we've got you covered. To help you get the best results instantly with your Guangna markers, we've created comprehensive Color Decoder Key PDFs for the most popular mystery coloring books, from Princess to the Classics.",
+    "whatsIncludedTitle": "What's Included in the Decoder Files?",
+    "featureA4Letter": "Formatted to print perfectly on both A4 and US Letter paper.",
+    "featureDualCoding": "Dual color coding: every page lists both the original color codes and the matching Guangna marker codes, so you can pick the right shade without guessing.",
+    "featureCompleteCoverage": "Complete book coverage: decoders for all 100 mystery pages per volume.",
+   "featureFreePreviewLabel": "Try before you buy:",
+"featureFreePreviewText": "download the first page decoder for free.",
+    "priceNote": "Full volume — complete decoder key for all 100 pages — €7.50",
+    "selectBookLabel": "Choose a book",
+    "selectSetLabel": "Choose your Guangna set",
+    "freePreview": "Free preview (page 1)",
+    "buy": "Buy",
+    "comingSoon": "Coming soon",
+    "linkNotSetUp": "Checkout link not set up yet",
+    "linkNeeded": "Link needed",
+    "metallicsNote": "Same match as the 360 set — metallic markers aren't used.",
+    "disclaimer": "Independent fan-made color-matching reference. Not affiliated with, endorsed by, or licensed by any coloring book publisher, illustrator, or brand.",
+    "books": {
+      "princess": "Princess",
+      "greatClassicsVol1": "The Great Classics Volume 1",
+      "greatClassicsVol2": "The Great Classics Volume 2",
+      "greatClassicsVol3": "The Great Classics Volume 3"
+    }
   }
-  }
+}
