@@ -946,10 +946,12 @@
     "metallicsNote": "Same match as the 360 set — metallic markers aren't used.",
     "disclaimer": "Independent fan-made color-matching reference. Not affiliated with, endorsed by, or licensed by any coloring book publisher, illustrator, or brand.",
     "books": {
-      "princess": "Princess",
+      "princess": "Princesses Volume 1",
+      "princessVol2": "Princesses Volume 2",
       "greatClassicsVol1": "The Great Classics Volume 1",
       "greatClassicsVol2": "The Great Classics Volume 2",
-      "greatClassicsVol3": "The Great Classics Volume 3"
+      "greatClassicsVol3": "The Great Classics Volume 3",
+      "greatClassicsVol4": "The Great Classics Volume 4"
     }
   }
 }

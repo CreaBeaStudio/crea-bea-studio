@@ -941,10 +941,12 @@
       "metallicsNote": "Même assortiment que le set 360 — les marqueurs métalliques ne sont pas utilisés.",
       "disclaimer": "Référence indépendante d'assortiment de couleurs, réalisée par des passionné(e)s. Aucune affiliation, approbation ou licence avec un éditeur, illustrateur ou marque de livre de coloriage.",
       "books": {
-        "princess": "Princesse",
-        "greatClassicsVol1": "Les Grands Classiques Volume 1",
-        "greatClassicsVol2": "Les Grands Classiques Volume 2",
-        "greatClassicsVol3": "Les Grands Classiques Volume 3"
+        "princess": "Princesses Tome 1",
+        "princessVol2": "Princesses Tome 2",
+        "greatClassicsVol1": "Les Grands Classiques Tome 1",
+        "greatClassicsVol2": "Les Grands Classiques Tome 2",
+        "greatClassicsVol3": "Les Grands Classiques Tome 3",
+        "greatClassicsVol4": "Les Grands Classiques Tome 4"
       }
     }
   }
