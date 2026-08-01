@@ -372,6 +372,7 @@
       "emptyPrompt": "Enter a color and click Search",
       "bestMatch": "Best match",
       "guangnaBadge": "Guangna",
+      "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "screenDisclaimer": "⚠️ Screen colors may differ from the actual marker. Always test on paper.",
       "bestMatchOwned": "Best match you have",
       "youHaveIt": "✓ You have it!",
@@ -427,6 +428,7 @@
       "matchButton": "Match to Guangna codes"
     },
     "results": {
+      "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "notInSetHeading": "💡 Even better matches outside your set",
       "notInSetSubheading": "These Guangna colors aren't in your selected set, but they're the closest possible match available.",
       "heading": "🎨 Guangna Color Palette Guide",
@@ -442,6 +444,7 @@
       "title": "♥ Color Your Memories ♥",
       "titleText": "Color Your Memories",
       "subtitle": "Guangna Color Palette  ·  {count} colors",
+      "gnFallbackLabel": "GN alt.:",
       "instructions": "Match each numbered swatch on your legend with the corresponding Guangna marker",
       "columnInSet": "Best Match in Your Set",
       "columnAvailable": "Best Guangna Match Available"
@@ -498,6 +501,7 @@
       "languoCodeLabel": "Languo code",
       "heading": "Closest Guangna matches",
       "ownedHeading": "Closest matches from your set",
+      "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes.",
       "notInSetNotice": "There are better matches available.",
       "orderPrompt": "Would you like to buy them? →",

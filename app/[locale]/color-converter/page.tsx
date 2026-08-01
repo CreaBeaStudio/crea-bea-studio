@@ -6,12 +6,18 @@ import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_COLORS, GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_COLORS, GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, hexToRgb, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "../../../lib/guangna";
 // lib/ lives at the project root (same convention as lib/payhip.ts),
 // so from app/[locale]/color-converter/page.tsx that's 3 levels up.
+//
+// NEW translation key needed under the "ColorConverter" namespace (add
+// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
+// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
+// when the main Best Match is a High Gloss (HG-) code, since those are
+// newer/less commonly owned than the classic GN line.
 
 // Plain, unprotected swatch — used for input-preview colors (the hex/rgb
 // echo, the extracted photo dominant color). These reflect what the
@@ -29,8 +35,9 @@ function Swatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) 
 // samples noisy pixels instead of the exact marker color. Each instance
 // gets its own filter id via useId() -- reusing a static id="noise"
 // across multiple <svg> elements on the same page is invalid HTML and
-// risks swatches referencing the wrong filter (this page can show two
-// ProtectedSwatch instances at once: best match + best match you own).
+// risks swatches referencing the wrong filter (this page can show up to
+// three ProtectedSwatch instances at once: best match + best match you
+// own + the GN fallback when the best match is High Gloss).
 function ProtectedSwatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -83,12 +90,13 @@ export default function ColorConverter() {
   const [mySet,setMySet]           = useState<string>("");
   const [extraCodes,setExtraCodes] = useState("");
   const [bestFull,setBestFull]     = useState<MatchResult|null>(null);
+  const [bestFullGNFallback,setBestFullGNFallback] = useState<MatchResult|null>(null);
   const [bestOwned,setBestOwned]   = useState<MatchResult|null>(null);
   const [hasOwned,setHasOwned]     = useState(false);
 
   const handlePhotoFile = useCallback((file:File)=>{
     const reader=new FileReader();
-    reader.onload=e=>{setPhotoDataUrl(e.target?.result as string);setPhotoName(file.name);setBestFull(null);setBestOwned(null);setDominantRgb(null);};
+    reader.onload=e=>{setPhotoDataUrl(e.target?.result as string);setPhotoName(file.name);setBestFull(null);setBestFullGNFallback(null);setBestOwned(null);setDominantRgb(null);};
     reader.readAsDataURL(file);
   },[]);
 
@@ -128,6 +136,11 @@ export default function ColorConverter() {
       }
       const full = findClosest(rgb, GN_366_IDS);
       setBestFull(full);
+      // Best match is a High Gloss code -- also surface the best
+      // *regular* GN match, since HG markers are newer and less
+      // commonly owned than the classic GN line. Left null (no extra
+      // line shown) whenever the best match is already a GN code.
+      setBestFullGNFallback(full.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null);
       const ownedIds = getOwnedIds();
       if (ownedIds.length>0) {
         const owned = findClosest(rgb, ownedIds);
@@ -202,7 +215,7 @@ export default function ColorConverter() {
             <div className="card">
               <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>
                 {(["hex","rgb","photo"] as InputMode[]).map(m=>(
-                  <button key={m} onClick={()=>{setMode(m);setBestFull(null);setBestOwned(null);}} style={{
+                  <button key={m} onClick={()=>{setMode(m);setBestFull(null);setBestFullGNFallback(null);setBestOwned(null);}} style={{
                     padding:"8px 18px",borderRadius:20,border:"2px solid var(--pink)",
                     background:mode===m?"var(--pink)":"white",
                     color:mode===m?"white":"var(--pink)",
@@ -318,6 +331,14 @@ export default function ColorConverter() {
                     <p style={{fontSize:11,color:"var(--muted)",marginTop:4,fontStyle:"italic"}}>
                       ✨ HG = High Gloss marker set.
                     </p>
+                  )}
+                  {bestFullGNFallback && (
+                    <div style={{display:"flex",alignItems:"center",gap:12,marginTop:10,padding:"8px 12px",borderRadius:8,background:"var(--cream)"}}>
+                      <ProtectedSwatch rgb={bestFullGNFallback.rgb} size={36}/>
+                      <p style={{fontSize:12,color:"var(--muted)",lineHeight:1.4,margin:0}}>
+                        {t("results.gnFallbackNotice", {code: bestFullGNFallback.code, name: bestFullGNFallback.name})}
+                      </p>
+                    </div>
                   )}
                 </div>
 

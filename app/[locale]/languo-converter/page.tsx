@@ -6,8 +6,8 @@ import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useMemo, useRef, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
-  findClosestN, rgbToHex, normalizeExtraCode,
+  GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
+  findClosest, findClosestN, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "../../../lib/guangna";
 import { LANGUO_COLORS, LANGUO_IDS } from "../../../lib/languo";
@@ -15,6 +15,15 @@ import { LANGUO_COLORS, LANGUO_IDS } from "../../../lib/languo";
 // Next.js only turns it into a route at that exact path/filename.
 // lib/ lives at the project root, so that's 3 levels up from here, same
 // convention as color-converter/page.tsx and legend-converter/page.tsx.
+//
+// NEW translation key needed under the "LanguoConverter" namespace (add
+// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
+// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
+// when the #1 match (fullMatches[0]) is a High Gloss (HG-) code, since
+// those are newer/less commonly owned than the classic GN line. Note
+// this can differ from whatever GN code happens to land at rank 2 or 3
+// in the existing top-3 list, since multiple HG entries can be closer
+// than the true best GN match.
 
 const MATCH_COUNT = 3;
 const MAX_SUGGESTIONS = 8;
@@ -22,11 +31,11 @@ const MAX_SUGGESTIONS = 8;
 // Same noise-overlay technique as ColorConverter's ProtectedSwatch, so a
 // browser eyedropper/color-picker samples noisy pixels instead of the
 // exact marker color. Unlike ColorConverter (one swatch on screen at a
-// time), this page can show up to 7 swatches at once (1 Languo color +
-// 3+3 matches), so each instance gets its own unique filter id via
-// useId() -- reusing a single id="noise" across multiple <svg> elements
-// on the same page is invalid HTML and risks swatches referencing the
-// wrong filter.
+// time), this page can show up to 8 swatches at once (1 Languo color +
+// 3+3 matches + the GN fallback), so each instance gets its own unique
+// filter id via useId() -- reusing a single id="noise" across multiple
+// <svg> elements on the same page is invalid HTML and risks swatches
+// referencing the wrong filter.
 function Swatch({ rgb, size = 56 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -62,6 +71,7 @@ type Results = {
   languoCode: string;
   languoRgb: [number, number, number];
   fullMatches: MatchResult[];
+  fullGNFallback: MatchResult | null;
   ownedMatches: MatchResult[] | null;
   ownedIds: string[];
 };
@@ -117,9 +127,17 @@ export default function LanguoConverter() {
     setMatching(true);
     try {
       const fullMatches = findClosestN(rgb, GN_366_IDS, MATCH_COUNT);
+      // Top match is a High Gloss code -- also surface the best
+      // *regular* GN match, since HG markers are newer and less
+      // commonly owned than the classic GN line. This can differ from
+      // any GN code already sitting at rank 2/3 above, since several
+      // HG entries can be closer than the true best GN match.
+      const fullGNFallback = fullMatches[0]?.code.startsWith("HG-")
+        ? findClosest(rgb, GN_ONLY_IDS)
+        : null;
       const ownedIds = getOwnedIds();
       const ownedMatches = ownedIds.length > 0 ? findClosestN(rgb, ownedIds, MATCH_COUNT) : null;
-      setResults({ languoCode: normalized, languoRgb: rgb, fullMatches, ownedMatches, ownedIds });
+      setResults({ languoCode: normalized, languoRgb: rgb, fullMatches, fullGNFallback, ownedMatches, ownedIds });
     } finally {
       setMatching(false);
     }
@@ -268,6 +286,15 @@ export default function LanguoConverter() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {results.fullMatches.map((m, i) => <MatchRow key={m.code} rank={i + 1} m={m} />)}
                 </div>
+
+                {results.fullGNFallback && (
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 10, padding: "8px 12px", borderRadius: 8, background: "var(--cream)" }}>
+                    <Swatch rgb={results.fullGNFallback.rgb} size={36} />
+                    <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.4, margin: 0 }}>
+                      {t("results.gnFallbackNotice", { code: results.fullGNFallback.code, name: results.fullGNFallback.name })}
+                    </p>
+                  </div>
+                )}
 
                 {bestNotOwned && (
                   <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>

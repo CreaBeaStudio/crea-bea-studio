@@ -6,16 +6,24 @@ import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useRef, useEffect, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_366_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "../../../lib/guangna";
 // This file must be saved as app/[locale]/legend-converter/page.tsx —
 // Next.js only turns it into a route at that exact path/filename.
 // lib/ lives at the project root, so that's 3 levels up from here.
+//
+// NEW translation key needed under the "LegendConverter" namespace (add
+// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
+// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
+// when a swatch's overall best match (full) is a High Gloss (HG-) code,
+// since those are newer/less commonly owned than the classic GN line.
+// Same note also appears in the downloadable PDF (pdf.gnFallbackLabel,
+// e.g. "GN alt.:") for whichever rows it applies to.
 
 type Swatch = { x: number; y: number; rgb: [number, number, number] } | null;
-type SwatchResult = { full: MatchResult; owned: MatchResult | null; originalIndex: number };
+type SwatchResult = { full: MatchResult; fullGNFallback: MatchResult | null; owned: MatchResult | null; originalIndex: number };
 
 const DISPLAY_MAX_W = 640;
 
@@ -38,10 +46,11 @@ function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number,
 // ProtectedSwatch and LanguoConverter's Swatch, so a browser
 // eyedropper/color-picker samples noisy pixels instead of the exact
 // marker color. This page can render many result swatches at once (up
-// to `colorCount`, plus a second "not in set" grid), so each instance
-// gets its own filter id via useId() -- reusing a static id="noise"
-// across multiple <svg> elements on the same page is invalid HTML and
-// risks swatches referencing the wrong filter.
+// to `colorCount`, plus a second "not in set" grid, plus a small GN
+// fallback swatch on rows where it applies), so each instance gets its
+// own filter id via useId() -- reusing a static id="noise" across
+// multiple <svg> elements on the same page is invalid HTML and risks
+// swatches referencing the wrong filter.
 function ResultSwatch({ rgb, size = 40 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -209,8 +218,12 @@ export default function LegendConverter() {
         .filter((x): x is { s: NonNullable<Swatch>; idx: number } => x !== null)
         .map(({ s, idx }) => {
           const full = findClosest(s.rgb, GN_366_IDS);
+          // Overall best match is a High Gloss code -- also surface the
+          // best *regular* GN match, since HG markers are newer and
+          // less commonly owned than the classic GN line.
+          const fullGNFallback = full.code.startsWith("HG-") ? findClosest(s.rgb, GN_ONLY_IDS) : null;
           const owned = ownedIds.length > 0 ? findClosest(s.rgb, ownedIds) : null;
-          return { full, owned, originalIndex: idx };
+          return { full, fullGNFallback, owned, originalIndex: idx };
         });
       setResults(matched);
     } finally {
@@ -233,6 +246,7 @@ export default function LegendConverter() {
 
       const ML = 14, MR = 14;
       const ROW_H = 9;
+      const ROW_H_TALL = 13; // extra room for the "regular GN alternative" note line
       const LOGO_RESERVED_H = 32; // bottom space kept clear for the logo on every page
       const HEADER_TOP = 14;
       const TABLE_TOP = 50;
@@ -304,10 +318,10 @@ export default function LegendConverter() {
       const leftBlockX = ML + idxW;
       const rightBlockX = ML + idxW + half + 8;
 
-      const drawBlock = (x: number, y: number, w: number, m: MatchResult, shaded: boolean) => {
+      const drawBlock = (x: number, y: number, w: number, rowH: number, m: MatchResult, shaded: boolean, fallback?: MatchResult | null) => {
         if (shaded) {
           doc.setFillColor(245, 245, 245);
-          doc.rect(x, y, w, ROW_H, "F");
+          doc.rect(x, y, w, rowH, "F");
         }
         doc.setFillColor(...m.rgb);
         doc.roundedRect(x + 1, y + 1, 9, ROW_H - 2, 1, 1, "F");
@@ -319,11 +333,18 @@ export default function LegendConverter() {
         doc.setFontSize(6.5);
         doc.setTextColor(...MID);
         doc.text(m.name, x + 13, y + 7.5);
+        if (fallback) {
+          doc.setFont("helvetica", "italic");
+          doc.setFontSize(6);
+          doc.setTextColor(...MID);
+          doc.text(`${t("pdf.gnFallbackLabel")} ${fallback.code} ${fallback.name}`, x + 13, y + 11.3);
+        }
       };
 
       let y = TABLE_TOP;
       results.forEach((item) => {
-        if (y + ROW_H > PAGE_BOTTOM) {
+        const rowH = item.fullGNFallback ? ROW_H_TALL : ROW_H;
+        if (y + rowH > PAGE_BOTTOM) {
           drawLogo();
           doc.addPage();
           drawPageHeader(true);
@@ -338,13 +359,16 @@ export default function LegendConverter() {
 
         if (anyOwned) {
           const inSet = item.owned ?? item.full; // fallback if nothing owned matched at all
-          drawBlock(leftBlockX, y, half, inSet, shaded);
-          drawBlock(rightBlockX, y, half, item.full, shaded);
+          drawBlock(leftBlockX, y, half, rowH, inSet, shaded);
+          // The GN alternative note is only relevant to the unrestricted
+          // "full" match column -- the owned/in-set column is already
+          // scoped to what the person told us they own.
+          drawBlock(rightBlockX, y, half, rowH, item.full, shaded, item.fullGNFallback);
         } else {
-          drawBlock(leftBlockX, y, usableW - idxW, item.full, shaded);
+          drawBlock(leftBlockX, y, usableW - idxW, rowH, item.full, shaded, item.fullGNFallback);
         }
 
-        y += ROW_H;
+        y += rowH;
       });
 
       drawLogo();
@@ -508,13 +532,20 @@ export default function LegendConverter() {
                   {results.map((item) => {
                     const primary = item.owned ?? item.full;
                     return (
-                      <div key={item.originalIndex} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
-                        <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 20 }}>{item.originalIndex + 1}</span>
-                        <ResultSwatch rgb={primary.rgb} />
-                        <div>
-                          <div style={{ fontWeight: 900, fontSize: 15 }}>{primary.code}</div>
-                          <div style={{ color: "#555", fontSize: 12 }}>{primary.name}</div>
+                      <div key={item.originalIndex} style={{ display: "flex", flexDirection: "column", gap: 8, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                          <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 20 }}>{item.originalIndex + 1}</span>
+                          <ResultSwatch rgb={primary.rgb} />
+                          <div>
+                            <div style={{ fontWeight: 900, fontSize: 15 }}>{primary.code}</div>
+                            <div style={{ color: "#555", fontSize: 12 }}>{primary.name}</div>
+                          </div>
                         </div>
+                        {item.fullGNFallback && (
+                          <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", margin: 0, paddingLeft: 32 }}>
+                            {t("results.gnFallbackNotice", { code: item.fullGNFallback.code, name: item.fullGNFallback.name })}
+                          </p>
+                        )}
                       </div>
                     );
                   })}

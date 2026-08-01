@@ -371,6 +371,7 @@
       "heading": "Résultats",
       "emptyPrompt": "Saisis une couleur et clique sur Rechercher",
       "bestMatch": "Meilleure correspondance",
+      "gnFallbackNotice": "Alternative Guangna feutre acrylique : {code} ({name})",
       "guangnaBadge": "Guangna",
       "screenDisclaimer": "⚠️ Les couleurs à l'écran peuvent différer du feutre réel. Teste toujours sur papier.",
       "bestMatchOwned": "Meilleure correspondance que tu possèdes",
@@ -431,6 +432,7 @@
     "results": {
       "heading": "🎨 Guide de palette Guangna",
       "downloadPdf": "Télécharger le PDF",
+      "gnFallbackNotice": "Alternative Guangna feutre acrylique : {code} ({name})",
       "screenDisclaimer": "⚠️ Pour préserver la fidélité de la palette Guangna, les couleurs à l'écran peuvent différer de la couleur réelle du marqueur.",
       "notInSetHeading": "💡 De meilleures correspondances hors de votre set",
       "notInSetSubheading": "Ces couleurs Guangna ne font pas partie de votre set sélectionné, mais sont la meilleure correspondance possible.",
@@ -443,6 +445,7 @@
     "pdf": {
       "titleText": "Colorie tes souvenirs",
       "subtitle": "Palette Guangna  ·  {count} couleurs",
+      "gnFallbackLabel": "Alt. GN :",
       "instructions": "Associez chaque pastille numérotée de votre légende au marqueur Guangna correspondant",
       "columnInSet": "Meilleure Correspondance dans Votre Set",
       "columnAvailable": "Meilleure Correspondance Guangna Disponible"
@@ -492,6 +495,7 @@
   "results": {
     "languoCodeLabel": "Code Languo",
     "heading": "Correspondances Guangna les plus proches",
+    "gnFallbackNotice": "Alternative Guangna feutre acrylique : {code} ({name})",
     "ownedHeading": "Correspondances les plus proches de votre set",
     "noOwnedMatch": "Aucun marqueur possédé ne correspond — essayez d'ajouter d'autres sets ou codes supplémentaires.",
     "notInSetNotice": "De meilleures correspondances sont disponibles.",

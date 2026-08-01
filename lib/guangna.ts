@@ -300,6 +300,14 @@ export const GN_COLORS: Record<string,[number,number,number,string]> = {
 
 export const GN_366_IDS: string[] = Object.keys(GN_COLORS);
 
+// GN-only subset (excludes High Gloss/HG- codes). Used when the overall
+// best match (across GN_366_IDS, which includes HG) turns out to be an
+// HG code: HG markers are newer and less commonly owned than the
+// classic GN line, so in that case we also compute and show the best
+// *regular* GN match as a more-likely-to-be-owned fallback suggestion.
+// When the best match is already a GN code, nothing uses this list.
+export const GN_ONLY_IDS: string[] = GN_366_IDS.filter(id => !id.startsWith("HG-"));
+
 export const GUANGNA_SETS: Record<string,string[]> = {
   "GN.8101-12 (12 colors)":["GN-600","GN-601","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-611","GN-614","GN-620"],
   "GN.8101-24 (24 colors)":["GN-600","GN-601","GN-602","GN-603","GN-604","GN-605","GN-606","GN-607","GN-608","GN-609","GN-611","GN-612","GN-613","GN-614","GN-615","GN-616","GN-617","GN-618","GN-619","GN-620","GN-622","GN-623","GN-634","GN-655"],
