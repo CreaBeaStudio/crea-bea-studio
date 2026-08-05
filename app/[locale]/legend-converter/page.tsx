@@ -2,30 +2,99 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useRef, useEffect, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, rgbToHex, normalizeExtraCode,
+  rgbToLab, deltaE,
   type MatchResult,
-} from "../../../lib/guangna";
+} from "@/lib/guangna";
+import {
+  LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
+} from "@/lib/languo";
+import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
 // This file must be saved as app/[locale]/legend-converter/page.tsx —
 // Next.js only turns it into a route at that exact path/filename.
 // lib/ lives at the project root, so that's 3 levels up from here.
 //
-// NEW translation key needed under the "LegendConverter" namespace (add
-// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
-// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
-// when a swatch's overall best match (full) is a High Gloss (HG-) code,
-// since those are newer/less commonly owned than the classic GN line.
-// Same note also appears in the downloadable PDF (pdf.gnFallbackLabel,
-// e.g. "GN alt.:") for whichever rows it applies to.
+// 2026-08-04 (part 6): brings LegendConverter in line with
+// ColorConverter's combined, tie-aware matching (same rule agreed
+// there), AND extends the PDF to include Languo -- previously the PDF
+// was Guangna-only.
+//
+//  - Per swatch, ONE combined match is computed instead of a separate
+//    Guangna match and Languo match: if My Markers has ANY selections
+//    (either brand), the search pool is your owned codes only, per
+//    brand; if nothing is selected, the pool is the full Guangna 366 +
+//    full Languo PAINT line (LANGUO_SETS["Brush 288 Set"] -- see the
+//    key-mismatch note below). This is a single hasOwnedResult flag for
+//    the whole match run (not per swatch), since My Markers doesn't
+//    change per swatch.
+//  - TIE RULE (same as ColorConverter): best Guangna candidate vs best
+//    Languo candidate compared by actual Delta E to the swatch color.
+//    If they differ by less than TIE_THRESHOLD (2.0), BOTH show for
+//    that swatch, brand-tagged. Otherwise only the closer one shows.
+//  - Results render as ONE grid (not two brand blocks) -- each card
+//    shows 1 or 2 tagged matches per swatch. When nothing is owned, one
+//    order banner appears above the grid (not per-card) linking to
+//    whichever store(s) are actually relevant, since repeating the same
+//    two links on every one of up to 72 cards would be noisy.
+//  - PDF now includes Languo: each row draws 1 or 2 blocks (same
+//    tie logic as on-page), brand-labeled inline next to the code.
+//    Column headers become "Guangna"/"Languo" (only shown when at
+//    least one row actually has a tie -- most rows will just be a
+//    single full-width block otherwise). Filename changed to the
+//    brand-neutral "marker-palette-guide.pdf".
+//  - The Guangna HG -> Classic-GN fallback note is unchanged: applies
+//    whenever a SHOWN match (on page or in the PDF) is a Guangna High
+//    Gloss code, tie or not.
+//
+// PRE-EXISTING BUG (not introduced here, same note as ColorConverter):
+// LANGUO_SET_OPTIONS advertises the full Paint set under key "288 Set",
+// but LANGUO_SETS actually stores it as "Brush 288 Set". Using the real
+// key directly here for the no-selection fallback pool.
+//
+// Removed: the old flat SwatchResult shape (full/fullGNFallback/owned),
+// the two separate "Guangna block"/"Languo block" result sections, and
+// renderBrandBlock(). Replaced by SwatchResult { matches: TaggedMatch[],
+// fallback }, hasOwnedResult, and a single results grid + order banner.
+//
+// en.json changes needed (LegendConverter namespace unless noted):
+//   - results.tieNotice (NEW, same wording as ColorConverter's)
+//   - results.orderBannerText / .pdf.columnGuangna / .pdf.columnLanguo (NEW)
+//   - results.notInSetHeading/.notInSetHeadingLanguo/.notInSetSubheading/
+//     .notInSetSubheadingLanguo/.bestMatchOwned/.youHaveIt/.fromYourSet/
+//     .noOwnedMatch/.pdfGuangnaOnlyNote/.pdf.columnInSet/.pdf.columnAvailable:
+//     no longer used, safe to remove
+//   - "common" namespace (brands.guangna/.languo, setsSelected):
+//     unchanged, reused here
 
 type Swatch = { x: number; y: number; rgb: [number, number, number] } | null;
-type SwatchResult = { full: MatchResult; fullGNFallback: MatchResult | null; owned: MatchResult | null; originalIndex: number };
+type Brand = "guangna" | "languo";
+type BrandCode = { brand: Brand; code: string };
+type TaggedMatch = { brand: Brand; code: string; name?: string; rgb: [number, number, number] };
+type SwatchResult = { originalIndex: number; matches: TaggedMatch[]; fallback: MatchResult | null };
 
 const DISPLAY_MAX_W = 640;
+const TIE_THRESHOLD = 2.0;
+// The original Languo Acrylic 288 ("Paint") line only -- NOT the newer
+// Gel Pens / PLUS / LanguoxQimiart product lines. Real key is
+// "Brush 288 Set" (LANGUO_SET_OPTIONS advertises it as "288 Set", which
+// doesn't exist in LANGUO_SETS -- pre-existing mismatch, using the real
+// key directly).
+const LANGUO_PAINT_IDS: string[] = LANGUO_SETS["Brush 288 Set"] ?? LANGUO_NON_GLITTER_IDS;
+
+// Tries Guangna's code format first, then Languo's -- the two formats
+// don't overlap (Guangna: digits-only or "GN-"/"HG-" prefixed; Languo:
+// always a 2-letter prefix + hyphen + digits).
+function normalizeCombinedCode(token: string): BrandCode | null {
+  const g = normalizeExtraCode(token);
+  if (g) return { brand: "guangna", code: g };
+  const l = normalizeLanguoExtraCode(token);
+  if (l) return { brand: "languo", code: l };
+  return null;
+}
 
 function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number, number, number] {
   const half = 2; // sample a small 5x5 box to smooth out noise/anti-aliasing
@@ -43,14 +112,9 @@ function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number,
 }
 
 // Noise-overlay protection, same technique as ColorConverter's
-// ProtectedSwatch and LanguoConverter's Swatch, so a browser
-// eyedropper/color-picker samples noisy pixels instead of the exact
-// marker color. This page can render many result swatches at once (up
-// to `colorCount`, plus a second "not in set" grid, plus a small GN
-// fallback swatch on rows where it applies), so each instance gets its
+// ProtectedSwatch and LanguoConverter's Swatch. Each instance gets its
 // own filter id via useId() -- reusing a static id="noise" across
-// multiple <svg> elements on the same page is invalid HTML and risks
-// swatches referencing the wrong filter.
+// multiple <svg> elements on the same page is invalid HTML.
 function ResultSwatch({ rgb, size = 40 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -86,6 +150,7 @@ async function loadImageAsDataUrl(url: string): Promise<string | null> {
 
 export default function LegendConverter() {
   const t = useTranslations("LegendConverter");
+  const tc = useTranslations("common");
   const locale = useLocale();
 
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null);
@@ -98,14 +163,27 @@ export default function LegendConverter() {
   const [swatches, setSwatches] = useState<Swatch[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [mySet, setMySet] = useState("");
-  const [extraCodes, setExtraCodes] = useState("");
+  // "My Markers": multi-select set lists per brand + ONE combined
+  // extra-codes field. Optional -- matching works with none selected.
+  const [mySetsGuangna, setMySetsGuangna] = useState<string[]>([]);
+  const [mySetsLanguo, setMySetsLanguo] = useState<string[]>([]);
+  const [myExtraCodes, setMyExtraCodes] = useState("");
 
   const [results, setResults] = useState<SwatchResult[] | null>(null);
+  const [hasOwnedResult, setHasOwnedResult] = useState(false);
   const [matching, setMatching] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const toggleGuangnaSet = (value: string) => {
+    setMySetsGuangna(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
+    setResults(null);
+  };
+  const toggleLanguoSet = (value: string) => {
+    setMySetsLanguo(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
+    setResults(null);
+  };
 
   const handlePhotoFile = useCallback((file: File) => {
     const reader = new FileReader();
@@ -197,14 +275,27 @@ export default function LegendConverter() {
   const filledCount = swatches.filter(Boolean).length;
   const allFilled = swatches.length > 0 && filledCount === swatches.length;
 
-  const getOwnedIds = (): string[] => {
+  const getOwnedGuangnaIds = (): string[] => {
     const ids: string[] = [];
-    if (mySet && GUANGNA_SETS[mySet]) {
-      for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
+    for (const setKey of mySetsGuangna) {
+      const setIds = GUANGNA_SETS[setKey];
+      if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
     }
-    for (const tok of extraCodes.split(/[\s,;]+/)) {
-      const id = normalizeExtraCode(tok);
-      if (id && !ids.includes(id)) ids.push(id);
+    for (const tok of myExtraCodes.split(/[\s,;]+/)) {
+      const bc = normalizeCombinedCode(tok);
+      if (bc && bc.brand === "guangna" && !ids.includes(bc.code)) ids.push(bc.code);
+    }
+    return ids;
+  };
+  const getOwnedLanguoIds = (): string[] => {
+    const ids: string[] = [];
+    for (const setKey of mySetsLanguo) {
+      const setIds = LANGUO_SETS[setKey];
+      if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
+    }
+    for (const tok of myExtraCodes.split(/[\s,;]+/)) {
+      const bc = normalizeCombinedCode(tok);
+      if (bc && bc.brand === "languo" && !ids.includes(bc.code)) ids.push(bc.code);
     }
     return ids;
   };
@@ -212,19 +303,52 @@ export default function LegendConverter() {
   const handleMatch = () => {
     setMatching(true);
     try {
-      const ownedIds = getOwnedIds();
-      const matched: SwatchResult[] = swatches
+      const ownedGIds = getOwnedGuangnaIds();
+      const ownedLIds = getOwnedLanguoIds();
+      const hasAnyOwned = ownedGIds.length > 0 || ownedLIds.length > 0;
+      setHasOwnedResult(hasAnyOwned);
+
+      const guangnaPoolIds = hasAnyOwned ? ownedGIds : GN_366_IDS;
+      const languoPoolIds  = hasAnyOwned ? ownedLIds : LANGUO_PAINT_IDS;
+
+      const filled = swatches
         .map((s, idx) => (s ? { s, idx } : null))
-        .filter((x): x is { s: NonNullable<Swatch>; idx: number } => x !== null)
-        .map(({ s, idx }) => {
-          const full = findClosest(s.rgb, GN_366_IDS);
-          // Overall best match is a High Gloss code -- also surface the
-          // best *regular* GN match, since HG markers are newer and
-          // less commonly owned than the classic GN line.
-          const fullGNFallback = full.code.startsWith("HG-") ? findClosest(s.rgb, GN_ONLY_IDS) : null;
-          const owned = ownedIds.length > 0 ? findClosest(s.rgb, ownedIds) : null;
-          return { full, fullGNFallback, owned, originalIndex: idx };
-        });
+        .filter((x): x is { s: NonNullable<Swatch>; idx: number } => x !== null);
+
+      const matched: SwatchResult[] = filled.map(({ s, idx }) => {
+        const candG: MatchResult | null = guangnaPoolIds.length > 0 ? findClosest(s.rgb, guangnaPoolIds) : null;
+        const candL = languoPoolIds.length > 0 ? (findClosestLanguoN(s.rgb, languoPoolIds, 1)[0] ?? null) : null;
+
+        const labT = rgbToLab(s.rgb);
+        const dG = candG ? deltaE(labT, rgbToLab(candG.rgb)) : Infinity;
+        const dL = candL ? deltaE(labT, rgbToLab(candL.rgb)) : Infinity;
+
+        let matches: TaggedMatch[] = [];
+        if (candG && candL) {
+          if (Math.abs(dG - dL) < TIE_THRESHOLD) {
+            matches = [
+              { brand: "guangna", code: candG.code, name: candG.name, rgb: candG.rgb },
+              { brand: "languo", code: candL.code, rgb: candL.rgb },
+            ];
+          } else if (dG < dL) {
+            matches = [{ brand: "guangna", code: candG.code, name: candG.name, rgb: candG.rgb }];
+          } else {
+            matches = [{ brand: "languo", code: candL.code, rgb: candL.rgb }];
+          }
+        } else if (candG) {
+          matches = [{ brand: "guangna", code: candG.code, name: candG.name, rgb: candG.rgb }];
+        } else if (candL) {
+          matches = [{ brand: "languo", code: candL.code, rgb: candL.rgb }];
+        }
+
+        // Overall best Guangna match (whichever slot it landed in) is a
+        // High Gloss code -- also surface the best regular GN match,
+        // since HG markers are newer and less commonly owned.
+        const hgResult = matches.find(m => m.brand === "guangna" && m.code.startsWith("HG-"));
+        const fallback = hgResult ? findClosest(s.rgb, GN_ONLY_IDS) : null;
+
+        return { originalIndex: idx, matches, fallback };
+      });
       setResults(matched);
     } finally {
       setMatching(false);
@@ -252,8 +376,6 @@ export default function LegendConverter() {
       const TABLE_TOP = 50;
       const PAGE_BOTTOM = pageH - LOGO_RESERVED_H;
 
-      const anyOwned = results.some(r => r.owned !== null);
-
       const logoDataUrl = await loadImageAsDataUrl("/marketing/logo-full.png");
       let logoW = 0, logoH = 0;
       if (logoDataUrl) {
@@ -277,7 +399,7 @@ export default function LegendConverter() {
         try { doc.addImage(logoDataUrl, "PNG", pageW - MR - logoW, pageH - LOGO_RESERVED_H + 6, logoW, logoH); } catch {}
       };
 
-      const drawPageHeader = (showColumnLabels: boolean) => {
+      const drawPageHeader = () => {
         doc.setFont("helvetica", "bold");
         doc.setFontSize(16);
         doc.setTextColor(...DARK);
@@ -292,24 +414,10 @@ export default function LegendConverter() {
         doc.text(t("pdf.subtitle", { count: results.length }), pageW / 2, HEADER_TOP + 8, { align: "center" });
         doc.setFontSize(7);
         doc.setTextColor(...MID);
-        doc.text(t("pdf.instructions"), pageW / 2, HEADER_TOP + 13, { align: "center" });
-
-        if (showColumnLabels && anyOwned) {
-          const usableW = pageW - ML - MR;
-          const half = (usableW - 8) / 2;
-          const leftCenter = ML + 8 + half / 2;
-          const rightCenter = ML + 8 + half + 8 + half / 2;
-          doc.setFont("helvetica", "bold");
-          doc.setFontSize(9);
-          doc.setTextColor(...PINK);
-          doc.text(t("pdf.columnInSet"), leftCenter, TABLE_TOP - 5, { align: "center" });
-          doc.text(t("pdf.columnAvailable"), rightCenter, TABLE_TOP - 5, { align: "center" });
-          doc.setDrawColor(230, 230, 230);
-          doc.line(pageW / 2, TABLE_TOP - 3, pageW / 2, PAGE_BOTTOM);
-        }
+        doc.text(hasOwnedResult ? t("pdf.scopeOwned") : t("pdf.scopeFull"), pageW / 2, HEADER_TOP + 13, { align: "center" });
       };
 
-      drawPageHeader(true);
+      drawPageHeader();
 
       const usableW = pageW - ML - MR;
       const half = (usableW - 8) / 2;
@@ -318,7 +426,7 @@ export default function LegendConverter() {
       const leftBlockX = ML + idxW;
       const rightBlockX = ML + idxW + half + 8;
 
-      const drawBlock = (x: number, y: number, w: number, rowH: number, m: MatchResult, shaded: boolean, fallback?: MatchResult | null) => {
+      const drawBlock = (x: number, y: number, w: number, rowH: number, m: TaggedMatch, shaded: boolean, fallback?: MatchResult | null) => {
         if (shaded) {
           doc.setFillColor(245, 245, 245);
           doc.rect(x, y, w, rowH, "F");
@@ -328,11 +436,12 @@ export default function LegendConverter() {
         doc.setFont("helvetica", "bold");
         doc.setFontSize(8.5);
         doc.setTextColor(...DARK);
-        doc.text(m.code.replace("GN-", ""), x + 13, y + 4.2);
+        const brandLabel = m.brand === "guangna" ? tc("brands.guangna") : tc("brands.languo");
+        doc.text(`${m.code.replace("GN-", "")} (${brandLabel})`, x + 13, y + 4.2);
         doc.setFont("helvetica", "normal");
         doc.setFontSize(6.5);
         doc.setTextColor(...MID);
-        doc.text(m.name, x + 13, y + 7.5);
+        doc.text(m.name ?? "", x + 13, y + 7.5);
         if (fallback) {
           doc.setFont("helvetica", "italic");
           doc.setFontSize(6);
@@ -343,11 +452,11 @@ export default function LegendConverter() {
 
       let y = TABLE_TOP;
       results.forEach((item) => {
-        const rowH = item.fullGNFallback ? ROW_H_TALL : ROW_H;
+        const rowH = item.fallback ? ROW_H_TALL : ROW_H;
         if (y + rowH > PAGE_BOTTOM) {
           drawLogo();
           doc.addPage();
-          drawPageHeader(true);
+          drawPageHeader();
           y = TABLE_TOP;
         }
         const shaded = item.originalIndex % 2 === 1;
@@ -357,29 +466,52 @@ export default function LegendConverter() {
         doc.setTextColor(...DARK);
         doc.text(String(item.originalIndex + 1), leftX, y + ROW_H / 2 + 1, { baseline: "middle" });
 
-        if (anyOwned) {
-          const inSet = item.owned ?? item.full; // fallback if nothing owned matched at all
-          drawBlock(leftBlockX, y, half, rowH, inSet, shaded);
-          // The GN alternative note is only relevant to the unrestricted
-          // "full" match column -- the owned/in-set column is already
-          // scoped to what the person told us they own.
-          drawBlock(rightBlockX, y, half, rowH, item.full, shaded, item.fullGNFallback);
-        } else {
-          drawBlock(leftBlockX, y, usableW - idxW, rowH, item.full, shaded, item.fullGNFallback);
+        if (item.matches.length === 2) {
+          // matches[0] is always Guangna, matches[1] always Languo (see
+          // handleMatch's tie construction) -- fallback (HG-only) pairs
+          // with the Guangna slot.
+          drawBlock(leftBlockX, y, half, rowH, item.matches[0], shaded, item.fallback);
+          drawBlock(rightBlockX, y, half, rowH, item.matches[1], shaded);
+        } else if (item.matches.length === 1) {
+          drawBlock(leftBlockX, y, usableW - idxW, rowH, item.matches[0], shaded, item.fallback);
         }
 
         y += rowH;
       });
 
       drawLogo();
-      doc.save("guangna-palette-guide.pdf");
+      doc.save("marker-palette-guide.pdf");
     } finally {
       setPdfLoading(false);
     }
   };
 
+  const anyGuangnaShown = results?.some(r => r.matches.some(m => m.brand === "guangna")) ?? false;
+  const anyLanguoShown = results?.some(r => r.matches.some(m => m.brand === "languo")) ?? false;
+
   return (
     <>
+      <style>{`
+        .marker-set-list {
+          max-height: 180px;
+          overflow-y: auto;
+          border: 2px solid var(--border);
+          border-radius: 12px;
+          padding: 6px;
+        }
+        .marker-set-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 13px;
+        }
+        .marker-set-row:hover {
+          background: #FFF0F3;
+        }
+      `}</style>
       <Navbar />
       <main style={{ padding: "40px 24px", maxWidth: 960, margin: "0 auto" }}>
         <div style={{ marginBottom: 12 }}>
@@ -391,6 +523,7 @@ export default function LegendConverter() {
         <p style={{ color: "#666", marginBottom: 12 }}>
           {t("subtitle")}
         </p>
+
         <p style={{ fontSize: 13, marginBottom: 16 }}>
           {t("crossLink.text")}{" "}
           <a href={`/${locale}/color-converter`} style={{ color: "var(--pink)", fontWeight: 700 }}>
@@ -398,8 +531,6 @@ export default function LegendConverter() {
           </a>
         </p>
 
-        {/* How-it-works / accuracy disclaimer, shown up front rather than
-            only after results — same pattern as LanguoConverter. */}
         <div style={{
           background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
           fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
@@ -486,23 +617,56 @@ export default function LegendConverter() {
               </div>
             </div>
 
-            {/* My Markers (optional) */}
+            {/* My Markers -- both brands shown together, true multi-select
+                per brand + ONE combined extra-codes field. Optional. */}
             <div className="card" style={{ marginBottom: 20 }}>
               <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
                 {t("myMarkers.heading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
               </h3>
               <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("myMarkers.description")}</p>
-              <SetAutocomplete
-                value={mySet}
-                onChange={key => { setMySet(key); setResults(null); }}
-                options={SET_OPTIONS}
-                noneLabel={t("myMarkers.noneSelected")}
-                style={{ marginBottom: 4 }}
-              />
-          <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
-  {t("myMarkers.metallicNote")}
-</p>
-              <input type="text" value={extraCodes} onChange={e => { setExtraCodes(e.target.value); setResults(null); }}
+
+              <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6 }}>{tc("brands.guangna")}</div>
+              <div className="marker-set-list">
+                {SET_OPTIONS.map(s => (
+                  <label key={s.key} className="marker-set-row">
+                    <input
+                      type="checkbox"
+                      checked={mySetsGuangna.includes(s.key)}
+                      onChange={() => toggleGuangnaSet(s.key)}
+                      style={{ accentColor: "var(--pink)" }}
+                    />
+                    <span>{s.label}</span>
+                  </label>
+                ))}
+              </div>
+              {mySetsGuangna.length > 0 && (
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 6 }}>{tc("setsSelected", { count: mySetsGuangna.length })}</p>
+              )}
+              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}>{t("myMarkers.metallicNote")}</p>
+
+              <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6, paddingTop: 8, borderTop: "1px solid var(--border)" }}>{tc("brands.languo")}</div>
+              <div className="marker-set-list">
+                {LANGUO_SET_OPTIONS.map(s => (
+                  <label key={s.key} className="marker-set-row">
+                    <input
+                      type="checkbox"
+                      checked={mySetsLanguo.includes(s.key)}
+                      onChange={() => toggleLanguoSet(s.key)}
+                      style={{ accentColor: "var(--pink)" }}
+                    />
+                    <span>{s.label}</span>
+                  </label>
+                ))}
+              </div>
+              {mySetsLanguo.length > 0 && (
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 6 }}>{tc("setsSelected", { count: mySetsLanguo.length })}</p>
+              )}
+              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}>{t("myMarkers.glitterNote")}</p>
+
+              <label style={{ fontSize: 13, fontWeight: 600, display: "block", marginBottom: 4 }}>
+                {t("myMarkers.extraCodesLabel")} <span style={{ fontWeight: 400, color: "var(--muted)" }}>{t("myMarkers.extraCodesHint")}</span>
+              </label>
+              <input type="text" value={myExtraCodes} onChange={e => { setMyExtraCodes(e.target.value); setResults(null); }}
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{ width: "100%" }} />
             </div>
 
@@ -519,7 +683,7 @@ export default function LegendConverter() {
               )}
             </div>
 
-            {/* Step 5 — palette guide results */}
+            {/* Step 5 — palette guide results, ONE combined grid */}
             {results && (
               <div className="card" style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
@@ -528,60 +692,61 @@ export default function LegendConverter() {
                     {pdfLoading ? t("matching") : t("results.downloadPdf")}
                   </button>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
-                  {results.map((item) => {
-                    const primary = item.owned ?? item.full;
-                    return (
-                      <div key={item.originalIndex} style={{ display: "flex", flexDirection: "column", gap: 8, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                          <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 20 }}>{item.originalIndex + 1}</span>
-                          <ResultSwatch rgb={primary.rgb} />
-                          <div>
-                            <div style={{ fontWeight: 900, fontSize: 15 }}>{primary.code}</div>
-                            <div style={{ color: "#555", fontSize: 12 }}>{primary.name}</div>
-                          </div>
-                        </div>
-                        {item.fullGNFallback && (
-                          <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", margin: 0, paddingLeft: 32 }}>
-                            {t("results.gnFallbackNotice", { code: item.fullGNFallback.code, name: item.fullGNFallback.name })}
-                          </p>
+
+                {!hasOwnedResult && (anyGuangnaShown || anyLanguoShown) && (
+                  <div style={{ marginBottom: 20, padding: "12px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)" }}>
+                    <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 8 }}>{t("results.orderBannerText")}</p>
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                      {anyGuangnaShown && (
+                        <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
+                          style={{ padding: "6px 14px", borderRadius: 16, background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 12, textDecoration: "none" }}>
+                          {tc("brands.guangna")} →
+                        </a>
+                      )}
+                      {anyLanguoShown && (
+                        <a href="https://languoart.com/?ref=creabeastudio" target="_blank" rel="noopener noreferrer sponsored"
+                          style={{ padding: "6px 14px", borderRadius: 16, background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 12, textDecoration: "none" }}>
+                          {tc("brands.languo")} →
+                        </a>
+                      )}
+                    </div>
+                    {anyLanguoShown && (
+                      <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", marginTop: 8, marginBottom: 0 }}>
+                        {t("results.languoAffiliateDisclosure")}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 12 }}>
+                  {results.map((item) => (
+                    <div key={item.originalIndex} style={{ display: "flex", flexDirection: "column", gap: 8, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+                        <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 20 }}>{item.originalIndex + 1}</span>
+                        {item.matches.length > 1 && (
+                          <span style={{ fontSize: 10, color: "var(--muted)", fontStyle: "italic" }}>{t("results.tieNotice")}</span>
                         )}
                       </div>
-                    );
-                  })}
+                      {item.matches.map((m) => (
+                        <div key={m.brand} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <ResultSwatch rgb={m.rgb} size={32} />
+                          <div>
+                            <div style={{ fontWeight: 900, fontSize: 14 }}>
+                              {m.code} <span style={{ fontWeight: 600, fontSize: 10, color: "var(--muted)" }}>({m.brand === "guangna" ? tc("brands.guangna") : tc("brands.languo")})</span>
+                            </div>
+                            {m.name && <div style={{ color: "#555", fontSize: 11 }}>{m.name}</div>}
+                          </div>
+                        </div>
+                      ))}
+                      {item.fallback && (
+                        <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", margin: 0, paddingLeft: 42 }}>
+                          {t("results.gnFallbackNotice", { code: item.fallback.code, name: item.fallback.name })}
+                        </p>
+                      )}
+                    </div>
+                  ))}
                 </div>
 
-                {(() => {
-                  const notInSet = results.filter(item => item.owned && item.owned.code !== item.full.code);
-                  if (notInSet.length === 0) return null;
-                  return (
-                    <div style={{ marginTop: 24 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4, flexWrap: "wrap" }}>
-                        <h3 style={{ fontWeight: 800, fontSize: 15 }}>{t("results.notInSetHeading")}</h3>
-                        <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
-                          style={{
-                            padding: "6px 14px", borderRadius: 16, background: "var(--pink)",
-                            color: "white", fontWeight: 700, fontSize: 12, textDecoration: "none", whiteSpace: "nowrap",
-                          }}>
-                          {t("results.orderPrompt")}
-                        </a>
-                      </div>
-                      <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 14 }}>{t("results.notInSetSubheading")}</p>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
-                        {notInSet.map(item => (
-                          <div key={item.originalIndex} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)" }}>
-                            <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 20 }}>{item.originalIndex + 1}</span>
-                            <ResultSwatch rgb={item.full.rgb} />
-                            <div>
-                              <div style={{ fontWeight: 900, fontSize: 15 }}>{item.full.code}</div>
-                              <div style={{ color: "#555", fontSize: 12 }}>{item.full.name}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })()}
                 <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 14, lineHeight: 1.5 }}>
                   {t("results.screenDisclaimer")}
                 </p>

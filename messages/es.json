@@ -62,8 +62,9 @@
     "footerCreate": "Crear",
     "footerConverter": "Convertidor de colores",
     "footerExamples": "Ejemplos",
+    "footerMysteryDecoder": "Decodificador Mystery",
     "footerLegendConverter": "Conversor de leyenda",
-    "footerLanguoConverter": "Conversor Languo",
+    "footerLanguoConverter": "Conversor de Marcas",
     "footerGuangnaReference": "Guía Guangna",
     "footerSwatchCreator": "Generador de cartas de colores",
     "footerTips": "Consejos y trucos",
@@ -79,7 +80,8 @@
     "home": "Inicio",
     "create": "Crear",
     "tools": "Herramientas",
-    "languoConverter": "Conversor Languo",
+    "languoConverter": "Conversor de Marcas",
+    "mysteryDecoder": "Decodificador Mystery",
     "createGuangna": "Crear Guangna by Number",
     "colorConverter": "Convertidor de colores",
     "legendConverter": "Conversor de leyenda",
@@ -95,7 +97,6 @@
   },
   "faq": {
     "title": "Preguntas frecuentes",
-    "subtitle": "Colorea tus recuerdos",
     "q1": "¿Qué recibo después de hacer un pedido?",
     "a1": "Recibirás un paquete digital completo: un dibujo Guangna by Number (PDF), una Guía de paleta de colores Guangna personalizada y una vista previa de la obra terminada (PDF). Ten en cuenta: se trata de una obra digital personalizada — no se enviará ningún artículo físico.",
     "q2": "¿Cuánto tiempo se tarda en recibir mi diseño?",
@@ -272,7 +273,6 @@
   },
   "tips": {
     "title": "Consejos y trucos",
-    "subtitle": "Colorea tus recuerdos",
     "s1Title": "🐾 Antes de empezar",
     "s1q1": "Agita antes de usar",
     "s1a1": "Agita bien el rotulador y pruébalo hasta que la tinta fluya de manera uniforme para evitar rayas. Presiona suavemente la punta sobre papel de prueba hasta que esté completamente saturada. Nunca bombees la punta de los rotuladores directamente sobre tu página para colorear, ya que podría causar manchas grandes y estropear una zona.",
@@ -328,121 +328,126 @@
     "nextExample": "Siguiente ejemplo",
     "createCta": "Crea tu Guangna by Number ahora →"
   },
-  "ColorConverter": {
-    "title": "Convertidor de colores Guangna",
-    "subtitle": "Introduce cualquier color y encuentra el marcador Guangna más cercano disponible, y, opcionalmente, de tu propia colección.",
-    "disclaimer": "Las coincidencias se calculan buscando el marcador Guangna más cercano a tu color introducido, usando la distancia de color Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
+  "common": {
+    "brands": {
+      "guangna": "Guangna",
+      "languo": "Languo",
+      "both": "your markers"
+    },
+    "setsSelected": "{count} set(s) selected"
+  },
+"ColorConverter": {
+    "title": "Guangna Kleurconverter",
+    "subtitle": "Voer een kleur in en vind de bijbehorende Guangna-marker, en optioneel ook de beste match uit je eigen collectie.",
+    "disclaimer": "Matches worden berekend door de dichtstbijzijnde Guangna-marker bij jouw ingevoerde kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "myMarkers": {
-      "heading": "🗂️ Mis marcadores",
-      "optional": "opcional",
-      "description": "Selecciona tu set para ver también la mejor coincidencia entre los marcadores que ya tienes.",
-      "setLabel": "Set de marcadores",
-      "noneSelected": "— Ninguno seleccionado —",
-      "extraCodesLabel": "Códigos adicionales",
-      "extraCodesHint": "(3 dígitos, separados por comas o espacios)",
-      "extraCodesPlaceholder": "p. ej. 603, 648, 820"
+      "heading": "🗂️ Mijn markers",
+      "optional": "optioneel",
+      "description": "Selecteer je set om de beste match te krijgen uit de markers die je al hebt.",
+      "metallicNote": "Note: Metallic markers zijn niet meegenomen",
+      "glitterNote": "Note: Glitter pennen zijn niet meegenomen.",
+      "extraCodesLabel": "Extra codes",
+      "extraCodesHint": "(3-cijferig, gescheiden door komma's of spaties)",
+      "extraCodesPlaceholder": "bijv. 603, 648, 820"
     },
     "modes": {
       "hex": "HEX",
       "rgb": "RGB",
-      "photo": "📸 Muestra de color de foto"
+      "photo": "📸 Foto van Kleur"
     },
     "hex": {
-      "label": "Color Hex"
+      "label": "Hex waarden"
     },
     "rgb": {
       "rLabel": "R (0–255)",
-      "gLabel": "V (0–255)",
+      "gLabel": "G (0–255)",
       "bLabel": "B (0–255)"
     },
     "photo": {
-      "dropHint": "Suelta una foto o haz clic para explorar",
-      "lightingTip": "Para una coincidencia más precisa, fotografía con luz natural y uniforme — las sombras o la luz interior amarillenta pueden distorsionar los colores y reducir la precisión.",
+      "lightingTip": "Voor het beste resultaat, neem de foto met natuurlijk, gelijkmatig daglicht — vermijd schaduw of gekleurd binnenlicht, dit kan de kleur beinvloeden en in een onjuiste match resulteren.",
+      "dropHint": "Sleep een foto hierheen of klik om te zoeken",
       "fileTypes": "JPG, PNG",
       "fileSelected": "✓ {fileName}",
-      "dominantColorExtracted": "Color dominante extraído"
+      "dominantColorExtracted": "Dominante kleur gevonden"
     },
-    "yourColour": "Tu color",
-    "searchButton": "Convertir a código Guangna →",
-    "searching": "🔍 Buscando…",
+    "yourColour": "Jouw kleur",
+    "searchButton": "Omzetten naar Guangna-code →",
+    "searching": "🔍 Zoeken…",
     "results": {
-      "heading": "Resultados",
-      "emptyPrompt": "Introduce un color y haz clic en Buscar",
-      "bestMatch": "Mejor coincidencia",
-      "guangnaBadge": "Guangna",
-      "screenDisclaimer": "⚠️ Los colores en pantalla pueden diferir del marcador real. Prueba siempre sobre papel.",
-      "bestMatchOwned": "Mejor coincidencia que tienes",
-      "youHaveIt": "✓ ¡Ya lo tienes!",
-      "fromYourSet": "De tu set",
-      "notInSetNotice": "💡 La mejor coincidencia Guangna ({code}) no está en tu set.",
-      "orderPrompt": "¿Quieres pedirlo? →",
-      "noOwnedMatch": "Ninguno de tus marcadores coincide — prueba a añadir más sets o códigos adicionales."
+      "heading": "Resultaten",
+      "emptyPrompt": "Voer een kleur in en klik op Zoeken",
+      "bestMatch": "Beste match",
+      "screenDisclaimer": "⚠️ Kleuren op je scherm kunnen afwijken van de echte stift. Test altijd op papier.",
+      "bestMatchOwned": "Beste match die je hebt",
+      "youHaveIt": "✓ Heb je al!",
+      "fromYourSet": "Uit jouw set",
+      "notInSetNotice": "💡 De beste Guangna-match ({code}) zit niet in jouw set.",
+      "notInSetNoticeLanguo": "💡 De beste Languo-match ({code}) zit niet in je set.",
+      "languoAffiliateDisclosure": "Dit is een affiliate link. Als je via deze link iets koopt, ontvang ik een kleine commissie, zonder extra kosten voor jou.",
+      "orderPrompt": "Wil je deze bestellen? →",
+      "noOwnedMatch": "Geen van je markers kwam overeen — voeg meer sets of extra codes toe."
     },
     "crossLink": {
-      "text": "¿Tienes toda una leyenda de colores en vez de un solo color?",
-      "linkText": "Prueba el conversor de leyenda →"
+      "text": "Heb je een hele kleurenlegenda in plaats van één kleur?",
+      "linkText": "Probeer dan de Legenda Converter →"
     },
     "donate": {
-      "text": "¿Esto te ahorró tiempo? Un café siempre se agradece ☕",
-      "button": "Invítame un café"
+      "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
+      "button": "Trakteer me op koffie"
     }
   },
   "LegendConverter": {
-    "title": "Leyenda a paleta Guangna",
-    "subtitle": "Sube la leyenda de colores de un dibujo para colorear, haz clic en cada muestra y obtén una guía de marcadores Guangna lista para usar.",
-    "disclaimer": "Las coincidencias se calculan muestreando los colores que haces clic en tu leyenda subida y buscando el marcador Guangna más cercano para cada uno, usando la distancia de color Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
+    "title": "Legenda naar Guangna palet",
+    "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare Guangna-stiftgids.",
+    "disclaimer": "Matches worden berekend door de kleuren die je aanklikt in je geüploade legenda en de dichtstbijzijnde Guangna-marker voor elke kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "crossLink": {
-      "text": "¿Solo necesitas comprobar un color?",
-      "linkText": "Prueba el conversor de colores →"
+      "text": "Wil je gewoon één kleur checken?",
+      "linkText": "Probeer de Kleurenconverter →"
     },
     "step1": {
-      "heading": "1 · Sube la leyenda de colores",
-      "dropHint": "Suelta una foto aquí o haz clic para subirla",
-      "fileTypes": "JPG o PNG",
-      "replacePhoto": "Usar otra foto",
-      "lightingTip": "Para los códigos Guangna más precisos: fotografía la leyenda con luz natural y uniforme — las sombras o la luz amarillenta pueden distorsionar los colores. Un escaneo funciona aún mejor que una foto, si tienes esa opción."
+      "heading": "1 · Upload de kleurenlegenda",
+      "dropHint": "Sleep hier een foto of klik om te uploaden",
+      "fileTypes": "JPG of PNG",
+      "replacePhoto": "Andere foto gebruiken",
+      "lightingTip": "Voor de meest nauwkeurige Guangna-codes: fotografeer de legenda in natuurlijk, gelijkmatig daglicht — schaduwen of geel binnenlicht kunnen de kleuren vervormen. Een scan werkt nog beter dan een foto, als je die mogelijkheid hebt."
     },
     "step2": {
-      "heading": "2 · ¿Cuántos colores de tu leyenda quieres convertir?",
-      "apply": "Aplicar"
+      "heading": "2 · Hoeveel kleuren uit je legenda wil je omzetten?",
+      "apply": "Instellen"
     },
     "step3": {
-      "heading": "3 · Haz clic en cada muestra",
-      "prompt": "Haz clic en la muestra {num} de {total} en la imagen",
-      "allDone": "Todas las muestras tomadas — haz clic en un número abajo para repetirla",
-      "editSwatch": "Haz clic para repetir la muestra {num}",
-      "remaining": "Quedan {count} muestra(s) sin hacer clic — se excluirán de tu guía a menos que también hagas clic en ellas.",
-      "howToTip": "Para asociar un color: haz clic en su número en la fila de cuadros numerados bajo la foto para seleccionarlo (ya está seleccionado la primera vez), y luego haz clic en ese color exacto en la foto de la leyenda de arriba. Repite para cada color — no es necesario seguir el orden, y puedes volver a hacer clic en un número en cualquier momento para repetirlo."
+      "heading": "3 · Klik elk vlakje aan",
+      "prompt": "Klik vlakje {num} van {total} aan op de afbeelding",
+      "allDone": "Alle vlakjes aangeklikt — klik op een nummer hieronder om opnieuw te doen",
+      "editSwatch": "Klik om vlakje {num} opnieuw te doen",
+      "remaining": "Nog {count} vlakje(s) niet ingesteld — deze worden weggelaten uit je gids, tenzij je ze ook aanklikt.",
+      "howToTip": "Om een kleur te matchen, klik je op nummer 1 direct onder je geüploade afbeelding. Klik vervolgens op de kleur in de afbeelding die je wilt omzetten in een Guangna-code. Herhaal dit voor elk volgende nummer. Als je een selectie wilt aanpassen, klik je gewoon opnieuw op dat nummer en kies je een nieuwe kleur uit de afbeelding."
     },
     "myMarkers": {
-      "heading": "🗂️ Mis marcadores",
-      "optional": "opcional",
-      "description": "Selecciona tu set para comparar solo con los marcadores que tienes.",
-      "noneSelected": "— Ninguno seleccionado —",
-      "extraCodesPlaceholder": "ej. 603, 648, 820"
+      "heading": "🗂️ Mijn markers",
+      "optional": "optioneel",
+      "description": "Selecteer je set om te matchen binnen de markers die je al hebt.",
+      "metallicNote": "Note: Metallic markers zijn niet meegenomen",
+      "glitterNote": "Note: Glitter pennen zijn niet meegenomen.",
+      "extraCodesPlaceholder": "bijv. 603, 648, 820"
     },
-    "matching": "Comparando…",
+    "matching": "Matchen…",
     "step4": {
-      "matchButton": "Comparar con códigos Guangna"
+      "matchButton": "Matchen met Guangna-codes"
     },
     "results": {
-      "heading": "🎨 Guía de paleta de colores Guangna",
-      "downloadPdf": "Descargar PDF",
-      "screenDisclaimer": "⚠️ Para preservar la fidelidad de la paleta Guangna, los colores en pantalla pueden diferir del color real del marcador.",
-      "notInSetHeading": "💡 Coincidencias aún mejores fuera de tu set",
-      "notInSetSubheading": "Estos colores Guangna no están en tu set seleccionado, pero son la mejor coincidencia posible.",
-      "orderPrompt": "¿Te gustaría pedirlo? →"
+      "heading": "🎨 Guangna kleurenpalet gids",
+      "downloadPdf": "PDF downloaden",
+      "screenDisclaimer": "⚠️ Om de juistheid van het Guangna-palet te waarborgen, kunnen de kleuren op het scherm afwijken van de werkelijke kleur van de marker.",
+      "languoAffiliateDisclosure": "Dit is een affiliate link. Als je via deze link iets koopt, ontvang ik een kleine commissie, zonder extra kosten voor jou."
     },
     "donate": {
-      "text": "¿Esto te ahorró tiempo? Un café siempre se agradece ☕",
-      "button": "Invítame un café"
+      "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
+      "button": "Trakteer me op koffie"
     },
     "pdf": {
-   "titleText": "Colorea tus recuerdos",
-      "subtitle": "Paleta Guangna  ·  {count} colores",
-      "instructions": "Asocia cada muestra numerada de tu leyenda con el marcador Guangna correspondiente",
-      "columnInSet": "Mejor Coincidencia en Tu Set",
-      "columnAvailable": "Mejor Coincidencia Guangna Disponible"
+      "titleText": "Kleur je herinneringen",
+      "subtitle": "Guangna kleurenpalet  ·  {count} kleuren"
     }
   },
   "coloringPages": {
@@ -465,52 +470,94 @@
       "linkText": "Prueba a Crear Guangna by Number →"
     }
   },
-  "LanguoConverter": {
-  "title": "Conversor de Languo a Guangna",
-  "subtitle": "Introduce un código Languo Art 288 Acrylic y encuentra las 3 coincidencias de marcador Guangna más cercanas, opcionalmente de tu propia colección.",
-  "disclaimer": "Las equivalencias se calculan matemáticamente buscando los rotuladores Guangna más cercanos a los colores de Languo mediante la distancia de color (Delta E CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según la pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, por lo que te recomendamos probar siempre los rotuladores en un trozo de papel usado. Considera estas equivalencias como un punto de partida útil y no como una garantía absoluta.",
-  "step1": {
-    "heading": "1 · Introduce tu código Languo",
-    "description": "Escribe un código, p. ej. RY-06.",
-    "placeholder": "p. ej. RY-06"
+  "BrandConverter": {
+    "title": "Conversor de Marcas",
+    "subtitle": "Convierte entre Languo y Guangna — un código a la vez, o compara un set completo de una vez.",
+    "disclaimer": "Las coincidencias se calculan convirtiendo los valores de color medidos y buscando los rotuladores más cercanos según la distancia de color, usando Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según tu pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, así que prueba siempre tus rotuladores en un papel de sobra. Considera estas coincidencias como un punto de partida útil, no como una garantía perfecta.",
+    "mode": {
+      "single": "Código individual",
+      "set": "Comparar set completo"
+    },
+    "direction": {
+      "toGuangna": "Languo → Guangna",
+      "toLanguo": "Guangna → Languo"
+    },
+    "step1": {
+      "headingToGuangna": "1 · Introduce tu código Languo",
+      "descriptionToGuangna": "Escribe un código, p. ej. RY-06.",
+      "placeholderToGuangna": "p. ej. RY-06",
+      "headingToLanguo": "1 · Introduce tu código Guangna",
+      "descriptionToLanguo": "Escribe un código, p. ej. GN-605 o F01.",
+      "placeholderToLanguo": "p. ej. GN-605"
+    },
+    "myMarkers": {
+      "heading": "🗂️ Mis rotuladores",
+      "optional": "opcional",
+      "description": "Selecciona tu set para ver también la mejor coincidencia entre los rotuladores que ya tienes.",
+      "setLabel": "Set de rotuladores",
+      "noneSelected": "— Ninguno seleccionado —",
+      "metallicNote": "Nota: los rotuladores metálicos no están incluidos.",
+      "glitterNote": "Nota: los rotuladores con purpurina no están incluidos.",
+      "extraCodesLabel": "Códigos adicionales",
+      "extraCodesPlaceholder": "p. ej. 603, 648, Y01"
+    },
+    "matching": "Buscando coincidencias…",
+    "step2": {
+      "matchButton": "Buscar coincidencias más cercanas"
+    },
+    "setMatch": {
+      "yourSetHeading": "1 · Selecciona el set que tienes",
+      "yourSetDescriptionToGuangna": "Elige el set de Languo que tienes — se comparará cada código que contiene.",
+      "yourSetDescriptionToLanguo": "Elige el set de Guangna que tienes — se comparará cada código que contiene.",
+      "matchToHeading": "2 · Comparar con",
+      "matchToDescription": "Déjalo vacío para comparar con el set completo Guangna 366 o Languo Brush 288.",
+      "matchButton": "Comparar mi set",
+      "matching": "Comparando tu set…",
+      "defaultGuangna": "Guangna 366 (set completo)",
+      "defaultLanguo": "Languo Brush 288 (set completo)",
+      "resultsHeading": "Tu set comparado",
+      "rowCount": "{count} códigos comparados",
+      "sourceCodeLabelToGuangna": "Código Languo",
+      "sourceCodeLabelToLanguo": "Código Guangna",
+      "matchedCodeLabel": "Coincidencia más cercana",
+      "downloadPdf": "Descargar PDF gratis",
+      "orderNoticeToGuangna": "¿Listo para conseguir estos rotuladores Guangna?",
+      "orderNoticeToLanguo": "¿Listo para conseguir estos rotuladores Languo?",
+      "paperSize": "Tamaño de papel",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
+    },
+    "results": {
+      "codeLabelToGuangna": "Código Languo",
+      "codeLabelToLanguo": "Código Guangna",
+      "heading": "Coincidencias más cercanas",
+      "ownedHeading": "Coincidencias más cercanas de tu set",
+      "gnFallbackNotice": "Alternativa Guangna Acrylic Brush: {code} ({name})",
+      "noOwnedMatch": "Ninguno de tus rotuladores coincidió — prueba a añadir más sets o códigos adicionales.",
+      "notInSetNotice": "Hay mejores coincidencias disponibles.",
+      "orderPrompt": "¿Quieres comprarlos? →",
+      "betterMatchNoticeToLanguo": "Hay mejores coincidencias disponibles fuera de tu set.",
+      "languoAffiliateDisclosure": "Este es un enlace de afiliado: si compras algo a través de él, recibo una pequeña comisión, sin coste adicional para ti.",
+      "screenDisclaimer": "⚠️ Los colores en pantalla pueden diferir del rotulador real. Prueba siempre sobre papel."
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" no es un código reconocido. Revisa la ortografía o elige uno de la lista.",
+      "noSetSelected": "Selecciona primero el set que tienes."
+    },
+    "crossLink": {
+      "text": "¿Necesitas comparar una foto o un solo color en su lugar?",
+      "linkText": "Prueba el Conversor de Color →"
+    },
+    "crossLinkLegend": {
+      "text": "¿Tienes una leyenda de colores completa para convertir?",
+      "linkText": "Prueba el Conversor de Leyendas →"
+    },
+    "donate": {
+      "text": "Si esto te ahorró tiempo, un café siempre se agradece ☕",
+      "button": "Invítame a un café"
+    }
   },
-  "myMarkers": {
-    "heading": "🗂️ Mis marcadores",
-    "optional": "opcional",
-    "description": "Selecciona tu set para ver también las mejores coincidencias entre los marcadores que ya tienes.",
-    "noneSelected": "— Ninguno seleccionado —",
-    "extraCodesPlaceholder": "p. ej. 603, 648, 820"
-  },
-  "matching": "Buscando coincidencias…",
-  "step2": {
-    "matchButton": "Buscar las coincidencias Guangna más cercanas"
-  },
-  "results": {
-    "languoCodeLabel": "Código Languo",
-    "heading": "Coincidencias Guangna más cercanas",
-    "ownedHeading": "Coincidencias más cercanas de tu set",
-    "noOwnedMatch": "Ningún marcador propio coincidió — prueba a añadir más sets o códigos extra.",
-    "notInSetNotice": "Hay mejores coincidencias disponibles.",
-    "orderPrompt": "¿Quieres pedirlos? →",
-    "screenDisclaimer": "⚠️ Los colores en pantalla pueden diferir del marcador real. Prueba siempre sobre papel."
-  },
-  "errors": {
-    "codeNotFound": "\"{code}\" no es un código Languo reconocido. Comprueba la ortografía o elige uno de la lista."
-  },
-  "crossLink": {
-    "text": "¿Necesitas emparejar una foto o un solo color en su lugar?",
-    "linkText": "Prueba el Conversor de colores →"
-  },
-  "crossLinkLegend": {
-    "text": "¿Tienes toda una leyenda de colores para convertir?",
-    "linkText": "Prueba el Conversor de leyenda →"
-  },
-  "donate": {
-    "text": "Si esto te ahorró tiempo, un café siempre se agradece ☕",
-    "button": "Invítame a un café"
-  }
-},
-"GuangnaReference": {
+  "GuangnaReference": {
     "title": "Guía Guangna",
     "subtitle": "Busca a qué sets pertenece un rotulador, o mira todos los rotuladores incluidos en un set determinado.",
     "byCode": {

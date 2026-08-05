@@ -51,7 +51,7 @@
     "everyOrderLabel": "Elke bestelling bevat",
     "wdygTitle": "Wat krijg je?",
     "wdygPaletteDesc": "Een complete Guangna-kleurengids met Guangna-codes en -namen, en een voorbeeld in kleur van het voltooide kunstwerk.",
-  "wdygOutlineDesc": "Een printbaar lijntekeningsjabloon in hoge resolutie, klaar om in te kleuren.",
+    "wdygOutlineDesc": "Een printbaar lijntekeningsjabloon in hoge resolutie, klaar om in te kleuren.",
     "wdygPalette": "Guangna Color Palette Guide en  Voorbeeld ingekleurde kleurplaat (PDF)",
     "wdygOutline": "Guangna by Number Kleurplaat (PDF)",
     "wdygColoredOutline": "Ingekleurde Guangna by Number kleurplaat (PDF)",
@@ -63,8 +63,9 @@
     "footerTagline": "Kleur je herinneringen, kleur voor kleur. 🐾",
     "footerConverter": "Kleurenconverter",
     "footerLegendConverter": "Legenda Converter",
-    "footerLanguoConverter": "Languo Converter",
+    "footerLanguoConverter": "Brand Converter",
     "footerGuangnaReference": "Guangna Referentie Guide",
+    "footerMysteryDecoder": "Mystery Decoder",
     "footerSwatchCreator": "Kleurkaart Maker",
     "footerExamples": "Voorbeelden",
     "footerTips": "Tips & Tricks",
@@ -80,10 +81,11 @@
     "home": "Home",
     "create": "Maken",
     "createGuangna": "Guangna by Number",
+    "mysteryDecoder": "Mystery Decoder",
     "tools": "Tools",
     "colorConverter": "Kleurenconverter",
     "legendConverter": "Legenda Converter",
-    "languoConverter": "Languo Converter",
+    "languoConverter": "Brand Converter",
     "swatchCreator": "Kleuren kaart",
     "examples": "Voorbeelden",
     "tips": "Tips & Tricks",
@@ -96,7 +98,6 @@
   },
   "faq": {
     "title": "Veelgestelde Vragen",
-    "subtitle": "Kleur je herinneringen",
     "q1": "Wat ontvang ik na het plaatsen van een bestelling?",
     "a1": "Je ontvangt een compleet digitaal pakket: een Guangna by Number kleurplaat (PDF), een Persoonlijke Guangna Kleurenpalet Gids en een Impressie van het eindresultaat (PDF). Let op: dit is een digitaal product — er worden geen fysieke producten verzonden.",
     "q2": "Hoe lang duurt het voordat ik mijn ontwerp ontvang?",
@@ -273,7 +274,6 @@
   },
   "tips": {
     "title": "Tips & Tricks",
-    "subtitle": "Kleur je herinneringen",
     "s1Title": "🐾 Voor Je Begint",
     "s1q1": "Schudden Voor Gebruik",
     "s1a1": "Schud de marker goed en test totdat de inkt gelijkmatig vloeit om strepen te voorkomen. Druk de punt zachtjes op kladpapier totdat deze volledig verzadigd is. Prime je markers nooit direct op je kleurplaat, dit kan grote vlekken veroorzaken en een vlak verpesten.",
@@ -329,16 +329,24 @@
     "nextExample": "Volgende voorbeeld",
     "createCta": "Maak nu jouw Guangna by Number →"
   },
+  "common": {
+    "brands": {
+      "guangna": "Guangna",
+      "languo": "Languo",
+      "both": "your markers"
+    },
+    "setsSelected": "{count} set(s) selected"
+  },
   "ColorConverter": {
-    "title": "Guangna Kleurconverter",
-    "subtitle": "Voer een kleur in en vind de bijbehorende Guangna-marker, en optioneel ook de beste match uit je eigen collectie.",
-    "disclaimer": "Matches worden berekend door de dichtstbijzijnde Guangna-marker bij jouw ingevoerde kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
+    "title": "Kleurconverter",
+    "subtitle": "Voer een kleur in en vind de dichtstbijzijnde marker, en optioneel ook de beste match uit je eigen collectie.",
+    "disclaimer": "Matches worden berekend door de dichtstbijzijnde marker bij jouw ingevoerde kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "myMarkers": {
       "heading": "🗂️ Mijn markers",
       "optional": "optioneel",
       "description": "Selecteer je set om de beste match te krijgen uit de markers die je al hebt.",
-      "setLabel": "Markerset",
-      "noneSelected": "— Geen selectie —",
+      "metallicNote": "Note: Metallic markers zijn niet meegenomen",
+      "glitterNote": "Note: Glitter pennen zijn niet meegenomen.",
       "extraCodesLabel": "Extra codes",
       "extraCodesHint": "(3-cijferig, gescheiden door komma's of spaties)",
       "extraCodesPlaceholder": "bijv. 603, 648, 820"
@@ -364,18 +372,19 @@
       "dominantColorExtracted": "Dominante kleur gevonden"
     },
     "yourColour": "Jouw kleur",
-    "searchButton": "Omzetten naar Guangna-code →",
+    "searchButton": "Vind mijn marker →",
     "searching": "🔍 Zoeken…",
     "results": {
       "heading": "Resultaten",
       "emptyPrompt": "Voer een kleur in en klik op Zoeken",
       "bestMatch": "Beste match",
-      "guangnaBadge": "Guangna",
       "screenDisclaimer": "⚠️ Kleuren op je scherm kunnen afwijken van de echte stift. Test altijd op papier.",
       "bestMatchOwned": "Beste match die je hebt",
       "youHaveIt": "✓ Heb je al!",
       "fromYourSet": "Uit jouw set",
       "notInSetNotice": "💡 De beste Guangna-match ({code}) zit niet in jouw set.",
+      "notInSetNoticeLanguo": "💡 De beste Languo-match ({code}) zit niet in je set.",
+      "languoAffiliateDisclosure": "Dit is een affiliate link. Als je via deze link iets koopt, ontvang ik een kleine commissie, zonder extra kosten voor jou.",
       "orderPrompt": "Wil je deze bestellen? →",
       "noOwnedMatch": "Geen van je markers kwam overeen — voeg meer sets of extra codes toe."
     },
@@ -389,9 +398,9 @@
     }
   },
   "LegendConverter": {
-    "title": "Legenda naar Guangna palet",
-    "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare Guangna-stiftgids.",
-    "disclaimer": "Matches worden berekend door de kleuren die je aanklikt in je geüploade legenda en de dichtstbijzijnde Guangna-marker voor elke kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
+    "title": "Legenda naar kleurenpalet",
+    "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare stiftgids.",
+    "disclaimer": "Matches worden berekend door de kleuren die je aanklikt in je geüploade legenda en de dichtstbijzijnde marker voor elke kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
     "crossLink": {
       "text": "Wil je gewoon één kleur checken?",
       "linkText": "Probeer de Kleurenconverter →"
@@ -401,7 +410,7 @@
       "dropHint": "Sleep hier een foto of klik om te uploaden",
       "fileTypes": "JPG of PNG",
       "replacePhoto": "Andere foto gebruiken",
-      "lightingTip": "Voor de meest nauwkeurige Guangna-codes: fotografeer de legenda in natuurlijk, gelijkmatig daglicht — schaduwen of geel binnenlicht kunnen de kleuren vervormen. Een scan werkt nog beter dan een foto, als je die mogelijkheid hebt."
+      "lightingTip": "Voor de meest nauwkeurige codes: fotografeer de legenda in natuurlijk, gelijkmatig daglicht — schaduwen of geel binnenlicht kunnen de kleuren vervormen. Een scan werkt nog beter dan een foto, als je die mogelijkheid hebt."
     },
     "step2": {
       "heading": "2 · Hoeveel kleuren uit je legenda wil je omzetten?",
@@ -413,26 +422,25 @@
       "allDone": "Alle vlakjes aangeklikt — klik op een nummer hieronder om opnieuw te doen",
       "editSwatch": "Klik om vlakje {num} opnieuw te doen",
       "remaining": "Nog {count} vlakje(s) niet ingesteld — deze worden weggelaten uit je gids, tenzij je ze ook aanklikt.",
-      "howToTip": "Om een kleur te matchen, klik je op nummer 1 direct onder je geüploade afbeelding. Klik vervolgens op de kleur in de afbeelding die je wilt omzetten in een Guangna-code. Herhaal dit voor elk volgende nummer. Als je een selectie wilt aanpassen, klik je gewoon opnieuw op dat nummer en kies je een nieuwe kleur uit de afbeelding."
+      "howToTip": "Om een kleur te matchen, klik je op nummer 1 direct onder je geüploade afbeelding. Klik vervolgens op de kleur in de afbeelding die je wilt omzetten in een markercode. Herhaal dit voor elk volgende nummer. Als je een selectie wilt aanpassen, klik je gewoon opnieuw op dat nummer en kies je een nieuwe kleur uit de afbeelding."
     },
     "myMarkers": {
       "heading": "🗂️ Mijn markers",
       "optional": "optioneel",
       "description": "Selecteer je set om te matchen binnen de markers die je al hebt.",
-      "noneSelected": "— Niets geselecteerd —",
+      "metallicNote": "Note: Metallic markers zijn niet meegenomen",
+      "glitterNote": "Note: Glitter pennen zijn niet meegenomen.",
       "extraCodesPlaceholder": "bijv. 603, 648, 820"
     },
     "matching": "Matchen…",
     "step4": {
-      "matchButton": "Matchen met Guangna-codes"
+      "matchButton": "Matchen met jouw markers"
     },
     "results": {
-      "heading": "🎨 Guangna kleurenpalet gids",
+      "heading": "🎨 Kleurenpalet gids",
       "downloadPdf": "PDF downloaden",
-      "screenDisclaimer": "⚠️ Om de juistheid van het Guangna-palet te waarborgen, kunnen de kleuren op het scherm afwijken van de werkelijke kleur van de marker.",
-      "notInSetHeading": "💡 Nog betere matches buiten jouw set",
-      "notInSetSubheading": "Deze Guangna-kleuren zitten niet in je geselecteerde set, maar zijn wel de best mogelijke match.",
-      "orderPrompt": "Bestel hem →"
+      "screenDisclaimer": "⚠️ Om de juistheid van het palet te waarborgen, kunnen de kleuren op het scherm afwijken van de werkelijke kleur van de marker.",
+      "languoAffiliateDisclosure": "Dit is een affiliate link. Als je via deze link iets koopt, ontvang ik een kleine commissie, zonder extra kosten voor jou."
     },
     "donate": {
       "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
@@ -440,10 +448,7 @@
     },
     "pdf": {
       "titleText": "Kleur je herinneringen",
-      "subtitle": "Guangna kleurenpalet  ·  {count} kleuren",
-      "instructions": "Match elk genummerd vlakje van je legenda met de bijbehorende Guangna-marker",
-      "columnInSet": "Beste Match in Jouw Set",
-      "columnAvailable": "Beste Beschikbare Guangna Match"
+      "subtitle": "Jouw markerpalet  ·  {count} kleuren"
     }
   },
   "coloringPages": {
@@ -466,51 +471,93 @@
       "linkText": "Probeer Guangna by Number →"
     }
   },
-    "LanguoConverter": {
-  "title": "Languo naar Guangna Converter",
-  "subtitle": "Voer een Languo Art 288 Acrylic-code in en vind de 3 dichtstbijzijnde Guangna-markeermatches, optioneel uit je eigen collectie.",
-  "disclaimer": "De matches worden berekend door de kleurwaarden van Languo om te zetten en de dichtstbijzijnde Guangna-markers te vinden op basis van kleurafstand, met Delta E (CIE 1976). Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
-  "step1": {
-    "heading": "1 · Voer je Languo-code in",
-    "description": "Typ een code, bijv. RY-06.",
-    "placeholder": "bijv. RY-06"
-  },
-  "myMarkers": {
-    "heading": "🗂️ Mijn markers",
-    "optional": "optioneel",
-    "description": "Selecteer je set om ook de beste matches te zien uit markers die je al hebt.",
-    "noneSelected": "— Niets geselecteerd —",
-    "extraCodesPlaceholder": "bijv. 603, 648, 820"
-  },
-  "matching": "Bezig met matchen…",
-  "step2": {
-    "matchButton": "Vind dichtstbijzijnde Guangna-matches"
-  },
-  "results": {
-    "languoCodeLabel": "Languo-code",
-    "heading": "Dichtstbijzijnde Guangna-matches",
-    "ownedHeading": "Dichtstbijzijnde matches uit jouw set",
-    "noOwnedMatch": "Geen eigen markers gematcht — probeer meer sets of extra codes toe te voegen.",
-    "notInSetNotice": "Er zijn betere matches beschikbaar.",
-    "orderPrompt": "Wil je ze bestellen? →",
-    "screenDisclaimer": "⚠️ Schermkleuren kunnen afwijken van de echte marker. Test altijd op papier."
-  },
-  "errors": {
-    "codeNotFound": "\"{code}\" is geen herkende Languo-code. Controleer de spelling of kies er een uit de lijst."
-  },
-  "crossLink": {
-    "text": "Wil je liever een foto of losse kleur matchen?",
-    "linkText": "Probeer de Kleurconverter →"
-  },
-  "crossLinkLegend": {
-    "text": "Heb je een hele kleurenlegenda om te converteren?",
-    "linkText": "Probeer de Legenda-converter →"
-  },
-  "donate": {
-    "text": "Als dit je tijd bespaarde, is een kopje koffie altijd welkom ☕",
-    "button": "Trakteer me op koffie"
-  }
-  },
+  "BrandConverter": {
+    "title": "Brand Converter",
+    "subtitle": "Zet Languo-codes om naar Guangna-codes, en omgekeerd — één code tegelijk, of match een hele set in één keer.",
+    "disclaimer": "De matches worden berekend door de gemeten kleurwaarden om te zetten en de dichtstbijzijnde stiften te vinden op basis van kleurafstand, met Delta E (CIE 1976). Omdat dit een digitale vergelijking is, kunnen de visuele resultaten verschillen afhankelijk van je scherm, belichting en papiersoort. Onze gemeten kleurwaarden kunnen licht afwijken van de werkelijke inkt, dus test je stiften altijd eerst op een kladblaadje. Zie deze matches als een handig startpunt, niet als een perfecte garantie.",
+    "mode": {
+      "single": "Enkele code",
+      "set": "Hele set matchen"
+    },
+    "direction": {
+      "toGuangna": "Languo → Guangna",
+      "toLanguo": "Guangna → Languo"
+    },
+    "step1": {
+      "headingToGuangna": "1 · Voer je Languo-code in",
+      "descriptionToGuangna": "Typ een code, bijv. RY-06.",
+      "placeholderToGuangna": "bijv. RY-06",
+      "headingToLanguo": "1 · Voer je Guangna-code in",
+      "descriptionToLanguo": "Typ een code, bijv. GN-605 of F01.",
+      "placeholderToLanguo": "bijv. GN-605"
+    },
+    "myMarkers": {
+      "heading": "🗂️ Mijn stiften",
+      "optional": "optioneel",
+      "description": "Selecteer je set om ook de beste match te zien uit de stiften die je al hebt.",
+      "setLabel": "Stiftenset",
+      "noneSelected": "— Niets geselecteerd —",
+      "metallicNote": "Let op: metallic stiften zijn niet inbegrepen.",
+      "glitterNote": "Let op: glitterstiften zijn niet inbegrepen.",
+      "extraCodesLabel": "Extra codes",
+      "extraCodesPlaceholder": "bijv. 603, 648, Y01"
+    },
+    "matching": "Bezig met matchen…",
+    "step2": {
+      "matchButton": "Vind dichtstbijzijnde matches"
+    },
+    "setMatch": {
+      "yourSetHeading": "1 · Selecteer de set die je hebt",
+      "yourSetDescriptionToGuangna": "Kies de Languo-set die je hebt — elke code hierin wordt gematcht.",
+      "yourSetDescriptionToLanguo": "Kies de Guangna-set die je hebt — elke code hierin wordt gematcht.",
+      "matchToHeading": "2 · Matchen met",
+      "matchToDescription": "Laat leeg om te matchen met de volledige Guangna 366- of Languo Paint 288-set.",
+      "matchButton": "Match mijn set",
+      "matching": "Je set wordt gematcht…",
+      "defaultGuangna": "Guangna 366 (volledige set)",
+      "defaultLanguo": "Languo Brush 288 (volledige set)",
+      "resultsHeading": "Jouw set gematcht",
+      "rowCount": "{count} codes gematcht",
+      "sourceCodeLabelToGuangna": "Languo-code",
+      "sourceCodeLabelToLanguo": "Guangna-code",
+      "matchedCodeLabel": "Dichtstbijzijnde match",
+      "downloadPdf": "Download Gratis PDF",
+      "orderNoticeToGuangna": "Klaar om deze Guangna-stiften te bestellen?",
+      "orderNoticeToLanguo": "Klaar om deze Languo-stiften te bestellen?",
+      "paperSize": "Papierformaat",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
+    },
+    "results": {
+      "codeLabelToGuangna": "Languo-code",
+      "codeLabelToLanguo": "Guangna-code",
+      "heading": "Dichtstbijzijnde matches",
+      "ownedHeading": "Dichtstbijzijnde matches uit jouw set",
+      "gnFallbackNotice": "Guangna Acrylic Brush alternatief: {code} ({name})",
+      "noOwnedMatch": "Geen van je eigen stiften kwam overeen — probeer meer sets of extra codes toe te voegen.",
+      "notInSetNotice": "Er zijn betere matches beschikbaar.",
+      "orderPrompt": "Wil je ze bestellen? →",
+      "betterMatchNoticeToLanguo": "Er zijn betere matches beschikbaar buiten jouw set.",
+      "languoAffiliateDisclosure": "Dit is een affiliate link: als je hierdoor iets koopt, ontvang ik een kleine commissie, zonder extra kosten voor jou.",
+      "screenDisclaimer": "⚠️ Schermkleuren kunnen afwijken van de echte stift. Test altijd op papier."
+    },
+    "errors": {
+      "codeNotFound": "\"{code}\" is geen herkende code. Controleer de spelling of kies er één uit de lijst.",
+      "noSetSelected": "Selecteer eerst de set die je hebt."
+    },
+    "crossLink": {
+      "text": "Wil je liever een foto of losse kleur matchen?",
+      "linkText": "Probeer de Kleurconverter →"
+    },
+    "crossLinkLegend": {
+      "text": "Heb je een hele kleurenlegenda om te converteren?",
+      "linkText": "Probeer de Legenda-converter →"
+    },
+    "donate": {
+      "text": "Heeft dit je tijd bespaard? Een kopje koffie wordt erg op prijs gesteld ☕",
+      "button": "Trakteer me op koffie"
+    }
+      },
   "GuangnaReference": {
     "title": "Guangna Referentiegids",
     "subtitle": "Kijk in welke sets een bepaalde marker zit, of bekijk alle markers in een specifieke set.",

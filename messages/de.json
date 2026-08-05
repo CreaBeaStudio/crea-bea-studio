@@ -62,10 +62,11 @@
     "footerCreate": "Erstellen",
     "footerConverter": "Farbkonverter",
     "footerLegendConverter": "Legend-Konverter",
-    "footerLanguoConverter": "Languokonverter",
+    "footerLanguoConverter": "Marken-Konverter",
     "footerGuangnaReference": "Guangna Referenz Guide",
     "footerSwatchCreator": "Farbkarten-Generator",
     "footerExamples": "Beispiele",
+    "footerMysteryDecoder": "Mystery-Decoder",
     "footerTips": "Tipps & Tricks",
     "footerFaq": "FAQ",
     "footerTiktok": "TikTok",
@@ -79,7 +80,7 @@
     "home": "Home",
     "create": "Erstellen",
     "tools": "Werkzeuge",
-    "languoConverter": "Languo-Konverter",
+    "languoConverter": "Marken-Konverter",
     "createGuangna": "Guangna Malen-nach-Zahlen",
     "mysteryDecoder": "Mystery-Decoder",
     "colorConverter": "Farbkonverter",
@@ -97,7 +98,6 @@
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
-    "subtitle": "Male deine Erinnerungen",
     "q1": "Was erhalte ich nach einer Bestellung?",
     "a1": "Du erhältst ein komplettes digitales Paket: einen Guangna Malen-nach-Zahlen-Vorlage (PDF), einen persönlichen Guangna Farbpalette-Guide und ein Eindruck der fertigen Malvorlageeine (PDF). Bitte beachte: Dies ist ein digitales Maßwerk — es werden keine physischen Artikel versendet.",
     "q2": "Wie lange dauert es, bis ich mein Design erhalte?",
@@ -274,7 +274,6 @@
   },
   "tips": {
     "title": "Tipps & Tricks",
-    "subtitle": "Male deine Erinnerungen",
     "s1Title": "🐾 Bevor du anfängst",
     "s1q1": "Vor Gebrauch schütteln",
     "s1a1": "Schüttle den Marker gut und teste ihn, bis die Tinte gleichmäßig fließt, um Schlieren zu vermeiden. Drücke die Spitze sanft auf ein Probeblatt, bis sie vollständig gesättigt ist. Aktiviere deine Marker niemals direkt auf deiner Malvorlage, da dies große Flecken verursachen und einen Bereich ruinieren kann.",
@@ -329,19 +328,27 @@
     "nextExample": "Nächstes Beispiel",
     "createCta": "Erstelle jetzt dein Guangna Malen-nach-Zahlen →"
   },
-  "ColorConverter": {
-    "title": "Guangna Farbkonverter",
-    "subtitle": "Gib eine beliebige Farbe ein und finde den nächstgelegenen verfügbaren Guangna Marker — optional auch aus deiner eigenen Sammlung.",
-    "disclaimer": "Die Treffer werden berechnet, indem der nächstgelegene Guangna-Marker zu deiner eingegebenen Farbe anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+  "common": {
+    "brands": {
+      "guangna": "Guangna",
+      "languo": "Languo",
+      "both": "your markers"
+    },
+    "setsSelected": "{count} set(s) selected"
+  },
+"ColorConverter": {
+    "title": "Farbkonverter",
+    "subtitle": "Gib eine beliebige Farbe ein und finde den nächstgelegenen verfügbaren Marker — optional auch aus deiner eigenen Sammlung.",
+    "disclaimer": "Die Treffer werden berechnet, indem der nächstgelegene Marker zu deiner eingegebenen Farbe anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
     "myMarkers": {
       "heading": "🗂️ Meine Marker",
       "optional": "optional",
       "description": "Wähle dein Set aus, um auch die beste Übereinstimmung mit deinen eigenen Markern zu sehen.",
-      "setLabel": "Marker-Set",
-      "noneSelected": "— Keine Auswahl —",
+      "metallicNote": "Hinweis: Metallic-Marker wurden nicht berücksichtigt.",
+      "glitterNote": "Hinweis: Glitter-Stifte wurden nicht berücksichtigt.",
       "extraCodesLabel": "Zusätzliche Codes",
-      "extraCodesHint": "(3-stellig, durch Komma oder Leerzeichen getrennt)",
-      "extraCodesPlaceholder": "z. B. 603, 648, 820"
+      "extraCodesHint": "(Guangna: digits or HG-code · Languo: letters-digits)",
+      "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01"
     },
     "modes": {
       "hex": "HEX",
@@ -364,18 +371,20 @@
       "dominantColorExtracted": "Dominante Farbe extrahiert"
     },
     "yourColour": "Deine Farbe",
-    "searchButton": "In Guangna-Code umwandeln →",
+    "searchButton": "In Marker-Code umwandeln →",
     "searching": "🔍 Suche läuft…",
     "results": {
       "heading": "Ergebnisse",
       "emptyPrompt": "Gib eine Farbe ein und klicke auf Suchen",
       "bestMatch": "Beste Übereinstimmung",
-      "guangnaBadge": "Guangna",
+      "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "screenDisclaimer": "⚠️ Bildschirmfarben können vom tatsächlichen Marker abweichen. Teste immer auf Papier.",
       "bestMatchOwned": "Beste Übereinstimmung, die du besitzt",
       "youHaveIt": "✓ Du hast ihn!",
       "fromYourSet": "Aus deinem Set",
       "notInSetNotice": "💡 Die beste Guangna-Übereinstimmung ({code}) ist nicht in deinem Set.",
+      "notInSetNoticeLanguo": "💡 Der beste Languo-Treffer ({code}) ist nicht in Ihrem Set enthalten.",
+      "languoAffiliateDisclosure": "Dies ist ein Affiliate-Link. Wenn du darüber etwas kaufst, erhalte ich eine kleine Provision – ohne zusätzliche Kosten für dich.",
       "orderPrompt": "Möchtest du ihn bestellen? →",
       "noOwnedMatch": "Keiner deiner Marker passt — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen."
     },
@@ -389,13 +398,9 @@
     }
   },
   "LegendConverter": {
-    "title": "Legende zu Guangna-Palette",
-    "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Guangna-Stiftguide.",
+    "title": "Legende zur Farbpalette",
+    "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Stift-guide.",
     "disclaimer": "Die Treffer werden berechnet, indem die Farben, die du in deiner hochgeladenen Legende anklickst, erfasst und der jeweils nächstgelegene Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
-    "crossLink": {
-      "text": "Möchtest du nur eine einzelne Farbe prüfen?",
-      "linkText": "Farbkonverter ausprobieren →"
-    },
     "step1": {
       "heading": "1 · Farblegende hochladen",
       "dropHint": "Foto hier ablegen oder klicken zum Hochladen",
@@ -419,31 +424,34 @@
       "heading": "🗂️ Meine Stifte",
       "optional": "optional",
       "description": "Wähle dein Set, um nur mit eigenen Stiften abzugleichen.",
-      "noneSelected": "— Keine Auswahl —",
-      "extraCodesPlaceholder": "z. B. 603, 648, 820"
+      "metallicNote": "Hinweis: Metallic-Marker wurden nicht berücksichtigt.",
+      "glitterNote": "Hinweis: Glitter-Stifte wurden nicht berücksichtigt.",
+      "extraCodesHint": "(Guangna: digits or HG-code · Languo: letters-digits)",
+      "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01"
     },
     "matching": "Wird abgeglichen…",
     "step4": {
-      "matchButton": "Mit Guangna-Codes abgleichen"
+      "matchButton": "Zu deinen Stiften matchen"
     },
     "results": {
-      "heading": "🎨 Guangna-Farbpalette-Guide",
+      "heading": "🎨 Farbpalette-Guide",
       "downloadPdf": "PDF herunterladen",
-      "screenDisclaimer": "⚠️ Um die Genauigkeit der Guangna-Palette zu gewährleisten, können die Farben am Bildschirm von der tatsächlichen Stiftfarbe abweichen.",
-      "notInSetHeading": "💡 Noch bessere Treffer außerhalb deines Sets",
-      "notInSetSubheading": "Diese Guangna-Farben sind nicht in deinem ausgewählten Set enthalten, bieten aber die bestmögliche Übereinstimmung.",
-      "orderPrompt": "Jetzt bestellen →"
+      "screenDisclaimer": "⚠️ Um die Genauigkeit der Palette zu gewährleisten, können die Farben am Bildschirm von der tatsächlichen Stiftfarbe abweichen.",
+      "languoAffiliateDisclosure": "Dies ist ein Affiliate-Link. Wenn du darüber etwas kaufst, erhalte ich eine kleine Provision – ohne zusätzliche Kosten für dich.",
+      "tieNotice": "Gleichwertiger Treffer",
+      "orderBannerText": "Das sind die passendsten verfügbaren Stifte. So erhältst du sie:"
     },
     "donate": {
       "text": "Hat dir das Zeit gespart? Ein Kaffee wird sehr geschätzt ☕",
       "button": "Spendiere mir einen Kaffee"
     },
     "pdf": {
-      "title": "♥ Male deine Erinnerungen ♥",
-      "subtitle": "Guangna-Farbpalette  ·  {count} Farben",
-      "instructions": "Ordne jedes nummerierte Farbfeld deiner Legende dem passenden Guangna-Stift zu",
-      "columnInSet": "Beste Übereinstimmung in Deinem Set",
-      "columnAvailable": "Beste Verfügbare Guangna-Übereinstimmung"
+      "titleText": "Male deine Erinnerungen",
+      "subtitle": "Farbpalette  ·  {count} Farben"
+    },
+    "crossLink": {
+      "text": "Möchtest du nur eine einzelne Farbe prüfen?",
+      "linkText": "Farbkonverter ausprobieren →"
     }
   },
   "coloringPages": {
@@ -466,49 +474,91 @@
       "linkText": "Guangna Malen-nach-Zahlen ausprobieren →"
     }
   },
-  "LanguoConverter": {
-    "title": "Languo-zu-Guangna-Konverter",
-    "subtitle": "Gib einen Languo Art 288 Acryl-Code ein und finde die 3 nächstgelegenen Guangna-Marker-Übereinstimmungen, optional aus deiner eigenen Sammlung.",
-    "disclaimer": "Die Übereinstimmungen werden berechnet, indem die Farbwerte von Languo umgerechnet und die nächstgelegenen Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt werden. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+  "BrandConverter": {
+    "title": "Marken-Konverter",
+    "subtitle": "Konvertiere zwischen Languo und Guangna — einzeln oder als komplettes Set.",
+    "disclaimer": "Die Treffer werden berechnet, indem die gemessenen Farbwerte umgerechnet und die nächstliegenden Stifte anhand des Farbabstands (Delta E, CIE 1976) ermittelt werden. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen — teste deine Stifte daher immer zuerst auf einem Probeblatt. Betrachte diese Treffer als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+    "mode": {
+      "single": "Einzelner Code",
+      "set": "Ganzes Set abgleichen"
+    },
+    "direction": {
+      "toGuangna": "Languo → Guangna",
+      "toLanguo": "Guangna → Languo"
+    },
     "step1": {
-      "heading": "1 · Gib deinen Languo-Code ein",
-      "description": "Gib einen Code ein, z. B. RY-06.",
-      "placeholder": "z. B. RY-06"
+      "headingToGuangna": "1 · Gib deinen Languo-Code ein",
+      "descriptionToGuangna": "Gib einen Code ein, z. B. RY-06.",
+      "placeholderToGuangna": "z. B. RY-06",
+      "headingToLanguo": "1 · Gib deinen Guangna-Code ein",
+      "descriptionToLanguo": "Gib einen Code ein, z. B. GN-605 oder F01.",
+      "placeholderToLanguo": "z. B. GN-605"
     },
     "myMarkers": {
-      "heading": "🗂️ Meine Marker",
+      "heading": "🗂️ Meine Stifte",
       "optional": "optional",
-      "description": "Wähle dein Set aus, um auch die besten Treffer aus Markern zu sehen, die du bereits besitzt.",
+      "description": "Wähle dein Set aus, um zusätzlich die beste Übereinstimmung aus deinen eigenen Stiften zu sehen.",
+      "setLabel": "Stifte-Set",
       "noneSelected": "— Nichts ausgewählt —",
-      "extraCodesPlaceholder": "z. B. 603, 648, 820"
+      "metallicNote": "Hinweis: Metallic-Stifte sind nicht enthalten.",
+      "glitterNote": "Hinweis: Glitzerstifte sind nicht enthalten.",
+      "extraCodesLabel": "Weitere Codes",
+      "extraCodesPlaceholder": "z. B. 603, 648, Y01"
     },
     "matching": "Wird abgeglichen…",
     "step2": {
-      "matchButton": "Nächstgelegene Guangna-Treffer finden"
+      "matchButton": "Nächstliegende Treffer finden"
+    },
+    "setMatch": {
+      "yourSetHeading": "1 · Wähle das Set, das du besitzt",
+      "yourSetDescriptionToGuangna": "Wähle dein Languo-Set aus — jeder darin enthaltene Code wird abgeglichen.",
+      "yourSetDescriptionToLanguo": "Wähle dein Guangna-Set aus — jeder darin enthaltene Code wird abgeglichen.",
+      "matchToHeading": "2 · Abgleichen mit",
+      "matchToDescription": "Leer lassen, um mit dem vollständigen Guangna-366- oder Languo-Brush-288-Set abzugleichen.",
+      "matchButton": "Mein Set abgleichen",
+      "matching": "Dein Set wird abgeglichen…",
+      "defaultGuangna": "Guangna 366 (vollständiges Set)",
+      "defaultLanguo": "Languo Brush 288 (vollständiges Set)",
+      "resultsHeading": "Dein abgeglichenes Set",
+      "rowCount": "{count} Codes abgeglichen",
+      "sourceCodeLabelToGuangna": "Languo-Code",
+      "sourceCodeLabelToLanguo": "Guangna-Code",
+      "matchedCodeLabel": "Nächstliegender Treffer",
+      "downloadPdf": "Kostenloses PDF herunterladen",
+      "orderNoticeToGuangna": "Bereit, diese Guangna-Stifte zu bestellen?",
+      "orderNoticeToLanguo": "Bereit, diese Languo-Stifte zu bestellen?",
+      "paperSize": "Papierformat",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
     },
     "results": {
-      "languoCodeLabel": "Languo-Code",
-      "heading": "Nächstgelegene Guangna-Treffer",
-      "ownedHeading": "Nächstgelegene Treffer aus deinem Set",
-      "noOwnedMatch": "Keine eigenen Marker gefunden — versuche, weitere Sets oder zusätzliche Codes hinzuzufügen.",
+      "codeLabelToGuangna": "Languo-Code",
+      "codeLabelToLanguo": "Guangna-Code",
+      "heading": "Nächstliegende Treffer",
+      "ownedHeading": "Nächstliegende Treffer aus deinem Set",
+      "gnFallbackNotice": "Guangna Acrylic Brush Alternative: {code} ({name})",
+      "noOwnedMatch": "Keine deiner eigenen Stifte passte — versuche weitere Sets oder zusätzliche Codes hinzuzufügen.",
       "notInSetNotice": "Es sind bessere Treffer verfügbar.",
       "orderPrompt": "Möchtest du sie bestellen? →",
-      "screenDisclaimer": "⚠️ Bildschirmfarben können vom tatsächlichen Marker abweichen. Teste immer auf Papier."
+      "betterMatchNoticeToLanguo": "Außerhalb deines Sets sind bessere Treffer verfügbar.",
+      "languoAffiliateDisclosure": "Dies ist ein Affiliate-Link: Wenn du darüber etwas kaufst, erhalte ich eine kleine Provision, ohne zusätzliche Kosten für dich.",
+      "screenDisclaimer": "⚠️ Bildschirmfarben können vom echten Stift abweichen. Teste immer auf Papier."
     },
     "errors": {
-      "codeNotFound": "\"{code}\" ist kein bekannter Languo-Code. Überprüfe die Schreibweise oder wähle einen aus der Liste."
+      "codeNotFound": "„{code}“ ist kein erkannter Code. Prüfe die Schreibweise oder wähle einen aus der Liste.",
+      "noSetSelected": "Bitte wähle zuerst das Set aus, das du besitzt."
     },
     "crossLink": {
       "text": "Möchtest du stattdessen ein Foto oder eine einzelne Farbe abgleichen?",
       "linkText": "Zum Farbkonverter →"
     },
     "crossLinkLegend": {
-      "text": "Hast du eine ganze Farblegende zum Umwandeln?",
+      "text": "Hast du stattdessen eine ganze Farblegende zum Konvertieren?",
       "linkText": "Zum Legenden-Konverter →"
     },
     "donate": {
-      "text": "Wenn dir das Zeit gespart hat, freuen wir uns über einen Kaffee ☕",
-      "button": "Spendiere mir einen Kaffee"
+      "text": "Wenn dir das Zeit gespart hat, freue ich mich immer über einen Kaffee ☕",
+      "button": "Spendier mir einen Kaffee"
     }
   },
   "GuangnaReference": {
@@ -614,5 +664,5 @@
       "greatClassicsVol2": "Die großen Klassiker Band 2",
       "greatClassicsVol3": "Die großen Klassiker Band 3"
     }
+    }
   }
-}

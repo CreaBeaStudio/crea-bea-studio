@@ -60,8 +60,9 @@
 "footerTagline": "Color your memories, one number at a time. 🐾",
 "footerCreate": "Create",
 "footerConverter": "Color Converter",
+"footerMysteryDecoder": "Mystery Decoder",
 "footerLegendConverter": "Legend Converter",
-"footerLanguoConverter": "Languo Converter",
+"footerLanguoConverter": "Brand Converter",
 "footerGuangnaReference": "Guangna Reference Guide",
 "footerSwatchCreator": "Swatch Card Creator",
 "footerExamples": "Examples",
@@ -82,7 +83,7 @@
     "mysteryDecoder": "Mystery Decoder",
     "colorConverter": "Color Converter",
     "legendConverter": "Legend Converter",
-    "languoConverter": "Languo Converter",
+    "languoConverter": "Brand Converter",
     "swatchCreator": "Swatch Card Creator",
     "helpCenter": "Help Center",
     "examples": "Examples",
@@ -96,7 +97,6 @@
 },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Color Your Memories",
     "q1": "What do I receive after placing an order?",
     "a1": "You will receive a complete digital package: a Paint by Number Outline (PDF), a Custom Guangna Color Palette Guide with a Finished Artwork Impression (PDF). Please note: this is a custom digital artwork — no physical items will be shipped.",
     "q2": "How long does it take to receive my custom Guangna-by-Number?",
@@ -273,7 +273,6 @@
   },
   "tips": {
     "title": "Tips & Tricks",
-    "subtitle": "Color Your Memories",
     "s1Title": "🐾 Before You Start",
     "s1q1": "Shake Before Use",
     "s1a1": "Shake the marker well and test until the ink flows evenly to avoid streaky lines. Gently press the nib on scrap paper until fully saturated. Never prime your markers directly on your coloring page, as this can cause large blobs and ruin a section.",
@@ -329,20 +328,27 @@
     "nextExample": "Next example",
     "createCta": "Create your Guangna by Number now →"
   },
+  "common": {
+    "brands": {
+      "guangna": "Guangna",
+      "languo": "Languo",
+      "both": "your markers"
+    },
+    "setsSelected": "{count} set(s) selected"
+  },
   "ColorConverter": {
-    "title": "Guangna Color Converter",
-    "subtitle": "Enter any color and find the closest Guangna marker available and, optionally, from your own collection.",
-    "disclaimer": "Matches are calculated by finding the closest Guangna marker to your input color, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
+    "title": "Color Converter",
+    "subtitle": "Enter any color and find the closest marker available and, optionally, from your own collection.",
+    "disclaimer": "Matches are calculated by finding the closest marker to your input color, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
     "myMarkers": {
   "heading": "🗂️ My Markers",
   "optional": "optional",
   "description": "Select your set to also see the best match from markers you own.",
-  "setLabel": "Marker set",
-  "noneSelected": "— None selected —",
   "metallicNote": "Note: Metallic markers are not included.",
+  "glitterNote": "Note: Glitter pens are not included.",
   "extraCodesLabel": "Extra codes",
-  "extraCodesHint": "(3-digit or letter and 2-digit, comma or space separated)",
-"extraCodesPlaceholder": "e.g. 603, 648, Y01"
+  "extraCodesHint": "(Guangna: digits or HG-code · Languo: letters-digits)",
+  "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01"
 },
     "modes": {
       "hex": "HEX",
@@ -365,19 +371,20 @@
       "dominantColorExtracted": "Dominant color extracted"
     },
     "yourColour": "Your colour",
-    "searchButton": "Convert to Guangna code →",
+    "searchButton": "Find My Marker Match →",
     "searching": "🔍 Searching…",
     "results": {
       "heading": "Results",
       "emptyPrompt": "Enter a color and click Search",
       "bestMatch": "Best match",
-      "guangnaBadge": "Guangna",
       "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "screenDisclaimer": "⚠️ Screen colors may differ from the actual marker. Always test on paper.",
       "bestMatchOwned": "Best match you have",
       "youHaveIt": "✓ You have it!",
       "fromYourSet": "From your set",
       "notInSetNotice": "💡 The best Guangna match ({code}) is not in your set.",
+      "notInSetNoticeLanguo": "💡 The best Languo match ({code}) is not in your set.",
+      "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you.",
       "orderPrompt": "Would you like to order it? →",
       "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes."
     },
@@ -391,11 +398,11 @@
     }
   },
   "LegendConverter": {
-    "title": "Legend to Guangna Palette",
-    "subtitle": "Upload a coloring page's color legend, click each swatch, and get a ready-made Guangna marker guide.",
-    "disclaimer": "Matches are calculated by sampling the colors you click in your uploaded legend and finding the closest Guangna marker to each, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
+    "title": "Legend to Color Palette",
+    "subtitle": "Upload a coloring page's color legend, click each swatch, and get a ready-made marker guide.",
+    "disclaimer": "Matches are calculated by sampling the colors you click in your uploaded legend and finding the closest marker to each, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
     "step1": {
-      "lightingTip": "For the most accurate Guangna codes: photograph the legend in natural, even daylight — shadows or yellow indoor lighting can distort the colors. A flatbed scan works even better than a photo if you have one available.",
+      "lightingTip": "For the most accurate codes: photograph the legend in natural, even daylight — shadows or yellow indoor lighting can distort the colors. A flatbed scan works even better than a photo if you have one available.",
       "heading": "1 · Upload the color legend",
       "dropHint": "Drop a photo here or click to upload",
       "fileTypes": "JPG or PNG",
@@ -411,43 +418,41 @@
       "allDone": "All swatches sampled — click any number below to redo one",
       "editSwatch": "Click to redo swatch {num}",
       "remaining": "{count} swatch(es) not yet set — they'll be left out of your guide unless you go back and click them too.",
-      "howToTip": "To match a color, click on number 1 just below your uploaded image, then click the color in the image you want to convert into a Guangna code. Repeat this process for each subsequent number. If you ever need to redo a selection, just click that number again and select a new color from the image."
+      "howToTip": "To match a color, click on number 1 just below your uploaded image, then click the color in the image you want to convert into your marker code. Repeat this process for each subsequent number. If you ever need to redo a selection, just click that number again and select a new color from the image."
     },
     "myMarkers": {
       "heading": "🗂️ My Markers",
       "optional": "optional",
       "description": "Select your set to also see the best match from markers you own.",
-      "setLabel": "Marker set",
-      "noneSelected": "— None selected —",
       "metallicNote": "Note: Metallic markers are not included.",
+      "glitterNote": "Note: Glitter markers are not included.",
       "extraCodesLabel": "Extra codes",
-    "extraCodesPlaceholder": "e.g. 603, 648, Y01"
+      "extraCodesHint": "(Guangna: digits or HG-code · Languo: letters-digits)",
+      "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01"
     },
     "matching": "Matching…",
     "step4": {
-      "matchButton": "Match to Guangna codes"
+      "matchButton": "Match to your markers"
     },
     "results": {
       "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
-      "notInSetHeading": "💡 Even better matches outside your set",
-      "notInSetSubheading": "These Guangna colors aren't in your selected set, but they're the closest possible match available.",
-      "heading": "🎨 Guangna Color Palette Guide",
+      "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you.",
+      "heading": "🎨 Color Palette Guide",
       "downloadPdf": "Download PDF",
-      "screenDisclaimer": "⚠️ To safeguard the integrity of Guangna Palette, the colors on screen may vary from the actual color of the marker.",
-      "orderPrompt": "Would you like to Order it/them →"
+      "screenDisclaimer": "⚠️ To safeguard the integrity of the color palette, the colors on screen may vary from the actual color of the marker.",
+      "tieNotice": "Equally close match",
+      "orderBannerText": "These are the closest available marker matches. To get them:"
     },
     "donate": {
       "text": "If this saved you time, a coffee is always appreciated ☕",
       "button": "Buy me a coffee"
     },
     "pdf": {
-      "title": "♥ Color Your Memories ♥",
       "titleText": "Color Your Memories",
-      "subtitle": "Guangna Color Palette  ·  {count} colors",
+      "subtitle": "Your Marker Color Palette  ·  {count} colors",
       "gnFallbackLabel": "GN alt.:",
-      "instructions": "Match each numbered swatch on your legend with the corresponding Guangna marker",
-      "columnInSet": "Best Match in Your Set",
-      "columnAvailable": "Best Guangna Match Available"
+      "scopeOwned": "Matched against your own markers",
+      "scopeFull": "Matched against the full Guangna & Languo Paint catalogs"
     },
     "crossLink": {
       "text": "Just need to check a single color?",
@@ -473,15 +478,26 @@
       "text": "Want to turn your own photo into a paint-by-number?",
       "linkText": "Try Create your own Guangna by Number →"
     }
-  },
-  "LanguoConverter": {
-    "title": "Languo to Guangna Converter",
-    "subtitle": "Enter a Languo Art 288 Acrylic code and find the 3 closest Guangna marker matches, optionally from your own collection.",
-    "disclaimer": "Matches are calculated by converting Languo's color values and finding the closest Guangna markers by color distance, using Delta E (CIE 1976). Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
+    },
+"BrandConverter": {
+    "title": "Brand Converter",
+    "subtitle": "Convert between Languo and Guangna — one code at a time, or match a whole set at once.",
+    "disclaimer": "Matches are calculated by converting the measured color values and finding the closest markers by color distance, using Delta E (CIE 1976). Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
+    "mode": {
+      "single": "Single Code",
+      "set": "Match Full Set"
+    },
+    "direction": {
+      "toGuangna": "Languo → Guangna",
+      "toLanguo": "Guangna → Languo"
+    },
     "step1": {
-      "heading": "1 · Enter your Languo code",
-      "description": "Type a code, e.g. RY-06.",
-      "placeholder": "e.g. RY-06"
+      "headingToGuangna": "1 · Enter your Languo code",
+      "descriptionToGuangna": "Type a code, e.g. RY-06.",
+      "placeholderToGuangna": "e.g. RY-06",
+      "headingToLanguo": "1 · Enter your Guangna code",
+      "descriptionToLanguo": "Type a code, e.g. GN-605 or F01.",
+      "placeholderToLanguo": "e.g. GN-605"
     },
     "myMarkers": {
       "heading": "🗂️ My Markers",
@@ -490,25 +506,52 @@
       "setLabel": "Marker set",
       "noneSelected": "— None selected —",
       "metallicNote": "Note: Metallic markers are not included.",
+      "glitterNote": "Note: Glitter markers are not included.",
       "extraCodesLabel": "Extra codes",
-    "extraCodesPlaceholder": "e.g. 603, 648, Y01"
+      "extraCodesPlaceholder": "e.g. 603, 648, Y01"
     },
     "matching": "Matching…",
     "step2": {
-      "matchButton": "Find closest Guangna matches"
+      "matchButton": "Find closest matches"
+    },
+  "setMatch": {
+      "yourSetHeading": "1 · Select the set you own",
+      "yourSetDescriptionToGuangna": "Pick the Languo set you have — every code in it will be matched.",
+      "yourSetDescriptionToLanguo": "Pick the Guangna set you have — every code in it will be matched.",
+      "matchToHeading": "2 · Match to",
+      "matchToDescription": "Leave empty to match against the full Guangna 366 or Languo Paint 288 set.",
+      "matchButton": "Match my set",
+      "matching": "Matching your set…",
+      "defaultGuangna": "Guangna 366 (full set)",
+      "defaultLanguo": "Languo Brush 288 (full set)",
+      "resultsHeading": "Your set matched",
+      "rowCount": "{count} codes matched",
+      "sourceCodeLabelToGuangna": "Languo code",
+      "sourceCodeLabelToLanguo": "Guangna code",
+      "matchedCodeLabel": "Closest match",
+      "downloadPdf": "Download as Free PDF",
+      "orderNoticeToGuangna": "Ready to get these Guangna markers?",
+      "orderNoticeToLanguo": "Ready to get these Languo markers?",
+      "paperSize": "Paper size",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
     },
     "results": {
-      "languoCodeLabel": "Languo code",
-      "heading": "Closest Guangna matches",
+      "codeLabelToGuangna": "Languo code",
+      "codeLabelToLanguo": "Guangna code",
+      "heading": "Closest matches",
       "ownedHeading": "Closest matches from your set",
       "gnFallbackNotice": "Guangna Acrylic Brush alternative: {code} ({name})",
       "noOwnedMatch": "No owned markers matched — try adding more sets or extra codes.",
       "notInSetNotice": "There are better matches available.",
       "orderPrompt": "Would you like to buy them? →",
+      "betterMatchNoticeToLanguo": "There are better matches available outside your set.",
+      "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you.",
       "screenDisclaimer": "⚠️ Screen colors may differ from the actual marker. Always test on paper."
     },
     "errors": {
-      "codeNotFound": "\"{code}\" isn't a recognized Languo code. Check the spelling or pick one from the list."
+      "codeNotFound": "\"{code}\" isn't a recognized code. Check the spelling or pick one from the list.",
+      "noSetSelected": "Please select the set you own first."
     },
     "crossLink": {
       "text": "Need to match a photo or single color instead?",

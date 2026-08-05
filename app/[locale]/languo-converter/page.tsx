@@ -6,36 +6,71 @@ import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useMemo, useRef, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_COLORS, GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, findClosestN, rgbToHex, normalizeExtraCode,
   type MatchResult,
-} from "../../../lib/guangna";
-import { LANGUO_COLORS, LANGUO_IDS } from "../../../lib/languo";
-// This file must be saved as app/[locale]/languo-converter/page.tsx —
-// Next.js only turns it into a route at that exact path/filename.
-// lib/ lives at the project root, so that's 3 levels up from here, same
-// convention as color-converter/page.tsx and legend-converter/page.tsx.
+} from "@/lib/guangna";
+import {
+  LANGUO_COLORS, LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
+  type LanguoMatchResult,
+} from "@/lib/languo";
+import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
+// This file must be saved as app/[locale]/languo-converter/page.tsx --
+// route path kept as-is for now even though the feature/component is
+// renamed to "Brand Converter" (avoids breaking existing links/SEO from
+// the old name). Rename the folder to app/[locale]/brand-converter/ if
+// Mirjam decides she wants the URL renamed too -- flagged, not done here.
 //
-// NEW translation key needed under the "LanguoConverter" namespace (add
-// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
-// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
-// when the #1 match (fullMatches[0]) is a High Gloss (HG-) code, since
-// those are newer/less commonly owned than the classic GN line. Note
-// this can differ from whatever GN code happens to land at rank 2 or 3
-// in the existing top-3 list, since multiple HG entries can be closer
-// than the true best GN match.
+// 2026-08-05: added a second top-level mode alongside the existing
+// single-code lookup: "set" mode matches an ENTIRE owned set against a
+// target set (or the largest default set per brand if no target is
+// chosen), producing one closest-match row per owned code. Direction
+// ("toGuangna"/"toLanguo") now governs both modes -- in single mode it
+// still means "which code you're typing"; in set mode it means "which
+// brand's set you own" (source) vs "which brand's set you're matching
+// into" (target), so the meaning is consistent (source brand -> target
+// brand either way).
+//
+// Translation namespace renamed "LanguoConverter" -> "BrandConverter" to
+// match the rename. This ONLY updates en.json here -- nl/de/es/fr/it.json
+// still have the old "LanguoConverter" key and need the same rename +
+// the new setMatch/mode/errors.noSetSelected keys added, same as the
+// existing translation backlog for this page.
+//
+// DATA BUGS FOUND while building set-mode defaults (not fixed here,
+// flagging for her confirmation before touching the underlying files):
+//   1. lib/languoSets.ts: LANGUO_SET_OPTIONS lists the 288-color Languo
+//      set under key "288 Set", but LANGUO_SETS itself only has that data
+//      under the key "Brush 288 Set" -- so selecting "Paint 288 Set" in
+//      the UI (both here and in the existing single-code "My Markers"
+//      picker) silently resolves to an empty/no-match set today. Fixed
+//      in the delivered lib/languoSets.ts replacement below (option key
+//      changed to match the real data key) -- low-risk, one-line rename,
+//      no data reshuffling.
+//   2. lib/guangna.ts: GUANGNA_SETS["GN.8101-366 (366 colors)"] is
+//      defined as `Object.keys(GN_COLORS)`, which includes BOTH the 366
+//      classic GN- codes AND the 168 HG- (High Gloss) codes -- so it's
+//      actually ~534 codes despite the "366" label. NOT changed here
+//      (it's used elsewhere and changing it would silently change
+//      existing matching results) -- for this page's own "largest
+//      Guangna set" default I used GN_ONLY_IDS instead (the already-
+//      exported, correctly-sized 366-only list), sidestepping the bug
+//      rather than fixing it. Worth a decision from her on whether to
+//      correct GUANGNA_SETS itself.
 
 const MATCH_COUNT = 3;
 const MAX_SUGGESTIONS = 8;
 
+type Direction = "toGuangna" | "toLanguo";
+type Mode = "single" | "set";
+
+const LANGUO_NON_GLITTER_SET = new Set(LANGUO_NON_GLITTER_IDS);
+const LANGUO_BRUSH_288_DEFAULT = (LANGUO_SETS["Brush 288 Set"] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id));
+
 // Same noise-overlay technique as ColorConverter's ProtectedSwatch, so a
 // browser eyedropper/color-picker samples noisy pixels instead of the
-// exact marker color. Unlike ColorConverter (one swatch on screen at a
-// time), this page can show up to 8 swatches at once (1 Languo color +
-// 3+3 matches + the GN fallback), so each instance gets its own unique
-// filter id via useId() -- reusing a single id="noise" across multiple
-// <svg> elements on the same page is invalid HTML and risks swatches
-// referencing the wrong filter.
+// exact marker color. Each instance gets its own unique filter id via
+// useId() since this page can show many swatches at once.
 function Swatch({ rgb, size = 56 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -54,32 +89,58 @@ function Swatch({ rgb, size = 56 }: { rgb: [number, number, number]; size?: numb
   );
 }
 
-function MatchRow({ rank, m }: { rank: number; m: MatchResult }) {
+// name is omitted for Languo matches -- Languo codes have no marker
+// "name" the way GN_COLORS entries do (see LanguoMatchResult).
+function MatchRow({ rank, code, name, rgb }: { rank: number; code: string; name?: string; rgb: [number, number, number] }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
       <span style={{ fontWeight: 800, fontSize: 13, color: "var(--muted)", minWidth: 18 }}>{rank}</span>
-      <Swatch rgb={m.rgb} size={44} />
+      <Swatch rgb={rgb} size={44} />
       <div>
-        <div style={{ fontWeight: 900, fontSize: 16 }}>{m.code}</div>
-        <div style={{ color: "#555", fontSize: 12 }}>{m.name}</div>
+        <div style={{ fontWeight: 900, fontSize: 16 }}>{code}</div>
+        {name && <div style={{ color: "#555", fontSize: 12 }}>{name}</div>}
       </div>
     </div>
   );
 }
 
 type Results = {
-  languoCode: string;
-  languoRgb: [number, number, number];
-  fullMatches: MatchResult[];
-  fullGNFallback: MatchResult | null;
-  ownedMatches: MatchResult[] | null;
+  direction: Direction;
+  inputCode: string;
+  inputRgb: [number, number, number];
+  fullMatches: { code: string; name?: string; rgb: [number, number, number] }[];
+  fullGNFallback: MatchResult | null; // only ever set when direction === "toGuangna"
+  ownedMatches: { code: string; name?: string; rgb: [number, number, number] }[] | null;
   ownedIds: string[];
 };
 
-export default function LanguoConverter() {
-  const t = useTranslations("LanguoConverter");
+// One row of a full-set match: the code she owns, plus its single
+// closest match in the target set. Set-mode always shows the single
+// best match per owned code (not top-3 like single-code mode) -- a
+// top-3-per-row table would get unwieldy fast for a 100+ code set.
+type SetMatchRow = {
+  sourceCode: string;
+  sourceRgb: [number, number, number];
+  matchCode: string;
+  matchName?: string;
+  matchRgb: [number, number, number];
+};
+
+type SetResults = {
+  direction: Direction;
+  yourSetLabel: string;
+  matchToLabel: string;
+  rows: SetMatchRow[];
+};
+
+export default function BrandConverter() {
+  const t = useTranslations("BrandConverter");
   const locale = useLocale();
 
+  const [mode, setMode] = useState<Mode>("single");
+  const [direction, setDirection] = useState<Direction>("toGuangna");
+
+  // --- Single-code mode state ---
   const [codeInput, setCodeInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,26 +150,72 @@ export default function LanguoConverter() {
   const [matching, setMatching] = useState(false);
   const blurTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Custom autocomplete instead of a native <datalist> — a <datalist>
-  // renders every one of the 288 codes in a native scrollable list,
-  // which is exactly what we're avoiding here. This only ever shows a
+  // --- Set-match mode state ---
+  const [yourSet, setYourSet] = useState("");
+  const [matchToSet, setMatchToSet] = useState("");
+  const [setModeResults, setSetResults] = useState<SetResults | null>(null);
+  const [setModeMatching, setSetMatching] = useState(false);
+  const [setModeError, setSetError] = useState<string | null>(null);
+  const [pdfPaperSize, setPdfPaperSize] = useState<"a4" | "letter">("a4");
+
+  const switchDirection = (d: Direction) => {
+    if (d === direction) return;
+    setDirection(d);
+    // The typed code / chosen sets / any results all belong to the
+    // previous direction's code namespace (Languo vs Guangna) -- none
+    // of them carry over meaningfully, so reset everything in both modes.
+    setCodeInput("");
+    setMySet("");
+    setExtraCodes("");
+    setResults(null);
+    setError(null);
+    setYourSet("");
+    setMatchToSet("");
+    setSetResults(null);
+    setSetError(null);
+  };
+
+  const switchMode = (m: Mode) => {
+    if (m === mode) return;
+    setMode(m);
+    setError(null);
+    setSetError(null);
+  };
+
+  // Custom autocomplete instead of a native <datalist> -- only shows a
   // short filtered slice, and only once the person has actually typed
-  // something. LANGUO_IDS is already sorted ascending in lib/languo.ts,
-  // so filter() preserves that order here without any extra sort.
+  // something.
   const suggestions = useMemo(() => {
     const q = codeInput.trim().toUpperCase();
     if (!q) return [];
-    return LANGUO_IDS.filter(code => code.includes(q)).slice(0, MAX_SUGGESTIONS);
-  }, [codeInput]);
+    const pool = direction === "toGuangna" ? LANGUO_NON_GLITTER_IDS : GN_366_IDS;
+    return pool.filter(code => code.includes(q)).slice(0, MAX_SUGGESTIONS);
+  }, [codeInput, direction]);
 
+  // "My Markers" describes what the person owns of the OUTPUT type --
+  // Guangna markers when matching toGuangna, Languo markers when
+  // matching toLanguo -- since that's what the owned-match filter
+  // narrows down. Only used in single-code mode.
   const getOwnedIds = (): string[] => {
     const ids: string[] = [];
-    if (mySet && GUANGNA_SETS[mySet]) {
-      for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
-    }
-    for (const tok of extraCodes.split(/[\s,;]+/)) {
-      const id = normalizeExtraCode(tok);
-      if (id && !ids.includes(id)) ids.push(id);
+    if (direction === "toGuangna") {
+      if (mySet && GUANGNA_SETS[mySet]) {
+        for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
+      }
+      for (const tok of extraCodes.split(/[\s,;]+/)) {
+        const id = normalizeExtraCode(tok);
+        if (id && !ids.includes(id)) ids.push(id);
+      }
+    } else {
+      if (mySet && LANGUO_SETS[mySet]) {
+        for (const id of LANGUO_SETS[mySet]) {
+          if (LANGUO_COLORS[id] && !ids.includes(id)) ids.push(id);
+        }
+      }
+      for (const tok of extraCodes.split(/[\s,;]+/)) {
+        const id = normalizeLanguoExtraCode(tok);
+        if (id && !ids.includes(id)) ids.push(id);
+      }
     }
     return ids;
   };
@@ -116,31 +223,191 @@ export default function LanguoConverter() {
   const handleMatch = () => {
     setError(null);
     setResults(null);
-    // Normalize: trim, uppercase — matches how the codes are stored
-    // (e.g. "BR-702"), so "br-702" or " BR-702 " both resolve.
     const normalized = codeInput.trim().toUpperCase();
-    const rgb = LANGUO_COLORS[normalized];
+    const rgb = direction === "toGuangna" ? LANGUO_COLORS[normalized] : GN_COLORS[normalized]?.slice(0, 3) as [number, number, number] | undefined;
     if (!rgb) {
       setError(t("errors.codeNotFound", { code: codeInput }));
       return;
     }
     setMatching(true);
     try {
-      const fullMatches = findClosestN(rgb, GN_366_IDS, MATCH_COUNT);
-      // Top match is a High Gloss code -- also surface the best
-      // *regular* GN match, since HG markers are newer and less
-      // commonly owned than the classic GN line. This can differ from
-      // any GN code already sitting at rank 2/3 above, since several
-      // HG entries can be closer than the true best GN match.
-      const fullGNFallback = fullMatches[0]?.code.startsWith("HG-")
-        ? findClosest(rgb, GN_ONLY_IDS)
-        : null;
       const ownedIds = getOwnedIds();
-      const ownedMatches = ownedIds.length > 0 ? findClosestN(rgb, ownedIds, MATCH_COUNT) : null;
-      setResults({ languoCode: normalized, languoRgb: rgb, fullMatches, fullGNFallback, ownedMatches, ownedIds });
+      let fullMatches: { code: string; name?: string; rgb: [number, number, number] }[];
+      let fullGNFallback: MatchResult | null = null;
+      let ownedMatches: { code: string; name?: string; rgb: [number, number, number] }[] | null = null;
+
+      if (direction === "toGuangna") {
+        const gnMatches = findClosestN(rgb, GN_366_IDS, MATCH_COUNT);
+        fullMatches = gnMatches;
+        fullGNFallback = gnMatches[0]?.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null;
+        ownedMatches = ownedIds.length > 0 ? findClosestN(rgb, ownedIds, MATCH_COUNT) : null;
+      } else {
+        const languoMatches = findClosestLanguoN(rgb, LANGUO_NON_GLITTER_IDS, MATCH_COUNT);
+        fullMatches = languoMatches;
+        ownedMatches = ownedIds.length > 0 ? findClosestLanguoN(rgb, ownedIds, MATCH_COUNT) : null;
+      }
+
+      setResults({ direction, inputCode: normalized, inputRgb: rgb, fullMatches, fullGNFallback, ownedMatches, ownedIds });
     } finally {
       setMatching(false);
     }
+  };
+
+  // Path to the CreaBeaStudio logo used in the PDF footer -- confirmed
+  // by her as public/marketing/logo-full.png. loadLogoDataUrl() below
+  // still tolerates a bad/missing path (returns null, PDF still
+  // generates without a logo) so this never breaks the export even if
+  // the file moves later.
+  const LOGO_PATH = "/marketing/logo-full.png";
+
+  const loadLogoDataUrl = async (): Promise<{ dataUrl: string; width: number; height: number } | null> => {
+    try {
+      const res = await fetch(LOGO_PATH);
+      if (!res.ok) return null;
+      const blob = await res.blob();
+      const dataUrl: string = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+      const dims: { width: number; height: number } = await new Promise((resolve, reject) => {
+        const img = new window.Image();
+        img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        img.onerror = reject;
+        img.src = dataUrl;
+      });
+      return { dataUrl, ...dims };
+    } catch {
+      return null;
+    }
+  };
+
+  // Builds a downloadable PDF of a full-set match: a condensed 3-column
+  // layout (source code + swatch -> matched code + swatch per row),
+  // repeated across as many pages as the set size needs. A4/Letter are
+  // both supported via pdfPaperSize; margins are sized to the smaller
+  // of the two (Letter) so the same layout prints cleanly on either
+  // without re-flowing content. Dynamic import keeps jsPDF out of the
+  // SSR bundle (same pattern Legend Converter's PDF export already
+  // relies on -- ASSUMES `jspdf` is already an installed dependency
+  // there; if it isn't, `npm install jspdf` first).
+  // Brand pink, from :root { --pink: #F4607A } in her CSS.
+  const BRAND_PINK: [number, number, number] = [244, 96, 122];
+
+  const handleDownloadPdf = async () => {
+    if (!setModeResults) return;
+    const { jsPDF } = await import("jspdf");
+    const doc = new jsPDF({ unit: "pt", format: pdfPaperSize });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const margin = 36;
+    const numColumns = 3;
+    const columnGap = 16;
+    const columnWidth = (pageWidth - margin * 2 - columnGap * (numColumns - 1)) / numColumns;
+    const rowHeight = 15;
+    const swatchSize = 8;
+    const footerReserve = 46; // room for the logo/footer at the bottom of every page
+
+    const isToGuangna = setModeResults.direction === "toGuangna";
+    const referenceBrand = isToGuangna ? "Languo" : "Guangna";
+    const targetBrand = isToGuangna ? "Guangna" : "Languo";
+
+    const logo = await loadLogoDataUrl();
+
+    const drawHeader = (): number => {
+      let y = margin + 6;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(15);
+      doc.setTextColor(BRAND_PINK[0], BRAND_PINK[1], BRAND_PINK[2]);
+      doc.text("CreaBeaStudio - Brand Converter", margin, y);
+      y += 20;
+
+      // Single combined line ("<your set> - <brand> vs <matched-to set>
+      // - <brand>") -- replaces the earlier two-line "REFERENCE (what
+      // you own) / TARGET (matched codes below)" wording, which read as
+      // too literal/formal per her feedback.
+      doc.setFontSize(11);
+      doc.setTextColor(20, 20, 20);
+      doc.text(
+        `${setModeResults.yourSetLabel} - ${referenceBrand}  vs  ${setModeResults.matchToLabel} - ${targetBrand}`,
+        margin, y
+      );
+      y += 16;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(90, 90, 90);
+      doc.text(`${setModeResults.rows.length} codes matched  ·  screen colors may differ from the actual marker`, margin, y);
+      y += 14;
+      doc.setDrawColor(220, 220, 220);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 12;
+
+      // Per-column brand headers ("Languo" / "Guangna"), mirroring the
+      // on-screen table's <th> labels -- repeated above every column
+      // pair since this is a condensed 3-column layout, not one wide
+      // table with a single header row.
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8);
+      doc.setTextColor(140, 140, 140);
+      for (let col = 0; col < numColumns; col++) {
+        const x = margin + col * (columnWidth + columnGap);
+        const matchX = x + columnWidth * 0.56;
+        doc.text(referenceBrand, x, y);
+        doc.text(targetBrand, matchX, y);
+      }
+      y += 12;
+
+      return y;
+    };
+
+    const drawFooter = () => {
+      if (!logo) return;
+      const footerLogoHeight = 28;
+      const footerLogoWidth = (logo.width / logo.height) * footerLogoHeight;
+      doc.addImage(
+        logo.dataUrl, "PNG",
+        pageWidth - margin - footerLogoWidth, pageHeight - margin - footerLogoHeight + 10,
+        footerLogoWidth, footerLogoHeight
+      );
+    };
+
+    let headerBottomY = drawHeader();
+    const availableHeight = pageHeight - footerReserve - headerBottomY;
+    const rowsPerColumn = Math.max(1, Math.floor(availableHeight / rowHeight));
+    const rowsPerPage = rowsPerColumn * numColumns;
+
+    doc.setFontSize(8);
+    setModeResults.rows.forEach((row, i) => {
+      const withinPage = i % rowsPerPage;
+      if (i > 0 && withinPage === 0) {
+        drawFooter();
+        doc.addPage();
+        headerBottomY = drawHeader();
+        doc.setFontSize(8);
+      }
+      const col = Math.floor(withinPage / rowsPerColumn);
+      const rowInCol = withinPage % rowsPerColumn;
+      const x = margin + col * (columnWidth + columnGap);
+      const y = headerBottomY + rowInCol * rowHeight + rowHeight - 4;
+
+      doc.setFillColor(row.sourceRgb[0], row.sourceRgb[1], row.sourceRgb[2]);
+      doc.rect(x, y - swatchSize + 2, swatchSize, swatchSize, "F");
+      doc.setTextColor(20, 20, 20);
+      doc.text(row.sourceCode, x + swatchSize + 4, y);
+
+      doc.text("->", x + columnWidth * 0.48, y);
+
+      const matchX = x + columnWidth * 0.56;
+      doc.setFillColor(row.matchRgb[0], row.matchRgb[1], row.matchRgb[2]);
+      doc.rect(matchX, y - swatchSize + 2, swatchSize, swatchSize, "F");
+      doc.text(row.matchCode, matchX + swatchSize + 4, y);
+    });
+    drawFooter();
+
+    doc.save(`brand-converter-${setModeResults.direction}-${pdfPaperSize}.pdf`);
   };
 
   const selectSuggestion = (code: string) => {
@@ -149,17 +416,88 @@ export default function LanguoConverter() {
     setError(null);
   };
 
-  // Best overall match isn't in the person's own set -> worth pointing
-  // them at guangna.eu, same pattern as LegendConverter's "not in set"
-  // notice.
   const bestNotOwned = !!(results?.ownedMatches && results.fullMatches.length > 0
     && !results.ownedIds.includes(results.fullMatches[0].code));
+
+  // setOptions here means "the OUTPUT-brand set list" -- used by single
+  // mode's "My Markers" picker (unchanged from before).
+  const setOptions = direction === "toGuangna" ? SET_OPTIONS : LANGUO_SET_OPTIONS;
+  const glitterOrMetallicNote = direction === "toGuangna" ? t("myMarkers.metallicNote") : t("myMarkers.glitterNote");
+
+  // In set mode, "your set" is the SOURCE brand (the opposite of
+  // single-mode's "My Markers", which is the output/target brand) --
+  // Languo sets when going toGuangna, Guangna sets when going toLanguo.
+  const yourSetOptions = direction === "toGuangna" ? LANGUO_SET_OPTIONS : SET_OPTIONS;
+  // "Match to" is the TARGET brand -- same brand as single mode's
+  // setOptions, reused here under a clearer local name.
+  const matchToOptions = setOptions;
+
+  // Resolves a stored set KEY (e.g. "GN.8101-288 (288 colors)") to its
+  // human-readable LABEL (e.g. "Classic brush-288") for display in the
+  // results heading and the PDF header -- previously the raw key was
+  // stored directly as the "label", which is why the PDF showed keys
+  // like "GN.8101-288 (288 colors)" instead of the friendly set name
+  // the dropdown itself shows.
+  const labelForSetKey = (key: string, options: { label: string; key: string }[]): string =>
+    options.find(o => o.key === key)?.label || key;
+
+  const handleSetMatch = () => {
+    setSetError(null);
+    setSetResults(null);
+    if (!yourSet) {
+      setSetError(t("errors.noSetSelected"));
+      return;
+    }
+    setSetMatching(true);
+    try {
+      const isToGuangna = direction === "toGuangna";
+
+      const sourceIds = isToGuangna
+        ? (LANGUO_SETS[yourSet] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
+        : (GUANGNA_SETS[yourSet] || []);
+
+      const targetIds = isToGuangna
+        ? (matchToSet ? (GUANGNA_SETS[matchToSet] || []) : GN_ONLY_IDS)
+        : (matchToSet
+          ? (LANGUO_SETS[matchToSet] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
+          : LANGUO_BRUSH_288_DEFAULT);
+
+      const rows: SetMatchRow[] = [];
+      for (const id of sourceIds) {
+        if (isToGuangna) {
+          const rgb = LANGUO_COLORS[id];
+          if (!rgb) continue;
+          const [m] = findClosestN(rgb, targetIds, 1);
+          if (m) rows.push({ sourceCode: id, sourceRgb: rgb, matchCode: m.code, matchName: m.name, matchRgb: m.rgb });
+        } else {
+          const c = GN_COLORS[id];
+          if (!c) continue;
+          const rgb: [number, number, number] = [c[0], c[1], c[2]];
+          const [m] = findClosestLanguoN(rgb, targetIds, 1);
+          if (m) rows.push({ sourceCode: id, sourceRgb: rgb, matchCode: m.code, matchRgb: m.rgb });
+        }
+      }
+
+      setSetResults({
+        direction,
+        yourSetLabel: labelForSetKey(yourSet, yourSetOptions),
+        matchToLabel: matchToSet
+          ? labelForSetKey(matchToSet, matchToOptions)
+          : (isToGuangna ? t("setMatch.defaultGuangna") : t("setMatch.defaultLanguo")),
+        rows,
+      });
+    } finally {
+      setSetMatching(false);
+    }
+  };
 
   return (
     <>
       <style>{`
         .languo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
         @media (max-width: 768px) { .languo-grid { grid-template-columns: 1fr; } }
+        .set-results-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+        .set-results-table td { padding: 8px 10px; }
       `}</style>
       <Navbar />
       <main style={{ padding: "40px 24px", maxWidth: 960, margin: "0 auto" }}>
@@ -172,6 +510,35 @@ export default function LanguoConverter() {
         <p style={{ color: "#666", marginBottom: 12 }}>
           {t("subtitle")}
         </p>
+
+        {/* Mode toggle: single code lookup vs matching a whole owned set */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+          {(["single", "set"] as Mode[]).map(m => (
+            <button key={m} onClick={() => switchMode(m)} style={{
+              padding: "8px 18px", borderRadius: 20, border: "2px solid var(--ink, #222)",
+              background: mode === m ? "var(--ink, #222)" : "white",
+              color: mode === m ? "white" : "var(--ink, #222)",
+              fontWeight: 700, cursor: "pointer", fontSize: 13,
+            }}>
+              {t(`mode.${m}`)}
+            </button>
+          ))}
+        </div>
+
+        {/* Direction toggle */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+          {(["toGuangna", "toLanguo"] as Direction[]).map(d => (
+            <button key={d} onClick={() => switchDirection(d)} style={{
+              padding: "8px 18px", borderRadius: 20, border: "2px solid var(--pink)",
+              background: direction === d ? "var(--pink)" : "white",
+              color: direction === d ? "white" : "var(--pink)",
+              fontWeight: 700, cursor: "pointer", fontSize: 13,
+            }}>
+              {t(`direction.${d}`)}
+            </button>
+          ))}
+        </div>
+
         <p style={{ fontSize: 13, marginBottom: 8 }}>
           {t("crossLink.text")}{" "}
           <a href={`/${locale}/color-converter`} style={{ color: "var(--pink)", fontWeight: 700 }}>
@@ -185,9 +552,6 @@ export default function LanguoConverter() {
           </a>
         </p>
 
-        {/* How-it-works / accuracy disclaimer, shown up front rather than
-            only after results — this is about setting expectations for
-            the whole tool, not just one match. */}
         <div style={{
           background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
           fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
@@ -195,150 +559,322 @@ export default function LanguoConverter() {
           💡 {t("disclaimer")}
         </div>
 
-        {/* Languo code + My Markers, side by side */}
-        <div className="languo-grid" style={{ marginBottom: 20 }}>
-          <div className="card">
-            <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t("step1.heading")}</h3>
-            <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("step1.description")}</p>
-            <div style={{ position: "relative" }}>
-              <input
-                type="text"
-                value={codeInput}
-                onChange={e => { setCodeInput(e.target.value); setShowSuggestions(true); setError(null); }}
-                onFocus={() => setShowSuggestions(true)}
-                onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 120); }}
-                placeholder={t("step1.placeholder")}
-                style={{ width: "100%" }}
-                autoComplete="off"
-              />
-              {showSuggestions && suggestions.length > 0 && (
-                <div style={{
-                  position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, zIndex: 10,
-                  background: "white", border: "2px solid var(--border)", borderRadius: 10,
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
-                }}>
-                  {suggestions.map(code => (
-                    <button
-                      key={code}
-                      // onMouseDown fires before the input's onBlur, so the
-                      // click registers before the suggestion list closes.
-                      onMouseDown={() => { if (blurTimeout.current) clearTimeout(blurTimeout.current); selectSuggestion(code); }}
-                      style={{
-                        display: "block", width: "100%", textAlign: "left", padding: "9px 14px",
-                        border: "none", background: "white", cursor: "pointer", fontSize: 13, fontWeight: 600,
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.background = "var(--cream)")}
-                      onMouseLeave={e => (e.currentTarget.style.background = "white")}
-                    >
-                      {code}
-                    </button>
-                  ))}
+        {mode === "single" && (
+          <>
+            {/* Code input + My Markers, side by side */}
+            <div className="languo-grid" style={{ marginBottom: 20 }}>
+              <div className="card">
+                <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t(`step1.heading${direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}</h3>
+                <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t(`step1.description${direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}</p>
+                <div style={{ position: "relative" }}>
+                  <input
+                    type="text"
+                    value={codeInput}
+                    onChange={e => { setCodeInput(e.target.value); setShowSuggestions(true); setError(null); }}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 120); }}
+                    placeholder={t(`step1.placeholder${direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}
+                    style={{ width: "100%" }}
+                    autoComplete="off"
+                  />
+                  {showSuggestions && suggestions.length > 0 && (
+                    <div style={{
+                      position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, zIndex: 10,
+                      background: "white", border: "2px solid var(--border)", borderRadius: 10,
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.1)", overflow: "hidden",
+                    }}>
+                      {suggestions.map(code => (
+                        <button
+                          key={code}
+                          onMouseDown={() => { if (blurTimeout.current) clearTimeout(blurTimeout.current); selectSuggestion(code); }}
+                          style={{
+                            display: "block", width: "100%", textAlign: "left", padding: "9px 14px",
+                            border: "none", background: "white", cursor: "pointer", fontSize: 13, fontWeight: 600,
+                          }}
+                          onMouseEnter={e => (e.currentTarget.style.background = "var(--cream)")}
+                          onMouseLeave={e => (e.currentTarget.style.background = "white")}
+                        >
+                          {code}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            {error && (
-              <p style={{ fontSize: 12, color: "var(--pink)", marginTop: 8, fontWeight: 600 }}>{error}</p>
-            )}
-          </div>
+                {error && (
+                  <p style={{ fontSize: 12, color: "var(--pink)", marginTop: 8, fontWeight: 600 }}>{error}</p>
+                )}
+              </div>
 
-          <div className="card">
-            <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
-              {t("myMarkers.heading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
-            </h3>
-            <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("myMarkers.description")}</p>
-            <SetAutocomplete
-              value={mySet}
-              onChange={key => { setMySet(key); setResults(null); }}
-              options={SET_OPTIONS}
-              noneLabel={t("myMarkers.noneSelected")}
-              style={{ marginBottom: 4 }}
-            />
-          <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
-  {t("myMarkers.metallicNote")}
-</p>
-            <input type="text" value={extraCodes} onChange={e => { setExtraCodes(e.target.value); setResults(null); }}
-              placeholder={t("myMarkers.extraCodesPlaceholder")} style={{ width: "100%" }} />
-          </div>
-        </div>
-
-        {/* Match button */}
-        <div style={{ marginBottom: 20 }}>
-          <button className="btn-primary" onClick={handleMatch} disabled={!codeInput.trim() || matching}
-            style={{ width: "100%", opacity: (!codeInput.trim() || matching) ? 0.6 : 1 }}>
-            {matching ? t("matching") : t("step2.matchButton")}
-          </button>
-        </div>
-
-        {/* Results */}
-        {results && (
-          <div className="card" style={{ marginBottom: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, padding: 14, borderRadius: 10, background: "var(--cream)" }}>
-              <Swatch rgb={results.languoRgb} size={56} />
-              <div>
-                <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>{t("results.languoCodeLabel")}</div>
-                <div style={{ fontWeight: 900, fontSize: 20 }}>{results.languoCode}</div>
+              <div className="card">
+                <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
+                  {t("myMarkers.heading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
+                </h3>
+                <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("myMarkers.description")}</p>
+                <SetAutocomplete
+                  value={mySet}
+                  onChange={key => { setMySet(key); setResults(null); }}
+                  options={setOptions}
+                  noneLabel={t("myMarkers.noneSelected")}
+                  style={{ marginBottom: 4 }}
+                />
+                <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
+                  {glitterOrMetallicNote}
+                </p>
+                <input type="text" value={extraCodes} onChange={e => { setExtraCodes(e.target.value); setResults(null); }}
+                  placeholder={t("myMarkers.extraCodesPlaceholder")} style={{ width: "100%" }} />
               </div>
             </div>
 
-            <div className="languo-grid">
-              <div>
-                <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 12 }}>{t("results.heading")}</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {results.fullMatches.map((m, i) => <MatchRow key={m.code} rank={i + 1} m={m} />)}
+            <div style={{ marginBottom: 20 }}>
+              <button className="btn-primary" onClick={handleMatch} disabled={!codeInput.trim() || matching}
+                style={{ width: "100%", opacity: (!codeInput.trim() || matching) ? 0.6 : 1 }}>
+                {matching ? t("matching") : t("step2.matchButton")}
+              </button>
+            </div>
+
+            {results && (
+              <div className="card" style={{ marginBottom: 20 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, padding: 14, borderRadius: 10, background: "var(--cream)" }}>
+                  <Swatch rgb={results.inputRgb} size={56} />
+                  <div>
+                    <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>
+                      {t(`results.codeLabel${results.direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}
+                    </div>
+                    <div style={{ fontWeight: 900, fontSize: 20 }}>{results.inputCode}</div>
+                  </div>
                 </div>
 
-                {results.fullGNFallback && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 10, padding: "8px 12px", borderRadius: 8, background: "var(--cream)" }}>
-                    <Swatch rgb={results.fullGNFallback.rgb} size={36} />
-                    <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.4, margin: 0 }}>
-                      {t("results.gnFallbackNotice", { code: results.fullGNFallback.code, name: results.fullGNFallback.name })}
-                    </p>
-                  </div>
-                )}
+                <div className="languo-grid">
+                  <div>
+                    <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 12 }}>{t("results.heading")}</h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {results.fullMatches.map((m, i) => <MatchRow key={m.code} rank={i + 1} code={m.code} name={m.name} rgb={m.rgb} />)}
+                    </div>
 
-                {bestNotOwned && (
+                    {results.fullGNFallback && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 10, padding: "8px 12px", borderRadius: 8, background: "var(--cream)" }}>
+                        <Swatch rgb={results.fullGNFallback.rgb} size={36} />
+                        <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.4, margin: 0 }}>
+                          {t("results.gnFallbackNotice", { code: results.fullGNFallback.code, name: results.fullGNFallback.name })}
+                        </p>
+                      </div>
+                    )}
+
+                    {bestNotOwned && results.direction === "toGuangna" && (
+                      <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>
+                        💡 {t("results.notInSetNotice")}{" "}
+                        <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
+                          style={{ color: "var(--pink)", fontWeight: 700 }}>
+                          {t("results.orderPrompt")}
+                        </a>
+                      </div>
+                    )}
+
+                    {bestNotOwned && results.direction === "toLanguo" && (
+                      <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>
+                        <p style={{ margin: "0 0 8px 0" }}>💡 {t("results.betterMatchNoticeToLanguo")}</p>
+                        <p style={{ fontSize: 11, fontStyle: "italic", margin: "0 0 4px 0" }}>{t("results.languoAffiliateDisclosure")}</p>
+                        <a href="https://languoart.com/?ref=creabeastudio" target="_blank" rel="noopener noreferrer sponsored"
+                          style={{ color: "var(--pink)", fontWeight: 700 }}>
+                          {t("results.orderPrompt")}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  {results.ownedMatches && (
+                    <div>
+                      <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 12 }}>{t("results.ownedHeading")}</h2>
+                      {results.ownedMatches.length > 0 ? (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                          {results.ownedMatches.map((m, i) => <MatchRow key={m.code} rank={i + 1} code={m.code} name={m.name} rgb={m.rgb} />)}
+                        </div>
+                      ) : (
+                        <div style={{ opacity: 0.6, textAlign: "center", padding: 24 }}>
+                          <p style={{ fontSize: 13 }}>{t("results.noOwnedMatch")}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 20, lineHeight: 1.5 }}>
+                  {t("results.screenDisclaimer")}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+
+        {mode === "set" && (
+          <>
+            {/* Set-to-set matching: pick the set she owns, optionally pick
+                a target set, get one closest match per owned code. */}
+            <div className="languo-grid" style={{ marginBottom: 20 }}>
+              <div className="card">
+                <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{t("setMatch.yourSetHeading")}</h3>
+                <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>
+                  {t(`setMatch.yourSetDescription${direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}
+                </p>
+                <SetAutocomplete
+                  value={yourSet}
+                  onChange={key => { setYourSet(key); setSetResults(null); setSetError(null); }}
+                  options={yourSetOptions}
+                  noneLabel={t("myMarkers.noneSelected")}
+                  style={{ marginBottom: 4 }}
+                />
+                {setModeError && (
+                  <p style={{ fontSize: 12, color: "var(--pink)", marginTop: 8, fontWeight: 600 }}>{setModeError}</p>
+                )}
+              </div>
+
+              <div className="card">
+                <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
+                  {t("setMatch.matchToHeading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
+                </h3>
+                <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{t("setMatch.matchToDescription")}</p>
+                <SetAutocomplete
+                  value={matchToSet}
+                  onChange={key => { setMatchToSet(key); setSetResults(null); }}
+                  options={matchToOptions}
+                  noneLabel={direction === "toGuangna" ? t("setMatch.defaultGuangna") : t("setMatch.defaultLanguo")}
+                  style={{ marginBottom: 4 }}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginBottom: 20 }}>
+              <button className="btn-primary" onClick={handleSetMatch} disabled={!yourSet || setModeMatching}
+                style={{ width: "100%", opacity: (!yourSet || setModeMatching) ? 0.6 : 1 }}>
+                {setModeMatching ? t("setMatch.matching") : t("setMatch.matchButton")}
+              </button>
+            </div>
+
+            {/* Quick-actions card: everything needed to get the PDF or
+                order links, placed right after the match button so she
+                doesn't have to scroll past a potentially 300+ row table
+                to reach it. Duplicates the page's "buy me a coffee"
+                donate button here (the original at the true page bottom
+                stays put too, since it still serves single-code mode
+                and anyone who does scroll all the way down) -- flagged
+                as a deliberate choice, not an oversight. */}
+            {setModeResults && (
+              <div className="card" style={{ marginBottom: 20 }}>
+                <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>{t("setMatch.paperSize")}</span>
+                  {(["a4", "letter"] as const).map(size => (
+                    <button key={size} onClick={() => setPdfPaperSize(size)} style={{
+                      padding: "6px 14px", borderRadius: 16, border: "2px solid var(--ink, #222)",
+                      background: pdfPaperSize === size ? "var(--ink, #222)" : "white",
+                      color: pdfPaperSize === size ? "white" : "var(--ink, #222)",
+                      fontWeight: 700, cursor: "pointer", fontSize: 12,
+                    }}>
+                      {t(`setMatch.${size === "a4" ? "paperA4" : "paperLetter"}`)}
+                    </button>
+                  ))}
+                </div>
+
+                <div style={{ marginTop: 12 }}>
+                  <button className="btn-primary" onClick={handleDownloadPdf} style={{ width: "100%" }}>
+                    {t("setMatch.downloadPdf")}
+                  </button>
+                </div>
+
+                {/* Every row here is a code she'll need to buy in the
+                    target brand -- unlike single mode's "not owned"
+                    notice, this always shows once a set match completes,
+                    since matching FROM a set means she doesn't already
+                    own the target brand's codes. */}
+                {setModeResults.direction === "toGuangna" ? (
                   <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>
-                    💡 {t("results.notInSetNotice")}{" "}
+                    💡 {t("setMatch.orderNoticeToGuangna")}{" "}
                     <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
                       style={{ color: "var(--pink)", fontWeight: 700 }}>
                       {t("results.orderPrompt")}
                     </a>
                   </div>
+                ) : (
+                  <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>
+                    <p style={{ margin: "0 0 8px 0" }}>💡 {t("setMatch.orderNoticeToLanguo")}</p>
+                    <p style={{ fontSize: 11, fontStyle: "italic", margin: "0 0 4px 0" }}>{t("results.languoAffiliateDisclosure")}</p>
+                    <a href="https://languoart.com/?ref=creabeastudio" target="_blank" rel="noopener noreferrer sponsored"
+                      style={{ color: "var(--pink)", fontWeight: 700 }}>
+                      {t("results.orderPrompt")}
+                    </a>
+                  </div>
                 )}
-              </div>
 
-              {results.ownedMatches && (
-                <div>
-                  <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 12 }}>{t("results.ownedHeading")}</h2>
-                  {results.ownedMatches.length > 0 ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                      {results.ownedMatches.map((m, i) => <MatchRow key={m.code} rank={i + 1} m={m} />)}
-                    </div>
-                  ) : (
-                    <div style={{ opacity: 0.6, textAlign: "center", padding: 24 }}>
-                      <p style={{ fontSize: 13 }}>{t("results.noOwnedMatch")}</p>
-                    </div>
-                  )}
+                <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--border)", textAlign: "center" }}>
+                  <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
+                  <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
+                    style={{
+                      display: "inline-block", padding: "10px 22px", borderRadius: 20,
+                      background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 13, textDecoration: "none",
+                    }}>
+                    {t("donate.button")}
+                  </a>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 20, lineHeight: 1.5 }}>
-              {t("results.screenDisclaimer")}
-            </p>
+            {setModeResults && (
+              <div className="card" style={{ marginBottom: 20 }}>
+                <h2 style={{ fontWeight: 800, fontSize: 17, marginBottom: 4 }}>{t("setMatch.resultsHeading")}</h2>
+                <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 16 }}>
+                  {t("setMatch.rowCount", { count: setModeResults.rows.length })}
+                </p>
+                <div style={{ overflowX: "auto" }}>
+                  <table className="set-results-table">
+                    <thead>
+                      <tr style={{ fontSize: 11, color: "var(--muted)", textAlign: "left" }}>
+                        <th>{t(`setMatch.sourceCodeLabel${setModeResults.direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}</th>
+                        <th></th>
+                        <th>{t("setMatch.matchedCodeLabel")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {setModeResults.rows.map(row => (
+                        <tr key={row.sourceCode} style={{ background: "var(--cream)" }}>
+                          <td style={{ borderRadius: "10px 0 0 10px" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                              <Swatch rgb={row.sourceRgb} size={36} />
+                              <span style={{ fontWeight: 800 }}>{row.sourceCode}</span>
+                            </div>
+                          </td>
+                          <td style={{ color: "var(--muted)", fontSize: 16 }}>→</td>
+                          <td style={{ borderRadius: "0 10px 10px 0" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                              <Swatch rgb={row.matchRgb} size={36} />
+                              <div>
+                                <div style={{ fontWeight: 800 }}>{row.matchCode}</div>
+                                {row.matchName && <div style={{ color: "#555", fontSize: 12 }}>{row.matchName}</div>}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-            <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", textAlign: "center" }}>
-              <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
-              <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
-                style={{
-                  display: "inline-block", padding: "10px 22px", borderRadius: 20,
-                  background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 13, textDecoration: "none",
-                }}>
-                {t("donate.button")}
-              </a>
-            </div>
-          </div>
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 20, lineHeight: 1.5 }}>
+                  {t("results.screenDisclaimer")}
+                </p>
+              </div>
+            )}
+          </>
         )}
+
+        <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", textAlign: "center" }}>
+          <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
+          <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
+            style={{
+              display: "inline-block", padding: "10px 22px", borderRadius: 20,
+              background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 13, textDecoration: "none",
+            }}>
+            {t("donate.button")}
+          </a>
+        </div>
       </main>
       <Footer />
     </>

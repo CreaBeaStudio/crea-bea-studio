@@ -2,22 +2,68 @@
 import Image from "next/image"
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
   GN_COLORS, GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, hexToRgb, rgbToHex, normalizeExtraCode,
   type MatchResult,
-} from "../../../lib/guangna";
-// lib/ lives at the project root (same convention as lib/payhip.ts),
-// so from app/[locale]/color-converter/page.tsx that's 3 levels up.
+} from "@/lib/guangna";
+import {
+  LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
+  type LanguoMatchResult,
+} from "@/lib/languo";
+import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
 //
-// NEW translation key needed under the "ColorConverter" namespace (add
-// to en.json first, then nl/de/es/fr/it): results.gnFallbackNotice
-// e.g. "Regular Guangna alternative: {code} ({name})" -- shown only
-// when the main Best Match is a High Gloss (HG-) code, since those are
-// newer/less commonly owned than the classic GN line.
+// 2026-08-04 (part 4): removed the "Search across" Guangna/Languo toggle
+// entirely -- it was redundant with "My Markers": once results are two
+// independent per-brand boxes (part 3), which brand actually matters to
+// a given person is already shown by whether THAT box has a "best match
+// from your set" section (i.e. whether they filled in anything under
+// that brand in My Markers). A separate toggle just asked the same
+// question a second time. Both boxes now always compute and render on
+// every search -- no brand gating left anywhere. targetGuangna/
+// targetLanguo state, toggleTargetBrand(), and the whole "Search
+// across" UI block are gone. selectedBrandLabel() is gone too --
+// searchButton no longer takes a {brand} param (see en.json note).
+//
+// Also: the disclaimer text no longer names "Guangna" specifically --
+// see en.json note below.
+//
+// en.json changes needed:
+//   - ColorConverter.searchButton: drop the {brand} interpolation --
+//     becomes a static string, e.g. "Find My Marker Match →"
+//   - ColorConverter.disclaimer: reword to remove "Guangna", e.g.:
+//     "Matches are calculated by finding the closest marker to your
+//      input color from each supported brand, using Delta E (CIE 1976)
+//      color distance. Because this is a digital comparison, visual
+//      results will vary depending on your screen, lighting, and paper
+//      type. Our measured color values may differ slightly from the
+//      actual ink, so please always test your markers on a scrap piece.
+//      Treat these matches as a helpful starting point rather than a
+//      perfect guarantee."
+//   - ColorConverter.matchAgainst.* (heading/guangna/languo) are now
+//     unused on this page -- safe to remove once LegendConverter (if it
+//     still has its own copy) is migrated the same way
+//   - "common" namespace (brands.guangna/.languo/.both, setsSelected)
+//     unchanged; brands.both is no longer used on THIS page specifically
+//     but may still be needed elsewhere (e.g. LegendConverter), so keep
+//     it defined
+
+type SimpleMatch = { code: string; name?: string; rgb: [number, number, number] };
+type BrandCode = { brand: "guangna" | "languo"; code: string };
+
+// Tries Guangna's code format first, then Languo's -- the two formats
+// don't overlap (Guangna: digits-only or "GN-"/"HG-" prefixed; Languo:
+// always a 2-letter prefix + hyphen + digits), so trying one first never
+// shadows a valid code from the other brand.
+function normalizeCombinedCode(token: string): BrandCode | null {
+  const g = normalizeExtraCode(token);
+  if (g) return { brand: "guangna", code: g };
+  const l = normalizeLanguoExtraCode(token);
+  if (l) return { brand: "languo", code: l };
+  return null;
+}
 
 // Plain, unprotected swatch — used for input-preview colors (the hex/rgb
 // echo, the extracted photo dominant color). These reflect what the
@@ -34,10 +80,7 @@ function Swatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) 
 // swatches in the Results column, so a browser eyedropper/color-picker
 // samples noisy pixels instead of the exact marker color. Each instance
 // gets its own filter id via useId() -- reusing a static id="noise"
-// across multiple <svg> elements on the same page is invalid HTML and
-// risks swatches referencing the wrong filter (this page can show up to
-// three ProtectedSwatch instances at once: best match + best match you
-// own + the GN fallback when the best match is High Gloss).
+// across multiple <svg> elements on the same page is invalid HTML.
 function ProtectedSwatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -73,12 +116,117 @@ function getDominantColor(dataUrl:string): Promise<[number,number,number]> {
   });
 }
 
+// Shared result box, fed brand-specific props. Renders:
+//   Best Match -> (optional) fallback notice -> (optional) owned-match
+//   box -> (optional) "not in your set, order it" notice.
+function BrandResultPanel({
+  brandName, full, fallback, owned, hasOwned,
+  orderHref, orderNoticeKey, affiliateDisclosure, t,
+}: {
+  brandName: string;
+  full: SimpleMatch;
+  fallback?: SimpleMatch | null;
+  owned: SimpleMatch | null;
+  hasOwned: boolean;
+  orderHref: string;
+  orderNoticeKey: string;
+  affiliateDisclosure?: string;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  const isHG = full.code.startsWith("HG-");
+  const matchesOwned = !!owned && owned.code === full.code;
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="card" style={{border:"2px solid var(--pink)"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
+          <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatch")}</span>
+          <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14,fontWeight:700}}>{brandName}</span>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:16}}>
+          <ProtectedSwatch rgb={full.rgb} size={72}/>
+          <div>
+            <div style={{fontWeight:900,fontSize:22,letterSpacing:"-0.5px"}}>{full.code}</div>
+            {full.name && <div style={{color:"#555",fontSize:14,marginTop:2}}>{full.name}</div>}
+          </div>
+        </div>
+        <p style={{fontSize:11,color:"var(--muted)",marginTop:10,lineHeight:1.5}}>
+          {t("results.screenDisclaimer")}
+        </p>
+        {isHG && (
+          <p style={{fontSize:11,color:"var(--muted)",marginTop:4,fontStyle:"italic"}}>
+            ✨ HG = High Gloss marker set.
+          </p>
+        )}
+        {fallback && (
+          <div style={{display:"flex",alignItems:"center",gap:12,marginTop:10,padding:"8px 12px",borderRadius:8,background:"var(--cream)"}}>
+            <ProtectedSwatch rgb={fallback.rgb} size={36}/>
+            <p style={{fontSize:12,color:"var(--muted)",lineHeight:1.4,margin:0}}>
+              {t("results.gnFallbackNotice", {code: fallback.code, name: fallback.name ??""})}
+            </p>
+          </div>
+        )}
+        {hasOwned && owned && !matchesOwned && (
+          <div style={{marginTop:12,padding:"10px 14px",borderRadius:10,background:"#fff7f9",border:"1px solid var(--pink)",fontSize:13,color:"var(--muted)"}}>
+            {affiliateDisclosure ? (
+              <>
+                <p style={{margin:"0 0 8px 0"}}>💡 {t(orderNoticeKey as any, {code: full.code} as any)}</p>
+                <p style={{fontSize:11,fontStyle:"italic",margin:"0 0 4px 0"}}>{affiliateDisclosure}</p>
+                <a href={orderHref} target="_blank" rel="noopener noreferrer sponsored" style={{color:"var(--pink)",fontWeight:700}}>
+                  {t("results.orderPrompt")}
+                </a>
+              </>
+            ) : (
+              <>
+                💡 {t(orderNoticeKey as any, {code: full.code} as any)}{" "}
+                <a href={orderHref} target="_blank" rel="noopener noreferrer" style={{color:"var(--pink)",fontWeight:700}}>
+                  {t("results.orderPrompt")}
+                </a>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      {hasOwned && owned && (
+        <div className="card" style={{border: matchesOwned ? "2px solid #4caf50" : "2px solid var(--border)"}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
+            <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatchOwned")}</span>
+            {matchesOwned
+              ? <span style={{background:"#4caf50",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.youHaveIt")}</span>
+              : <span style={{background:"#888",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.fromYourSet")}</span>}
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:16}}>
+            <ProtectedSwatch rgb={owned.rgb} size={72}/>
+            <div>
+              <div style={{fontWeight:900,fontSize:22,letterSpacing:"-0.5px"}}>{owned.code}</div>
+              {owned.name && <div style={{color:"#555",fontSize:14,marginTop:2}}>{owned.name}</div>}
+            </div>
+          </div>
+          {owned.code.startsWith("HG-") && (
+            <p style={{fontSize:11,color:"var(--muted)",marginTop:8,fontStyle:"italic"}}>
+              ✨ HG = High Gloss marker set.
+            </p>
+          )}
+        </div>
+      )}
+
+      {hasOwned && !owned && (
+        <div className="card" style={{opacity:0.6,textAlign:"center",padding:24}}>
+          <p style={{fontSize:13}}>{t("results.noOwnedMatch")}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 type InputMode = "hex"|"rgb"|"photo";
 
 export default function ColorConverter() {
   const t = useTranslations("ColorConverter");
+  const tc = useTranslations("common");
   const locale = useLocale();
   const [mode,setMode]             = useState<InputMode>("hex");
+
   const [hexInput,setHexInput]     = useState("#ff6b6b");
   const [rInput,setRInput]         = useState("255");
   const [gInput,setGInput]         = useState("107");
@@ -87,16 +235,44 @@ export default function ColorConverter() {
   const [photoName,setPhotoName]   = useState("");
   const [dominantRgb,setDominantRgb] = useState<[number,number,number]|null>(null);
   const [searching,setSearching]   = useState(false);
-  const [mySet,setMySet]           = useState<string>("");
-  const [extraCodes,setExtraCodes] = useState("");
-  const [bestFull,setBestFull]     = useState<MatchResult|null>(null);
-  const [bestFullGNFallback,setBestFullGNFallback] = useState<MatchResult|null>(null);
-  const [bestOwned,setBestOwned]   = useState<MatchResult|null>(null);
-  const [hasOwned,setHasOwned]     = useState(false);
+
+  // "My Markers": multi-select set list per brand + ONE combined
+  // extra-codes field covering both brands.
+  const [mySetsGuangna,setMySetsGuangna] = useState<string[]>([]);
+  const [mySetsLanguo,setMySetsLanguo]   = useState<string[]>([]);
+  const [myExtraCodes,setMyExtraCodes]   = useState("");
+
+  // Results: two fully independent boxes, one per brand -- ALWAYS both
+  // computed and shown now, no brand-gating toggle.
+  const [bestFullGuangna,setBestFullGuangna]             = useState<MatchResult|null>(null);
+  const [bestFullGuangnaFallback,setBestFullGuangnaFallback] = useState<MatchResult|null>(null);
+  const [bestOwnedGuangna,setBestOwnedGuangna]           = useState<MatchResult|null>(null);
+  const [hasOwnedGuangna,setHasOwnedGuangna]             = useState(false);
+
+  const [bestFullLanguo,setBestFullLanguo] = useState<LanguoMatchResult|null>(null);
+  const [bestOwnedLanguo,setBestOwnedLanguo] = useState<LanguoMatchResult|null>(null);
+  const [hasOwnedLanguo,setHasOwnedLanguo] = useState(false);
+
+  const clearResults = () => {
+    setBestFullGuangna(null);
+    setBestFullGuangnaFallback(null);
+    setBestOwnedGuangna(null);
+    setHasOwnedGuangna(false);
+    setBestFullLanguo(null);
+    setBestOwnedLanguo(null);
+    setHasOwnedLanguo(false);
+  };
+
+  const toggleGuangnaSet = (value: string) => {
+    setMySetsGuangna(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
+  };
+  const toggleLanguoSet = (value: string) => {
+    setMySetsLanguo(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
+  };
 
   const handlePhotoFile = useCallback((file:File)=>{
     const reader=new FileReader();
-    reader.onload=e=>{setPhotoDataUrl(e.target?.result as string);setPhotoName(file.name);setBestFull(null);setBestFullGNFallback(null);setBestOwned(null);setDominantRgb(null);};
+    reader.onload=e=>{setPhotoDataUrl(e.target?.result as string);setPhotoName(file.name);clearResults();setDominantRgb(null);};
     reader.readAsDataURL(file);
   },[]);
 
@@ -110,14 +286,29 @@ export default function ColorConverter() {
       ? [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0]
       : dominantRgb||[0,0,0];
 
-  const getOwnedIds = (): string[] => {
+  // Splits the ONE combined extra-codes field into per-brand id lists,
+  // using normalizeCombinedCode()'s try-Guangna-then-Languo resolution.
+  const getOwnedGuangnaIds = (): string[] => {
     const ids: string[] = [];
-    if (mySet && GUANGNA_SETS[mySet]) {
-      for (const id of GUANGNA_SETS[mySet]) { if (!ids.includes(id)) ids.push(id); }
+    for (const setKey of mySetsGuangna) {
+      const setIds = GUANGNA_SETS[setKey];
+      if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
     }
-    for (const tok of extraCodes.split(/[\s,;]+/)) {
-      const id = normalizeExtraCode(tok);
-      if (id && !ids.includes(id)) ids.push(id);
+    for (const tok of myExtraCodes.split(/[\s,;]+/)) {
+      const bc = normalizeCombinedCode(tok);
+      if (bc && bc.brand === "guangna" && !ids.includes(bc.code)) ids.push(bc.code);
+    }
+    return ids;
+  };
+  const getOwnedLanguoIds = (): string[] => {
+    const ids: string[] = [];
+    for (const setKey of mySetsLanguo) {
+      const setIds = LANGUO_SETS[setKey];
+      if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
+    }
+    for (const tok of myExtraCodes.split(/[\s,;]+/)) {
+      const bc = normalizeCombinedCode(tok);
+      if (bc && bc.brand === "languo" && !ids.includes(bc.code)) ids.push(bc.code);
     }
     return ids;
   };
@@ -134,30 +325,60 @@ export default function ColorConverter() {
       } else {
         rgb = [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0];
       }
-      const full = findClosest(rgb, GN_366_IDS);
-      setBestFull(full);
-      // Best match is a High Gloss code -- also surface the best
-      // *regular* GN match, since HG markers are newer and less
-      // commonly owned than the classic GN line. Left null (no extra
-      // line shown) whenever the best match is already a GN code.
-      setBestFullGNFallback(full.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null);
-      const ownedIds = getOwnedIds();
-      if (ownedIds.length>0) {
-        const owned = findClosest(rgb, ownedIds);
-        setBestOwned(owned);
-        setHasOwned(true);
+
+      // Guangna box -- always computed.
+      const fullG = findClosest(rgb, GN_366_IDS);
+      setBestFullGuangna(fullG);
+      setBestFullGuangnaFallback(fullG.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null);
+      const ownedGIds = getOwnedGuangnaIds();
+      if (ownedGIds.length > 0) {
+        setBestOwnedGuangna(findClosest(rgb, ownedGIds));
+        setHasOwnedGuangna(true);
       } else {
-        setBestOwned(null);
-        setHasOwned(false);
+        setBestOwnedGuangna(null);
+        setHasOwnedGuangna(false);
+      }
+
+      // Languo box -- always computed.
+      const fullL = findClosestLanguoN(rgb, LANGUO_NON_GLITTER_IDS, 1)[0] ?? null;
+      setBestFullLanguo(fullL);
+      const ownedLIds = getOwnedLanguoIds();
+      if (ownedLIds.length > 0) {
+        setBestOwnedLanguo(findClosestLanguoN(rgb, ownedLIds, 1)[0] ?? null);
+        setHasOwnedLanguo(true);
+      } else {
+        setBestOwnedLanguo(null);
+        setHasOwnedLanguo(false);
       }
     } finally { setSearching(false); }
   };
+
+  const hasAnyResult = !!bestFullGuangna || !!bestFullLanguo;
 
   return (
     <>
       <style>{`
         .converter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
         @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } }
+        .marker-set-list {
+          max-height: 180px;
+          overflow-y: auto;
+          border: 2px solid var(--border);
+          border-radius: 12px;
+          padding: 6px;
+        }
+        .marker-set-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 10px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 13px;
+        }
+        .marker-set-row:hover {
+          background: #FFF0F3;
+        }
       `}</style>
       <Navbar/>
       <main style={{padding:"40px 24px",maxWidth:960,margin:"0 auto"}}>
@@ -170,6 +391,7 @@ export default function ColorConverter() {
         <p style={{color:"#666",marginBottom:12}}>
           {t("subtitle")}
         </p>
+
         <p style={{ fontSize: 13, marginBottom: 16 }}>
           {t("crossLink.text")}{" "}
           <a href={`/${locale}/legend-converter`} style={{ color: "var(--pink)", fontWeight: 700 }}>
@@ -178,7 +400,7 @@ export default function ColorConverter() {
         </p>
 
         {/* How-it-works / accuracy disclaimer, shown up front rather than
-            only after results — same pattern as LanguoConverter. */}
+            only after results — no longer names a specific brand. */}
         <div style={{
           background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
           fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
@@ -191,23 +413,54 @@ export default function ColorConverter() {
           {/* ── LEFT ── */}
           <div style={{display:"flex",flexDirection:"column",gap:20}}>
 
-            {/* My Markers */}
+            {/* My Markers -- both brands' set lists shown together, ONE
+                combined extra-codes field for both. This is now the ONLY
+                place brand relevance is expressed -- no separate
+                "Search across" toggle. */}
             <div className="card">
               <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>{t("myMarkers.heading")} <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>{t("myMarkers.optional")}</span></h3>
               <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>{t("myMarkers.description")}</p>
-              <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.setLabel")}</label>
-              <SetAutocomplete
-                value={mySet}
-                onChange={setMySet}
-                options={SET_OPTIONS}
-                noneLabel={t("myMarkers.noneSelected")}
-                style={{ marginBottom: 4 }}
-              />
-           <p style={{ fontSize: 11, color: "var(--muted)", marginBottom: 12 }}>
-               {t("myMarkers.metallicNote")}
-            </p>
+
+              <div style={{fontWeight:700,fontSize:13,marginBottom:6}}>{tc("brands.guangna")}</div>
+              <div className="marker-set-list">
+                {SET_OPTIONS.map(s => (
+                  <label key={s.key} className="marker-set-row">
+                    <input
+                      type="checkbox"
+                      checked={mySetsGuangna.includes(s.key)}
+                      onChange={()=>toggleGuangnaSet(s.key)}
+                      style={{accentColor:"var(--pink)"}}
+                    />
+                    <span>{s.label}</span>
+                  </label>
+                ))}
+              </div>
+              {mySetsGuangna.length > 0 && (
+                <p style={{fontSize:11,color:"var(--muted)",marginTop:6}}>{tc("setsSelected", { count: mySetsGuangna.length })}</p>
+              )}
+              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}>{t("myMarkers.metallicNote")}</p>
+
+              <div style={{fontWeight:700,fontSize:13,marginBottom:6,paddingTop:8,borderTop:"1px solid var(--border)"}}>{tc("brands.languo")}</div>
+              <div className="marker-set-list">
+                {LANGUO_SET_OPTIONS.map(s => (
+                  <label key={s.key} className="marker-set-row">
+                    <input
+                      type="checkbox"
+                      checked={mySetsLanguo.includes(s.key)}
+                      onChange={()=>toggleLanguoSet(s.key)}
+                      style={{accentColor:"var(--pink)"}}
+                    />
+                    <span>{s.label}</span>
+                  </label>
+                ))}
+              </div>
+              {mySetsLanguo.length > 0 && (
+                <p style={{fontSize:11,color:"var(--muted)",marginTop:6}}>{tc("setsSelected", { count: mySetsLanguo.length })}</p>
+              )}
+              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}>{t("myMarkers.glitterNote")}</p>
+
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.extraCodesLabel")} <span style={{fontWeight:400,color:"var(--muted)"}}>{t("myMarkers.extraCodesHint")}</span></label>
-              <input type="text" value={extraCodes} onChange={e=>setExtraCodes(e.target.value)}
+              <input type="text" value={myExtraCodes} onChange={e=>setMyExtraCodes(e.target.value)}
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{width:"100%"}}/>
             </div>
 
@@ -215,7 +468,7 @@ export default function ColorConverter() {
             <div className="card">
               <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>
                 {(["hex","rgb","photo"] as InputMode[]).map(m=>(
-                  <button key={m} onClick={()=>{setMode(m);setBestFull(null);setBestFullGNFallback(null);setBestOwned(null);}} style={{
+                  <button key={m} onClick={()=>{setMode(m);clearResults();}} style={{
                     padding:"8px 18px",borderRadius:20,border:"2px solid var(--pink)",
                     background:mode===m?"var(--pink)":"white",
                     color:mode===m?"white":"var(--pink)",
@@ -305,76 +558,42 @@ export default function ColorConverter() {
           <div>
             <h2 style={{fontWeight:800,fontSize:17,marginBottom:16}}>{t("results.heading")}</h2>
 
-            {!bestFull ? (
+            {!hasAnyResult ? (
               <div className="card" style={{textAlign:"center",opacity:0.5,padding:40}}>
                 <div style={{fontSize:48,marginBottom:8}}>🎨</div>
                 <p>{t("results.emptyPrompt")}</p>
               </div>
             ) : (
-              <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                <div className="card" style={{border:"2px solid var(--pink)"}}>
-                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-                    <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatch")}</span>
-                    <span style={{background:"var(--pink)",color:"white",borderRadius:10,padding:"2px 8px",fontSize:14,fontWeight:700}}>{t("results.guangnaBadge")}</span>
-                  </div>
-                  <div style={{display:"flex",alignItems:"center",gap:16}}>
-                    <ProtectedSwatch rgb={bestFull.rgb} size={72}/>
-                    <div>
-                      <div style={{fontWeight:900,fontSize:22,letterSpacing:"-0.5px"}}>{bestFull.code}</div>
-                      <div style={{color:"#555",fontSize:14,marginTop:2}}>{bestFull.name}</div>
-                    </div>
-                  </div>
-                  <p style={{fontSize:11,color:"var(--muted)",marginTop:10,lineHeight:1.5}}>
-                    {t("results.screenDisclaimer")}
-                  </p>
-                  {bestFull.code.startsWith("HG-") && (
-                    <p style={{fontSize:11,color:"var(--muted)",marginTop:4,fontStyle:"italic"}}>
-                      ✨ HG = High Gloss marker set.
-                    </p>
-                  )}
-                  {bestFullGNFallback && (
-                    <div style={{display:"flex",alignItems:"center",gap:12,marginTop:10,padding:"8px 12px",borderRadius:8,background:"var(--cream)"}}>
-                      <ProtectedSwatch rgb={bestFullGNFallback.rgb} size={36}/>
-                      <p style={{fontSize:12,color:"var(--muted)",lineHeight:1.4,margin:0}}>
-                        {t("results.gnFallbackNotice", {code: bestFullGNFallback.code, name: bestFullGNFallback.name})}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {hasOwned && bestOwned && (
-                  <div className="card" style={{border:bestOwned.code===bestFull.code?"2px solid #4caf50":"2px solid var(--border)"}}>
-                    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-                      <span style={{fontWeight:800,fontSize:16}}>{t("results.bestMatchOwned")}</span>
-                      {bestOwned.code===bestFull.code
-                        ? <span style={{background:"#4caf50",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.youHaveIt")}</span>
-                        : <span style={{background:"#888",color:"white",borderRadius:10,padding:"2px 8px",fontSize:11,fontWeight:700}}>{t("results.fromYourSet")}</span>}
-                    </div>
-                    <div style={{display:"flex",alignItems:"center",gap:16}}>
-                      <ProtectedSwatch rgb={bestOwned.rgb} size={72}/>
-                      <div>
-                        <div style={{fontWeight:900,fontSize:22,letterSpacing:"-0.5px"}}>{bestOwned.code}</div>
-                        <div style={{color:"#555",fontSize:14,marginTop:2}}>{bestOwned.name}</div>
-                      </div>
-                    </div>
-                    {bestOwned.code!==bestFull.code && (
-                      <div style={{marginTop:12,padding:"8px 12px",borderRadius:8,background:"var(--cream)",fontSize:14,color:"var(--muted)"}}>
-                        {t("results.notInSetNotice", {code: bestFull.code})}{" "}
-                        <a href="https://www.guangna.eu" target="_blank" rel="noopener noreferrer"
-                          style={{color:"var(--pink)",fontWeight:700}}>{t("results.orderPrompt")}</a>
-                      </div>
-                    )}
-                    {bestOwned.code.startsWith("HG-") && (
-                      <p style={{fontSize:11,color:"var(--muted)",marginTop:8,fontStyle:"italic"}}>
-                        ✨ HG = High Gloss marker set.
-                      </p>
-                    )}
+              <div style={{display:"flex",flexDirection:"column",gap:28}}>
+                {bestFullGuangna && (
+                  <div>
+                    <h3 style={{fontWeight:800,fontSize:15,marginBottom:10,color:"var(--pink)"}}>{tc("brands.guangna")}</h3>
+                    <BrandResultPanel
+                      brandName={tc("brands.guangna")}
+                      full={bestFullGuangna}
+                      fallback={bestFullGuangnaFallback}
+                      owned={bestOwnedGuangna}
+                      hasOwned={hasOwnedGuangna}
+                      orderHref="https://www.guangna.eu"
+                      orderNoticeKey="results.notInSetNotice"
+                      t={t}
+                    />
                   </div>
                 )}
 
-                {hasOwned && !bestOwned && (
-                  <div className="card" style={{opacity:0.6,textAlign:"center",padding:24}}>
-                    <p style={{fontSize:13}}>{t("results.noOwnedMatch")}</p>
+                {bestFullLanguo && (
+                  <div>
+                    <h3 style={{fontWeight:800,fontSize:15,marginBottom:10,color:"var(--pink)"}}>{tc("brands.languo")}</h3>
+                    <BrandResultPanel
+                      brandName={tc("brands.languo")}
+                      full={bestFullLanguo}
+                      owned={bestOwnedLanguo}
+                      hasOwned={hasOwnedLanguo}
+                      orderHref="https://languoart.com/?ref=creabeastudio"
+                      orderNoticeKey="results.notInSetNoticeLanguo"
+                      affiliateDisclosure={t("results.languoAffiliateDisclosure")}
+                      t={t}
+                    />
                   </div>
                 )}
 

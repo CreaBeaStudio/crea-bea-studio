@@ -61,6 +61,7 @@ export default function Footer() {
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", fontSize: 13 }}>
           <a href="/create" style={linkStyle}>{t("footerCreate")}</a>
           <a href="/swatch-creator" style={linkStyle}>{t("footerSwatchCreator")}</a>
+          <a href="/mystery-decoder" style={linkStyle}>{t("footerMysteryDecoder")}</a>
           <a href="/color-converter" style={linkStyle}>{t("footerConverter")}</a>
           <a href="/legend-converter" style={linkStyle}>{t("footerLegendConverter")}</a>
           <a href="/guangna-reference" style={linkStyle}>{t("footerGuangnaReference")}</a>

@@ -85,7 +85,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { GN_COLORS, SET_OPTIONS, GUANGNA_SETS } from "@/lib/guangna";
 import { LANGUO_COLORS, LANGUO_IDS } from "@/lib/languo";
-import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
+import { LANGUO_SETS, LANGUO_SET_OPTIONS_SWATCH_CREATOR } from "@/lib/languoSets";
 import {
   COLOR_FAMILIES,
   COLOR_FAMILY_LABELS,
@@ -915,7 +915,7 @@ export default function SwatchCreator() {
           {tab === "languo-set" && (
             <>
               <SetAutocomplete
-                options={LANGUO_SET_OPTIONS}
+                options={LANGUO_SET_OPTIONS_SWATCH_CREATOR}
                 value={languoSetKey}
                 onChange={setLanguoSetKey}
                 placeholder={t("placeholders.languoSetSearch")}

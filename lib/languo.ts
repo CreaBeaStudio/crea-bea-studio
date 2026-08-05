@@ -1,14 +1,25 @@
-// Languo Art 288 Acrylic set color data + Guangna matching.
-// Source: Languo_288_final_incl_swatch.xlsx (Code + Adobe RGB columns only,
-// no color names, no usable embedded swatches).
+// Languo color data: Art 288 Acrylic + Gel Pens 0.6mm + PLUS Acrylic Gel Pens 1mm
+// Bold Tip + Languo x Qimiart Glitter.
 //
-// IMPORTANT: the source file only gives Adobe RGB. These values were
-// converted to sRGB using the same Adobe RGB (1998) -> XYZ (D65) -> sRGB
-// pipeline used to build lib/guangna.ts's GN_COLORS srgb field -- verified
-// against 15 known Adobe RGB/sRGB pairs from the Guangna master file with
-// zero rounding error before being applied here. Skipping this step is
-// what caused the original Guangna matching bugs; do not match Languo's
-// raw Adobe RGB values directly against GN_COLORS (which are sRGB).
+// rgbToLab/deltaE come from lib/guangna.ts so both directions of the
+// Languo<->Guangna converter (and any other Languo color matching) use
+// the exact same distance math -- no duplicated/potentially-drifting
+// copy of the Lab conversion or Delta E formula here.
+import { rgbToLab, deltaE } from "./guangna";
+//
+// Source (Art 288 Acrylic): Languo_288_final_incl_swatch.xlsx (Code + Adobe RGB
+// columns only, no color names, no usable embedded swatches).
+// Source (Gel Pens 0.6mm, PLUS 1mm Bold Tip, Languo x Qimiart): Update_Languo_ts.xlsx
+// (2026-08-03), consolidated by Mirjam from Languo_Gel_06.xlsx and Languo_Addition.xlsx
+// with Adobe RGB, sRGB and per-set membership columns already filled in.
+//
+// IMPORTANT: source files only give Adobe RGB. All values here were converted to
+// sRGB using the same Adobe RGB (1998) -> XYZ (D65) -> sRGB pipeline used to build
+// lib/guangna.ts's GN_COLORS srgb field -- verified against 15+ known Adobe RGB/sRGB
+// pairs from the Guangna master file and from Mirjam's own conversions with zero
+// rounding error before being applied here. Skipping this step is what caused the
+// original Guangna matching bugs; do not match Languo's raw Adobe RGB values
+// directly against GN_COLORS (which are sRGB).
 //
 // AG-251 correction (2026-07-16): the source file's (260,155,90) was
 // confirmed a typo -- the correct Adobe RGB value is (160,155,95).
@@ -24,7 +35,39 @@
 //   DS-181: Adobe (225,185,130) -> sRGB (239,186,128) -- was wrongly
 //     entered as an exact copy of LC-197's (252,245,230); LC-197 itself
 //     was re-checked and confirmed correct as-is.
- 
+//
+// 2026-08-03 merge (Gel Pens 0.6mm / PLUS 1mm Bold Tip / Languo x Qimiart):
+//   - LM-258 (Gel Pens): source Adobe RGB '190. 180, 210' (period instead of
+//     comma) -- CONFIRMED by Mirjam as (190,180,210).
+//   - GH-165 (Gel Pens): sheet's sRGB (237,133,144) didn't match converting
+//     its own Adobe RGB (210,113,141) -> (237,114,143) -- CONFIRMED by
+//     Mirjam as a manual-entry typo in the sRGB column; her re-measured
+//     sRGB (237,113,144) is within 1 unit of the computed value (rounding
+//     only). Computed value kept as-is.
+//   - GH-161 (Gel Pens): sheet's Adobe RGB (235,197,197) was itself a typo
+//     -- Mirjam measured the real value as (235,197,187) (light pinkish
+//     color, blue channel off by 10). Recomputed sRGB (248,198,188) matches
+//     her independently measured sRGB (249,198,188) within 1 unit.
+//   - No code collisions found between the Art 288 Acrylic set, Gel Pens,
+//     PLUS, or Languo x Qimiart -- all four product lines use distinct code
+//     ranges/prefixes, confirmed programmatically.
+//   - PLUS and Languo x Qimiart share the same 144 base "BG-" codes (same
+//     product family, different physical formats) -- their Adobe RGB values
+//     matched exactly for 140/144 codes (1 more matched after normalizing a
+//     missing space) and PLUS's now-resolved single value was used as the
+//     source of truth for the remaining 3 (BG-201, BG-202, BG-203).
+//   - BG-201 / BG-202 / BG-203: these three codes still have an EXTRA,
+//     unresolved duplicate row in Update_Languo_ts.xlsx's 'Qimiart' sheet
+//     with a different Adobe RGB value from the one used here (which came
+//     from the now-fixed PLUS sheet). The stray duplicate rows were not
+//     included. If those extra rows represent a real 4th color, they need
+//     a new code -- please check against the supplier/physical set.
+//   - The 72 "SG-xx" codes from the Languo x Qimiart sheet are Glitter pens
+//     (see LANGUO_GLITTER_IDS below) -- kept in LANGUO_COLORS for reference
+//     and for the 'LanguoxQimiart' set, but should be excluded from the
+//     Color/Legend/Languo-Guangna converters, the same way Guangna's
+//     Metallic markers are excluded there.
+
 export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "GB-401":[255,255,255],"BR-702":[228,221,211],"BR-706":[179,151,125],"CB-906":[109,74,68],"RY-09":[160,100,84],"RY-07":[156,52,52],
   "RY-06":[232,51,45],"RY-05":[234,90,61],"YE-126":[240,131,51],"RY-03":[250,191,93],"RY-02":[254,240,0],"RY-01":[255,250,188],
@@ -73,9 +116,93 @@ export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "DB-1612":[114,165,182],"GR-1010":[113,167,182],"GR-1013":[87,186,160],"AG-175":[157,172,145],"AG-174":[182,196,176],"GR-1011":[180,201,104],
   "GR-1012":[199,206,138],"LC-192":[238,245,225],"AG-250":[197,177,134],"BL-259":[194,201,232],"PC-817":[243,172,202],"PC-818":[224,74,122],
   "PU-319":[127,79,133],"BL-215":[27,136,204],"PU-320":[100,100,137],"PU-318":[154,161,187],"PU-321":[169,177,192],"PU-317":[187,187,208],
-  "PU-316":[215,201,222],"LC-195":[247,240,246],"LC-194":[232,245,250],"LC-193":[238,245,240],"AG-249":[228,201,138],"BL-260":[172,172,208]
+  "PU-316":[215,201,222],"LC-195":[247,240,246],"LC-194":[232,245,250],"LC-193":[238,245,240],"AG-249":[228,201,138],"BL-260":[172,172,208],
+  "BH-151":[75,105,105],"BH-152":[105,115,120],"BH-153":[130,130,120],"BH-154":[130,120,135],"BH-155":[147,132,142],"BH-156":[135,110,100],
+  "BH-157":[125,120,110],"BH-158":[110,110,130],"BH-159":[110,110,125],"CH-161":[235,200,190],"CH-162":[220,150,130],"CH-163":[200,95,80],
+  "CH-164":[195,50,50],"CH-165":[210,117,142],"CH-166":[125,168,186],"CH-167":[207,150,157],"CH-168":[185,125,115],"CH-169":[160,95,105],
+  "DB-181":[140,195,210],"DB-182":[155,195,80],"DB-183":[195,215,75],"DB-184":[250,240,55],"DB-185":[240,205,50],"DB-186":[210,160,195],
+  "DB-187":[187,175,210],"DB-188":[155,197,240],"DB-189":[200,55,135],"DC-201":[255,255,230],"DC-202":[240,245,245],"DC-203":[238,245,238],
+  "DC-204":[233,243,253],"DC-205":[245,238,245],"DC-206":[248,235,230],"DC-207":[250,245,230],"DC-208":[252,248,230],"DC-209":[245,245,240],
+  "FS-191":[247,240,230],"FS-192":[242,233,210],"FS-193":[235,220,190],"FS-194":[250,235,235],"FS-195":[240,210,190],"FS-196":[235,200,200],
+  "FS-197":[215,180,175],"FS-198":[190,170,160],"FS-199":[170,130,117],"FS-601":[247,237,244],"FS-602":[245,230,230],"FS-603":[250,242,229],
+  "FS-604":[245,230,205],"FS-605":[245,235,220],"FS-606":[240,218,203],"FS-607":[230,180,160],"FS-608":[220,157,175],"FS-609":[190,160,140],
+  "GF-401":[220,145,175],"GF-402":[225,160,125],"GF-403":[250,240,110],"GF-404":[190,210,120],"GF-405":[165,210,245],"GF-406":[140,110,170],
+  "GF-407":[225,180,190],"GF-408":[140,155,210],"GF-409":[120,110,175],"GH-161":[248,198,188],"GH-162":[219,147,125],"GH-163":[204,88,75],
+  "GH-164":[192,29,34],"GH-165":[210,113,141],"GH-166":[224,167,187],"GH-167":[207,148,155],"GH-168":[185,122,112],"GH-169":[157,88,96],
+  "GJ-211":[205,210,210],"GJ-212":[190,195,195],"GJ-213":[190,205,205],"GJ-214":[185,195,175],"GJ-215":[160,170,143],"GJ-216":[150,155,140],
+  "GJ-217":[197,190,177],"GJ-218":[190,170,157],"GJ-219":[165,150,140],"HL-701":[220,237,240],"HL-702":[190,220,230],"HL-703":[130,180,195],
+  "HL-704":[197,225,250],"HL-705":[150,190,230],"HL-706":[110,143,200],"HL-707":[50,75,125],"HL-708":[95,110,165],"HL-709":[55,65,140],
+  "HN-901":[253,250,190],"HN-902":[250,238,55],"HN-903":[235,200,45],"HN-904":[220,143,47],"HN-905":[205,90,65],"HN-906":[200,55,50],
+  "HN-907":[137,52,52],"HN-908":[115,65,55],"HN-909":[140,90,65],"JY-141":[202,202,202],"JY-143":[220,200,150],"LM-251":[240,230,243],
+  "LM-252":[220,215,235],"LM-253":[205,195,225],"LM-254":[210,210,230],"LM-255":[185,190,225],"LM-256":[182,182,215],"LM-257":[180,173,205],
+  "LM-258":[190,180,210],"LM-259":[165,155,195],"MB-101":[90,95,105],"MB-102":[100,150,160],"MB-103":[105,160,135],"MB-104":[67,80,90],
+  "MB-105":[175,165,150],"MB-106":[135,115,100],"MB-107":[140,125,100],"MB-108":[100,70,70],"MB-109":[113,83,93],"MF-301":[80,90,115],
+  "MF-302":[135,190,190],"MF-303":[105,140,105],"MF-304":[135,158,120],"MF-305":[188,165,108],"MF-306":[183,150,120],"MF-307":[155,115,90],
+  "MF-308":[145,80,90],"MF-309":[120,70,75],"MH-221":[225,185,130],"MH-222":[175,145,105],"MH-223":[150,120,85],"MH-224":[130,85,85],
+  "MH-225":[175,122,105],"MH-226":[187,150,117],"MH-227":[150,120,90],"MH-228":[125,105,90],"MH-229":[100,92,80],"ML-131":[240,230,215],
+  "ML-132":[225,220,210],"ML-133":[210,195,165],"ML-134":[200,175,140],"ML-135":[175,140,110],"ML-136":[135,115,95],"ML-137":[120,82,55],
+  "ML-138":[90,80,70],"ML-139":[65,50,42],"MS-241":[220,230,185],"MS-242":[195,205,170],"MS-243":[170,195,140],"MS-244":[145,155,100],
+  "MS-245":[135,170,140],"MS-246":[133,160,130],"MS-247":[117,120,77],"MS-248":[95,105,80],"MS-249":[55,95,65],"MT-01":[160,180,205],
+  "MT-02":[180,215,235],"MT-03":[165,205,155],"MT-04":[210,225,175],"MT-05":[230,230,150],"MT-06":[225,215,170],"MT-07":[215,180,150],
+  "MT-08":[225,180,193],"MT-09":[210,175,210],"MY-201":[125,140,160],"MY-202":[135,190,195],"MY-203":[180,205,155],"MY-204":[160,200,155],
+  "MY-205":[220,217,147],"MY-206":[220,195,145],"MY-207":[203,155,125],"MY-208":[205,125,120],"MY-209":[195,155,175],"MZ-501":[190,180,215],
+  "MZ-502":[160,138,185],"MZ-503":[140,113,170],"MZ-504":[120,110,172],"MZ-505":[95,95,155],"MZ-506":[140,90,155],"MZ-507":[160,125,180],
+  "MZ-508":[185,140,185],"MZ-509":[215,195,220],"SD-271":[250,250,200],"SD-272":[235,235,165],"SD-273":[200,215,125],"SD-274":[218,228,130],
+  "SD-275":[200,210,110],"SD-276":[190,200,100],"SD-277":[185,200,100],"SD-278":[138,165,96],"SD-279":[145,160,100],"SM-111":[255,255,255],
+  "SM-112":[240,240,240],"SM-113":[200,200,200],"SM-114":[160,160,160],"SM-115":[115,115,115],"SM-116":[95,95,95],"SM-117":[50,50,50],
+  "TF-121":[240,217,223],"TF-122":[230,180,205],"TF-123":[215,125,165],"TF-124":[203,95,150],"TF-125":[167,75,130],"TF-126":[190,60,110],
+  "TF-127":[170,70,100],"TF-128":[120,50,80],"TF-129":[90,45,65],"WH-171":[250,245,168],"WH-172":[245,240,120],"WH-173":[245,223,74],
+  "WH-174":[240,200,45],"WH-175":[230,176,42],"WH-176":[215,130,60],"WH-177":[200,170,85],"WH-178":[205,190,110],"WH-179":[225,205,130],
+  "YL-231":[185,215,210],"YL-232":[175,208,220],"YL-233":[165,185,185],"YL-234":[155,185,180],"YL-235":[125,160,155],"YL-236":[80,140,140],
+  "YL-237":[75,115,125],"YL-238":[70,115,135],"YL-239":[65,95,115],"ZG-261":[185,100,80],"ZG-262":[170,75,60],"ZG-263":[170,70,55],
+  "ZG-264":[175,60,55],"ZG-265":[160,75,85],"ZG-266":[160,70,70],"ZG-267":[150,55,55],"ZG-268":[140,65,65],"ZG-269":[110,55,55],
+  "ZS-801":[235,240,230],"ZS-802":[215,230,210],"ZS-803":[185,215,180],"ZS-804":[220,230,135],"ZS-805":[172,190,125],"ZS-806":[145,183,125],
+  "ZS-807":[115,150,110],"ZS-808":[80,140,115],"ZS-809":[85,100,85],"BG-902":[250,240,123],"BG-903":[242,210,125],"BG-904":[215,142,100],
+  "BG-906":[200,65,65],"BG-907":[130,60,60],"BG-909":[155,100,85],"BG-801":[240,245,230],"BG-803":[200,225,203],"BG-804":[215,225,125],
+  "BG-805":[190,213,110],"BG-807":[110,160,127],"BG-809":[100,135,105],"BG-701":[210,230,230],"BG-702":[145,195,210],"BG-704":[205,230,250],
+  "BG-705":[135,190,220],"BG-707":[77,95,135],"BG-709":[50,60,105],"BG-501":[190,175,205],"BG-502":[190,145,185],"BG-503":[137,115,172],
+  "BG-505":[105,115,165],"BG-506":[160,100,160],"BG-508":[200,120,170],"BG-601":[250,245,245],"BG-602":[245,230,220],"BG-603":[252,245,230],
+  "BG-604":[245,225,200],"BG-606":[243,215,190],"BG-609":[200,158,235],"BG-111":[254,254,254],"BG-112":[240,240,240],"BG-113":[202,204,206],
+  "BG-114":[150,155,160],"BG-116":[102,104,106],"BG-117":[48,48,50],"BG-121":[240,215,215],"BG-122":[232,207,222],"BG-124":[220,155,185],
+  "BG-125":[192,95,152],"BG-126":[210,115,145],"BG-128":[170,95,130],"BG-161":[225,165,160],"BG-162":[215,140,130],"BG-164":[180,45,50],
+  "BG-166":[210,120,135],"BG-167":[185,100,105],"BG-169":[170,90,100],"BG-132":[245,240,230],"BG-133":[230,220,200],"BG-135":[205,180,145],
+  "BG-136":[140,117,95],"BG-137":[165,120,100],"BG-139":[100,80,60],"BG-171":[252,249,170],"BG-173":[247,227,100],"BG-175":[230,183,95],
+  "BG-176":[225,160,75],"BG-177":[215,188,100],"BG-178":[210,190,85],"BG-181":[135,195,190],"BG-183":[220,230,135],"BG-184":[250,235,125],
+  "BG-185":[220,155,100],"BG-187":[180,170,205],"BG-189":[213,135,172],"BG-151":[75,105,100],"BG-152":[60,85,95],"BG-154":[90,80,100],
+  "BG-155":[110,90,100],"BG-157":[90,85,75],"BG-158":[50,55,78],"BG-191":[247,240,227],"BG-192":[250,240,210],"BG-193":[235,220,180],
+  "BG-196":[235,200,206],"BG-197":[220,180,185],"BG-199":[205,160,145],"BG-03":[180,212,176],"BG-204":[153,195,143],"BG-203":[162,190,103],
+  "BG-304":[145,170,105],"BG-303":[125,175,125],"BG-104":[90,100,75],"BG-02":[205,230,240],"BG-202":[140,190,190],"BG-102":[107,142,165],
+  "BG-201":[155,165,180],"BG-301":[70,85,113],"BG-101":[70,72,85],"BG-402":[225,173,143],"BG-403":[240,235,230],"BG-404":[200,218,120],
+  "BG-405":[165,210,245],"BG-407":[217,145,167],"BG-409":[155,135,180],"BG-201-L":[255,253,230],"BG-202-L":[238,245,225],"BG-203-L":[238,238,245],
+  "BG-205":[245,240,248],"BG-206":[250,238,232],"BG-209":[252,252,246],"BG-211":[208,210,212],"BG-213":[192,202,205],"BG-214":[185,195,175],
+  "BG-215":[160,170,143],"BG-217":[197,190,177],"BG-219":[160,147,133],"BG-221":[225,190,120],"BG-222":[175,145,105],"BG-225":[175,122,105],
+  "BG-226":[185,135,88],"BG-227":[150,110,80],"BG-229":[105,95,75],"BG-232":[177,207,217],"BG-233":[165,185,185],"BG-234":[155,185,185],
+  "BG-236":[83,143,143],"BG-237":[90,130,140],"BG-238":[77,120,140],"BG-241":[220,230,185],"BG-242":[196,207,170],"BG-243":[170,195,135],
+  "BG-245":[135,170,140],"BG-248":[100,120,80],"BG-249":[66,93,77],"BG-251":[240,230,240],"BG-252":[220,215,235],"BG-256":[182,183,218],
+  "BG-257":[181,172,205],"BG-258":[192,178,212],"BG-259":[160,150,190],"BG-261":[206,106,76],"BG-262":[173,85,70],"BG-263":[170,74,57],
+  "BG-265":[180,75,95],"BG-267":[155,55,55],"BG-269":[110,50,55],"BG-271":[222,232,152],"BG-272":[210,220,130],"BG-273":[165,195,90],
+  "BG-275":[183,200,95],"BG-276":[178,187,90],"BG-278":[125,165,90],"SG-01":[232,211,205],"SG-02":[235,200,200],"SG-03":[195,165,205],
+  "SG-04":[195,215,230],"SG-05":[207,227,227],"SG-06":[245,240,160],"SG-81":[230,230,235],"SG-82":[207,207,207],"SG-83":[227,215,230],
+  "SG-84":[240,220,215],"SG-85":[207,217,235],"SG-86":[230,215,197],"SG-21":[240,210,210],"SG-22":[230,180,205],"SG-23":[215,145,165],
+  "SG-24":[195,120,105],"SG-25":[170,68,85],"SG-26":[150,80,85],"SG-111":[220,233,195],"SG-112":[205,228,248],"SG-113":[230,210,230],
+  "SG-114":[235,200,210],"SG-115":[245,235,120],"SG-116":[238,213,180],"SG-71":[235,190,140],"SG-72":[227,185,77],"SG-73":[220,160,95],
+  "SG-74":[205,125,78],"SG-75":[150,105,95],"SG-76":[125,110,90],"SG-11":[200,105,160],"SG-12":[205,175,210],"SG-13":[195,225,240],
+  "SG-14":[105,110,175],"SG-15":[110,175,175],"SG-16":[155,115,85],"SG-61":[220,220,140],"SG-62":[180,195,120],"SG-63":[170,180,90],
+  "SG-64":[140,160,95],"SG-65":[110,120,80],"SG-66":[125,120,80],"SG-51":[190,220,207],"SG-52":[130,180,120],"SG-53":[150,200,180],
+  "SG-54":[110,180,165],"SG-55":[118,188,188],"SG-56":[100,145,140],"SG-91":[142,152,182],"SG-92":[170,145,165],"SG-93":[200,195,145],
+  "SG-94":[160,160,170],"SG-95":[135,145,145],"SG-96":[160,150,135],"SG-41":[180,210,225],"SG-42":[120,180,220],"SG-43":[108,180,195],
+  "SG-44":[92,125,190],"SG-45":[75,95,165],"SG-46":[85,90,155],"SG-101":[105,110,170],"SG-102":[120,105,170],"SG-103":[85,90,160],
+  "SG-104":[105,85,135],"SG-105":[155,90,155],"SG-106":[150,75,105],"SG-31":[200,50,120],"SG-32":[222,145,70],"SG-33":[245,235,100],
+  "SG-34":[170,200,80],"SG-35":[100,160,210],"SG-36":[100,110,170]
 };
- 
+
+// Glitter pens (from the Languo x Qimiart Glitter set) -- these should be
+// excluded from all color-matching converters (Color Converter, Legend
+// Converter, Languo-Guangna Converter), the same way Guangna's Metallic
+// markers are excluded, since glitter finish isn't meaningfully comparable
+// by RGB color distance.
+export const LANGUO_GLITTER_IDS: string[] = ["SG-01", "SG-02", "SG-03", "SG-04", "SG-05", "SG-06", "SG-11", "SG-12", "SG-13", "SG-14", "SG-15", "SG-16", "SG-21", "SG-22", "SG-23", "SG-24", "SG-25", "SG-26", "SG-31", "SG-32", "SG-33", "SG-34", "SG-35", "SG-36", "SG-41", "SG-42", "SG-43", "SG-44", "SG-45", "SG-46", "SG-51", "SG-52", "SG-53", "SG-54", "SG-55", "SG-56", "SG-61", "SG-62", "SG-63", "SG-64", "SG-65", "SG-66", "SG-71", "SG-72", "SG-73", "SG-74", "SG-75", "SG-76", "SG-81", "SG-82", "SG-83", "SG-84", "SG-85", "SG-86", "SG-91", "SG-92", "SG-93", "SG-94", "SG-95", "SG-96", "SG-101", "SG-102", "SG-103", "SG-104", "SG-105", "SG-106", "SG-111", "SG-112", "SG-113", "SG-114", "SG-115", "SG-116"];
+
 // Sorted ascending so any UI that lists Languo codes (e.g. the
 // autocomplete on /languo-converter) shows them in a predictable order
 // instead of source-file/object-insertion order. localeCompare with
@@ -84,3 +211,52 @@ export const LANGUO_COLORS: Record<string,[number,number,number]> = {
 export const LANGUO_IDS: string[] = Object.keys(LANGUO_COLORS).sort((a, b) =>
   a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
 );
+
+// Same ordering as LANGUO_IDS but with the Glitter pens removed -- use this
+// (not LANGUO_IDS) for any converter's autocomplete/lookup, matching the
+// Guangna converters' exclusion of Metallic markers.
+export const LANGUO_NON_GLITTER_IDS: string[] = LANGUO_IDS.filter(
+  (id) => !LANGUO_GLITTER_IDS.includes(id)
+);
+
+export type LanguoMatchResult = { code: string; rgb: [number, number, number] };
+
+// Returns the n closest Languo matches to rgb, sorted nearest-first,
+// searching only `ids`. Mirrors lib/guangna.ts's findClosestN, but
+// Languo codes have no marker "name" the way GN_COLORS entries do, so
+// LanguoMatchResult only carries code + rgb.
+// Callers are responsible for excluding Glitter pens from `ids` when
+// that's wanted (pass LANGUO_NON_GLITTER_IDS for the unrestricted
+// search, or an owned-codes list that itself should never contain
+// Glitter codes -- see normalizeLanguoExtraCode below, which already
+// refuses to resolve Glitter codes for exactly this reason).
+export function findClosestLanguoN(rgb: [number, number, number], ids: string[], n: number): LanguoMatchResult[] {
+  const labT = rgbToLab(rgb);
+  const scored: { id: string; d: number }[] = [];
+  for (const id of ids) {
+    const c = LANGUO_COLORS[id];
+    if (!c) continue;
+    const d = deltaE(labT, rgbToLab(c));
+    scored.push({ id, d });
+  }
+  scored.sort((a, b) => a.d - b.d);
+  return scored.slice(0, n).map(({ id }) => ({ code: id, rgb: LANGUO_COLORS[id] }));
+}
+
+// Normalizes a free-typed "extra Languo code" token to its LANGUO_COLORS
+// key, or null if it doesn't resolve to a real, non-Glitter entry.
+// Languo codes are always a 2-letter prefix + hyphen + 1-4 digits
+// ("BR-702", "AG-171", "DB-1610") -- the hyphen is optional in the typed
+// token ("br702" also resolves to "BR-702"). Glitter codes (the 72
+// "SG-xx" codes from the Languo x Qimiart set, distinct from the
+// Acrylic 288 "SG-1xx"/"SG-2xx" Sage/Forest Green codes that share the
+// same prefix) are deliberately excluded, same as LANGUO_GLITTER_IDS is
+// excluded everywhere else in the converters.
+export function normalizeLanguoExtraCode(token: string): string | null {
+  const t = token.trim().toUpperCase().replace(/\s+/g, "");
+  if (!t) return null;
+  const m = t.match(/^([A-Z]{2})-?(\d{1,4})$/);
+  if (!m) return null;
+  const id = `${m[1]}-${m[2]}`;
+  return LANGUO_COLORS[id] && !LANGUO_GLITTER_IDS.includes(id) ? id : null;
+}
