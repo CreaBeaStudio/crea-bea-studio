@@ -1,4 +1,59 @@
 "use client";
+// Save this file as app/[locale]/create/page.tsx
+//
+// UPDATED (2026-08-06, multi-brand): full rewrite of Step 2 (marker
+// selection) and Step 3 (preview) to support Guangna AND Languo
+// together, per Mirjam's [[multi-brand-pbn-expansion]] backend work
+// (deployed 2026-08-05, /generate-multi-way).
+//
+//  - Step 2 now shows TWO always-visible set pickers (Guangna, Languo)
+//    instead of one -- a customer can select sets from both brands at
+//    once. selectedSets (single array) is replaced by
+//    selectedGuangnaSets + selectedLanguoSets; everywhere downstream
+//    that needs "all selected sets" combines them
+//    ([...selectedGuangnaSets, ...selectedLanguoSets]) -- this is also
+//    exactly what gets sent as the API's comma-separated `sets` field,
+//    so confirm/page.tsx and submit-order/route.ts need NO changes:
+//    they already treat `sets` as an opaque string[]/string, never
+//    Guangna-specific.
+//  - The free-text "individual codes" field now accepts BOTH Guangna
+//    codes (bare digits, "GN-605", "HG-F01") and Languo codes
+//    ("BR-702", "AG-171") in the same box, comma/space separated.
+//    Validated via lib/guangna.ts's normalizeExtraCode() OR
+//    lib/languo.ts's normalizeLanguoExtraCode() per token -- both are
+//    the same real-code-table validators already used elsewhere in
+//    the codebase (ColorConverter etc.), not a new hand-rolled regex.
+//  - PreviewResult (owned/full366/natural, fixed shape) is replaced by
+//    MultiPreviewResult (owned/references/natural), matching
+//    /generate-multi-way's real response shape 1:1 (see main.py's
+//    /generate-multi-way docstring). `references` is a dict with 0-4
+//    keys ("guangna"/"paint"/"gel"/"plus"), one per brand/line the
+//    customer touches and hasn't already maxed out -- NOT a fixed
+//    owned/full366 pair anymore. The preview section maps over
+//    Object.entries(previewResult.references) instead of rendering two
+//    hardcoded panels. The old isFullPalette special-case (a single
+//    full-width slider when GN-8101-366 was selected) is dropped --
+//    with multiple possible reference brands there's no single
+//    "the customer selected the full palette" case anymore; owned +
+//    every reference panel now render uniformly in a responsive grid.
+//  - Added a short note (per Mirjam, 2026-08-05 session notes) shown
+//    when the customer has selected markers from BOTH Guangna and
+//    Languo at once, since combined-brand generation is measurably
+//    slower on the current Cloud Run sizing (~28-32s vs ~8s locally,
+//    confirmed pre-existing infra, not a regression) -- sets
+//    expectations rather than looking stuck.
+//  - "wantsFullGuide" (free full-palette-guide opt-in) is kept as a
+//    single generic checkbox shown once below whichever reference
+//    panels render, rather than tied to one specific "full366" panel
+//    as before -- still just a boolean carried through to order.json
+//    unchanged; which reference line(s) it applies to is a
+//    /generate-full-side decision for a future pass (see
+//    [[multi-brand-pbn-expansion]]'s flagged /generate-full gap).
+//
+// Everything else (crop, background tools, quality floor, draft
+// restore, paper size, email, cart/order summary, submit) is
+// unchanged from the previous version.
+
 import Navbar from "../components/Navbar";
 import LoadingCat from "../components/LoadingCat";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
@@ -11,105 +66,149 @@ import { GUANGNA_BY_NUMBER, parseEuroPrice, toUsdEstimate } from "@/lib/lemonSqu
 import type { PaperSize } from "@/lib/lemonSqueezyPricing";
 import { saveDraft, loadDraft, fileToBase64, base64ToFile } from "@/lib/createDraft";
 import { isApiErrorCode } from "@/lib/apiErrors";
+import { SET_OPTIONS as GUANGNA_SET_OPTIONS_RAW, normalizeExtraCode } from "@/lib/guangna";
 
-// UPDATED (2026-07-27):
-//  - Submit now sends a `locale` field (read from this page's own
-//    [locale] URL segment via useParams()) so submit-order/route.ts
-//    can persist it into order.json -- first step of threading the
-//    customer's language through to the post-purchase delivery email
-//    (fulfillOrder.ts / lib/email.ts still need to pick this up).
-//  - Errors coming back from our own API routes (submit-order,
-//    generate-preview) are now translated via the shared "apiErrors"
-//    namespace using the CODE the route returns (see lib/apiErrors.ts),
-//    instead of `data.error || t("...")` -- that pattern never actually
-//    hit the translated fallback since data.error was always a truthy
-//    English string from the route itself, so every error showed up in
-//    English regardless of locale. Client-detected failures (network
-//    errors caught in the `catch` blocks, never having reached a route
-//    at all) still use the existing create.step3.connectionError /
-//    create.submit.genericError copy, since those aren't route
-//    responses.
-//
-// UPDATED (2026-07-27, i18n pass): full i18n pass -- this page
-// previously had NO next-intl integration at all (no useTranslations,
-// no namespace). Per Mirjam's "go big for French" approach (same one
-// used on Swatch Creator), every visible string here now routes
-// through t() under a new "create" namespace -- step titles,
-// descriptions, warnings, error messages, button labels, the order
-// summary, and the Level labels/descriptions. MARKER_SETS (the 34
-// physical marker-set names) are deliberately left untranslated for
-// now -- flagged separately as an open question since some contain
-// plain English color words ("Blue", "Skin") rather than pure SKU
-// codes.
-//
-// UPDATED (2026-07-24): paper size choice moved here from /confirm as a
-// new Step 4 ("Your Guangna Marker Sets" -> preview -> paper size ->
-// email, which is now Step 5). Confirm no longer lets you pick paper
-// size -- it just displays what was chosen here (read-only) and lets
-// you go "back to make changes" if you want a different one. Order
-// summary card now shows the paper size + resulting price too, so the
-// summary is complete before checkout instead of only showing price at
-// /confirm.
-//
-// UPDATED (2026-07-23): pricing text throughout now reflects flat
-// paper-size pricing (see lib/lemonSqueezyPricing.ts's GUANGNA_BY_NUMBER)
-// instead of the old per-difficulty 7€/9€/11€ tiers -- difficulty is
-// still selected (via the Step 3 "bigger areas / more detail" buttons)
-// and still drives generation, it just no longer changes price, so the
-// price shown everywhere is the flat base (A4) price. The actual paper
-// choice -- and therefore the final price -- still only happens on
-// /confirm, same as before.
-//
-// Also fixes the "total so far: NaN€" cart bug: prevOrders (built by
-// confirm-page.tsx's orderAnother()) no longer carries a numeric
-// `price` field -- pricing moved from per-order difficulty tiers to a
-// paper-size choice made ON /confirm, so each previous order's real
-// price only exists as its `priceLabel` string, set at the point that
-// order actually went through checkout. totalSoFar now parses that
-// string instead of reading a `price` field that no longer exists.
-
-const MARKER_SETS = [
-  { label:"Classic brush-366", value:"GN-8101-366" },
-  { label:"Classic brush-408", value:"GN-8101-408" },
-  { label:"Classic brush-360", value:"GN-8101-360" },
-  { label:"Classic brush-288", value:"GN-8101-288" },
-  { label:"Classic brush-240", value:"GN-8101-240" },
-  { label:"Classic brush-168", value:"GN-8101-168" },
-  { label:"Classic brush-120", value:"GN-8101-120" },
-  { label:"Classic brush-100", value:"GN-8101-100" },
-  { label:"Classic brush-72",  value:"GN-8101-72"  },
-  { label:"Classic brush-60",  value:"GN-8101-60"  },
-  { label:"Classic brush-48",  value:"GN-8101-48"  },
-  { label:"Classic brush-36",  value:"GN-8101-36"  },
-  { label:"Classic brush-24",  value:"GN-8101-24"  },
-  { label:"Classic brush-12",  value:"GN-8101-12"  },
-  { label:"Classic Brush: Skin (24F)",value:"GN.8201F-24" },
-  { label:"Classic Brush: Skin (12B)",value:"GN.8201B-12" },
-  { label:"Dual tip: 240",     value:"GN.8109-240" },
-  { label:"Dual tip: 72",      value:"GN.8109-72"  },
-  { label:"Dual tip: 36",      value:"GN.8102-36"  },
-  { label:"Dual colors 84/168",value:"GN.8106-84"  },
-  { label:"Dual colors 60/120",value:"GN.8106-60"  },
-  { label:"Dual colors 30/60", value:"GN.8106-30"  },
-  { label:"Dual tip: Blue",    value:"GN.8109A-12" },
-  { label:"Dual tip: Pink",    value:"GN.8109B-12" },
-  { label:"Dual tip: Green",   value:"GN.8109C-12" },
-  { label:"Dual tip: Red",     value:"GN.8109D-12" },
-  { label:"Dual tip: Purple",  value:"GN.8109E-12" },
-  { label:"Dual tip: Yellow",  value:"GN.8109F-12" },
-  { label:"Dual tip: Warm skin",      value:"GN.8109G-12" },
-  { label:"Dual tip: Reddish brown",  value:"GN.8109H-12" },
-  { label:"Dual tip: White-Gray",     value:"GN.8109I-12" },
-  { label:"Dual tip: Tan",            value:"GN.8109J-12" },
-  { label:"Dual tip: Pinkish skin",   value:"GN.8109K-12" },
-  { label:"Macaron",                  value:"GN.8201M-24" },
+// EXPLICIT ORDER (2026-08-07, per Mirjam): Classic Brush + skin variants,
+// Dual colors, and Dual tip sets follow her exact specified sequence
+// rather than a pure numeric sort -- 366 before 408 is deliberate, and
+// the 24F/12B skin variants slot into the main Classic Brush sequence
+// rather than sitting off with the single-color dual-tip packs. Every
+// key NOT listed here (dual-tip single-color 12-packs, Macaron, High
+// Gloss) falls back to the original size-descending sort, appended
+// after all of these.
+const GUANGNA_SET_PRIORITY_ORDER: string[] = [
+  "GN.8101-366 (366 colors)",
+  "GN.8101-408 (360 colors)",
+  "GN.8101-360 (360 colors)",
+  "GN.8101-288 (288 colors)",
+  "GN.8101-240 (240 colors)",
+  "GN.8101-168 (168 colors)",
+  "GN.8101-120 (120 colors)",
+  "GN.8101-100 (100 colors)",
+  "GN.8101-72 (72 colors)",
+  "GN.8101-60 (60 colors)",
+  "GN.8101-48 (48 colors)",
+  "GN.8101-36 (36 colors)",
+  "GN.8101-24 (24 colors)",
+  "GN.8101-12 (12 colors)",
+  "GN.8201F-24 (24 colors)",
+  "GN.8201B-12 (12 colors)",
+  "GN.8106-84 (168 colors)",
+  "GN.8106-60 (120 colors)",
+  "GN.8106-30 (60 colors)",
+  "GN.8109-240 (240 colors)",
+  "GN.8109-72 (72 colors)",
+  "GN.8102-36 (36 colors)",
 ];
+
+const GUANGNA_SET_OPTIONS = [...GUANGNA_SET_OPTIONS_RAW].sort((a, b) => {
+  const ia = GUANGNA_SET_PRIORITY_ORDER.indexOf(a.key);
+  const ib = GUANGNA_SET_PRIORITY_ORDER.indexOf(b.key);
+  if (ia !== -1 && ib !== -1) return ia - ib;
+  if (ia !== -1) return -1;
+  if (ib !== -1) return 1;
+  const na = parseInt(a.label.match(/\((\d+)\s*colors?\)/i)?.[1] ?? "-1", 10);
+  const nb = parseInt(b.label.match(/\((\d+)\s*colors?\)/i)?.[1] ?? "-1", 10);
+  if (na !== nb) return nb - na;
+  return a.label.localeCompare(b.label);
+});
+import { normalizeLanguoExtraCode } from "@/lib/languo";
+
+// ── MULTI-BRAND: Languo set picker options (2026-08-06) ────────────────
+// Hardcoded here (not imported from lib/languoSets.ts) deliberately --
+// the frontend never needs each set's actual CODE membership (that
+// resolution happens server-side, in main.py's
+// _resolve_owned_ids_multi()), only the exact SET-NAME STRINGS to send
+// as `sets` tokens and a "line" tag for grouping the picker. Using the
+// exact names/line groupings straight from her real languoSets.json
+// data (confirmed matching main.py's BIGGEST_SET_IDS_BY_LINE keys for
+// the three "biggest set" names) avoids any risk of this file's Languo
+// set list silently drifting from lib/languoSets.ts's own export shape.
+// If lib/languoSets.ts's real TS export differs from this list (new
+// sets added, names changed), update this array to match -- it MUST
+// stay byte-for-byte in sync with the webservice's gn.LANGUO_SETS keys,
+// since a mismatched string here means /generate-multi-way 400s with
+// "Unrecognized set".
+//
+// UPDATED (2026-08-06, per Mirjam): imports the real token list from
+// lib/languoSets.ts instead of hardcoding it a second time here --
+// SET_OPTIONS' shape (key/label) mirrors lib/guangna.ts's own
+// SET_OPTIONS by design (per her established "mirror the Guangna
+// pattern" convention), so LANGUO_SET_OPTIONS is expected to have the
+// same {key, label} shape. `key` is treated as the backend-critical
+// token (byte-exact match to gn.LANGUO_SETS' keys) -- if this import
+// doesn't compile, it means the real export differs from that
+// assumption; check lib/languoSets.ts's actual export shape and
+// adjust the `.key`/`.label` field names below to match, rather than
+// guessing further.
+//
+// Display labels (LANGUO_PRETTY_LABELS below) and sort sizes
+// (LANGUO_SET_SIZE) are a SEPARATE, hand-curated layer on top --
+// deliberately decoupled from the import, so a cosmetic naming choice
+// never risks the backend-critical token value. If you add a new
+// Languo set to lib/languoSets.ts in the future, it'll automatically
+// appear in this picker (solves the "forgot to add it somewhere
+// else" problem) -- it'll just show its raw token as a fallback label
+// until you also add an entry to LANGUO_PRETTY_LABELS/LANGUO_SET_SIZE
+// below, which is a much smaller manual step than the old full
+// duplication.
+import { LANGUO_SETS as LANGUO_SET_OPTIONS_RAW, LANGUO_PRETTY_LABELS } from "@/lib/languoSets";
+
+type LanguoLine = "paint" | "gel" | "plus" | "qimiart";
+
+function deriveLanguoLine(token: string): LanguoLine {
+  if (/gel/i.test(token)) return "gel";
+  if (/plus/i.test(token)) return "plus";
+  if (/qimiart/i.test(token)) return "qimiart";
+  return "paint";
+}
+
+
+// Sort key (descending = largest set first, per Mirjam's request).
+// Sets without a clear numeric size (the "Series" sub-palettes) sort
+// after all numbered sets, alphabetically among themselves.
+const LANGUO_SET_SIZE: Record<string, number> = {
+  "Brush 288 Set": 288, "240 Set": 240, "192 Set": 192, "96 Set": 96,
+  "72 Set": 72, "60 Set": 60, "48 Set": 48, "36 Set": 36, "24 Set": 24,
+  "Gel 234 Set": 234, "Gel 45 Set": 45, "Gel 72 Set": 72, "Gel 99 Set": 99,
+  "Gel 168/162 Set": 168,
+  "PLUS 144 Set": 144, "PLUS 36 Set": 36, "PLUS 54 Set": 54,
+  "PLUS 72 Set": 72, "PLUS 90 Set": 90,
+};
+
+type LanguoOption = { token: string; prettyLabel: string; line: LanguoLine; size: number };
+
+// CORRECTED (2026-08-06): the real lib/languoSets.ts exports LANGUO_SETS
+// as Record<string, {line, codes}> -- a dict keyed by set name, matching
+// her raw languoSets.json data exactly -- NOT an array of {key,label}
+// the way the first guess assumed (that guess came from a TS compile
+// error, confirming the real shape rather than the assumed one).
+function buildLanguoOptions(raw: Record<string, { line: string; codes: string[] }>): LanguoOption[] {
+  const options: LanguoOption[] = Object.keys(raw).map(token => ({
+    token,
+    prettyLabel: LANGUO_PRETTY_LABELS[token] ?? token,
+    line: deriveLanguoLine(token), // ignoring raw[token].line -- deriving from the
+                                    // token itself keeps this resilient even if a
+                                    // future set's own "line" field is inconsistent
+    size: LANGUO_SET_SIZE[token] ?? -1, // -1 sorts after every numbered set
+  }));
+  return options.sort((a, b) => {
+    if (a.size !== b.size) return b.size - a.size; // large -> small
+    return a.prettyLabel.localeCompare(b.prettyLabel); // stable tiebreak
+  });
+}
+
+const LANGUO_SET_OPTIONS: LanguoOption[] = buildLanguoOptions(LANGUO_SET_OPTIONS_RAW);
+
+const LANGUO_LINE_LABELS: Record<LanguoLine, string> = {
+  paint: "Paint",
+  gel: "Gel Pens",
+  plus: "PLUS Acrylic",
+  qimiart: "x Qimiart",
+};
 
 const DEFAULT_LEVEL = "24";
 
-// Labels/descriptions now come from t("levels.*") -- see LEVEL_KEYS
-// below for the value/popular mapping this array still needs; the
-// display text itself is no longer stored here.
 const LEVEL_KEYS: Record<string, { labelKey: string; descKey: string; popular?: boolean }> = {
   "15": { labelKey: "levels.beginner",     descKey: "levels.beginnerDesc" },
   "24": { labelKey: "levels.intermediate", descKey: "levels.intermediateDesc", popular: true },
@@ -121,27 +220,18 @@ function priceFor(p: PaperSize) {
   return GUANGNA_BY_NUMBER[p === "letter" ? "us" : "a4"].price;
 }
 
-// Maps the create page's level selector onto the generation service's
-// region-cap difficulty tiers (see webservice's DIFFICULTY_PRESETS,
-// 2026-07-11).
 const LEVEL_TO_DIFFICULTY: Record<string, string> = {
   "15": "beginner",
   "24": "standard",
   "36": "advanced",
 };
 
-// ── QUALITY FLOOR: reject uploads below this on the shorter side.
 const MIN_PHOTO_DIMENSION = 1200;
-
-// ── CROP: aspect ratio presets shown as quick-select buttons ──────────────
 const BG_TOOLS_ENABLED = false;
 
-// Matches confirm-page.tsx's OrderItem shape exactly -- both pages
-// round-trip this through URL params via prevOrders, so they must
-// agree on what fields exist. paperSize is now chosen here (Step 4)
-// rather than on /confirm, but the field still lives on OrderItem
-// since /confirm is what actually builds each finished OrderItem when
-// pushing to prevOrders (see its orderAnother()).
+// OrderItem/prevOrders round-trip through URL params unchanged -- `sets`
+// stays a plain string[] (now containing a mix of Guangna + Languo set
+// tokens), so confirm/page.tsx's own OrderItem type needs NO change.
 type OrderItem = {
   photoName:  string;
   level:      string;
@@ -152,15 +242,19 @@ type OrderItem = {
   indPens:    string;
 };
 
-// Preview response shape, matching webservice's /generate-three-way
-// JSON (see main.py's _branch_json()/_serialize_legend()). Only the
-// fields the create page actually uses are declared here.
+// ── MULTI-BRAND: matches /generate-multi-way's real response shape
+// (see main.py's /generate-multi-way + pbn_guangna_generate.py's
+// generate_multi_way()) -- NOT the old fixed owned/full366/natural
+// shape. `references` has 0-4 keys, one per brand/line the customer
+// touches that isn't already at its biggest set. ─────────────────────
 type LegendEntry = {
   number: number;
   rgb: number[];
   pixel_area: number;
   marker_id?: string;
   marker_name?: string;
+  marker_ids?: string[];
+  marker_names?: string[];
 };
 type PreviewBranch = {
   outline_png_base64: string;
@@ -175,28 +269,20 @@ type UpsellEntry = {
   marker_rgb: number[];
   region_count: number;
 };
-type PreviewResult = {
+type ReferenceBranch = {
+  result: PreviewBranch;
+  upsell: UpsellEntry[];
+};
+type MultiPreviewResult = {
   owned: PreviewBranch | null;
-  full366: PreviewBranch | null;
+  references: Record<string, ReferenceBranch>;
   natural: PreviewBranch | null;
-  upsell: UpsellEntry[] | null;
   generation_seconds: number;
 };
 
-function validateGnCode(code: string): boolean {
-  const num = parseInt(code.replace(/^GN-?/i, ""), 10);
-  return !isNaN(num) && num >= 600 && num <= 965;
-}
-
-// Picks the N markers that cover the most pixel area in this branch's
-// result, so the swatches shown are the colors that actually dominate
-// the design -- not just the first N printed numbers, which could all
-// be tiny background-detail regions. legend_data has one entry per
-// PRINTED number (a marker can repeat across many numbers), so entries
-// sharing a marker_id are combined by summing pixel_area before
-// ranking. Entries without a marker_id (shouldn't happen for
-// owned/full366, only for the natural branch which isn't shown here)
-// are skipped defensively.
+// Picks the N markers covering the most pixel area in a branch's legend
+// -- unchanged logic from before, just no longer Guangna-specific
+// (marker_id can now be any brand's code).
 function topMarkers(legend: LegendEntry[] | undefined, n: number, exclude?: Set<string>): LegendEntry[] {
   if (!legend) return [];
   const byMarker = new Map<string, LegendEntry & { total_area: number }>();
@@ -236,23 +322,27 @@ function MarkerSwatches({ legend, exclude }: { legend: LegendEntry[] | undefined
   );
 }
 
-// Converts the free-text individual marker codes field ("603, 648, 712"
-// or "GN-603, gn-648") into the comma-separated "GN-xxx" form the
-// generation service's extra_codes field expects.
-function toApiExtraCodes(raw: string): string {
+// ── MULTI-BRAND: replaces toApiExtraCodes(). Normalizes each free-text
+// token against BOTH real code tables (Guangna via normalizeExtraCode --
+// handles bare-digit GN codes and HG- codes; Languo via
+// normalizeLanguoExtraCode -- handles the 2-letter-prefix codes,
+// excludes Glitter). A token that resolves against neither is dropped
+// here (validateIndPensMulti below is what surfaces the error to the
+// customer; this function's job is just building the API payload from
+// whatever DID validate). ─────────────────────────────────────────────
+function normalizeMultiExtraCode(token: string): string | null {
+  return normalizeExtraCode(token) || normalizeLanguoExtraCode(token);
+}
+function toApiExtraCodesMulti(raw: string): string {
   return raw
     .split(/[,\s]+/)
     .map(c => c.trim())
     .filter(Boolean)
-    .map(c => {
-      const num = c.replace(/^GN-?/i, "");
-      return `GN-${num}`;
-    })
+    .map(normalizeMultiExtraCode)
+    .filter((c): c is string => Boolean(c))
     .join(",");
 }
 
-// ── CROP: centers a crop box at the chosen aspect ratio when first opened
-// or when the aspect preset changes ─────────────────────────────────────
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop({ unit: "%", width: 90 }, aspect, mediaWidth, mediaHeight),
@@ -261,9 +351,6 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
   );
 }
 
-// ── CROP: draws the selected crop region (in displayed-image pixel units)
-// onto a canvas at the photo's full original resolution, then exports it
-// as a Blob. Standard react-image-crop pattern. ─────────────────────────
 async function getCroppedBlob(
   image: HTMLImageElement,
   crop: { x: number; y: number; width: number; height: number },
@@ -295,16 +382,9 @@ function CreateInner() {
   const tApiErrors = useTranslations("apiErrors");
   const router = useRouter();
   const params = useSearchParams();
-  // Route-segment locale ([locale] in app/[locale]/create/page.tsx) --
-  // distinct from `params` above, which is the query-string reader.
-  // Sent along at submit time so submit-order/route.ts can persist it
-  // into order.json for the eventual delivery-email locale wiring.
   const routeParams = useParams();
   const locale = (Array.isArray(routeParams?.locale) ? routeParams.locale[0] : routeParams?.locale) as string || "en";
 
-  // Aspect preset labels: only "Free" is actual text (t("step1.cropper.aspectFree"));
-  // the ratio strings (1:1, 4:3, 16:9) are numeric notation, not language, so they
-  // stay as plain data here rather than translation keys.
   const ASPECT_PRESETS = [
     { label: t("step1.cropper.aspectFree"), value: undefined },
     { label: "1:1",  value: 1 },
@@ -322,7 +402,13 @@ function CreateInner() {
   const [email, setEmail]           = useState("");
   const [level, setLevel]           = useState(DEFAULT_LEVEL);
   const [paperSize, setPaperSize]   = useState<PaperSize>("a4");
-  const [selectedSets, setSelectedSets] = useState<string[]>([]);
+  // ── MULTI-BRAND: split from the old single `selectedSets` array so
+  // Step 2's two picker lists each have their own checkbox state.
+  // Combined via [...selectedGuangnaSets, ...selectedLanguoSets]
+  // everywhere a flat list is needed downstream (draft persistence,
+  // the API's `sets` field, URL params, order summary). ──────────────
+  const [selectedGuangnaSets, setSelectedGuangnaSets] = useState<string[]>([]);
+  const [selectedLanguoSets, setSelectedLanguoSets]   = useState<string[]>([]);
   const [individualPens, setIndividualPens] = useState("");
   const [indPenError, setIndPenError]       = useState("");
   const [errorMsg, setErrorMsg]     = useState("");
@@ -330,50 +416,19 @@ function CreateInner() {
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  // ── QUALITY FLOOR: set when a dropped/selected photo is smaller than
-  // MIN_PHOTO_DIMENSION on its shorter side; the file is rejected (not
-  // set as the working photo) and this message shown instead. ─────────
   const [photoDimError, setPhotoDimError] = useState("");
-
-  // ── QUALITY FLOOR (2026-07-24): a too-small photo no longer blocks
-  // outright -- it's held here (not yet accepted as the working photo)
-  // while photoDimError's warning is shown with a "continue anyway?"
-  // choice, same pattern as showNoSetsWarning below. Cleared either by
-  // acceptPhoto() (continuing) or by discarding it (choosing a
-  // different photo).
   const [pendingSmallPhoto, setPendingSmallPhoto] = useState<{ file: File; url: string; width: number; height: number } | null>(null);
-
-  // ── FULL GUIDE (2026-07-17): opt-in checkbox on the full366 upsell
-  // panel -- "also prepare my free complete palette guide". Unchecked
-  // by default.
   const [wantsFullGuide, setWantsFullGuide] = useState(false);
 
-  // ── PREVIEW: required generation step before Submit unlocks, unless
-  // skipped -- see SKIP PREVIEW below. ──────────────────────────────────
-  const [previewResult, setPreviewResult]   = useState<PreviewResult | null>(null);
+  const [previewResult, setPreviewResult]   = useState<MultiPreviewResult | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [previewError, setPreviewError]     = useState("");
   const [previewStale, setPreviewStale]     = useState(false);
-  const [showNoSetsWarning, setShowNoSetsWarning] = useState(false);
-  const [previousPreviewResult, setPreviousPreviewResult] = useState<PreviewResult | null>(null);
+  const [previousPreviewResult, setPreviousPreviewResult] = useState<MultiPreviewResult | null>(null);
   const [adjustmentMade, setAdjustmentMade] = useState(false);
-
-  // ── SKIP PREVIEW (2026-07-23): lets a customer who already knows
-  // what they want order directly, without waiting on generation.
-  // Reset whenever a new photo is uploaded (a fresh photo deserves a
-  // fresh decision) and, like previewStale, doesn't need to be reset on
-  // every input change -- if they change their mind and skip again
-  // after tweaking sets/level, that's still a valid "I know what I
-  // want" choice.
   const [previewSkipped, setPreviewSkipped] = useState(false);
-
-  // ── DRAFT PERSISTENCE: brief confirmation shown when the photo comes
-  // back from a restored draft (vs. a fresh upload), so it's clear
-  // what just happened rather than a photo silently appearing.
   const [photoRestoredNotice, setPhotoRestoredNotice] = useState(false);
 
-  // ── CROP: original upload kept separate from the (possibly cropped)
-  // working version, so re-cropping always starts from full quality ──────
   const [originalPhoto, setOriginalPhoto]   = useState<File|null>(null);
   const [originalPhotoUrl, setOriginalPhotoUrl] = useState("");
   const [showCropper, setShowCropper]       = useState(false);
@@ -382,7 +437,6 @@ function CreateInner() {
   const [aspect, setAspect]                 = useState<number | undefined>(undefined);
   const cropImgRef = useRef<HTMLImageElement>(null);
 
-  // ── BACKGROUND TOOLS: remove / blur ─────────────────────────────────
   const [bgProcessing, setBgProcessing] = useState<"remove" | "blur" | null>(null);
   const [bgError, setBgError]           = useState("");
 
@@ -394,16 +448,6 @@ function CreateInner() {
     const pIndPens    = params.get("indPens");
     const pPrevOrders = params.get("prevOrders");
 
-    // confirm's two "back to /create" actions look almost identical in
-    // their params, but differ in one telling way: goBack() ("make
-    // changes") always includes `level`, since it's editing the order
-    // that's already fully filled out; orderAnother() deliberately
-    // omits it, since it's starting a fresh item. That's the existing
-    // signal (no new param needed) for whether landing here should
-    // restore the previous photo (editing) or not (a genuinely new
-    // item, where restoring the OLD photo would be actively wrong).
-    // Bare navigation with no params at all (e.g. back from /examples)
-    // restores everything, same as editing.
     const cameFromConfirm = pEmail !== null || pSets !== null || pIndPens !== null || pPrevOrders !== null;
     const isEditingExisting = pLevel !== null;
     const restoreFromDraft = !cameFromConfirm || isEditingExisting;
@@ -411,16 +455,28 @@ function CreateInner() {
 
     setEmail(pEmail ?? draft?.email ?? "");
     setLevel(pLevel && pLevel !== "reset" ? pLevel : (draft?.level ?? DEFAULT_LEVEL));
-    // paperSize restore is intentionally NOT gated by the
-    // editing-vs-new distinction above: whether you're editing an
-    // existing order or starting a fresh one via "order another",
-    // carrying over the last-chosen paper size is a reasonable
-    // default either way (same convenience as email/sets carrying
-    // over in orderAnother()). Falls back to the "a4" initial state
-    // when no paperSize param is present at all.
     if (pPaperSize === "a4" || pPaperSize === "letter") setPaperSize(pPaperSize);
-    if (pSets) setSelectedSets(pSets.split("|").filter(Boolean));
-    else if (draft?.selectedSets) setSelectedSets(draft.selectedSets);
+
+    // ── MULTI-BRAND: pSets (from confirm's goBack/orderAnother, or a
+    // restored draft) is a flat combined list -- split it back into
+    // Guangna vs Languo buckets for the two picker lists' checkbox
+    // state, using each option list's own known labels as the
+    // classifier (a token not found in either is dropped rather than
+    // guessed at).
+    const guangnaLabels = new Set(GUANGNA_SET_OPTIONS.map(o => o.key));
+    const languoLabels = new Set(LANGUO_SET_OPTIONS.map(o => o.token));
+    const splitSets = (list: string[]) => ({
+      guangna: list.filter(s => guangnaLabels.has(s)),
+      languo: list.filter(s => languoLabels.has(s)),
+    });
+    if (pSets) {
+      const { guangna, languo } = splitSets(pSets.split("|").filter(Boolean));
+      setSelectedGuangnaSets(guangna);
+      setSelectedLanguoSets(languo);
+    } else if (draft?.selectedGuangnaSets || draft?.selectedLanguoSets) {
+      setSelectedGuangnaSets(draft.selectedGuangnaSets ?? []);
+      setSelectedLanguoSets(draft.selectedLanguoSets ?? []);
+    }
     if (pIndPens) setIndividualPens(pIndPens);
     else if (draft?.individualPens) setIndividualPens(draft.individualPens);
     if (pPrevOrders) {
@@ -429,8 +485,6 @@ function CreateInner() {
     if (draft?.wantsFullGuide) setWantsFullGuide(true);
     if (draft?.previewSkipped) setPreviewSkipped(true);
 
-    // The photo is the one field that can NEVER arrive via URL params --
-    // this is the only path that restores it.
     if (draft?.photoBase64 && draft.photoName) {
       base64ToFile(draft.photoBase64, draft.photoName, draft.photoType || "image/jpeg")
         .then(file => {
@@ -446,15 +500,16 @@ function CreateInner() {
     }
   }, []);
 
-  // ── DRAFT PERSISTENCE: keeps sessionStorage in sync with the working
-  // state so a detour to /examples (which customers are actively
-  // encouraged to visit before finishing an order, to see the
-  // resolution comparison) or an accidental navigation away doesn't
-  // lose the upload. Split into two effects so typing in the email
-  // field doesn't re-encode the photo to base64 on every keystroke --
-  // that only happens when the photo itself actually changes; the
-  // cached result lives in photoDraftRef and gets reused by the
-  // lighter-weight effect below. ─────────────────────────────────────
+  // NEW (2026-08-06): fire-and-forget pre-warm ping, sent as soon as
+  // the page mounts -- well before the customer picks any markers or
+  // clicks "Generate". Gives Cloud Run a head start spinning up an
+  // instance during the time spent filling out the form. Deliberately
+  // NOT awaited -- this must never block or slow down the page itself,
+  // it's pure best-effort.
+  useEffect(() => {
+    fetch("/api/warm-preview").catch(() => {});
+  }, []);
+
   const photoDraftRef = useRef<{ base64: string; name: string; type: string } | null>(null);
 
   const persistDraft = () => {
@@ -462,7 +517,9 @@ function CreateInner() {
       photoBase64: photoDraftRef.current?.base64,
       photoName: photoDraftRef.current?.name,
       photoType: photoDraftRef.current?.type,
-      email, level, selectedSets, individualPens, wantsFullGuide, previewSkipped,
+      email, level,
+      selectedGuangnaSets, selectedLanguoSets,
+      individualPens, wantsFullGuide, previewSkipped,
     });
   };
 
@@ -487,14 +544,8 @@ function CreateInner() {
   useEffect(() => {
     persistDraft();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email, level, selectedSets, individualPens, wantsFullGuide, previewSkipped]);
+  }, [email, level, selectedGuangnaSets, selectedLanguoSets, individualPens, wantsFullGuide, previewSkipped]);
 
-  // ── PREVIEW: any change to what would be generated invalidates the
-  // last preview. Only fires once a preview actually exists -- doesn't
-  // do anything on initial mount or while the user is still making
-  // their first round of choices. paperSize deliberately isn't in this
-  // list -- it doesn't affect generation, only the final PDF layout, so
-  // changing it shouldn't force a fresh preview. ───────────────────────
   useEffect(() => {
     if (previewResult) {
       setPreviewStale(true);
@@ -502,11 +553,9 @@ function CreateInner() {
       setAdjustmentMade(false);
       setWantsFullGuide(false);
     }
-  }, [photo, selectedSets, individualPens, level]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photo, selectedGuangnaSets, selectedLanguoSets, individualPens, level]);
 
-  // ── QUALITY FLOOR: finishes accepting a photo once it has passed (or
-  // skipped, e.g. undecodable format) the dimension check. This is the
-  // same "new photo" reset handleFile always did. ─────────────────────
   const acceptPhoto = (file: File, url: string) => {
     setPhotoDimError("");
     setPhoto(file);
@@ -520,7 +569,6 @@ function CreateInner() {
     setPreviewResult(null);
     setPreviewStale(false);
     setPreviewError("");
-    setShowNoSetsWarning(false);
     setPreviousPreviewResult(null);
     setAdjustmentMade(false);
     setWantsFullGuide(false);
@@ -554,17 +602,12 @@ function CreateInner() {
     img.src = url;
   };
 
-  // ── QUALITY FLOOR: user chose "continue anyway" on a below-recommended
-  // photo -- accept it as the working photo like any other. ───────────
   const continueWithSmallPhoto = () => {
     if (!pendingSmallPhoto) return;
     acceptPhoto(pendingSmallPhoto.file, pendingSmallPhoto.url);
     setPendingSmallPhoto(null);
   };
 
-  // ── QUALITY FLOOR: user chose to pick a different photo instead --
-  // discard the pending one, clear the warning, nothing becomes the
-  // working photo. ─────────────────────────────────────────────────────
   const discardSmallPhoto = () => {
     if (pendingSmallPhoto) URL.revokeObjectURL(pendingSmallPhoto.url);
     setPendingSmallPhoto(null);
@@ -577,7 +620,6 @@ function CreateInner() {
     if (f) handleFile(f);
   }, []);
 
-  // ── CROP: handlers ───────────────────────────────────────────────────
   const onCropImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
     if (aspect) {
@@ -618,8 +660,6 @@ function CreateInner() {
     setBgError("");
   };
 
-  // ── BACKGROUND TOOLS: calls our own /api/photo-tools route, which
-  // proxies to the separate Python service. ────────────────────────────
   const applyBackgroundAction = async (action: "remove" | "blur") => {
     if (!photo) return;
     setBgProcessing(action);
@@ -648,17 +688,25 @@ function CreateInner() {
     }
   };
 
-  const toggleSet = (value: string) => {
-    setSelectedSets(prev =>
+  const toggleGuangnaSet = (value: string) => {
+    setSelectedGuangnaSets(prev =>
+      prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
+    );
+  };
+  const toggleLanguoSet = (value: string) => {
+    setSelectedLanguoSets(prev =>
       prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
     );
   };
 
+  // ── MULTI-BRAND: validates every free-text token against BOTH brands'
+  // real code tables (see normalizeMultiExtraCode above). A token that
+  // resolves against neither is reported as invalid, same UX as before.
   const validateIndPens = (val: string) => {
     setIndividualPens(val);
     if (!val.trim()) { setIndPenError(""); return; }
     const codes = val.split(/[,\s]+/).filter(Boolean);
-    const invalid = codes.filter(c => !validateGnCode(c));
+    const invalid = codes.filter(c => !normalizeMultiExtraCode(c));
     if (invalid.length > 0) {
       setIndPenError(t("step2.invalidCodes", { codes: invalid.join(", ") }));
     } else {
@@ -667,41 +715,63 @@ function CreateInner() {
   };
 
   const currentLevelInfo = LEVEL_KEYS[level];
-  const hasMarkersSelected = selectedSets.length > 0 || individualPens.trim().length > 0;
+  const allSelectedSets = [...selectedGuangnaSets, ...selectedLanguoSets];
+  const hasMarkersSelected = allSelectedSets.length > 0 || individualPens.trim().length > 0;
+
+  // ── MULTI-BRAND: "bear with me, this combo takes a bit longer" note
+  // -- shown when the customer has touched BOTH brands at once (either
+  // via set pickers or the free-text field), matching Mirjam's
+  // 2026-08-05 note on combined-brand generation being slower on the
+  // current Cloud Run sizing.
+  const extraCodesResolved = individualPens.trim()
+    ? individualPens.split(/[,\s]+/).filter(Boolean).map(normalizeMultiExtraCode).filter(Boolean) as string[]
+    : [];
+  const hasGuangnaTouch = selectedGuangnaSets.length > 0 || extraCodesResolved.some(c => c.startsWith("GN-") || c.startsWith("HG-"));
+  const hasLanguoTouch = selectedLanguoSets.length > 0 || extraCodesResolved.some(c => !c.startsWith("GN-") && !c.startsWith("HG-"));
+  const isCrossBrand = hasGuangnaTouch && hasLanguoTouch;
+
   const selectedMarkersLabel = (() => {
-    const setLabels = selectedSets
-      .map(v => MARKER_SETS.find(s => s.value === v)?.label)
-      .filter(Boolean) as string[];
+    const setLabels = [
+      ...selectedGuangnaSets.map(v => GUANGNA_SET_OPTIONS.find(s => s.key === v)?.label),
+      ...selectedLanguoSets.map(v => LANGUO_SET_OPTIONS.find(s => s.token === v)?.prettyLabel ?? v),
+    ].filter(Boolean) as string[];
     const parts = [...setLabels];
-    const extraCodes = toApiExtraCodes(individualPens).split(",").filter(Boolean);
-    if (extraCodes.length) parts.push(t("step3.individualMarkers", { count: extraCodes.length }));
+    if (extraCodesResolved.length) parts.push(t("step3.individualMarkers", { count: extraCodesResolved.length }));
     return parts.join(", ");
   })();
-  const isFullPalette = selectedSets.includes("GN-8101-366");
 
-  // Shared: translates a code the route returned via lib/apiErrors.ts's
-  // whitelist, falling back to a generic message for anything else
-  // (an older deploy of a route, or a code this list hasn't caught up
-  // with yet) -- never displays a raw route string directly.
   const translateApiError = (code: unknown): string =>
     isApiErrorCode(code) ? tApiErrors(code) : tApiErrors("generic");
 
-  const generatePreview = async (overrideSets?: string[]) => {
+  // ── MULTI-BRAND: overrideGuangna/overrideLanguo replace the old
+  // single overrideSets param, kept for signature compatibility though
+  // nothing calls it with overrides anymore now that the "use full
+  // Guangna palette" quick action is gone (see FIX note below). ──────
+  //
+  // FIX (2026-08-06, per Mirjam): selecting NO markers at all used to
+  // silently fall back to matching against Guangna 366 -- wrong; it
+  // should generate the "natural" branch instead (unconstrained
+  // clustering, no marker snapping at all), which is exactly what
+  // /generate-multi-way already does server-side whenever owned_ids
+  // resolves empty (see main.py's generate_multi_way: `include_natural
+  // = not owned_ids`). So the fix here is just to STOP blocking/
+  // defaulting on an empty selection -- let the call through with
+  // empty sets/extraCodes, and let the backend's own natural-fallback
+  // logic do the right thing. The old block-and-offer-full-366 UI is
+  // removed entirely (see the Step 3 JSX below).
+  const generatePreview = async (overrideGuangna?: string[], overrideLanguo?: string[]) => {
     if (!photo || indPenError) return;
-    const setsToUse = overrideSets ?? selectedSets;
-    if (setsToUse.length === 0 && !individualPens.trim()) {
-      setShowNoSetsWarning(true);
-      return;
-    }
-    setShowNoSetsWarning(false);
-    if (overrideSets) setSelectedSets(overrideSets);
+    const gSets = overrideGuangna ?? selectedGuangnaSets;
+    const lSets = overrideLanguo ?? selectedLanguoSets;
+    if (overrideGuangna) setSelectedGuangnaSets(overrideGuangna);
+    if (overrideLanguo) setSelectedLanguoSets(overrideLanguo);
     setPreviewLoading(true);
     setPreviewError("");
     try {
       const formData = new FormData();
       formData.append("image", photo);
-      formData.append("sets", setsToUse.join(","));
-      formData.append("extraCodes", toApiExtraCodes(individualPens));
+      formData.append("sets", [...gSets, ...lSets].join(","));
+      formData.append("extraCodes", toApiExtraCodesMulti(individualPens));
       formData.append("difficulty", LEVEL_TO_DIFFICULTY[level] || "standard");
 
       const res = await fetch("/api/generate-preview", { method: "POST", body: formData });
@@ -725,17 +795,12 @@ function CreateInner() {
     }
   };
 
-  // ── SKIP PREVIEW: lets someone who already knows what they want order
-  // without waiting on generation. Still requires a photo + valid
-  // marker input, same as generating a preview would -- just doesn't
-  // require the actual preview call. ────────────────────────────────────
+  // FIX (2026-08-06): skip-preview no longer requires markers selected
+  // either -- consistent with generatePreview above, an empty selection
+  // is a valid choice (natural/unconstrained generation at order time),
+  // not an error state to block.
   const skipPreview = () => {
     if (!photo || indPenError) return;
-    if (selectedSets.length === 0 && !individualPens.trim()) {
-      setShowNoSetsWarning(true);
-      return;
-    }
-    setShowNoSetsWarning(false);
     setPreviewSkipped(true);
   };
 
@@ -747,8 +812,8 @@ function CreateInner() {
     try {
       const formData = new FormData();
       formData.append("image", photo);
-      formData.append("sets", selectedSets.join(","));
-      formData.append("extraCodes", toApiExtraCodes(individualPens));
+      formData.append("sets", allSelectedSets.join(","));
+      formData.append("extraCodes", toApiExtraCodesMulti(individualPens));
       formData.append("difficulty", difficulty);
 
       const res = await fetch("/api/generate-preview", { method: "POST", body: formData });
@@ -783,18 +848,15 @@ function CreateInner() {
     setErrorMsg("");
     let orderId = "";
     try {
-      const filledSets = selectedSets;
       const formData = new FormData();
       formData.append("image",      photo);
       formData.append("email",      email);
       formData.append("level",      level);
       formData.append("paperSize",  paperSize);
-      formData.append("sets",       filledSets.join(", "));
+      formData.append("sets",       allSelectedSets.join(", "));
       formData.append("indPens",    individualPens);
       formData.append("wantsFullGuide", String(wantsFullGuide));
       formData.append("previewSkipped", String(previewSkipped));
-      // Customer's locale -- see submit-order/route.ts, which persists
-      // this into order.json for the delivery-email locale wiring.
       formData.append("locale", locale);
       const res  = await fetch("/api/submit-order", { method: "POST", body: formData });
       const data = await res.json();
@@ -811,12 +873,11 @@ function CreateInner() {
       setSubmitting(false);
       return;
     }
-    const filledSets = selectedSets;
     const q = new URLSearchParams({
       email, level,
       paperSize,
       photoName:  photo!.name,
-      sets:       filledSets.join("|"),
+      sets:       allSelectedSets.join("|"),
       indPens:    individualPens,
       orderId,
       prevOrders: encodeURIComponent(JSON.stringify(prevOrders)),
@@ -826,12 +887,21 @@ function CreateInner() {
   };
 
   const canSubmit  = photo && email && !indPenError && (previewSkipped || (previewResult && !previewStale));
-  // Previous orders' real prices only ever exist as priceLabel strings
-  // (set once each order actually reached /confirm) -- parse those
-  // rather than relying on a numeric `price` field that no longer
-  // exists on OrderItem.
   const totalSoFar = prevOrders.reduce((acc, o) => acc + parseEuroPrice(o.priceLabel), 0);
-  const selectedPrice = priceFor(paperSize); // reflects the paper size chosen in Step 4
+  const selectedPrice = priceFor(paperSize);
+
+  // PIVOT (2026-08-06): the reference branch is now text-only upsell
+  // data, no rendered image (branch.result is always null now -- see
+  // compute_upsell_data_only() on the webservice side). There's at
+  // most one entry ("improved"). previewImage picks whichever real
+  // image branch exists to actually display -- "owned" when the
+  // customer selected any markers, otherwise "natural" (unconstrained
+  // generation, shown when nothing was selected at all).
+  const upsellMarkers: UpsellEntry[] = previewResult
+    ? Object.values(previewResult.references)[0]?.upsell ?? []
+    : [];
+  const previewBranch: PreviewBranch | null = previewResult?.owned ?? previewResult?.natural ?? null;
+  const previewIsNatural = !!previewResult && !previewResult.owned && !!previewResult.natural;
 
   return (
     <>
@@ -866,16 +936,17 @@ function CreateInner() {
         .marker-set-row:hover {
           background: #FFF0F3;
         }
-        .preview-compare-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
+        .marker-set-group-header {
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: var(--muted);
+          padding: 10px 12px 4px;
         }
-        @media (max-width: 640px) {
-          .preview-compare-grid {
-            grid-template-columns: 1fr;
-          }
-        }
+        /* PIVOT (2026-08-06): preview-compare-grid removed -- only one
+           image branch renders now (owned or natural), no multi-panel
+           grid needed. */
         .full-width {
           grid-column: 1 / -1;
         }
@@ -915,11 +986,10 @@ function CreateInner() {
 
         <div className="create-grid">
 
-          {/* Step 1: Photo */}
+          {/* Step 1: Photo -- unchanged */}
           <div className="card">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:14}}>{t("step1.title")}</h2>
 
-              {/* ── CROP: cropper UI replaces the static preview while active ── */}
               {showCropper ? (
                 <div>
                   <div style={{display:"flex", gap:8, marginBottom:10, flexWrap:"wrap"}}>
@@ -1029,13 +1099,11 @@ function CreateInner() {
                       <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:8}}>
                         <p style={{fontSize:13, color:"var(--muted)"}}>✓ {photo.name}</p>
                         <div style={{display:"flex", gap:14, flexWrap:"wrap"}}>
-                          {/* ── CROP: entry point button ── */}
                           <button onClick={() => setShowCropper(true)} disabled={!!bgProcessing}
                             style={{fontSize:16, color:"var(--pink)", background:"none", border:"none", cursor:"pointer", fontWeight:700, display:"flex", alignItems:"center", gap:6}}>
                             <span style={{fontSize:20}}>✂️</span> {t("step1.cropLabel")}
                           </button>
-                     
-                         {/* ── BACKGROUND TOOLS: remove / blur — hidden via flag, code intact ── */}
+
                          {BG_TOOLS_ENABLED && (
                             <>
                               <button onClick={() => applyBackgroundAction("remove")} disabled={!!bgProcessing}
@@ -1054,7 +1122,7 @@ function CreateInner() {
                               {t("step1.resetToOriginal")}
                             </button>
                           )}
-                          <button onClick={() => { setPhoto(null); setPhotoUrl(""); setOriginalPhoto(null); setOriginalPhotoUrl(""); setBgError(""); setPhotoDimError(""); setPreviewResult(null); setPreviewError(""); setShowNoSetsWarning(false); setPreviousPreviewResult(null); setAdjustmentMade(false); setWantsFullGuide(false); setPreviewSkipped(false); setPhotoRestoredNotice(false); }} disabled={!!bgProcessing}
+                          <button onClick={() => { setPhoto(null); setPhotoUrl(""); setOriginalPhoto(null); setOriginalPhotoUrl(""); setBgError(""); setPhotoDimError(""); setPreviewResult(null); setPreviewError(""); setPreviousPreviewResult(null); setAdjustmentMade(false); setWantsFullGuide(false); setPreviewSkipped(false); setPhotoRestoredNotice(false); }} disabled={!!bgProcessing}
                             style={{fontSize:12, color:"var(--pink)", background:"none", border:"none", cursor:"pointer"}}>
                             {t("step1.remove")}
                           </button>
@@ -1074,28 +1142,52 @@ function CreateInner() {
               )}
             </div>
 
-          {/* Step 2: Markers */}
+          {/* Step 2: Markers -- MULTI-BRAND: two always-visible picker
+              lists (Guangna + Languo) instead of one. */}
           <div className="card" style={{display:"flex", flexDirection:"column"}}>
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step2.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
                 {t("step2.description")}
               </p>
-              <div className="marker-set-list" style={{flex:"1 1 auto", minHeight:200}}>
-                {MARKER_SETS.map(s => (
-                  <label key={s.value} className="marker-set-row">
+
+              <h3 style={{fontWeight:700, fontSize:14, marginBottom:6}}>Guangna</h3>
+              <div className="marker-set-list" style={{minHeight:140, marginBottom:16}}>
+                {GUANGNA_SET_OPTIONS.map(s => (
+                  <label key={s.key} className="marker-set-row">
                     <input
                       type="checkbox"
-                      checked={selectedSets.includes(s.value)}
-                      onChange={() => toggleSet(s.value)}
+                      checked={selectedGuangnaSets.includes(s.key)}
+                      onChange={() => toggleGuangnaSet(s.key)}
                       style={{accentColor:"var(--pink)"}}
                     />
-                    <span>{s.label} <span style={{color:"var(--muted)"}}>({s.value})</span></span>
+                    <span>{s.label}</span>
                   </label>
                 ))}
               </div>
-              {selectedSets.length > 0 && (
+
+              <h3 style={{fontWeight:700, fontSize:14, marginBottom:6}}>Languo</h3>
+              <div className="marker-set-list" style={{minHeight:140}}>
+                {(["paint", "gel", "plus", "qimiart"] as LanguoLine[]).map(line => (
+                  <div key={line}>
+                    <div className="marker-set-group-header">{LANGUO_LINE_LABELS[line]}</div>
+                    {LANGUO_SET_OPTIONS.filter(s => s.line === line).map(s => (
+                      <label key={s.token} className="marker-set-row">
+                        <input
+                          type="checkbox"
+                          checked={selectedLanguoSets.includes(s.token)}
+                          onChange={() => toggleLanguoSet(s.token)}
+                          style={{accentColor:"var(--pink)"}}
+                        />
+                        <span>{s.prettyLabel}</span>
+                      </label>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {allSelectedSets.length > 0 && (
                 <p style={{fontSize:12, color:"var(--muted)", marginTop:8}}>
-                  {t("step2.setsSelected", { count: selectedSets.length })}
+                  {t("step2.setsSelected", { count: allSelectedSets.length })}
                 </p>
               )}
               <div style={{marginTop:18}}>
@@ -1114,12 +1206,24 @@ function CreateInner() {
               </div>
             </div>
 
-            {/* Step 3: Generate preview -- full width */}
+
+            {/* Step 3: Generate preview -- full width. MULTI-BRAND:
+                renders owned + however many reference panels the API
+                returns, instead of a fixed owned/full366 pair. */}
             <div className="card full-width">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step3.title")}</h2>
-              <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
-                {t("step3.description", { price: selectedPrice })}
-              </p>
+          
+
+              {/* MOVED (2026-08-06, per Mirjam): was in Step 2, now
+                  sits right above the generate button in Step 3 -- the
+                  moment right before the wait actually happens, rather
+                  than earlier while still picking sets. */}
+             {isCrossBrand && (
+  <p style={{fontSize:12, color:"#8a6d1f", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:10, padding:"10px 12px", marginBottom:14, lineHeight:1.5}}>
+    {t("step3.crossBrandNotice")}
+  </p>
+)}
+
               <button
                 onClick={() => generatePreview()}
                 disabled={!photo || !!indPenError || previewLoading}
@@ -1136,9 +1240,6 @@ function CreateInner() {
                     : t("step3.generate")}
               </button>
 
-              {/* ── SKIP PREVIEW: only offered before a preview exists (or once
-                  the existing one's gone stale) -- once you HAVE a fresh
-                  preview, there's nothing left to skip. ── */}
               {photo && !indPenError && (!previewResult || previewStale) && !previewSkipped && (
                 <button
                   onClick={skipPreview}
@@ -1163,23 +1264,11 @@ function CreateInner() {
               {!photo && (
                 <p style={{fontSize:12, color:"var(--muted)", marginTop:8}}>{t("step3.uploadFirst")}</p>
               )}
-
-              {showNoSetsWarning && (
-                <div style={{marginTop:8, padding:"12px 14px", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:10}}>
-                  <p style={{fontSize:13, fontWeight:700, color:"#8a6d1f", marginBottom:8}}>
-                    {t("step3.noSetsWarning")}
-                  </p>
-                  <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
-                    <button onClick={() => generatePreview(["GN-8101-366"])} className="btn-primary" style={{fontSize:13, padding:"8px 14px"}}>
-                      {t("step3.useFullSet")}
-                    </button>
-                    <button onClick={() => setShowNoSetsWarning(false)}
-                      style={{fontSize:13, padding:"8px 14px", borderRadius:8, border:"2px solid var(--border)", background:"white", color:"#555", cursor:"pointer"}}>
-                      {t("step3.cancelPickSets")}
-                    </button>
-                  </div>
-                </div>
-              )}
+              {/* FIX (2026-08-06): the old "no sets selected" blocking
+                  warning + "use full Guangna 366" quick action is
+                  removed entirely -- selecting no markers is now a
+                  valid choice that generates the natural/unconstrained
+                  branch instead (see the "natural" panel below). */}
 
               {previewError && (
                 <p style={{fontSize:13, color:"#c62828", marginTop:8}}>⚠️ {previewError}</p>
@@ -1190,106 +1279,77 @@ function CreateInner() {
                 </p>
               )}
 
-              {previewResult && !previewStale && (previewResult.owned || previewResult.full366) && (
+              {previewResult && !previewStale && previewBranch && (
                 <div style={{marginTop:16}}>
-                  {isFullPalette ? (
-                    (() => {
-                      const branch = previewResult.owned || previewResult.full366!;
-                      return (
-                        <div className="preview-compare-grid">
-                          <div>
-                            <BeforeAfterSlider
-                              beforeImage={`data:image/png;base64,${branch.preview_png_base64}`}
-                              afterImage={`data:image/png;base64,${branch.outline_png_base64}`}
-                              beforeLabel={t("step3.beforeLabel")}
-                              afterLabel={t("step3.afterLabel")}
-                              aspectRatio={4 / 3}
-                            />
-                            <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
-                              {t("step3.matchedFullPalette")}
-                            </p>
-                            <MarkerSwatches legend={branch.legend} />
-                          </div>
-                        </div>
-                      );
-                    })()
-                  ) : (
-                  <div className={previewResult.owned && previewResult.full366 ? "preview-compare-grid" : undefined}>
-                    {previewResult.owned && (
-                      <div>
-                        <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>
-                          {t("step3.yourMarkers")}{selectedMarkersLabel ? ` — ${selectedMarkersLabel}` : ""}
-                        </p>
-                        <BeforeAfterSlider
-                          beforeImage={`data:image/png;base64,${previewResult.owned.preview_png_base64}`}
-                          afterImage={`data:image/png;base64,${previewResult.owned.outline_png_base64}`}
-                          beforeLabel={t("step3.beforeLabel")}
-                          afterLabel={t("step3.afterLabel")}
-                          aspectRatio={4 / 3}
-                        />
+                  <div>
+                    <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>
+                      {previewIsNatural
+                        ? t("step3.naturalPreviewLabel")
+                        : `${t("step3.yourMarkers")}${selectedMarkersLabel ? ` — ${selectedMarkersLabel}` : ""}`}
+                    </p>
+                    <BeforeAfterSlider
+                      beforeImage={`data:image/png;base64,${previewBranch.preview_png_base64}`}
+                      afterImage={`data:image/png;base64,${previewBranch.outline_png_base64}`}
+                      beforeLabel={t("step3.beforeLabel")}
+                      afterLabel={t("step3.afterLabel")}
+                      aspectRatio={4 / 3}
+                    />
+                    {previewIsNatural ? (
+                      <p style={{fontSize:12, color:"var(--muted)", marginTop:4}}>
+                        {t("step3.naturalPreviewNote")}
+                      </p>
+                    ) : (
+                      <>
                         <p style={{fontSize:12, color:"var(--pink)", fontWeight:600, marginTop:4}}>
                           {t("step3.matchedYourMarkers")}
                         </p>
-                        <MarkerSwatches legend={previewResult.owned.legend} />
-                      </div>
-                    )}
-                    {previewResult.full366 && (
-                      <div>
-                        <p style={{fontSize:12.5, fontWeight:700, color:"var(--pink)", marginBottom:6}}>{t("step3.fullColorPalette")}</p>
-                        <BeforeAfterSlider
-                          beforeImage={`data:image/png;base64,${previewResult.full366.preview_png_base64}`}
-                          afterImage={`data:image/png;base64,${previewResult.full366.outline_png_base64}`}
-                          beforeLabel={t("step3.beforeLabel")}
-                          afterLabel={t("step3.afterLabel")}
-                          aspectRatio={4 / 3}
-                        />
-                        {(() => {
-                          const excludeIds = previewResult.owned
-                            ? new Set(previewResult.owned.legend.map(e => e.marker_id).filter((id): id is string => Boolean(id)))
-                            : undefined;
-                          const full366Top = topMarkers(previewResult.full366!.legend, 5, excludeIds);
-                          return (
-                            <>
-                              {full366Top.length > 0 && (
-                                <p style={{fontSize:12, color:"#8a6d1f", fontWeight:600, marginTop:4}}>
-                                  {t("step3.addingMarkersHelps")}
-                                </p>
-                              )}
-                              <MarkerSwatches legend={previewResult.full366!.legend} exclude={excludeIds} />
-                            </>
-                          );
-                        })()}
-                        {/* ── FULL GUIDE: free opt-in, unchecked by default. ── */}
-                        <label style={{display:"flex", alignItems:"flex-start", gap:8, marginTop:10, fontSize:12.5, color:"#555", cursor:"pointer"}}>
-                          <input
-                            type="checkbox"
-                            checked={wantsFullGuide}
-                            onChange={e => setWantsFullGuide(e.target.checked)}
-                            style={{marginTop:2, accentColor:"var(--pink)"}}
-                          />
-                          <span>{t("step3.includeFullGuide")}</span>
-                        </label>
-                      </div>
-                      
+                        <MarkerSwatches legend={previewBranch.legend} />
+                      </>
                     )}
                   </div>
+
+                  {/* PIVOT (2026-08-06): text/swatch-only upsell note --
+                      no second rendered image. Only shown when there's
+                      an owned branch (a natural-only preview has
+                      nothing to upsell from) and the backend actually
+                      found markers worth suggesting. */}
+                  {!previewIsNatural && upsellMarkers.length > 0 && (
+                    <div style={{marginTop:14, padding:"14px 16px", background:"#FFF8ED", border:"1.5px solid #F0DFC0", borderRadius:12}}>
+                      <p style={{fontSize:13, fontWeight:700, color:"#8a6d1f", marginBottom:8}}>
+                        {t("step3.upsellHeading")}
+                      </p>
+                      <div style={{display:"flex", gap:10, flexWrap:"wrap"}}>
+                        {upsellMarkers.map(m => (
+                          <div key={m.marker_id} style={{display:"flex", flexDirection:"column", alignItems:"center", gap:3}} title={m.marker_name}>
+                            <div style={{
+                              width:26, height:26, borderRadius:7,
+                              background:`rgb(${m.marker_rgb[0]}, ${m.marker_rgb[1]}, ${m.marker_rgb[2]})`,
+                              border:"1px solid rgba(0,0,0,0.15)",
+                            }} />
+                            <span style={{fontSize:10, color:"#8a6d1f", fontWeight:600}}>
+                              {m.marker_id.replace(/^GN-?/i, "")}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
 
-                  <div style={{
-                    marginTop: 12, padding: "14px 16px", background: "var(--cream)",
-                    border: "1.5px solid var(--border)", borderRadius: 10,
-                    fontSize: 14, color: "#444", lineHeight: 1.6,
-                  }}>
-                    {t("step3.scaledDownNotice")}{" "}
-                    <a href="/examples" style={{ color: "var(--pink)", fontWeight: 700 }}>
-                      {t("step3.examplesLink")}
-                    </a>
-                  </div>
+                  {/* PIVOT (2026-08-06): free-guide opt-in now tied to
+                      whether there's upsell data to build a guide from,
+                      rather than a reference panel existing. */}
+                  {!previewIsNatural && upsellMarkers.length > 0 && (
+                    <label style={{display:"flex", alignItems:"flex-start", gap:8, marginTop:14, fontSize:12.5, color:"#555", cursor:"pointer"}}>
+                      <input
+                        type="checkbox"
+                        checked={wantsFullGuide}
+                        onChange={e => setWantsFullGuide(e.target.checked)}
+                        style={{marginTop:2, accentColor:"var(--pink)"}}
+                      />
+                      <span>{t("step3.includeFullGuide")}</span>
+                    </label>
+                  )}
 
-                  {/* ── ADJUST: happy-with-this flow. Two buttons regenerate at a
-                      different difficulty tier using the same sets/codes; once used,
-                      they're replaced by a single revert button. Prices removed --
-                      difficulty no longer affects price, see GUANGNA_BY_NUMBER. ── */}
                   <div style={{marginTop:14, padding:"14px 16px", background:"#FAFAFA", border:"1.5px solid var(--border)", borderRadius:12}}>
                     {!adjustmentMade ? (
                       <>
@@ -1331,7 +1391,7 @@ function CreateInner() {
               )}
             </div>
 
-            {/* Step 4: Paper size */}
+            {/* Step 4: Paper size -- unchanged */}
             <div className="card">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step4.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:14}}>
@@ -1371,20 +1431,20 @@ function CreateInner() {
               </div>
             </div>
 
-            {/* Step 5: Email */}
+            {/* Step 5: Email -- unchanged */}
             <div className="card">
               <h2 style={{fontWeight:800, fontSize:17, marginBottom:4}}>{t("step5.title")}</h2>
               <p style={{color:"var(--muted)", fontSize:13, marginBottom:12}}>{t("step5.description")}</p>
               <input type="email" className="email-input-big" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{width:"100%"}}/>
             </div>
 
-            {/* Order summary */}
+            {/* Order summary -- unchanged, sets already generic */}
             <div style={{background:"linear-gradient(135deg,#FFF0F3,#FDF6F0)", border:"2px solid var(--border)", borderRadius:16, padding:20}}>
               <h3 style={{fontWeight:800, fontSize:15, marginBottom:12}}>{t("summary.title")}</h3>
               <div style={{display:"flex", flexDirection:"column", gap:8, fontSize:14}}>
                 <Row label={t("summary.photo")}       value={photo ? `✓ ${photo.name}` : t("summary.none")}/>
                 <Row label={t("summary.level")}       value={currentLevelInfo ? t(currentLevelInfo.labelKey) : t("summary.none")}/>
-                <Row label={t("summary.markerSets")} value={selectedSets.length ? t("summary.nSelected", { count: selectedSets.length }) : t("summary.noneSelected")}/>
+                <Row label={t("summary.markerSets")} value={allSelectedSets.length ? t("summary.nSelected", { count: allSelectedSets.length }) : t("summary.noneSelected")}/>
                 <Row label={t("summary.preview")}     value={previewResult && !previewStale ? t("summary.generated") : previewSkipped ? t("summary.skipped") : t("summary.notYetGenerated")}/>
                 <Row label={t("summary.paperSize")}  value={PAPER_LABELS[paperSize]}/>
                 <Row label={t("summary.price")}       value={selectedPrice} highlight/>
@@ -1397,7 +1457,7 @@ function CreateInner() {
               </div>
             </div>
 
-            {/* Submit + status + error -- spans the full grid width */}
+            {/* Submit + status + error -- unchanged */}
             <div className="full-width" style={{display:"flex", flexDirection:"column", gap:8}}>
               <button
                 className="btn-primary"

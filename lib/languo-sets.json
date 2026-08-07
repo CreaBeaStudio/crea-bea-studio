@@ -1,4 +1,3 @@
-export const LANGUO_SETS: Record<string, { line: string; codes: string[] }> = 
 {
   "Brush 288 Set": {
     "line": "paint",
@@ -2713,78 +2712,4 @@ export const LANGUO_SETS: Record<string, { line: string; codes: string[] }> =
       "SG-116"
     ]
   }
-};
-// Hand-curated pretty labels: "{Line} {size} Set" / "{Line} {name} Series"
-// convention, plus the "96 Set" -> "96 Set" spacing fix. Keyed by the
-// EXACT backend token -- a token not listed here just falls back to
-// itself, so nothing breaks if a new set is added upstream before this
-// map is updated. Shared by create/page.tsx and the Swatch Creator
-// picker below, so the two never drift apart again.
-export const LANGUO_PRETTY_LABELS: Record<string, string> = {
-  "Brush 288 Set": "Paint 288 Set",
-  "240 Set": "Paint 240 Set",
-  "192 Set": "Paint 192 Set",
-  "96 Set": "Paint 96 Set",
-  "72 Set": "Paint 72 Set",
-  "60 Set": "Paint 60 Set",
-  "48 Set": "Paint 48 Set",
-  "36 Set": "Paint 36 Set",
-  "24 Set": "Paint 24 Set",
-  "Pink Series": "Paint Pink Series",
-  "Blue Purple Series": "Paint Blue Purple Series",
-  "Cocoa Brown Series": "Paint Cocoa Brown Series",
-  "Forest Green Series": "Paint Forest Green Series",
-  "Light Colors Series": "Paint Light Colors Series",
-  "Dark Skin Series": "Paint Dark Skin Series",
-  "Advanced Grey Series": "Paint Advanced Grey Series",
-  "Dusty Blue Series": "Paint Dusty Blue Series",
-  "Sage Green Series": "Paint Sage Green Series",
-  "Skin Tone Series B": "Paint Skin Tone Series B",
-  "Dopamine Series B": "Paint Dopamine Series B",
-  "Warm Yellow Series": "Paint Warm Yellow Series",
-  "Red Series": "Paint Red Series",
-  "Colourful Black Series": "Paint Colourful Black Series",
-  "Black Series": "Paint Black Series",
-  "Sweet Pink Series": "Paint Sweet Pink Series",
-  "Maillard Series": "Paint Maillard Series",
-  "Dopamine Series A": "Paint Dopamine Series A",
-  "Skin Tone Series A": "Paint Skin Tone Series A",
-  "Gray Brown Series": "Paint Gray Brown Series",
-  "Purple Series": "Paint Purple Series",
-  "Blue Series": "Paint Blue Series",
-  "Green Series": "Paint Green Series",
-  "Red/Yellow Series": "Paint Red/Yellow Series",
-  "Gel 234 Set": "Gel Pens 234 Set",
-  "Gel 45 Set": "Gel Pens 45 Set",
-  "Gel 72 Set": "Gel Pens 72 Set",
-  "Gel 99 Set": "Gel Pens 99 Set",
-  "Gel 168/162 Set": "Gel Pens 168/162 Set",
-  "PLUS 144 Set": "Plus 144 Set",
-  "PLUS 36 Set": "Plus 36 Set",
-  "PLUS 54 Set": "Plus 54 Set",
-  "PLUS 72 Set": "Plus 72 Set",
-  "PLUS 90 Set": "Plus 90 Set",
-  // "LanguoxQimiart" intentionally left unmapped -- no clear naming
-  // convention given for this one; falls back to its raw token.
-};
-// Full, unfiltered {key, label} list -- used by pages that should show
-// every Languo line regardless of the Swatch Creator toggle above
-// (color-converter, and anywhere else doing a flat Languo set checklist).
-export const LANGUO_SET_OPTIONS: { key: string; label: string }[] =
-  Object.keys(LANGUO_SETS).map((key) => ({ key, label: LANGUO_PRETTY_LABELS[key] ?? key }));
-  
-// TOGGLE (2026-08-07): per-line switch for Swatch Creator ONLY -- flip a
-// line to true once its colors have been allocated to color families and
-// ordered. create/page.tsx and the converters import LANGUO_SETS
-// directly and are unaffected by this toggle; they always show every line.
-const SWATCH_CREATOR_ENABLED_LINES: Record<string, boolean> = {
-  paint: true,
-  gel: false,
-  plus: false,
-  qimiart: false,
-};
-
-export const LANGUO_SET_OPTIONS_SWATCH_CREATOR: { key: string; label: string }[] =
-  Object.entries(LANGUO_SETS)
-    .filter(([, v]) => SWATCH_CREATOR_ENABLED_LINES[v.line])
-    .map(([key]) => ({ key, label: LANGUO_PRETTY_LABELS[key] ?? key }));
+}

@@ -36,6 +36,7 @@ const WHAT_YOU_GET_ITEMS = [
 
 export default function Home() {
   const t = useTranslations("home");
+  const tNav = useTranslations("nav");  // reuse existing Color/Legend/Brand Converter labels
 
   return (
     <>
@@ -231,7 +232,7 @@ export default function Home() {
                 {/* Right legend: Guangna */}
                 <div className="hero-legend hero-legend-guangna" style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
                   <span style={{ fontSize:22, fontWeight:800, color:"var(--pink)", marginBottom:10, textAlign:"center", lineHeight:1.25, width:320, flexShrink:0 }}>
-                    To this:<br/>Guangna code <br/>and name
+                    To this:<br/>Your codes <br/>and name
                   </span>
                   <div style={{ position:"relative", width:"100%", aspectRatio: "906 / 1320" }}>
                     <Image src="/marketing/guangna-legend.jpg" alt="Guangna color codes and names"
@@ -254,30 +255,43 @@ export default function Home() {
         </section>
 
 
-        {/* ── GUANGNA COLOR CONVERTER ── */}
-        <section style={{
-          padding:"60px 24px",
-          background:"linear-gradient(135deg,var(--pink) 0%,#c2185b 100%)",
-          color:"white", textAlign:"center"
-        }}>
-          <div style={{ maxWidth:700, margin:"0 auto" }}>
-            <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
-              <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
-              {t("converterTitle")}
-            </h2>
-            <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
-              {t("converterSubtitle")}
-            </p>
-            <Link href="/color-converter" style={{
-              background:"white", color:"var(--pink)",
-              borderRadius:50, padding:"14px 32px",
-              fontWeight:700, fontSize:16,
-              textDecoration:"none", display:"inline-block"
-            }}>
-              {t("converterCta")}
-            </Link>
-          </div>
-        </section>
+        {/* ── COLOR CONVERTER ── */}
+{/* ── COLOR CONVERTER ── */}
+<section style={{
+  padding:"60px 24px",
+  background:"linear-gradient(135deg,var(--pink) 0%,#c2185b 100%)",
+  color:"white", textAlign:"center"
+}}>
+  <div style={{ maxWidth:700, margin:"0 auto" }}>
+    <h2 style={{ fontFamily:"Nunito, sans-serif", fontWeight:900, fontSize:"clamp(24px,4vw,36px)", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+      <Image src="/marketing/Guangna_brush.png" alt="Guangna brush" width={120} height={84} style={{ objectFit:"contain", height:"auto" }} />
+      {t("converterTitle")}
+    </h2>
+    <p style={{ fontSize:17, opacity:0.9, marginBottom:28 }}>
+      {t("converterSubtitle")}
+    </p>
+    <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+      <Link href="/color-converter" style={{
+        background:"white", color:"var(--pink)", borderRadius:50, padding:"14px 32px",
+        fontWeight:700, fontSize:16, textDecoration:"none", display:"inline-block"
+      }}>
+        {tNav("colorConverter")}
+      </Link>
+      <Link href="/legend-converter" style={{
+        background:"white", color:"var(--pink)", borderRadius:50, padding:"14px 32px",
+        fontWeight:700, fontSize:16, textDecoration:"none", display:"inline-block"
+      }}>
+        {tNav("legendConverter")}
+      </Link>
+      <Link href="/languo-converter" style={{
+        background:"white", color:"var(--pink)", borderRadius:50, padding:"14px 32px",
+        fontWeight:700, fontSize:16, textDecoration:"none", display:"inline-block"
+      }}>
+        {tNav("languoConverter")}
+      </Link>
+    </div>
+  </div>
+</section>
 
         {/* ── HOW IT WORKS ── */}
         <section style={{ padding:"80px 24px", background:"white" }}>

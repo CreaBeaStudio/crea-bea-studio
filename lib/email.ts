@@ -41,6 +41,7 @@ function getResend(): Resend {
 // ASSUMPTION: the Guangna.eu link below points to https://guangna.eu --
 // flag if that's the wrong URL or needs UTM/referral params.
 const GUANGNA_EU_URL = "https://guangna.eu";
+const LANGUO_ART_URL = "https://languoart.com/?ref=creabeastudio";
 
 export type UpsellMarker = {
   marker_id: string;
@@ -92,6 +93,28 @@ export type OrderConfirmationEmailParams = {
   attachments?: EmailAttachment[];
 };
 
+// Detects which brand(s) are present in the upsell list and shows only
+// the relevant shop link(s) -- the "improved" reference branch can be a
+// combined Guangna+Languo union (per the multi-brand pivot), so an
+// upsell list can genuinely contain both brands' codes together.
+function shopLinksSection(markers: UpsellMarker[], t: ReturnType<typeof getEmailTranslator>): string {
+  const hasGuangna = markers.some(m => m.marker_id.startsWith("GN-") || m.marker_id.startsWith("HG-"));
+  const hasLanguo = markers.some(m => !m.marker_id.startsWith("GN-") && !m.marker_id.startsWith("HG-"));
+  const links: string[] = [];
+  if (hasGuangna) {
+    links.push(`<a href="${GUANGNA_EU_URL}" style="color:#e75480;font-weight:700;">${t("upsell.shopLink")}</a>`);
+  }
+  if (hasLanguo) {
+    links.push(`<a href="${LANGUO_ART_URL}" style="color:#e75480;font-weight:700;">${t("upsell.shopLinkLanguo")}</a>`);
+  }
+  return `
+    <p style="font-size:14px;margin-top:10px;">
+      ${links.join("<br/>")}
+    </p>
+    ${hasLanguo ? `<p style="font-size:11px;color:#999;margin-top:4px;">${t("upsell.languoAffiliateDisclosure")}</p>` : ""}
+  `;
+}
+
 // ── UPSELL TABLE (2026-07-24): "Improves" column now shows the actual
 // printed number(s) a marker would replace (e.g. "#4, #9") instead of a
 // region count that was previously always "1" regardless of the photo
@@ -117,7 +140,7 @@ function upsellMarkersTable(markers: UpsellMarker[], t: ReturnType<typeof getEma
         <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:rgb(${m.marker_rgb[0]},${m.marker_rgb[1]},${m.marker_rgb[2]});border:1px solid rgba(0,0,0,0.15);vertical-align:middle;margin-right:6px;"></span>
         ${m.marker_id}
       </td>
-      <td style="padding:6px 8px;border:1px solid #f0d0d8;">${m.marker_name}</td>
+      <td style="padding:6px 8px;border:1px solid #f0d0d8;">${m.marker_name || "Languo"}</td>
       <td style="padding:6px 8px;border:1px solid #f0d0d8;">${improves}</td>
     </tr>
   `;
@@ -137,9 +160,7 @@ function upsellMarkersTable(markers: UpsellMarker[], t: ReturnType<typeof getEma
       </thead>
       <tbody>${rows}</tbody>
     </table>
-    <p style="font-size:14px;margin-top:10px;">
-      <a href="${GUANGNA_EU_URL}" style="color:#e75480;font-weight:700;">${t("upsell.shopLink")}</a>
-    </p>
+    ${shopLinksSection(markers, t)}
   `;
 }
 

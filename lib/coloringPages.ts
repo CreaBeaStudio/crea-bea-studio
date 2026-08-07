@@ -153,7 +153,13 @@ export function pageMatchesMarkerSet(page: ColoringPage, ownedSetValue: MarkerSe
 }
 
 export type ColoringPage = {
-  /** Stable unique id — also used as the URL slug (/free-coloring-pages/<id>) and the React key, so keep it URL-safe (lowercase, hyphens). */
+  /**
+   * Which book format(s) this outline is suitable for. Leave undefined
+   * for "works for both" (the default, safe for existing entries) —
+   * only set this when an image is specifically simple (A5-only) or
+   * a compound/collection design (A4-only). Your own judgment call.
+   */
+  suitableFormats?: ("A5" | "A4")[];/** Stable unique id — also used as the URL slug (/free-coloring-pages/<id>) and the React key, so keep it URL-safe (lowercase, hyphens). */
   id: string;
   /** Shown as the card/page title. */
   title: string;

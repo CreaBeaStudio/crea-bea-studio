@@ -1,39 +1,38 @@
 {
   "meta": {
     "title": "CreaBeaStudio – Peinture par Numéro Personnalisée",
-    "description": "Transformez vos photos préférées en pages de peinture par numéro avec une palette de couleurs Guangna personnalisée."
+    "description": "Transformez vos photos préférées en pages de Coloriage par Numéro avec une palette de couleurs personnalisée."
   },
   "home": {
     "badge": "🐾 CreaBeaStudio",
     "heroTitle1": "Transforme ta photo en",
-    "heroTitle2": "Guangna by Number",
+    "heroTitle2": "Coloriage par Numéro",
     "heroTitle3": "œuvre d'art",
-    "heroSubtitle": "Fini de deviner les couleurs - prends tes feutres Guangna et commence à colorier.",
-    "heroCta": "Crée ton Guangna By Number →",
+    "heroSubtitle": "Fini de deviner les couleurs - prends tes feutres et commence à colorier.",
+    "heroCta": "Crée ton Coloriage par Numéro →",
     "heroSeeExamples": "Voir des exemples",
     "featureCamera": "Ta photo préférée",
     "featureNoGuessing": "Plus besoin de deviner les couleurs",
-    "featureGuangna": "Conçu pour tes feutres Guangna",
-    "paletteBanner": "Guangna by Number inclut une palette de couleurs adaptée à tes feutres Guangna — avec les noms et les codes exacts.",
-    "converterTitle": "Convertisseur de couleurs Guangna",
-    "converterSubtitle": "Tu as un code #HEX, une valeur RGB ou une photo ? Trouve instantanément la couleur Guangna correspondante.",
-    "converterCta": "Ouvrir le convertisseur de couleurs Guangna →",
+    "featureGuangna": "Conçu pour vos feutres préférés",
+    "paletteBanner": "Coloriage par Numéro inclut une palette de couleurs adaptée à tes feutres — avec les noms et les codes exacts.",
+    "converterTitle": "Convertisseur de couleurs",
+    "converterSubtitle": "Tu veux convertir une couleur, une légende, ou rechercher des codes.",
     "processLabel": "Étapes",
     "howTitle": "Comment ça marche",
     "howUpload": "Importe une photo.",
     "howUploadDesc": "Téléverse une photo. On s'occupe du reste.",
     "howChoose": "Choisir",
-    "howChooseDesc": "Sélectionne tes feutres Guangna et ton niveau.",
+    "howChooseDesc": "Sélectionne tes feutres et ton niveau.",
     "howOrder": "Commander",
-    "howOrderDesc": "Nous créons ton fichier Guangna by Number personnalisé",
+    "howOrderDesc": "Nous créons ton fichier Coloriage par Numéro personnalisé",
     "howColor": "Colorier",
     "howColorDesc": "Télécharge, imprime, et c'est parti !",
-    "createCta": "Crée ta page Guangna by Number",
+    "createCta": "Crée ta page Coloriage par Numéro",
     "chooseLevelLabel": "Choisis ton niveau",
     "levelsTitle": "Du débutant au confirmé",
     "levelsSubtitle": "Les niveaux supérieurs contiennent plus de couleurs et de détails fins — choisis le niveau qui te convient.",
     "levelBeginner": "Débutant",
-    "levelBeginnerDesc": "Idéal pour ton premier Guangna by Number. Moins de couleurs, zones plus grandes, coloriage facile et relaxant.",
+    "levelBeginnerDesc": "Idéal pour ton premier Coloriage par Numéro. Moins de couleurs, zones plus grandes, coloriage facile et relaxant.",
     "levelIntermediate": "Intermédiaire",
     "levelIntermediateDesc": "Bon équilibre entre effort et détail. Plus de couleurs, d'ombres et de détails pour plus de variété.",
     "levelAdvanced": "Avancé",
@@ -42,20 +41,20 @@
     "tryLevel": "Essayer {level}",
     "includedLabel": "Inclus avec chaque commande",
     "paletteTitle1": "Qu'est-ce que le",
-    "paletteTitle2": "Guide de palette de couleurs Guangna ?",
-    "paletteP1": "Le Guide de palette de couleurs Guangna est ta feuille de route personnelle vers un coloriage facile et magnifique — spécialement adapté aux feutres Guangna que tu possèdes.",
+    "paletteTitle2": "Guide de palette de couleurs ?",
+    "paletteP1": "Le Guide de palette de couleurs est ta feuille de route personnelle vers un coloriage facile et magnifique — spécialement adapté aux feutres que tu possèdes.",
     "paletteP2": "Plus besoin de deviner quelle couleur utiliser. Plus de tests de couleurs ni de comparaisons interminables. Ce guide élimine l'incertitude et te permet de te concentrer directement sur ce que tu aimes : colorier.",
-    "paletteP3": "Chaque section de ton design Guangna by Number est associée au feutre Guangna le plus adapté de ton propre set, pour des résultats précis et satisfaisants à chaque fois. Parfois, tu trouveras des options de couleurs créatives — te laissant la liberté d'ajouter des nuances subtiles, de la profondeur et du relief.",
+    "paletteP3": "Chaque section de ton design Coloriage par Numéro est associée au feutre le plus adapté de ton propre set, pour des résultats précis et satisfaisants à chaque fois. Parfois, tu trouveras des options de couleurs créatives — te laissant la liberté d'ajouter des nuances subtiles, de la profondeur et du relief.",
     "paletteP4": "Prépare simplement tes feutres, suis le guide et commence à colorier en toute confiance.",
     "paletteSlogan": "À vos marques. Prêts ? Sortez les marques !",
     "everyOrderLabel": "Chaque commande comprend",
     "wdygTitle": "Que reçois-tu ?",
-    "wdygOutline": "Dessin Guangna by Number (PDF)",
-    "wdygPalette": "Guide de palette de couleurs Guangna (PDF)",
-    "wdygPaletteDesc": "Un guide de référence complet des couleurs Guangna avec les codes et noms Guangna, ainsi qu'un aperçu en couleur de l'illustration terminée.",
+    "wdygOutline": "Dessin Coloriage par Numéro (PDF)",
+    "wdygPalette": "Guide de palette de couleurs (PDF)",
+    "wdygPaletteDesc": "Un guide de référence complet des couleurs avec les codes et noms, ainsi qu'un aperçu en couleur de l'illustration terminée.",
     "wdygOutlineDesc": "Un modèle d'illustration au trait à imprimer, en haute résolution et prêt à être colorié.",
-    "wdygColoredOutline": "Dessin Guangna by Number colorié (PDF)",
-    "finalCta": "Crée ton Guangna by Number →"
+    "wdygColoredOutline": "Dessin Coloriage par Numéro colorié (PDF)",
+    "finalCta": "Crée ton Coloriage par Numéro →"
   },
     "footer": {
     "footerTagline": "Colorie tes souvenirs, un numéro à la fois. 🐾",
@@ -82,7 +81,7 @@
     "tools": "Outils",
     "mysteryDecoder": "Décodeur Mystère",
     "languoConverter": "Convertisseur de Marques",
-    "createGuangna": "un Guangna by Number",
+    "createGuangna": "un Coloriage par Numéro",
     "colorConverter": "Convertisseur de couleurs",
     "legendConverter": "Convertisseur de Nuancier",
     "swatchCreator": "Créateur de cartes de Nuancier",
@@ -99,7 +98,7 @@
   "faq": {
     "title": "Questions fréquentes",
     "q1": "Que reçois-je après avoir passé commande ?",
-    "a1": "Tu recevras un pack numérique complet : un dessin Guangna by Number (PDF), un Guide de palette de couleurs Guangna personnalisé, et un aperçu de l'œuvre finie (PDF). À noter : il s'agit d'une œuvre numérique personnalisée — aucun article physique ne sera expédié.",
+    "a1": "Tu recevras un pack numérique complet : un dessin Coloriage par Numéro (PDF), un Guide de palette de couleurs personnalisé, et un aperçu de l'œuvre finie (PDF). À noter : il s'agit d'une œuvre numérique personnalisée — aucun article physique ne sera expédié.",
     "q2": "Combien de temps faut-il pour recevoir mon design ?",
     "a2": "Une fois ton paiement confirmé, tu recevras un e-mail de CreaBeaStudio avec tes liens de téléchargement - généralement sous 1 à 10 minutes.",
     "q3": "Quels formats de fichiers puis-je importer ?",
@@ -110,9 +109,9 @@
     "a5": "Tes fichiers sont stockés en toute sécurité pendant 37 jours, puis définitivement supprimés.",
     "q6": "Pour quel niveau est-ce fait ?",
     "a6": "Nos modèles conviennent aux créateurs Débutant, Intermédiaire et Avancé. En cas de doute, choisis Intermédiaire — le meilleur équilibre entre détail et difficulté relaxante.",
-    "q7": "Pourquoi devez-vous savoir quels sets Guangna je possède ?",
+    "q7": "Pourquoi devez-vous savoir quels sets je possède ?",
     "a7": "Cela nous permet d'associer chaque zone de couleur directement aux feutres que tu possèdes. Tu obtiens des combinaisons directement utilisables, sans devinette ni couleur manquante.",
-    "q8": "Guangna by Number fonctionne-t-il avec tous les feutres Guangna ?",
+    "q8": "Coloriage par Numéro fonctionne-t-il avec tous les feutres?",
     "a8": "Cela fonctionne avec tous les sets listés sur notre page de création ! Si tu ne vois pas tes feutres spécifiques, envoie-nous simplement un e-mail — nous serons ravis de les ajouter pour toi.",
     "q9": "La couleur de mon feutre ne correspond pas au guide de palette ?",
     "a9": "De légères variations de teinte peuvent survenir en raison de différences de lots d'encre, de qualité d'impression ou d'absorption du papier. Ton guide propose la recommandation la plus proche.",
@@ -121,7 +120,7 @@
     "q11": "Proposez-vous des remboursements ?",
     "a11": "En raison de la nature numérique et personnalisée de nos produits, aucun remboursement ne peut être accordé une fois le travail de design commencé.",
     "q12": "Qu'est-ce qui rend CreaBeaStudio différent ?",
-    "a12": "Nous sommes spécialisés dans les pages à colorier personnalisées, spécialement conçues pour les feutres Guangna — pour que tu puisses commencer à colorier immédiatement, sans la tâche fastidieuse du choix des couleurs.",
+    "a12": "Nous sommes spécialisés dans les coloriages personnalisés, spécialement conçus pour les feutres pinceaux de marque — pour que tu puisses commencer à colorier immédiatement, sans la tâche fastidieuse du choix des couleurs.",
     "stillQuestions": "Encore des questions ?",
     "contactUs": "Contacte-nous"
   },
@@ -260,7 +259,7 @@
   "refund": {
     "title": "Politique de remboursement",
     "lastUpdated": "Dernière mise à jour le 18 juin 2026",
-    "intro": "Comme chaque fichier Guangna by Number est réalisé sur mesure à partir de votre photo téléversée, nous ne pouvons pas proposer de remboursement une fois la production commencée.",
+    "intro": "Comme chaque fichier Coloriage par Numéro est réalisé sur mesure à partir de votre photo téléversée, nous ne pouvons pas proposer de remboursement une fois la production commencée.",
     "s1Heading": "Si quelque chose ne va pas avec votre commande",
     "s1Text": "Si vous recevez un fichier incorrect, rencontrez une erreur technique, ou n'êtes pas satisfait du résultat, veuillez nous contacter dans les 7 jours suivant la livraison à <email>hello@creabeastudio.com</email>. Nous travaillerons avec vous pour résoudre le problème ou, si approprié, procéder à un remboursement.",
     "s2Heading": "Annulations",
@@ -312,9 +311,9 @@
   },
   "examples": {
     "title": "Exemples",
-    "subtitle": "Découvre ce que CreaBeaStudio peut créer à partir de tes photos. Chaque Guangna by Number est généré de manière unique à partir de ta photo et adapté à tes feutres Guangna et à ton niveau.",
+    "subtitle": "Découvre ce que CreaBeaStudio peut créer à partir de tes photos. Chaque Coloriage par Numéro est généré de manière unique à partir de ta photo et adapté à tes feutres et à ton niveau.",
     "giftTitle": "Un cadeau unique et personnel",
-    "giftText": "Colorie tes souvenirs et fais-les revivre. Chaque Guangna by Number est créé à partir de ta photo préférée et adapté à tes feutres, devenant un souvenir unique pour les anniversaires, les fêtes ou les moments importants.",
+    "giftText": "Colorie tes souvenirs et fais-les revivre. Chaque Coloriage par Numéro est créé à partir de ta photo préférée et adapté à tes feutres, devenant un souvenir unique pour les anniversaires, les fêtes ou les moments importants.",
     "labelBeginner": "Débutant",
     "labelIntermediate": "Intermédiaire",
     "labelAdvanced": "Avancé",
@@ -327,7 +326,7 @@
     "goToExample": "Aller à l'exemple {number}",
     "previousExample": "Exemple précédent",
     "nextExample": "Exemple suivant",
-    "createCta": "Crée ton Guangna by Number maintenant →"
+    "createCta": "Crée ton Coloriage par Numéro maintenant →"
   },
   "common": {
     "brands": {
@@ -471,7 +470,7 @@
     "previewLabel": "Aperçu",
     "crossLink": {
       "text": "Envie de transformer votre propre photo en peinture par numéros ?",
-      "linkText": "Essayez Crée ta page Guangna by Numberr →"
+      "linkText": "Essayez Crée ta page Coloriage par Numéro →"
     }
   },
  "BrandConverter": {
@@ -739,8 +738,8 @@
     }
   },
   "create": {
-    "pageTitle": "Crée ton Guangna by Number personnalisé",
-    "pageSubtitle": "Téléverse ta photo, choisis tes feutres Guangna, et prévisualise ton design gratuitement avant de commander.",
+    "pageTitle": "Crée ton Coloriage par Numéro personnalisé",
+    "pageSubtitle": "Téléverse ta photo, choisis tes feutres préférés, et prévisualise ton design gratuitement avant de commander.",
     "cart": {
       "summary": "{count, plural, one {🛒 Tu as # commande dans ton panier} other {🛒 Tu as # commandes dans ton panier}} — total pour l'instant : {total}",
       "backToOrder": "← Retour à ma commande"
@@ -769,8 +768,8 @@
       }
     },
     "step2": {
-      "title": "Étape 2 : 🖊️ Tes sets de feutres Guangna",
-      "description": "Sélectionne chaque set que tu possèdes — nous construirons la palette à partir de tes feutres. Tu peux en choisir autant que tu veux, ou laisser ce champ vide pour prévisualiser avec la palette Guangna complète.",
+      "title": "Étape 2 : 🖊️ Tes sets de feutres",
+      "description": "Sélectionne chaque set que tu possèdes — nous construirons la palette à partir de tes feutres. Tu peux en choisir autant que tu veux, ou laisser ce champ vide pour prévisualiser avec les vraies couleurs.",
       "setsSelected": "{count, plural, one {# set sélectionné} other {# sets sélectionnés}}",
       "additionalCodesTitle": "Codes de feutres supplémentaires",
       "additionalCodesDescription": "Ajoute tes feutres individuels — codes GN (3 chiffres, séparés par des virgules ou des espaces). Les feutres métalliques ne sont pas inclus.",
@@ -779,14 +778,18 @@
     },
     "step3": {
       "title": "Étape 3 : 🖼️ Aperçu instantané gratuit",
-      "description": "Prévisualise un brouillon gratuit basse résolution en 20 à 40 secondes. Reçois le fichier haute résolution complet directement dans ta boîte mail pour {price}.",
-      "generating": "⏳ Génération de ton aperçu… (~20-40s)",
+      "description": "Une image haute résolution sera générée — cela peut prendre jusqu'à 1 minute, merci de patienter.",
+      "generating": "⏳ Génération de ton aperçu… (~20-60s)",
+      "crossBrandNotice": "C'est une combinaison de marqueurs intéressante — la génération de ton aperçu peut prendre un peu plus de temps, merci de ta patience !",
+      "upsellHeading": "✨ Envie d'enrichir ta palette de couleurs ? Ces marqueurs t'aideraient :",
+      "naturalPreviewLabel": "Aperçu couleur complet",
+      "naturalPreviewNote": "Cet aperçu utilise les couleurs naturelles de ta photo — aucun marqueur spécifique sélectionné.",
       "regenerate": "🔄 Régénérer l'aperçu",
       "generate": "🎨 Générer l'aperçu gratuit",
       "skipPreview": "Passer l'aperçu — je sais déjà ce que je veux →",
       "previewSkippedNotice": "✓ Aperçu ignoré — tu peux quand même en générer un ci-dessous à tout moment avant de commander.",
       "uploadFirst": "Téléverse d'abord une photo.",
-      "noSetsWarning": "Tu n'as sélectionné aucun set Guangna — veux-tu continuer avec la palette de couleurs complète ?",
+      "noSetsWarning": "Tu n'as sélectionné aucun set — veux-tu continuer avec la palette de couleurs complète ?",
       "useFullSet": "Oui, utiliser le set complet",
       "cancelPickSets": "Annuler, je choisis mes sets",
       "genericError": "Une erreur s'est produite lors de la génération de ton aperçu. Réessaie.",
@@ -794,12 +797,10 @@
       "stalePreview": "Ta photo ou tes sélections ont changé — génère un nouvel aperçu avant de commander.",
       "yourMarkers": "Tes feutres",
       "fullColorPalette": "Palette de couleurs complète",
-      "matchedFullPalette": "🎨 Associé à de vrais feutres Guangna — les couleurs que tu vois sont celles que tu utiliseras.",
-      "matchedYourMarkers": "🎨 Associé à tes feutres Guangna — ce sont ceux que tu utiliseras en coloriant ton Guangna by Number.",
-      "addingMarkersHelps": "✨ Ajouter ces feutres aidera ton Guangna by Number à ressembler davantage à l'image originale téléversée.",
+      "matchedFullPalette": "🎨 Associé à de vrais feutres — les couleurs que tu vois sont celles que tu utiliseras.",
+      "matchedYourMarkers": "🎨 Associé à tes feutres — ce sont ceux que tu utiliseras en coloriant ton Coloriage par Numéro.",
+      "addingMarkersHelps": "✨ Ajouter ces feutres aidera ton Coloriage par Numéro à ressembler davantage à l'image originale téléversée.",
       "includeFullGuide": "📩 Inclus gratuitement avec ma commande mon Guide de palette de couleurs complet, au cas où je voudrais ajouter d'autres feutres plus tard.",
-      "scaledDownNotice": "💡 Cet aperçu est réduit pour plus de rapidité, donc certains détails fins sont adoucis ici. Ton fichier acheté est généré en pleine résolution, avec des lignes plus nettes et des détails plus riches. Vois la différence par toi-même sur notre",
-      "examplesLink": "page d'exemples →",
       "beforeLabel": "Aperçu colorié",
       "afterLabel": "Contour numéroté",
       "happyOrChange": "Ça te convient, ou souhaites-tu apporter des modifications ?",
@@ -834,8 +835,8 @@
     },
     "submit": {
       "sending": "⏳ Envoi de ta commande…",
-      "order": "✨ Commander ton Guangna by Number personnalisé →",
-      "orderDisabled": "✨ Commander ton Guangna by Number personnalisé",
+      "order": "✨ Commander ton Coloriage par Numéro personnalisé →",
+      "orderDisabled": "✨ Commander ton Coloriage par Numéro personnalisé",
       "uploadToStart": "Téléverse une photo pour commencer",
       "generateOrSkip": "Génère un aperçu, ou passe cette étape, pour continuer",
       "addEmail": "Ajoute ton e-mail pour continuer",
@@ -883,7 +884,7 @@
     "checkoutOpenedNotice": "🔗 Le paiement s'est ouvert dans un nouvel onglet — termine ton paiement là-bas. Cette page restera ici si tu en as besoin.",
     "buttons": {
       "makeChanges": "✏️ Non, je veux faire des modifications",
-      "orderAnother": "🖼️ Commander un autre Guangna by Number",
+      "orderAnother": "🖼️ Commander un autre Coloriage par Numéro",
       "checkout": "🔒 Procéder au paiement — {price}",
       "preparingCheckout": "⏳ Préparation du paiement…"
     }
@@ -915,10 +916,12 @@
   },
   "emails": {
     "orderConfirmation": {
-      "subject": "🎨 Ton Guangna by Number personnalisé est prêt ! (Commande #{orderId})",
-      "heading": "🎨 Ton Guangna by Number personnalisé est prêt !",
+      "subject": "🎨 Ton Coloriage par Numéropersonnalisé est prêt ! (Commande #{orderId})",
+      "heading": "🎨 Ton Coloriage par Numéro personnalisé est prêt !",
       "orderIdLabel": "🔖 Numéro de commande",
       "levelLabel": "🎯 Niveau",
+      "shopLinkLanguo": "Acheter des marqueurs Languo →",
+      "languoAffiliateDisclosure": "Il s'agit d'un lien d'affiliation : si tu achètes quelque chose via ce lien, je perçois une petite commission, sans frais supplémentaires pour toi.",
       "markerSetsLabel": "🖊️ Sets de feutres",
       "defaultPalette": "Palette par défaut",
       "extraMarkersLabel": "➕ Feutres supplémentaires",
@@ -941,9 +944,9 @@
       "footerNote": "💡 Des questions sur ta commande ? Réponds simplement à cet e-mail ou contacte-nous à hello@creabeastudio.com."
     },
     "reminder": {
-      "subject": "🎨 Petit rappel — tes fichiers Guangna by Number t'attendent (Commande #{orderId})",
+      "subject": "🎨 Petit rappel — tes fichiers Coloriage par Numéro t'attendent (Commande #{orderId})",
       "heading": "🎨 N'oublie pas tes fichiers !",
-      "intro": "Petit rappel amical : tes fichiers Guangna by Number de la commande <strong>{orderId}</strong> sont prêts et t'attendent — il te reste environ <strong>{days}</strong> jours avant l'expiration de ce lien de téléchargement.",
+      "intro": "Petit rappel amical : tes fichiers Coloriage par Numéro de la commande <strong>{orderId}</strong> sont prêts et t'attendent — il te reste environ <strong>{days}</strong> jours avant l'expiration de ce lien de téléchargement.",
       "downloadOutline": "📄 Télécharger ton contour numéroté (prêt à imprimer)",
       "downloadPreviewGuide": "🖼️ Télécharger ton aperçu colorié et ton guide de feutres",
       "downloadFullGuide": "🎁 Télécharger ton guide de palette complet gratuit",

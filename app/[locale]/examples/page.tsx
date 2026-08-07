@@ -6,27 +6,25 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
 
-// ── EXAMPLES REDESIGN (2026-07-17): replaces the old autoplay
-// slideshow of single finished-artwork images with a sidebar of
-// example photos that drive two BeforeAfterSlider comparisons in the
-// main area:
-//   1) preview-1800 vs preview-3000  -- resolution/quality difference.
-//      Deliberately uses the COLORED PREVIEW at both sizes (not the
-//      outline) -- per Mirjam, the 1800-vs-3000 difference reads much
-//      more clearly in the colored version than in numbered line art.
-//   2) preview-3000 vs outline-3000  -- what you actually get: the
-//      colored reference vs the numbered page you paint from.
+// ── EXAMPLES REDESIGN (2026-07-17, simplified 2026-08-07): replaces
+// the old autoplay slideshow of single finished-artwork images with a
+// sidebar of example photos that drive a single BeforeAfterSlider
+// comparison in the main area: preview-3000 vs outline-3000 -- what
+// you actually get, the colored reference vs the numbered page you
+// paint from. (The earlier 1800px-vs-3000px resolution comparison was
+// dropped 2026-08-07 -- 1800-preview.png files can stay uploaded in
+// GCS if useful elsewhere, this page just no longer references them.)
 //
-// Each example therefore needs exactly 3 source images, not 4 -- see
-// the folder convention below. The sidebar thumbnail reuses preview3000
-// (no separate thumbnail file needed -- next/image handles resizing).
-//
+// Each example needs 2 source images -- see the folder convention
+// below. The sidebar thumbnail reuses preview3000 (no separate
+// thumbnail file needed -- next/image handles resizing).
+
 // ── PUBLIC ASSETS (2026-07-17): these images live in a public GCS
 // bucket, not /public -- see next.config.ts's images.remotePatterns.
-// Upload triplets to gs://crea-bea-public-assets/examples/<slug>/ using
-// exactly these three filenames (1800-preview.png, 3000-preview.png,
-// 3000-outline.png) and they're picked up automatically; no code change
-// needed beyond adding the slug (with its category) to EXAMPLES below.
+// Upload pairs to gs://crea-bea-public-assets/examples/<slug>/ using
+// exactly these two filenames (3000-preview.png, 3000-outline.png) and
+// they're picked up automatically; no code change needed beyond adding
+// the slug (with its category) to EXAMPLES below.
 //
 // ── DESCRIPTION CONSOLIDATION (2026-07-22): every example used to
 // carry its own descKey (descFamily, descPet, descHolidayCelebration,
@@ -43,7 +41,6 @@ const GCS_PUBLIC_BASE = "https://storage.googleapis.com/crea-bea-public-assets";
 
 function exampleUrls(slug: string) {
   return {
-    preview1800: `${GCS_PUBLIC_BASE}/examples/${slug}/1800-preview.png`,
     preview3000: `${GCS_PUBLIC_BASE}/examples/${slug}/3000-preview.png`,
     outline3000: `${GCS_PUBLIC_BASE}/examples/${slug}/3000-outline.png`,
   };
@@ -271,49 +268,27 @@ export default function Examples() {
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-              <div>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "var(--pink)", marginBottom: 8 }}>
-                  🔍 Preview quality: 1800px vs 3000px
-                </p>
-                <div className="examples-slider-wrap">
-                  <BeforeAfterSlider
-                    key={`${ex.slug}-res`}
-                    beforeImage={exUrls.preview1800}
-                    afterImage={exUrls.preview3000}
-                    beforeLabel="1800px (free preview)"
-                    afterLabel="3000px (purchased file)"
-                    aspectRatio={aspect}
-                  />
-                </div>
-                <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
-                  Your free preview is generated at a lower resolution for speed. The file you receive
-                  after ordering is generated fresh at full resolution, with sharper lines and richer detail.
-                </p>
+            <div>
+              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--pink)", marginBottom: 8 }}>
+                🎨 What you get: colored preview vs numbered outline
+              </p>
+              <div className="examples-slider-wrap">
+                <BeforeAfterSlider
+                  key={`${ex.slug}-type`}
+                  beforeImage={exUrls.preview3000}
+                  afterImage={exUrls.outline3000}
+                  beforeLabel="Colored preview"
+                  afterLabel="Numbered outline"
+                  aspectRatio={aspect}
+                />
               </div>
-
-              <div>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "var(--pink)", marginBottom: 8 }}>
-                  🎨 What you get: colored preview vs numbered outline
-                </p>
-                <div className="examples-slider-wrap">
-                  <BeforeAfterSlider
-                    key={`${ex.slug}-type`}
-                    beforeImage={exUrls.preview3000}
-                    afterImage={exUrls.outline3000}
-                    beforeLabel="Colored preview"
-                    afterLabel="Numbered outline"
-                    aspectRatio={aspect}
-                  />
-                </div>
-                <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
-                  You paint from the numbered outline -- the colored preview is your reference for
-                  which marker goes where.
-                </p>
-              </div>
+              <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
+                You paint from the numbered outline -- the colored preview is your reference for
+                which marker goes where.
+              </p>
             </div>
           </div>
-        </div>
+          </div>
 
         <div style={{ textAlign: "center", marginTop: 48 }}>
           <Link href="/create" className="btn-primary" style={{ display: "inline-flex", fontSize: 17, padding: "16px 40px" }}>

@@ -303,7 +303,7 @@ export default function ColorConverter() {
   const getOwnedLanguoIds = (): string[] => {
     const ids: string[] = [];
     for (const setKey of mySetsLanguo) {
-      const setIds = LANGUO_SETS[setKey];
+      const setIds = LANGUO_SETS[setKey]?.codes;
       if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
     }
     for (const tok of myExtraCodes.split(/[\s,;]+/)) {

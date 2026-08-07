@@ -65,7 +65,7 @@ type Direction = "toGuangna" | "toLanguo";
 type Mode = "single" | "set";
 
 const LANGUO_NON_GLITTER_SET = new Set(LANGUO_NON_GLITTER_IDS);
-const LANGUO_BRUSH_288_DEFAULT = (LANGUO_SETS["Brush 288 Set"] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id));
+const LANGUO_BRUSH_288_DEFAULT = (LANGUO_SETS["Brush 288 Set"]?.codes || []).filter(id => LANGUO_NON_GLITTER_SET.has(id));
 
 // Same noise-overlay technique as ColorConverter's ProtectedSwatch, so a
 // browser eyedropper/color-picker samples noisy pixels instead of the
@@ -208,7 +208,7 @@ export default function BrandConverter() {
       }
     } else {
       if (mySet && LANGUO_SETS[mySet]) {
-        for (const id of LANGUO_SETS[mySet]) {
+        for (const id of LANGUO_SETS[mySet].codes) {
           if (LANGUO_COLORS[id] && !ids.includes(id)) ids.push(id);
         }
       }
@@ -453,13 +453,13 @@ export default function BrandConverter() {
       const isToGuangna = direction === "toGuangna";
 
       const sourceIds = isToGuangna
-        ? (LANGUO_SETS[yourSet] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
+      ? (LANGUO_SETS[yourSet]?.codes || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
         : (GUANGNA_SETS[yourSet] || []);
 
       const targetIds = isToGuangna
         ? (matchToSet ? (GUANGNA_SETS[matchToSet] || []) : GN_ONLY_IDS)
         : (matchToSet
-          ? (LANGUO_SETS[matchToSet] || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
+          ? (LANGUO_SETS[matchToSet]?.codes || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
           : LANGUO_BRUSH_288_DEFAULT);
 
       const rows: SetMatchRow[] = [];

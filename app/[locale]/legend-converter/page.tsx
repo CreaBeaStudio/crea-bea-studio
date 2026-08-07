@@ -50,10 +50,10 @@ import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
 //    whenever a SHOWN match (on page or in the PDF) is a Guangna High
 //    Gloss code, tie or not.
 //
-// PRE-EXISTING BUG (not introduced here, same note as ColorConverter):
-// LANGUO_SET_OPTIONS advertises the full Paint set under key "288 Set",
-// but LANGUO_SETS actually stores it as "Brush 288 Set". Using the real
-// key directly here for the no-selection fallback pool.
+// Using the real LANGUO_SETS key directly for the no-selection fallback
+// pool, rather than going through LANGUO_SET_OPTIONS (which is a plain
+// checklist of every Languo set/line, not scoped to Paint specifically).
+//
 //
 // Removed: the old flat SwatchResult shape (full/fullGNFallback/owned),
 // the two separate "Guangna block"/"Languo block" result sections, and
@@ -79,11 +79,10 @@ type SwatchResult = { originalIndex: number; matches: TaggedMatch[]; fallback: M
 const DISPLAY_MAX_W = 640;
 const TIE_THRESHOLD = 2.0;
 // The original Languo Acrylic 288 ("Paint") line only -- NOT the newer
-// Gel Pens / PLUS / LanguoxQimiart product lines. Real key is
-// "Brush 288 Set" (LANGUO_SET_OPTIONS advertises it as "288 Set", which
-// doesn't exist in LANGUO_SETS -- pre-existing mismatch, using the real
-// key directly).
-const LANGUO_PAINT_IDS: string[] = LANGUO_SETS["Brush 288 Set"] ?? LANGUO_NON_GLITTER_IDS;
+// Gel Pens / PLUS / LanguoxQimiart product lines. Pulled directly from
+// LANGUO_SETS by its real key, since LANGUO_SET_OPTIONS is an unscoped
+// list of every Languo set across all lines.
+const LANGUO_PAINT_IDS: string[] = LANGUO_SETS["Brush 288 Set"]?.codes ?? LANGUO_NON_GLITTER_IDS;
 
 // Tries Guangna's code format first, then Languo's -- the two formats
 // don't overlap (Guangna: digits-only or "GN-"/"HG-" prefixed; Languo:
@@ -290,7 +289,7 @@ export default function LegendConverter() {
   const getOwnedLanguoIds = (): string[] => {
     const ids: string[] = [];
     for (const setKey of mySetsLanguo) {
-      const setIds = LANGUO_SETS[setKey];
+      const setIds = LANGUO_SETS[setKey]?.codes;
       if (setIds) for (const id of setIds) if (!ids.includes(id)) ids.push(id);
     }
     for (const tok of myExtraCodes.split(/[\s,;]+/)) {

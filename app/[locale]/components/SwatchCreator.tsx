@@ -118,6 +118,13 @@ import type { PaperSize } from "@/lib/lemonSqueezyPricing";
 import { FREE_COLOR_LIMIT, getSwatchBand, toUsdEstimate } from "@/lib/lemonSqueezyPricing";
 import ReadyMadePacks from "./ReadyMadePacks";
 
+// TOGGLE (2026-08-07): flip to true once High Gloss colors are allocated
+// to color families and ordered.
+const INCLUDE_HIGH_GLOSS_IN_SWATCH_CREATOR = false;
+const GUANGNA_SET_OPTIONS_SWATCH_CREATOR = INCLUDE_HIGH_GLOSS_IN_SWATCH_CREATOR
+  ? SET_OPTIONS
+  : SET_OPTIONS.filter((o) => !o.key.startsWith("GN.586"));
+  
 const FAMILY_ORDER = Object.keys(COLOR_FAMILY_LABELS) as ColorFamily[];
 
 // -- noise protection: a subtle turbulence overlay blended over every
@@ -542,7 +549,7 @@ export default function SwatchCreator() {
     [guangnaSetKey]
   );
   const languoSetPreview = useMemo(
-    () => (languoSetKey ? (LANGUO_SETS[languoSetKey] ?? []).map((c) => resolveItem(c, languoSetOrigin)).filter((x): x is SwatchItem => x !== null) : []),
+    () => (languoSetKey ? (LANGUO_SETS[languoSetKey]?.codes ?? []).map((c) => resolveItem(c, languoSetOrigin)).filter((x): x is SwatchItem => x !== null) : []),
     [languoSetKey]
   );
   const guangnaResults = useMemo(() => {
@@ -868,7 +875,7 @@ export default function SwatchCreator() {
           {tab === "guangna-set" && (
             <>
               <SetAutocomplete
-                options={SET_OPTIONS}
+                options={GUANGNA_SET_OPTIONS_SWATCH_CREATOR}
                 value={guangnaSetKey}
                 onChange={setGuangnaSetKey}
                 placeholder={t("placeholders.guangnaSetSearch")}

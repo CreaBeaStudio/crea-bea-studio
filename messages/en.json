@@ -1,39 +1,38 @@
 {
   "meta": {
     "title": "CreaBeaStudio – Custom Paint by Number",
-    "description": "Turn your favourite photos into Paint-by-Number colouring pages with a personalised Guangna marker colour palette guide."
+    "description": "Turn your favourite photos into Paint-by-Number colouring pages with a personalised marker colour palette guide."
   },
 "home": {
     "badge": "🐾 CreaBeaStudio",
     "heroTitle1": "Turn your photo into",
-    "heroTitle2": "Guangna by Number",
+    "heroTitle2": "Color by Number",
     "heroTitle3": "artwork",
-    "heroSubtitle": "Take the guesswork out of color selection - just pick up your Guangna brush markers and start coloring.",
-    "heroCta": "Create your Guangna By Number →",
+    "heroSubtitle": "Take the guesswork out of color selection - just pick up your brush markers and start coloring.",
+    "heroCta": "Create your Color By Number →",
     "heroSeeExamples": "See examples",
     "featureCamera": "Your favourite photo",
     "featureNoGuessing": "No more guessing colors",
-    "featureGuangna": "Made for your Guangna markers",
-    "paletteBanner": "Guangna by Number includes a color palette matched to your Guangna markers — with exact codes and names.",
-    "converterTitle": "Guangna Color Converter",
-    "converterSubtitle": "Do you have a #HEX, RGB or a picture? Find the closest Guangna color instantly.",
-    "converterCta": "Open Guangna Color Converter →",
+    "featureGuangna": "Made for your favorite markers",
+    "paletteBanner": "Color by Number includes a color palette matched to your markers — with exact codes and names.",
+    "converterTitle": "Converter Tools",
+    "converterSubtitle": "Do you want to convert a color, legend or look up codes.",
     "processLabel": "Process",
     "howTitle": "How it Works",
     "howUpload": "Upload",
     "howUploadDesc": "Upload any photo. We'll take care of the rest.",
     "howChoose": "Choose",
-    "howChooseDesc": "Select your Guangna markers and skill level.",
+    "howChooseDesc": "Select your markers and skill level.",
     "howOrder": "Order",
-    "howOrderDesc": "We create your custom Guangna by Number file",
+    "howOrderDesc": "We create your custom Color by Number file",
     "howColor": "Color",
     "howColorDesc": "Download, print, and start coloring!",
-    "createCta": "Create your Guangna by Number page",
+    "createCta": "Create your Color by Number page",
     "chooseLevelLabel": "Choose your level",
     "levelsTitle": "From beginner to advanced",
     "levelsSubtitle": "Higher levels include more colors and finer details — choose the level that suits you.",
     "levelBeginner": "Beginner",
-    "levelBeginnerDesc": "Ideal for your first Guangna by Number. Fewer colors, larger areas, easy and relaxing coloring.",
+    "levelBeginnerDesc": "Ideal for your first Color by Number. Fewer colors, larger areas, easy and relaxing coloring.",
     "levelIntermediate": "Intermediate",
     "levelIntermediateDesc": "Balanced mix of effort and detail. More colors, shading and detail give you more variety.",
     "levelAdvanced": "Advanced",
@@ -41,20 +40,20 @@
     "mostPopular": "Most Popular",
     "tryLevel": "Try {level}",
     "includedLabel": "Included with every order",
-    "paletteTitle1": "What is the Guangna",
+    "paletteTitle1": "What is the",
     "paletteTitle2": "Color Palette Guide?",
-    "paletteP1": "The Guangna Color Palette Guide is your personalized roadmap to effortless, beautiful coloring — tailored specifically to the Guangna markers you own.",
+    "paletteP1": "The Color Palette Guide is your personalized roadmap to effortless, beautiful coloring — tailored specifically to the your markers.",
     "paletteP2": "No more guessing which colors to use. No more creating test swatches or comparing endless shades. This guide removes the uncertainty and lets you jump straight into what you love: coloring.",
-    "paletteP3": "Each section of your Guangna by Number design is matched with the best-fitting Guangna marker from your personal set, ensuring accurate and satisfying results every time. At times, you'll find creative color options — giving you the freedom to add subtle shading, depth, and dimension.",
+    "paletteP3": "Each section of your Color by Number design is matched with the best-fitting marker from your personal set, ensuring accurate and satisfying results every time. At times, you'll find creative color options — giving you the freedom to add subtle shading, depth, and dimension.",
     "paletteP4": "Simply get your markers ready, follow the guide, and start coloring with confidence.",
     "paletteSlogan": "On your mark. Pick up your markers. Get set… and color.",
     "everyOrderLabel": "Every order includes",
     "wdygTitle": "What do you get?",
-    "wdygPalette": "Guangna Color Palette Guide and Impression Finished Artwork (PDF)",
-    "wdygOutline": "Guangna by Number Outline (PDF)",
-    "wdygPaletteDesc": "A complete Guangna color reference guide with Guangna codes and names, and a full-color preview of the finished artwork.",
+    "wdygPalette": "Custom Color Palette Guide and Impression Finished Artwork (PDF)",
+    "wdygOutline": "Color by Number Outline (PDF)",
+    "wdygPaletteDesc": "A complete color reference guide with your codes and names, and a full-color preview of the finished artwork.",
     "wdygOutlineDesc": "A printable, high-resolution line-art template ready for coloring.",
-    "finalCta": "Create your Guangna by Number →"
+    "finalCta": "Create your Color by Number →"
   },
   "footer": {
 "footerTagline": "Color your memories, one number at a time. 🐾",
@@ -79,7 +78,7 @@
     "home": "Home",
     "tools": "Tools",
     "create": "Create",
-    "createGuangna": "Guangna by Number",
+    "createGuangna": "Color by Number",
     "mysteryDecoder": "Mystery Decoder",
     "colorConverter": "Color Converter",
     "legendConverter": "Legend Converter",
@@ -98,8 +97,8 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "q1": "What do I receive after placing an order?",
-    "a1": "You will receive a complete digital package: a Paint by Number Outline (PDF), a Custom Guangna Color Palette Guide with a Finished Artwork Impression (PDF). Please note: this is a custom digital artwork — no physical items will be shipped.",
-    "q2": "How long does it take to receive my custom Guangna-by-Number?",
+    "a1": "You will receive a complete digital package: a Paint by Number Outline (PDF), a Custom Color Palette Guide with a Finished Artwork Impression (PDF). Please note: this is a custom digital artwork — no physical items will be shipped.",
+    "q2": "How long does it take to receive my custom Color-by-Number?",
     "a2": "Once your payment is confirmed, you'll receive a delivery email from CreaBeaStudio with your download links—usually within 1 to 10 minutes.",
     "q3": "What file formats can I upload?",
     "a3": "We accept JPG, PNG, WEBP, and HEIC. Most phone photos work perfectly.",
@@ -109,9 +108,9 @@
     "a5": "Your files are securely stored for 37 days, then permanently deleted.",
     "q6": "What skill level is this suitable for?",
     "a6": "Our templates suit Beginner, Intermediate, and Advanced creators. If unsure, choose Intermediate — it's the best balance between detail and relaxing difficulty.",
-    "q7": "Why do you need to know which Guangna sets I own?",
+    "q7": "Why do you need to know which marker sets I own?",
     "a7": "This lets us match every palette directly to the brush markers you have. You'll get combinations you can actually use right away, no guesswork, no missing colors.",
-    "q8": "Does Guangna by Number work with all Guangna markers?",
+    "q8": "Does Color by Number work with all branded markers?",
     "a8": "It works with any of the sets listed right on our creation page! If you don't see your specific markers there, just drop us an email—we would be happy to add them for you.",
     "q9": "My marker color doesn't match the palette guide?",
     "a9": "Minor shade variations can occur due to ink batch differences, printing quality, or paper absorption. Your guide provides the best-match recommendation.",
@@ -120,7 +119,7 @@
     "q11": "Do you offer refunds?",
     "a11": "Due to the personalised digital nature of our products, refunds cannot be accepted once design work has started.",
     "q12": "What makes CreaBeaStudio different?",
-    "a12": "We specialise in custom coloring pages tailored specifically for Guangna brush markers — so you can start coloring immediately, without the time-consuming color selection task.",
+    "a12": "We specialise in custom coloring pages tailored specifically for branded brush markers — so you can start coloring immediately, without the time-consuming color selection task.",
     "stillQuestions": "Still have questions?",
     "contactUs": "Contact us"
   },
@@ -259,7 +258,7 @@
   "refund": {
     "title": "Refund Policy",
     "lastUpdated": "Last updated June 18, 2026",
-    "intro": "Because each Guangna by Number file is custom-made based on your uploaded photo, we are unable to offer refunds once production has started.",
+    "intro": "Because each Color by Number file is custom-made based on your uploaded photo, we are unable to offer refunds once production has started.",
     "s1Heading": "If Something's Wrong With Your Order",
     "s1Text": "If you receive an incorrect file, experience a technical error, or are otherwise unhappy with the result, please contact us within 7 days of delivery at <email>hello@creabeastudio.com</email>. We will work with you to fix the issue or, if appropriate, issue a refund.",
     "s2Heading": "Cancellations",
@@ -311,9 +310,9 @@
   },
   "examples": {
     "title": "Examples",
-    "subtitle": "See what CreaBeaStudio can create from your photos. Every Guangna by Number is uniquely generated from your photo and tailored to your Guangna brush markers and skill level.",
+    "subtitle": "See what CreaBeaStudio can create from your photos. Every Color by Number is uniquely generated from your photo and tailored to your markers and skill level.",
     "giftTitle": "A Unique and Personal Gift",
-    "giftText": "Color your memories and bring them to life. Each Guangna by Number is created from your favorite photo and matched to your markers, becoming a one-of-a-kind keepsake for birthdays, holidays, or meaningful moments.",
+    "giftText": "Color your memories and bring them to life. Each Color by Number is created from your favorite photo and matched to your markers, becoming a one-of-a-kind keepsake for birthdays, holidays, or meaningful moments.",
     "labelBeginner": "Beginner",
     "labelIntermediate": "Intermediate",
     "labelAdvanced": "Advanced",
@@ -326,7 +325,7 @@
     "goToExample": "Go to example {number}",
     "previousExample": "Previous example",
     "nextExample": "Next example",
-    "createCta": "Create your Guangna by Number now →"
+    "createCta": "Create your Color by Number now →"
   },
   "common": {
     "brands": {
@@ -476,7 +475,7 @@
     "previewLabel": "Preview",
     "crossLink": {
       "text": "Want to turn your own photo into a paint-by-number?",
-      "linkText": "Try Create your own Guangna by Number →"
+      "linkText": "Try Create your own Color by Number →"
     }
     },
 "BrandConverter": {
@@ -744,8 +743,8 @@
     }
   },
   "create": {
-    "pageTitle": "Create Your Custom Guangna by Number",
-    "pageSubtitle": "Upload your photo, choose your Guangna markers, and preview your design for free before you order.",
+    "pageTitle": "Create Your Custom Color by Number",
+    "pageSubtitle": "Upload your photo, choose your favorite markers, and preview your design for free before you order.",
     "cart": {
       "summary": "{count, plural, one {🛒 You have # order in your cart} other {🛒 You have # orders in your cart}} — total so far: {total}",
       "backToOrder": "← Back to my order"
@@ -774,8 +773,8 @@
       }
     },
     "step2": {
-      "title": "Step 2: 🖊️ Your Guangna Marker Sets",
-      "description": "Select every set you own — we'll build the palette from your markers. You can pick as many as you like, or leave this empty to preview against the full Guangna color palette.",
+      "title": "Step 2: 🖊️ Your Marker Sets",
+      "description": "Select every set you own — we'll build the palette from your markers. You can pick as many as you like, or leave this empty to preview against the real colors.",
       "setsSelected": "{count, plural, one {# set selected} other {# sets selected}}",
       "additionalCodesTitle": "Additional Marker Codes",
       "additionalCodesDescription": "Add your individual markers — GN codes (3-digit, comma or space separated). Metallic pens not included.",
@@ -784,14 +783,16 @@
     },
     "step3": {
       "title": "Step 3: 🖼️ Free instant preview",
-      "description": "Preview a free low-res draft in 20-40 seconds. Get the full high-resolution file sent straight to your inbox for {price}.",
-      "generating": "⏳ Generating your preview… (~20-40s)",
+      "description": "A high-resolution image will be generated — this may take up to 1 minute, so please be patient.",
+      "generating": "⏳ Generating your preview… (~20-60s)",
+      "crossBrandNotice": "That's an interesting combination of markers — it can take a little longer to generate your preview, so bear with us and thank you for your patience!",
+      "upsellHeading": "✨ Level up your color palette? These markers would help:",
       "regenerate": "🔄 Regenerate preview",
       "generate": "🎨 Generate free preview",
       "skipPreview": "Skip the preview — I already know what I want →",
       "previewSkippedNotice": "✓ Preview skipped — you can still generate one below anytime before ordering.",
       "uploadFirst": "Upload a photo first.",
-      "noSetsWarning": "You haven't selected any Guangna sets — do you want to continue with the full color palette?",
+      "noSetsWarning": "You haven't selected any sets — do you want to continue with the full color palette?",
       "useFullSet": "Yes, use full set",
       "cancelPickSets": "Cancel, let me pick sets",
       "genericError": "Something went wrong generating your preview. Please try again.",
@@ -799,12 +800,10 @@
       "stalePreview": "Your photo or selections changed — generate a new preview before ordering.",
       "yourMarkers": "Your markers",
       "fullColorPalette": "Full color palette",
-      "matchedFullPalette": "🎨 Matched to real Guangna markers — the colors you see are what you'll use.",
-      "matchedYourMarkers": "🎨 Matched to your Guangna markers — you'll be using these when coloring your Guangna-by-Number.",
-      "addingMarkersHelps": "✨ Adding these markers will help your Guangna-by-Number look closer to the original uploaded image.",
+      "matchedFullPalette": "🎨 Matched to real markers — the colors you see are what you'll use.",
+      "matchedYourMarkers": "🎨 Matched to your markers — you'll be using these when coloring your Color-by-Number.",
+      "addingMarkersHelps": "✨ Adding these markers will help your Color-by-Number look closer to the original uploaded image.",
       "includeFullGuide": "📩 Please include my Full Color Palette Guide for free with my order, in case I want to add more markers later.",
-      "scaledDownNotice": "💡 This preview is scaled down for speed, so some fine detail is softened here. Your purchased file is generated at full resolution, with sharper lines and richer detail. See the difference for yourself on our",
-      "examplesLink": "examples page →",
       "beforeLabel": "Colored preview",
       "afterLabel": "Numbered outline",
       "happyOrChange": "Looks good, or would you like to make changes?",
@@ -839,8 +838,8 @@
     },
     "submit": {
       "sending": "⏳ Sending your order…",
-      "order": "✨ Order Your Custom Guangna by Number →",
-      "orderDisabled": "✨ Order Your Custom Guangna by Number",
+      "order": "✨ Order Your Custom Color by Number →",
+      "orderDisabled": "✨ Order Your Custom Color by Number",
       "uploadToStart": "Upload a photo to get started",
       "generateOrSkip": "Generate a preview, or skip it, to continue",
       "addEmail": "Add your email to continue",
@@ -888,7 +887,7 @@
     "checkoutOpenedNotice": "🔗 Checkout opened in a new tab — complete your payment there. This page will still be here if you need it.",
     "buttons": {
       "makeChanges": "✏️ No, I want to make changes",
-      "orderAnother": "🖼️ Order another Guangna by Number",
+      "orderAnother": "🖼️ Order another Color by Number",
       "checkout": "🔒 Proceed to Payment — {price}",
       "preparingCheckout": "⏳ Preparing checkout…"
     }
@@ -920,8 +919,8 @@
   },
   "emails": {
     "orderConfirmation": {
-      "subject": "🎨 Your Custom Guangna-by-Number is ready! (Order #{orderId})",
-      "heading": "🎨 Your Custom Guangna-by-Number is ready!",
+      "subject": "🎨 Your Custom Color-by-Number is ready! (Order #{orderId})",
+      "heading": "🎨 Your Custom Color-by-Number is ready!",
       "orderIdLabel": "🔖 Order ID",
       "levelLabel": "🎯 Level",
       "markerSetsLabel": "🖊️ Marker sets",
@@ -929,6 +928,8 @@
       "extraMarkersLabel": "➕ Extra markers",
       "downloadOutline": "📄 Download your numbered outline (print-ready)",
       "downloadPreviewGuide": "🖼️ Download your color preview & marker guide",
+      "shopLinkLanguo": "Shop Languo markers →",
+      "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you.",
       "fullGuide": {
         "title": "🎁 Your free complete palette guide",
         "body": "Handy if you end up ordering more markers later — this link stays active for 30 days.",
@@ -946,9 +947,9 @@
       "footerNote": "💡 Questions about your order? Just reply to this email or reach us at hello@creabeastudio.com."
     },
     "reminder": {
-      "subject": "🎨 Just checking in — your Guangna by Number files are waiting (Order #{orderId})",
+      "subject": "🎨 Just checking in — your Color by Number files are waiting (Order #{orderId})",
       "heading": "🎨 Don't forget your files!",
-      "intro": "Just a friendly reminder that your Guangna by Number files from order <strong>{orderId}</strong> are ready and waiting — with about <strong>{days}</strong> days left before this download link expires.",
+      "intro": "Just a friendly reminder that your Color by Number files from order <strong>{orderId}</strong> are ready and waiting — with about <strong>{days}</strong> days left before this download link expires.",
       "downloadOutline": "📄 Download your numbered outline (print-ready)",
       "downloadPreviewGuide": "🖼️ Download your color preview & marker guide",
       "downloadFullGuide": "🎁 Download your free complete palette guide",
@@ -980,8 +981,8 @@
     "featureA4Letter": "Formatted to print perfectly on both A4 and US Letter paper.",
     "featureDualCoding": "Dual color coding: every page lists both the original color codes and the matching Guangna marker codes, so you can pick the right shade without guessing.",
     "featureCompleteCoverage": "Complete book coverage: decoders for all 100 mystery pages per volume.",
-   "featureFreePreviewLabel": "Try before you buy:",
-"featureFreePreviewText": "download the first page decoder for free.",
+    "featureFreePreviewLabel": "Try before you buy:",
+    "featureFreePreviewText": "download the first page decoder for free.",
     "priceNote": "Full volume — complete decoder key for all 100 pages — €7.50",
     "selectBookLabel": "Choose a book",
     "selectSetLabel": "Choose your Guangna set",
