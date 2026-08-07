@@ -920,8 +920,6 @@
       "heading": "🎨 Ton Coloriage par Numéro personnalisé est prêt !",
       "orderIdLabel": "🔖 Numéro de commande",
       "levelLabel": "🎯 Niveau",
-      "shopLinkLanguo": "Acheter des marqueurs Languo →",
-      "languoAffiliateDisclosure": "Il s'agit d'un lien d'affiliation : si tu achètes quelque chose via ce lien, je perçois une petite commission, sans frais supplémentaires pour toi.",
       "markerSetsLabel": "🖊️ Sets de feutres",
       "defaultPalette": "Palette par défaut",
       "extraMarkersLabel": "➕ Feutres supplémentaires",
@@ -939,7 +937,9 @@
         "columnName": "Nom",
         "columnImproves": "Améliore",
         "newArea": "Nouvelle zone",
-        "shopLink": "Acheter des feutres Guangna →"
+        "shopLink": "Acheter des feutres Guangna →",
+        "shopLinkLanguo": "Acheter des marqueurs Languo →",
+        "languoAffiliateDisclosure": "Il s'agit d'un lien d'affiliation : si tu achètes quelque chose via ce lien, je perçois une petite commission, sans frais supplémentaires pour toi."
       },
       "footerNote": "💡 Des questions sur ta commande ? Réponds simplement à cet e-mail ou contacte-nous à hello@creabeastudio.com."
     },

@@ -928,8 +928,6 @@
       "extraMarkersLabel": "➕ Extra markers",
       "downloadOutline": "📄 Download your numbered outline (print-ready)",
       "downloadPreviewGuide": "🖼️ Download your color preview & marker guide",
-      "shopLinkLanguo": "Shop Languo markers →",
-      "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you.",
       "fullGuide": {
         "title": "🎁 Your free complete palette guide",
         "body": "Handy if you end up ordering more markers later — this link stays active for 30 days.",
@@ -942,7 +940,9 @@
         "columnName": "Name",
         "columnImproves": "Improves",
         "newArea": "New area",
-        "shopLink": "Shop Guangna markers →"
+        "shopLink": "Shop Guangna markers →",
+        "shopLinkLanguo": "Shop Languo markers →",
+        "languoAffiliateDisclosure": "This link is an affiliate link, meaning I earn a small commission if you make a purchase, at no extra cost to you."
       },
       "footerNote": "💡 Questions about your order? Just reply to this email or reach us at hello@creabeastudio.com."
     },
