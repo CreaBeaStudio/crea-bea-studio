@@ -1,39 +1,38 @@
 {
   "meta": {
     "title": "CreaBeaStudio – Individuelles Malen nach Zahlen",
-    "description": "Verwandle deine Lieblingsfotos in Malen-nach-Zahlen-Vorlagen mit einer persönlichen Guangna-Markerfarbpalette."
+    "description": "Verwandle deine Lieblingsfotos in Malen-nach-Zahlen-Vorlagen mit einer persönlichen Markerfarbpalette."
   },
   "home": {
     "badge": "🐾 CreaBeaStudio",
     "heroTitle1": "Verwandle dein Foto in ein",
-    "heroTitle2": "Guangna Malen-nach-Zahlen",
+    "heroTitle2": "Malen nach Zahlen",
     "heroTitle3": "Kunstwerk",
-    "heroSubtitle": "Kein Rätselraten mehr bei der Farbwahl - greif einfach zu deinen Guangna Brush Markern und fang an zu malen.",
-    "heroCta": "Erstelle dein Guangna Malen-nach-Zahlen →",
+    "heroSubtitle": "Kein Rätselraten mehr bei der Farbwahl - greif einfach zu deinen Brush Markern und fang an zu malen.",
+    "heroCta": "Erstelle dein Malen-nach-Zahlen →",
     "heroSeeExamples": "Beispiele ansehen",
     "featureCamera": "Dein liebstes Foto",
     "featureNoGuessing": "Kein Farben-Raten mehr",
-    "featureGuangna": "Passend für Guangna-Marker",
-    "paletteBanner": "Guangna Malen-nach-Zahlen enthält eine Farbpalette passend zu deinen Guangna Markern — mit genauen Codes und Namen.",
-    "converterTitle": "Guangna Farbkonverter",
-    "converterSubtitle": "Hast du einen #HEX-Code, RGB-Wert oder ein Foto? Finde sofort die passende Guangna Farbe.",
-    "converterCta": "Guangna Farbkonverter öffnen →",
+    "featureGuangna": "Passend für deine Lieblingsmarker",
+    "paletteBanner": "Malen-nach-Zahlen enthält eine Farbpalette passend zu deinen Markern — mit genauen Codes und Namen.",
+    "converterTitle": "Konverter-Werkzeuge",
+    "converterSubtitle": "Möchtest du eine Farbe, eine Legende umwandeln oder Codes nachschlagen.",
     "processLabel": "Ablauf",
     "howTitle": "So funktioniert's",
     "howUpload": "Hochladen",
     "howUploadDesc": "Lade ein Foto hoch. Wir erledigen den Rest.",
     "howChoose": "Auswählen",
-    "howChooseDesc": "Wähle deine Guangna Marker und dein Level.",
+    "howChooseDesc": "Wähle deine Marker und dein Level.",
     "howOrder": "Bestellen",
-    "howOrderDesc": "Wir erstellen deine persönliche Guangna Malen-nach-Zahlen Datei",
+    "howOrderDesc": "Wir erstellen deine persönliche Malen-nach-Zahlen Datei",
     "howColor": "Malen",
     "howColorDesc": "Herunterladen, ausdrucken und los geht's!",
-    "createCta": "Erstelle deine Guangna Malen-nach-Zahlen Seite",
+    "createCta": "Erstelle deine Malen-nach-Zahlen Seite",
     "chooseLevelLabel": "Wähle dein Level",
     "levelsTitle": "Von Anfänger bis Fortgeschritten",
     "levelsSubtitle": "Höhere Level enthalten mehr Farben und feinere Details — wähle das Level, das zu dir passt.",
     "levelBeginner": "Anfänger",
-    "levelBeginnerDesc": "Ideal für dein erstes Guangna Malen-nach-Zahlen. Weniger Farben, größere Flächen, einfaches und entspanntes Malen.",
+    "levelBeginnerDesc": "Ideal für dein erstes Malen-nach-Zahlen. Weniger Farben, größere Flächen, einfaches und entspanntes Malen.",
     "levelIntermediate": "Mittel",
     "levelIntermediateDesc": "Ausgewogene Mischung aus Aufwand und Detail. Mehr Farben, Schattierungen und Details für mehr Abwechslung.",
     "levelAdvanced": "Fortgeschritten",
@@ -41,21 +40,20 @@
     "mostPopular": "Am beliebtesten",
     "tryLevel": "{level} ausprobieren",
     "includedLabel": "Bei jeder Bestellung enthalten",
-    "paletteTitle1": "Was ist der Guangna",
+    "paletteTitle1": "Was ist der",
     "paletteTitle2": "Farbpalette-Guide?",
-    "paletteP1": "Der Guangna Farbpaletten-Leitfaden ist dein persönlicher Plan für müheloses und schönes Ausmalen - speziell zugeschnitten auf die Guangna Marker, die du besitzt.",
+    "paletteP1": "Der Farbpaletten-Leitfaden ist dein persönlicher Plan für müheloses und schönes Ausmalen - speziell zugeschnitten auf die Marker, die du besitzt.",
     "paletteP2": "Kein Rätselraten mehr, welche Farbe du nehmen sollst. Kein Testfarben mehr oder endloses Vergleichen. Dieser Guide nimmt dir die Unsicherheit und lässt dich direkt das tun, was du liebst: malen.",
-    "paletteP3": "Jeder Bereich deines Guangna Malen-nach-Zahlen Designs wird mit dem am besten passenden Guangna Marker aus deinem eigenen Set abgestimmt — für genaue und schöne Ergebnisse, jedes Mal. Manchmal findest du kreative Farboptionen — die dir die Freiheit geben, feine Schattierungen, Tiefe und Dimension hinzuzufügen.",
+    "paletteP3": "Jeder Bereich deines Malen-nach-Zahlen Designs wird mit dem am besten passenden Marker aus deinem eigenen Set abgestimmt — für genaue und schöne Ergebnisse, jedes Mal. Manchmal findest du kreative Farboptionen — die dir die Freiheit geben, feine Schattierungen, Tiefe und Dimension hinzuzufügen.",
     "paletteP4": "Hol dir einfach deine Marker, folge dem Guide und beginne selbstbewusst zu malen.",
     "paletteSlogan": "On your Mark. Marker bereit. Los… und mal.",
     "everyOrderLabel": "Jede Bestellung enthält",
     "wdygTitle": "Was bekommst du?",
-    "wdygOutline": "Guangna Malen-nach-Zahlen-Vorlage (PDF)",
-    "wdygPalette": "Guangna Farbpalette-Guide (PDF)",
+    "wdygOutline": "Malen-nach-Zahlen-Vorlage (PDF)",
+    "wdygPalette": "Individueller Farbpalette-Guide und Eindruck der fertigen Malvorlage (PDF)",
     "wdygOutlineDesc": "Eine druckfertige, hochauflösende Linienvorlage, bereit zum Ausmalen.",
-    "wdygPaletteDesc": "Ein vollständiger Guangna-Farbreferenz-Guide mit Guangna-Codes und -Namen sowie eine farbige Vorschau des fertigen Kunstwerks.",
-    "wdygImpressionPdf": "Eindruck der fertigen Malvorlage (PDF)",
-    "finalCta": "Erstelle dein Guangna Malen-nach-Zahlen →"
+    "wdygPaletteDesc": "Ein vollständiger Farbreferenz-Guide mit deinen Codes und Namen sowie eine farbige Vorschau des fertigen Kunstwerks.",
+    "finalCta": "Erstelle dein Malen-nach-Zahlen →"
   },
   "footer": {
     "footerTagline": "Male deine Erinnerungen, Nummer für Nummer. 🐾",
@@ -81,7 +79,7 @@
     "create": "Erstellen",
     "tools": "Werkzeuge",
     "languoConverter": "Marken-Konverter",
-    "createGuangna": "Guangna Malen-nach-Zahlen",
+    "createGuangna": "Malen nach Zahlen",
     "mysteryDecoder": "Mystery-Decoder",
     "colorConverter": "Farbkonverter",
     "legendConverter": "Legende-Konverter",
@@ -99,7 +97,7 @@
   "faq": {
     "title": "Häufig gestellte Fragen",
     "q1": "Was erhalte ich nach einer Bestellung?",
-    "a1": "Du erhältst ein komplettes digitales Paket: einen Guangna Malen-nach-Zahlen-Vorlage (PDF), einen persönlichen Guangna Farbpalette-Guide und ein Eindruck der fertigen Malvorlageeine (PDF). Bitte beachte: Dies ist ein digitales Maßwerk — es werden keine physischen Artikel versendet.",
+    "a1": "Du erhältst ein komplettes digitales Paket: eine Malen-nach-Zahlen-Vorlage (PDF), einen individuellen Farbpalette-Guide mit einem Eindruck der fertigen Malvorlage (PDF). Bitte beachte: Dies ist ein digitales Maßwerk — es werden keine physischen Artikel versendet.",
     "q2": "Wie lange dauert es, bis ich mein Design erhalte?",
     "a2": "Nach Bestätigung deiner Zahlung erhältst du eine E-Mail von CreaBeaStudio mit deinen Download-Links - meistens innerhalb von 1 bis 10 Minuten.",
     "q3": "Welche Dateiformate kann ich hochladen?",
@@ -110,9 +108,9 @@
     "a5": "Deine Dateien werden 37 Tage sicher gespeichert und danach dauerhaft gelöscht.",
     "q6": "Für welches Level ist das geeignet?",
     "a6": "Unsere Vorlagen passen für Anfänger, fortgeschrittene Einsteiger und Fortgeschrittene. Bist du unsicher? Wähle Mittel — die beste Balance zwischen Detail und entspanntem Schwierigkeitsgrad.",
-    "q7": "Warum müsst ihr wissen, welche Guangna-Sets ich besitze?",
+    "q7": "Warum müsst ihr wissen, welche Marker-Sets ich besitze?",
     "a7": "So können wir jede Palette direkt auf deine vorhandenen Brush Marker abstimmen. Du bekommst Kombinationen, die du sofort verwenden kannst — kein Rätselraten, keine fehlenden Farben.",
-    "q8": "Funktioniert Guangna Malen-nach-Zahlen mit allen Guangna Markern?",
+    "q8": "Funktioniert Malen-nach-Zahlen mit allen Markern?",
     "a8": "Es funktioniert mit jedem Set, das auf unserer Erstellungsseite aufgeführt ist! Findest du dein Set dort nicht, schick uns einfach eine E-Mail — wir fügen es gerne für dich hinzu.",
     "q9": "Meine Markerfarbe stimmt nicht mit dem Paletten-Guide überein?",
     "a9": "Kleine Farbabweichungen können durch unterschiedliche Tintenchargen, Druckqualität oder Papierabsorption entstehen. Dein Guide bietet die best passende Empfehlung.",
@@ -121,7 +119,7 @@
     "q11": "Bietet ihr Rückerstattungen an?",
     "a11": "Aufgrund der personalisierten digitalen Natur unserer Produkte können keine Rückerstattungen gewährt werden, sobald die Produktion begonnen hat.",
     "q12": "Was macht CreaBeaStudio besonders?",
-    "a12": "Wir haben uns auf individuelle Malvorlage spezialisiert, die speziell auf Guangna Brush Marker abgestimmt sind — damit du sofort mit dem Malen beginnen kannst, ohne zeitaufwändige Farbauswahl.",
+    "a12": "Wir haben uns auf individuelle Malvorlagen spezialisiert, die speziell auf Brush Marker abgestimmt sind — damit du sofort mit dem Malen beginnen kannst, ohne zeitaufwändige Farbauswahl.",
     "stillQuestions": "Noch Fragen?",
     "contactUs": "Kontakt"
   },
@@ -260,7 +258,7 @@
   "refund": {
     "title": "Rückerstattungsrichtlinie",
     "lastUpdated": "Zuletzt aktualisiert am 18. Juni 2026",
-    "intro": "Da jede Guangna Malen-nach-Zahlen Datei individuell auf Basis Ihres hochgeladenen Fotos erstellt wird, können wir keine Rückerstattungen anbieten, sobald die Produktion begonnen hat.",
+    "intro": "Da jede Malen-nach-Zahlen Datei individuell auf Basis Ihres hochgeladenen Fotos erstellt wird, können wir keine Rückerstattungen anbieten, sobald die Produktion begonnen hat.",
     "s1Heading": "Wenn etwas mit Ihrer Bestellung nicht stimmt",
     "s1Text": "Wenn Sie eine fehlerhafte Datei erhalten, einen technischen Fehler feststellen oder anderweitig mit dem Ergebnis unzufrieden sind, kontaktieren Sie uns bitte innerhalb von 7 Tagen nach Lieferung unter <email>hello@creabeastudio.com</email>. Wir arbeiten mit Ihnen zusammen, um das Problem zu beheben oder, falls angemessen, eine Rückerstattung vorzunehmen.",
     "s2Heading": "Stornierungen",
@@ -312,9 +310,9 @@
   },
   "examples": {
     "title": "Beispiele",
-    "subtitle": "Sieh dir an, was CreaBeaStudio aus deinen Fotos erschaffen kann. Jedes Guangna Malen-nach-Zahlen wird einzigartig aus deinem Foto generiert und auf deine Guangna Brush Marker und dein Level abgestimmt.",
+    "subtitle": "Sieh dir an, was CreaBeaStudio aus deinen Fotos erschaffen kann. Jedes Malen-nach-Zahlen wird einzigartig aus deinem Foto generiert und auf deine Marker und dein Level abgestimmt.",
     "giftTitle": "Ein einzigartiges, persönliches Geschenk",
-    "giftText": "Male deine Erinnerungen und erwecke sie zum Leben. Jedes Guangna Malen-nach-Zahlen wird aus deinem Lieblingsfoto erstellt und auf deine Marker abgestimmt — ein einzigartiges Andenken für Geburtstage, Feiertage oder besondere Momente.",
+    "giftText": "Male deine Erinnerungen und erwecke sie zum Leben. Jedes Malen-nach-Zahlen wird aus deinem Lieblingsfoto erstellt und auf deine Marker abgestimmt — ein einzigartiges Andenken für Geburtstage, Feiertage oder besondere Momente.",
     "labelBeginner": "Anfänger",
     "labelIntermediate": "Mittel",
     "labelAdvanced": "Fortgeschritten",
@@ -326,17 +324,18 @@
     "goToExample": "Zu Beispiel {number} gehen",
     "previousExample": "Vorheriges Beispiel",
     "nextExample": "Nächstes Beispiel",
-    "createCta": "Erstelle jetzt dein Guangna Malen-nach-Zahlen →"
+    "createCta": "Erstelle jetzt dein Malen-nach-Zahlen →",
+    "descCelebrationFamily": "Perfekt für dein liebstes Feier- oder Familienfoto"
   },
   "common": {
     "brands": {
       "guangna": "Guangna",
       "languo": "Languo",
-      "both": "your markers"
+      "both": "Deine Marker"
     },
     "setsSelected": "{count} set(s) selected"
   },
-"ColorConverter": {
+  "ColorConverter": {
     "title": "Farbkonverter",
     "subtitle": "Gib eine beliebige Farbe ein und finde den nächstgelegenen verfügbaren Marker — optional auch aus deiner eigenen Sammlung.",
     "disclaimer": "Die Treffer werden berechnet, indem der nächstgelegene Marker zu deiner eingegebenen Farbe anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
@@ -400,13 +399,13 @@
   "LegendConverter": {
     "title": "Legende zur Farbpalette",
     "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Stift-guide.",
-    "disclaimer": "Die Treffer werden berechnet, indem die Farben, die du in deiner hochgeladenen Legende anklickst, erfasst und der jeweils nächstgelegene Guangna-Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+    "disclaimer": "Die Treffer werden berechnet, indem die Farben, die du in deiner hochgeladenen Legende anklickst, erfasst und der jeweils nächstgelegene Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
     "step1": {
       "heading": "1 · Farblegende hochladen",
       "dropHint": "Foto hier ablegen oder klicken zum Hochladen",
       "fileTypes": "JPG oder PNG",
       "replacePhoto": "Anderes Foto verwenden",
-      "lightingTip": "Für die genauesten Guangna-Codes: fotografiere die Legende bei natürlichem, gleichmäßigem Tageslicht — Schatten oder gelbliches Kunstlicht können die Farben verfälschen. Ein Scan funktioniert noch besser als ein Foto, falls verfügbar."
+      "lightingTip": "Für die genauesten Codes: fotografiere die Legende bei natürlichem, gleichmäßigem Tageslicht — Schatten oder gelbliches Kunstlicht können die Farben verfälschen. Ein Scan funktioniert noch besser als ein Foto, falls verfügbar."
     },
     "step2": {
       "heading": "2 · Wie viele Farben aus deiner Legende möchtest du umwandeln?",
@@ -418,7 +417,7 @@
       "allDone": "Alle Farbfelder erfasst — klicke unten auf eine Nummer, um sie neu zu setzen",
       "editSwatch": "Klicken, um Farbfeld {num} neu zu setzen",
       "remaining": "Noch {count} Farbfeld(er) nicht gesetzt — sie werden aus deinem Guide ausgeschlossen, es sei denn, du klickst sie auch noch an.",
-      "howToTip": "Um eine Farbe abzugleichen, klicke auf Nummer 1 direkt unter deinem hochgeladenen Bild. Klicke anschließend auf die Farbe im Bild, die du in einen Guangna-Code umwandeln möchtest. Wiederhole diesen Vorgang für jede weitere Nummer. Wenn du eine Auswahl korrigieren möchtest, klicke einfach erneut auf die jeweilige Nummer und wähle eine neue Farbe aus dem Bild."
+      "howToTip": "Um eine Farbe abzugleichen, klicke auf Nummer 1 direkt unter deinem hochgeladenen Bild. Klicke anschließend auf die Farbe im Bild, die du in einen Markercode umwandeln möchtest. Wiederhole diesen Vorgang für jede weitere Nummer. Wenn du eine Auswahl korrigieren möchtest, klicke einfach erneut auf die jeweilige Nummer und wähle eine neue Farbe aus dem Bild."
     },
     "myMarkers": {
       "heading": "🗂️ Meine Stifte",
@@ -427,7 +426,8 @@
       "metallicNote": "Hinweis: Metallic-Marker wurden nicht berücksichtigt.",
       "glitterNote": "Hinweis: Glitter-Stifte wurden nicht berücksichtigt.",
       "extraCodesHint": "(Guangna: digits or HG-code · Languo: letters-digits)",
-      "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01"
+      "extraCodesPlaceholder": "e.g. 603, 648, BR-702, Y01",
+      "extraCodesLabel": "Zusätzliche Codes"
     },
     "matching": "Wird abgeglichen…",
     "step4": {
@@ -439,7 +439,8 @@
       "screenDisclaimer": "⚠️ Um die Genauigkeit der Palette zu gewährleisten, können die Farben am Bildschirm von der tatsächlichen Stiftfarbe abweichen.",
       "languoAffiliateDisclosure": "Dies ist ein Affiliate-Link. Wenn du darüber etwas kaufst, erhalte ich eine kleine Provision – ohne zusätzliche Kosten für dich.",
       "tieNotice": "Gleichwertiger Treffer",
-      "orderBannerText": "Das sind die passendsten verfügbaren Stifte. So erhältst du sie:"
+      "orderBannerText": "Das sind die passendsten verfügbaren Stifte. So erhältst du sie:",
+      "gnFallbackNotice": "Guangna Acrylic Brush Alternative: {code} ({name})"
     },
     "donate": {
       "text": "Hat dir das Zeit gespart? Ein Kaffee wird sehr geschätzt ☕",
@@ -447,7 +448,10 @@
     },
     "pdf": {
       "titleText": "Male deine Erinnerungen",
-      "subtitle": "Farbpalette  ·  {count} Farben"
+      "subtitle": "Farbpalette  ·  {count} Farben",
+      "gnFallbackLabel": "GN Alt.:",
+      "scopeOwned": "Abgeglichen mit deinen eigenen Stiften",
+      "scopeFull": "Abgeglichen mit dem vollständigen Guangna- & Languo-Paint-Katalog"
     },
     "crossLink": {
       "text": "Möchtest du nur eine einzelne Farbe prüfen?",
@@ -471,7 +475,7 @@
     "previewLabel": "Vorschau",
     "crossLink": {
       "text": "Möchtest du dein eigenes Foto in ein Paint-by-Number verwandeln?",
-      "linkText": "Guangna Malen-nach-Zahlen ausprobieren →"
+      "linkText": "Malen-nach-Zahlen ausprobieren →"
     }
   },
   "BrandConverter": {
@@ -570,13 +574,16 @@
       "placeholder": "z. B. 605",
       "button": "Sets finden",
       "foundIn": "In {count} Sets gefunden:",
-      "notInAnySet": "Dieser Code ist in keinem der aufgelisteten Sets enthalten."
+      "notInAnySet": "Dieser Code ist in keinem der aufgelisteten Sets enthalten.",
+      "metallicNote": "✨ Metallic-Marker — die angezeigte Farbe ist ungefähr.",
+      "hgNote": "✨ HG = High-Gloss-Markerset."
     },
     "bySet": {
       "heading": "📋 Marker nach Set finden",
       "description": "Wähle ein Set aus, um alle darin enthaltenen Markercodes zu sehen.",
       "noneSelected": "— Set auswählen —",
-      "codeCount": "{count} Marker in diesem Set:"
+      "codeCount": "{count} Marker in diesem Set:",
+      "metallicHeading": "✨ Metallic ({count})"
     },
     "errors": {
       "codeNotFound": "\"{code}\" ist kein anerkannter Guangna-Code."
@@ -604,7 +611,11 @@
     "colorCount": "{count} Farben",
     "buy": "Kaufen",
     "comingSoon": "Demnächst verfügbar",
-    "disclaimer": "Jedes Paket enthält die farbige Vorlage, eine Blanko-Vorlage, ein Referenzblatt sowie Druck- und Zusammenbauanleitungen."
+    "disclaimer": "Jedes Paket enthält die farbige Vorlage, eine Blanko-Vorlage, ein Referenzblatt sowie Druck- und Zusammenbauanleitungen.",
+    "linkNotSetUp": "Bezahllink noch nicht eingerichtet",
+    "linkNeeded": "Link fehlt",
+    "a4Label": "A4",
+    "usLabel": "US"
   },
   "swatchCreator": {
     "pageSubtitle": "Wähle ein vorsortiertes Farbkarten-Set oder gestalte deine eigenen, individuellen Druckvorlagen aus jeder Guangna- oder Languo-Markerkollektion.",
@@ -637,6 +648,98 @@
       "closing": "Die entstandene Reihenfolge ist bewusst so gestaltet, dass ein weicher, optisch ansprechender Verlauf entsteht, statt eines starren, rein mathematischen Layouts. Da manche Farben natürlicherweise zwischen zwei Familien liegen (z. B. ein kräftiges Blaugrün), sind sie in beiden Farbfamilien enthalten, damit du sie nicht verpasst.",
       "tip": "Betrachte diese Karten als hilfreichen, fachkundigen Ausgangspunkt — du kannst sie ganz nach deiner eigenen Farbinterpretation anpassen!",
       "note": "Hinweis: Metallic-Farben sind in der Farbfamilien-Gruppierung nicht enthalten."
+    },
+    "pageTitle": "Farbkarten-Generator",
+    "brushAlt": "Guangna Brush",
+    "diyToggleTitle": "🎨 Individuelle Farbkarten",
+    "tabs": {
+      "guangnaSet": "Guangna-Set",
+      "guangnaCodes": "Guangna-Codes",
+      "languoSet": "Languo-Set",
+      "languoCodes": "Languo-Codes",
+      "colorFamily": "Farbfamilie"
+    },
+    "resetFilters": "↺ Filter zurücksetzen",
+    "placeholders": {
+      "guangnaSetSearch": "Guangna-Set suchen…",
+      "languoSetSearch": "Languo-Set suchen…",
+      "guangnaCodeSearch": "Nach Code oder Name suchen…",
+      "languoCodeSearch": "Nach Languo-Code suchen…"
+    },
+    "hints": {
+      "pickSet": "Wähle oben ein Set aus, um seine Farben zu durchsuchen.",
+      "typeGuangnaCode": "Tippe, um nach Guangna-Codes zu suchen.",
+      "typeLanguoCode": "Tippe, um nach Languo-Codes zu suchen.",
+      "pickFamily": "Wähle oben eine Farbfamilie aus, um ihre Farben zu durchsuchen."
+    },
+    "metallicNote": "Hinweis: Metallic-Marker sind nicht enthalten.",
+    "addAll": "Alle {count, plural, one {# Farbe} other {# Farben}} hinzufügen",
+    "selectFamilyPlaceholder": "— Farbfamilie auswählen —",
+    "autocomplete": {
+      "clearSelection": "✕ Auswahl löschen",
+      "noMatches": "Keine Treffer"
+    },
+    "selectedColors": "Ausgewählt ({count, plural, one {# Farbe} other {# Farben}})",
+    "selectedColorsWithFamilies": "Ausgewählt ({count, plural, one {# Farbe} other {# Farben}}, {familyCount, plural, one {# Farbfamilie} other {# Farbfamilien}})",
+    "undo": "↺ Rückgängig",
+    "clearAll": "Alles löschen",
+    "dragHint": "💡 Ziehe eine Farbe auf eine andere innerhalb ihrer Familie, um sie neu anzuordnen.",
+    "emptySelection": "Ziehe Farben hierher oder klicke links auf eine Farbe, um sie hinzuzufügen.",
+    "familyActions": {
+      "downloadFamily": "Nur diese Farbfamilie herunterladen",
+      "downloadFamilyLocked": "Im vollständigen Download enthalten, sobald du dein Set unten freischaltest",
+      "removeFamily": "Diese Farbfamilie aus der Auswahl entfernen"
+    },
+    "a11y": {
+      "removeFromFamily": "{code} aus {family} entfernen",
+      "moveBack": "{code} zurück an die ursprüngliche Position verschieben"
+    },
+    "alsoIn": "auch: {families}",
+    "toast": {
+      "added": "Zur Auswahl hinzugefügt",
+      "addedMany": "{count, plural, one {# Farbe zur Auswahl hinzugefügt} other {# Farben zur Auswahl hinzugefügt}}"
+    },
+    "undoLabels": {
+      "removedItem": "{label} entfernt",
+      "removedItemFromFamily": "{label} aus {family} entfernt",
+      "removedFamily": "{family} entfernt ({count, plural, one {# Farbe} other {# Farben}})",
+      "clearedAll": "Alles gelöscht ({count, plural, one {# Farbe} other {# Farben}})"
+    },
+    "options": {
+      "swatchStyle": "Kartenstil",
+      "swatchStyleFilled": "Ausgefüllt (zeigt die Farbe)",
+      "swatchStyleBlank": "Blanko (nur Umriss, zum manuellen Swatchen)",
+      "bundleHole": "Bündel-Loch (Kopfleiste)",
+      "holeNone": "Keine",
+      "holeLeft": "Links",
+      "holeCenter": "Mitte",
+      "holeRight": "Rechts",
+      "cardLayout": "Kartenlayout",
+      "layoutPerFamily": "Eine Farbfamilie pro Karte",
+      "layoutPacked": "Mehrere Familien pro Karte",
+      "paperSize": "Papierformat",
+      "paperA4": "A4",
+      "paperLetter": "US Letter"
+    },
+    "cardCountSummary": "{cardCount, plural, one {# Karte} other {# Karten}} ({colorCount, plural, one {# Farbe} other {# Farben}}, bis zu 12 pro Karte, 4 pro Querformat-Seite)",
+    "errors": {
+      "saveSelection": "Deine Auswahl konnte nicht gespeichert werden. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+      "startCheckout": "Der Checkout konnte nicht gestartet werden. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com."
+    },
+    "checkoutOpened": {
+      "line1": "🔗 Der Checkout wurde in einem neuen Tab geöffnet — schließe dort deine Zahlung ab, um dein Set freizuschalten. Keine Sorge, diese Seite bleibt hier bestehen.",
+      "line2": "📧 Sofort-Download: Deine Datei wird nach dem Checkout automatisch heruntergeladen, zusätzlich sendet dir Lemon Squeezy (unser Zahlungsabwickler) einen Backup-Link per E-Mail.",
+      "orderReference": "Bestellreferenz: {id}"
+    },
+    "paywallStatus": "Du hast {count, plural, one {# Farbe} other {# Farben}} ausgewählt — die ersten {limit} (eine volle Seite) sind kostenlos. Schalte das komplette Set für {price} frei.",
+    "actions": {
+      "downloadFreePreview": "Kostenlose Vorschau herunterladen (erste {limit})",
+      "unlockFullSet": "Komplettes Set freischalten — {price}",
+      "downloadBlankTemplate": "Blanko-Vorlage herunterladen",
+      "downloadAll": "Alles als PDF herunterladen",
+      "generating": "Wird erstellt…",
+      "redirecting": "Wird weitergeleitet…"
     }
   },
   "mysteryDecoder": {
@@ -662,7 +765,241 @@
       "princess": "Prinzessin",
       "greatClassicsVol1": "Die großen Klassiker Band 1",
       "greatClassicsVol2": "Die großen Klassiker Band 2",
-      "greatClassicsVol3": "Die großen Klassiker Band 3"
+      "greatClassicsVol3": "Die großen Klassiker Band 3",
+      "princessVol2": "Prinzessin Band 2",
+      "greatClassicsVol4": "Die großen Klassiker Band 4"
     }
+  },
+  "create": {
+    "pageTitle": "Erstelle dein individuelles Malen nach Zahlen",
+    "pageSubtitle": "Lade dein Foto hoch, wähle deine Lieblingsmarker und sieh dir dein Design kostenlos an, bevor du bestellst.",
+    "cart": {
+      "summary": "{count, plural, one {🛒 Du hast # Bestellung im Warenkorb} other {🛒 Du hast # Bestellungen im Warenkorb}} — bisheriger Gesamtbetrag: {total}",
+      "backToOrder": "← Zurück zu meiner Bestellung"
+    },
+    "step1": {
+      "title": "Schritt 1: 📸 Lade dein Foto hoch",
+      "dropHint": "Foto hier ablegen",
+      "browseHint": "oder klicken zum Durchsuchen · JPG, PNG, HEIC",
+      "restoredNotice": "↺ Willkommen zurück — dein hochgeladenes Foto wurde wiederhergestellt.",
+      "dimWarning": "Dieses Foto ist {width}×{height}px groß — etwas klein für ein scharfes Ergebnis. Wir empfehlen mindestens {min}px auf der kürzeren Seite, du kannst aber auch mit diesem Foto fortfahren.",
+      "continueAnyway": "Ja, trotzdem fortfahren",
+      "chooseDifferent": "Anderes Foto wählen",
+      "cropLabel": "Zuschneiden",
+      "resetToOriginal": "↺ Auf Original zurücksetzen",
+      "remove": "Entfernen",
+      "removeBackground": "🪄 Hintergrund entfernen",
+      "removingBackground": "⏳ Wird entfernt…",
+      "blurBackground": "🌫️ Hintergrund weichzeichnen",
+      "blurringBackground": "⏳ Wird weichgezeichnet…",
+      "bgToolWakingUp": "Das kann bis zu einer Minute dauern, wenn das Foto-Tool gerade erst startet — bitte habe etwas Geduld.",
+      "bgErrorDefault": "Bei der Verarbeitung deines Fotos ist etwas schiefgelaufen. Bitte versuche es erneut.",
+      "cropper": {
+        "aspectFree": "Frei",
+        "apply": "✂️ Zuschnitt übernehmen",
+        "cancel": "Abbrechen"
+      }
+    },
+    "step2": {
+      "title": "Schritt 2: 🖊️ Deine Marker-Sets",
+      "description": "Wähle jedes Set aus, das du besitzt — wir erstellen die Palette aus deinen Markern. Du kannst so viele wählen, wie du möchtest, oder das Feld leer lassen, um eine Vorschau mit den echten Farben zu sehen.",
+      "setsSelected": "{count, plural, one {# Set ausgewählt} other {# Sets ausgewählt}}",
+      "additionalCodesTitle": "Zusätzliche Marker-Codes",
+      "additionalCodesDescription": "Füge deine einzelnen Marker hinzu — GN-Codes (3-stellig, durch Komma oder Leerzeichen getrennt). Metallic-Stifte sind nicht enthalten.",
+      "codesPlaceholder": "z. B. 603, 648, 712",
+      "invalidCodes": "Ungültige(r) Code(s): {codes}. Müssen 3-stellige Zahlen zwischen 600 und 965 sein."
+    },
+    "step3": {
+      "title": "Schritt 3: 🖼️ Kostenlose Sofortvorschau",
+      "description": "Es wird ein hochauflösendes Bild erstellt — das kann bis zu 1 Minute dauern, bitte habe etwas Geduld.",
+      "generating": "⏳ Deine Vorschau wird erstellt… (~20-60s)",
+      "crossBrandNotice": "Das ist eine interessante Kombination aus Markern — die Erstellung deiner Vorschau kann etwas länger dauern. Vielen Dank für deine Geduld!",
+      "upsellHeading": "✨ Deine Farbpalette aufwerten? Diese Marker würden helfen:",
+      "regenerate": "🔄 Vorschau neu erstellen",
+      "generate": "🎨 Kostenlose Vorschau erstellen",
+      "skipPreview": "Vorschau überspringen — ich weiß bereits, was ich möchte →",
+      "previewSkippedNotice": "✓ Vorschau übersprungen — du kannst jederzeit vor der Bestellung unten eine erstellen.",
+      "uploadFirst": "Lade zuerst ein Foto hoch.",
+      "noSetsWarning": "Du hast keine Sets ausgewählt — möchtest du mit der vollständigen Farbpalette fortfahren?",
+      "useFullSet": "Ja, vollständiges Set verwenden",
+      "cancelPickSets": "Abbrechen, ich möchte Sets auswählen",
+      "genericError": "Beim Erstellen deiner Vorschau ist etwas schiefgelaufen. Bitte versuche es erneut.",
+      "connectionError": "Beim Erstellen deiner Vorschau ist etwas schiefgelaufen. Bitte überprüfe deine Verbindung und versuche es erneut.",
+      "stalePreview": "Dein Foto oder deine Auswahl hat sich geändert — erstelle vor der Bestellung eine neue Vorschau.",
+      "yourMarkers": "Deine Marker",
+      "fullColorPalette": "Vollständige Farbpalette",
+      "matchedFullPalette": "🎨 Mit echten Markern abgeglichen — die angezeigten Farben sind die, die du verwenden wirst.",
+      "matchedYourMarkers": "🎨 Mit deinen Markern abgeglichen — diese wirst du beim Ausmalen deines Malen-nach-Zahlen verwenden.",
+      "addingMarkersHelps": "✨ Das Hinzufügen dieser Marker lässt dein Malen-nach-Zahlen näher am hochgeladenen Originalbild aussehen.",
+      "includeFullGuide": "📩 Bitte füge meinen vollständigen Farbpalette-Guide kostenlos zu meiner Bestellung hinzu, falls ich später weitere Marker hinzufügen möchte.",
+      "beforeLabel": "Farbige Vorschau",
+      "afterLabel": "Nummerierte Vorlage",
+      "happyOrChange": "Sieht gut aus, oder möchtest du Änderungen vornehmen?",
+      "largerAreas": "Größere Malflächen",
+      "ultraDetailed": "Ultra-detailliertes Design",
+      "revertPrevious": "↺ Die vorherige war besser",
+      "individualMarkers": "{count, plural, one {# einzelner Marker} other {# einzelne Marker}}"
+    },
+    "step4": {
+      "title": "Schritt 4: 📄 Papierformat",
+      "description": "Wähle das Format, für das dein fertiges PDF gestaltet wird. Du kannst dies später noch ändern."
+    },
+    "step5": {
+      "title": "Schritt 5: ✉️ Deine E-Mail",
+      "description": "Deine fertige Datei wird direkt an deine E-Mail-Adresse gesendet."
+    },
+    "summary": {
+      "title": "📋 Bestellübersicht",
+      "photo": "Foto",
+      "level": "Level",
+      "markerSets": "Marker-Sets",
+      "preview": "Vorschau",
+      "paperSize": "Papierformat",
+      "price": "Preis",
+      "previousOrders": "Vorherige Bestellungen ({count})",
+      "nSelected": "{count, plural, one {# ausgewählt} other {# ausgewählt}}",
+      "noneSelected": "Keine ausgewählt",
+      "generated": "✓ Erstellt",
+      "skipped": "Übersprungen",
+      "notYetGenerated": "Noch nicht erstellt",
+      "none": "—"
+    },
+    "submit": {
+      "sending": "⏳ Deine Bestellung wird gesendet…",
+      "order": "✨ Bestelle dein individuelles Malen nach Zahlen →",
+      "orderDisabled": "✨ Bestelle dein individuelles Malen nach Zahlen",
+      "uploadToStart": "Lade ein Foto hoch, um loszulegen",
+      "generateOrSkip": "Erstelle eine Vorschau oder überspringe sie, um fortzufahren",
+      "addEmail": "Gib deine E-Mail-Adresse ein, um fortzufahren",
+      "genericError": "Beim Absenden deiner Bestellung ist etwas schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com."
+    },
+    "levels": {
+      "beginner": "🌱 Anfänger",
+      "beginnerDesc": "Weniger Farben, größere Flächen.",
+      "intermediate": "🌿 Mittel",
+      "intermediateDesc": "Ausgewogene Mischung aus Aufwand und Detail.",
+      "advanced": "🌲 Fortgeschritten",
+      "advancedDesc": "Große Farbpalette, detailliert."
+    },
+    "paper": {
+      "a4": "A4",
+      "letter": "US Letter"
     }
+  },
+  "confirm": {
+    "pageTitle": "Ist alles korrekt?",
+    "pageSubtitle": "Bitte überprüfe deine Bestellung, bevor du fortfährst.",
+    "brushAlt": "Guangna Brush",
+    "previousOrdersHeading": "🛒 Vorherige Bestellungen in deinem Warenkorb:",
+    "orderNumber": "📦 Bestellung #{number}:",
+    "summary": {
+      "photoSubmitted": "📷 Foto übermittelt",
+      "difficulty": "🎯 Schwierigkeitsgrad",
+      "paperSize": "📄 Papierformat",
+      "markerSets": "🖊️ Marker-Set(s)",
+      "defaultPalette": "Standardpalette",
+      "additionalMarkers": "➕ Zusätzliche Marker",
+      "email": "✉️ E-Mail",
+      "orderRef": "🔖 Bestellreferenz"
+    },
+    "total": {
+      "single": "🧾 Gesamt",
+      "multiple": "🧾 Gesamt für {count} Bestellungen",
+      "estimateNote": "nur eine Schätzung, abhängig vom aktuellen Wechselkurs."
+    },
+    "deliveryNote": "📦 Sobald deine Bestellung abgeschlossen ist, stehen deine Dateien 30 Tage lang zum Download bereit. Zeitfenster verpasst? Schreib einfach eine E-Mail an hello@creabeastudio.com und wir senden dir einen neuen Link.",
+    "errors": {
+      "startCheckout": "Der Checkout konnte nicht gestartet werden. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+      "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com."
+    },
+    "checkoutOpenedNotice": "🔗 Der Checkout wurde in einem neuen Tab geöffnet — schließe dort deine Zahlung ab. Diese Seite bleibt bestehen, falls du sie brauchst.",
+    "buttons": {
+      "makeChanges": "✏️ Nein, ich möchte Änderungen vornehmen",
+      "orderAnother": "🖼️ Ein weiteres Malen nach Zahlen bestellen",
+      "checkout": "🔒 Weiter zur Zahlung — {price}",
+      "preparingCheckout": "⏳ Checkout wird vorbereitet…"
+    }
+  },
+  "apiErrors": {
+    "NO_IMAGE": "Kein Bild angegeben.",
+    "EMAIL_REQUIRED": "Bitte gib deine E-Mail-Adresse ein.",
+    "SAVE_FAILED": "Beim Speichern deiner Bestellung ist etwas schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+    "SUBMIT_FAILED": "Beim Absenden deiner Bestellung ist etwas schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+    "SERVICE_UNAVAILABLE": "Der Vorschau-Dienst ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+    "NO_MARKERS_SELECTED": "Wähle zuerst mindestens ein Marker-Set aus oder gib Marker-Codes ein.",
+    "GENERATION_FAILED": "Beim Erstellen deiner Vorschau ist etwas schiefgelaufen. Bitte versuche es erneut.",
+    "NO_MATCH_FOUND": "Wir konnten mit diesen Markern keine Vorschau erstellen. Versuche, ein größeres Set auszuwählen.",
+    "NO_LEVELS": "Kein Level ausgewählt.",
+    "MULTI_ORDER_NOT_SUPPORTED": "Die Bestellung mehrerer Fotos in einem Checkout wird noch nicht unterstützt — bitte schließe diese Bestellung zuerst ab und starte dann eine neue für dein nächstes Foto, oder kontaktiere hello@creabeastudio.com, um sie manuell zu kombinieren.",
+    "INVALID_PAPER_SIZE": "Fehlendes oder ungültiges Papierformat.",
+    "CHECKOUT_UNAVAILABLE": "Der Checkout ist derzeit nicht verfügbar. Bitte versuche es später erneut oder kontaktiere hello@creabeastudio.com.",
+    "CHECKOUT_FAILED": "Der Checkout konnte nicht erstellt werden. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com.",
+    "ORDER_ID_REQUIRED": "Fehlende Bestellreferenz.",
+    "COLOR_COUNT_REQUIRED": "Fehlende Farbanzahl.",
+    "WITHIN_FREE_TIER": "Diese Auswahl liegt im kostenlosen Bereich — kein Checkout nötig.",
+    "SWATCH_VARIANT_UNAVAILABLE": "Diese Option ist derzeit nicht verfügbar. Bitte kontaktiere hello@creabeastudio.com.",
+    "NO_ITEMS": "Keine Farben ausgewählt.",
+    "COLOR_COUNT_MISMATCH": "Bei deiner Auswahl stimmte etwas nicht überein. Bitte versuche es erneut.",
+    "INVALID_ORDER_ID": "Das sieht nicht nach einer gültigen Bestellreferenz aus.",
+    "ORDER_NOT_FOUND": "Wir konnten diese Bestellung nicht finden.",
+    "STATUS_CHECK_FAILED": "Beim Prüfen deines Bestellstatus ist etwas schiefgelaufen. Bitte versuche es erneut.",
+    "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere hello@creabeastudio.com."
+  },
+  "emails": {
+    "orderConfirmation": {
+      "subject": "🎨 Dein individuelles Malen nach Zahlen ist fertig! (Bestellung #{orderId})",
+      "heading": "🎨 Dein individuelles Malen nach Zahlen ist fertig!",
+      "orderIdLabel": "🔖 Bestell-ID",
+      "levelLabel": "🎯 Level",
+      "markerSetsLabel": "🖊️ Marker-Sets",
+      "defaultPalette": "Standardpalette",
+      "extraMarkersLabel": "➕ Zusätzliche Marker",
+      "downloadOutline": "📄 Lade deine nummerierte Vorlage herunter (druckfertig)",
+      "downloadPreviewGuide": "🖼️ Lade deine Farbvorschau & deinen Marker-Guide herunter",
+      "fullGuide": {
+        "title": "🎁 Dein kostenloser vollständiger Paletten-Guide",
+        "body": "Praktisch, falls du später weitere Marker bestellst — dieser Link bleibt 30 Tage lang aktiv.",
+        "link": "Lade deinen kostenlosen Guide herunter →"
+      },
+      "upsell": {
+        "title": "✨ Deine Farbpalette aufwerten?",
+        "intro": "Das sind die Marker, die dein Design am meisten verbessern würden, und welche deiner nummerierten Bereiche sie ersetzen würden:",
+        "columnMarker": "Marker",
+        "columnName": "Name",
+        "columnImproves": "Verbessert",
+        "newArea": "Neuer Bereich",
+        "shopLink": "Guangna-Marker kaufen →",
+        "shopLinkLanguo": "Languo-Marker kaufen →",
+        "languoAffiliateDisclosure": "Dies ist ein Affiliate-Link. Wenn du darüber etwas kaufst, erhalte ich eine kleine Provision – ohne zusätzliche Kosten für dich."
+      },
+      "footerNote": "💡 Fragen zu deiner Bestellung? Antworte einfach auf diese E-Mail oder erreiche uns unter hello@creabeastudio.com."
+    },
+    "reminder": {
+      "subject": "🎨 Nur eine kurze Erinnerung — deine Malen-nach-Zahlen-Dateien warten (Bestellung #{orderId})",
+      "heading": "🎨 Vergiss deine Dateien nicht!",
+      "intro": "Nur eine kurze Erinnerung: Deine Malen-nach-Zahlen-Dateien aus Bestellung <strong>{orderId}</strong> sind fertig und warten auf dich — noch etwa <strong>{days}</strong> Tage, bevor dieser Download-Link abläuft.",
+      "downloadOutline": "📄 Lade deine nummerierte Vorlage herunter (druckfertig)",
+      "downloadPreviewGuide": "🖼️ Lade deine Farbvorschau & deinen Marker-Guide herunter",
+      "downloadFullGuide": "🎁 Lade deinen kostenlosen vollständigen Paletten-Guide herunter",
+      "footerNote": "💡 Zeitfenster komplett verpasst? Antworte einfach auf diese E-Mail oder erreiche uns unter hello@creabeastudio.com und wir senden dir einen neuen Link."
+    }
+  },
+  "swatchDownload": {
+    "checkingTitle": "Deine Zahlung wird bestätigt…",
+    "checkingBody": "Das dauert normalerweise nur wenige Sekunden. Bitte schließe diese Seite nicht.",
+    "readyTitle": "Deine Farbkarten sind fertig! 💖",
+    "readyBody": "Dein Download sollte automatisch starten. Falls nicht, nutze den Button unten.",
+    "generating": "Wird erstellt…",
+    "downloadButton": "Lade deine Farbkarten herunter",
+    "orderReferenceNote": "Bestellreferenz: {orderId}. Bewahre diese auf, falls du hello@creabeastudio.com kontaktieren musst.",
+    "timedOutTitle": "Wird noch verarbeitet…",
+    "timedOutBody": "Die Bestätigung deiner Zahlung dauert länger als gewöhnlich. Das kann gelegentlich vorkommen — deine Bestellung ist nicht verloren.",
+    "timedOutEmailPrefix": "Falls sich diese Seite nach ein paar Minuten nicht aktualisiert hat, schreib eine E-Mail an",
+    "timedOutRefSuffix": "mit dieser Bestellreferenz:",
+    "errorTitle": "Etwas ist schiefgelaufen",
+    "errorEmailPrefix": "Wir konnten diese Bestellung nicht finden oder überprüfen. Bitte schreibe eine E-Mail an",
+    "errorRefSuffix": "mit dieser Bestellreferenz:",
+    "errorNoRefSuffix": "um Hilfe zu erhalten.",
+    "pdfGenerationError": "Beim Erstellen deines PDFs ist etwas schiefgelaufen. Versuche es erneut über den Button oder kontaktiere hello@creabeastudio.com mit deiner Bestellreferenz."
   }
+}

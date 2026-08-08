@@ -53,7 +53,6 @@
     "wdygPalette": "Guide de palette de couleurs (PDF)",
     "wdygPaletteDesc": "Un guide de référence complet des couleurs avec les codes et noms, ainsi qu'un aperçu en couleur de l'illustration terminée.",
     "wdygOutlineDesc": "Un modèle d'illustration au trait à imprimer, en haute résolution et prêt à être colorié.",
-    "wdygColoredOutline": "Dessin Coloriage par Numéro colorié (PDF)",
     "finalCta": "Crée ton Coloriage par Numéro →"
   },
     "footer": {
@@ -332,9 +331,9 @@
     "brands": {
       "guangna": "Guangna",
       "languo": "Languo",
-      "both": "your markers"
+      "both": "vos marqueurs"
     },
-    "setsSelected": "{count} set(s) selected"
+    "setsSelected": "{count} ensemble(s) sélectionné(s)"
   },
 "ColorConverter": {
     "title": "Convertisseur de couleurs",
@@ -430,6 +429,8 @@
       "description": "Sélectionnez votre set pour voir aussi les meilleures correspondances parmi les marqueurs que vous possédez.",
       "glitterNote": "Remarque : les marqueurs pailletés ne sont pas inclus.",
       "metallicNote": "Remarque : les marqueurs métallisés ne sont pas inclus.",
+      "extraCodesHint": "(Guangna : chiffres ou code HG · Languo : lettres-chiffres)",
+      "extraCodesLabel": "Codes supplémentaires",
       "extraCodesPlaceholder": "par ex. 603, 648, Y01"
     },
     "matching": "Comparaison en cours…",
@@ -441,7 +442,9 @@
       "downloadPdf": "Télécharger le PDF",
       "gnFallbackNotice": "Alternative Guangna feutre acrylique : {code} ({name})",
       "screenDisclaimer": "⚠️ Pour préserver la fidélité de la palette, les couleurs à l'écran peuvent différer de la couleur réelle du marqueur.",
-      "languoAffiliateDisclosure": "Il s'agit d'un lien d'affiliation. Si vous achetez quelque chose via ce lien, je perçois une petite commission, sans frais supplémentaires pour vous."
+      "languoAffiliateDisclosure": "Il s'agit d'un lien d'affiliation. Si vous achetez quelque chose via ce lien, je perçois une petite commission, sans frais supplémentaires pour vous.",
+      "orderBannerText": "Ce sont les marqueurs disponibles les plus proches. Pour les obtenir :",
+      "tieNotice": "Correspondance équivalente"
     },
     "donate": {
       "text": "Cela vous a fait gagner du temps ? Un café est toujours apprécié ☕",
@@ -450,6 +453,8 @@
     "pdf": {
       "titleText": "Colorie tes souvenirs",
       "subtitle": "Ta palette de marqueurs  ·  {count} couleurs",
+      "scopeFull": "Comparé à l'ensemble des catalogues Guangna & Languo Paint",
+      "scopeOwned": "Comparé à vos propres marqueurs",
       "gnFallbackLabel": "Alt. GN :"
     }
   },
@@ -782,8 +787,6 @@
       "generating": "⏳ Génération de ton aperçu… (~20-60s)",
       "crossBrandNotice": "C'est une combinaison de marqueurs intéressante — la génération de ton aperçu peut prendre un peu plus de temps, merci de ta patience !",
       "upsellHeading": "✨ Envie d'enrichir ta palette de couleurs ? Ces marqueurs t'aideraient :",
-      "naturalPreviewLabel": "Aperçu couleur complet",
-      "naturalPreviewNote": "Cet aperçu utilise les couleurs naturelles de ta photo — aucun marqueur spécifique sélectionné.",
       "regenerate": "🔄 Régénérer l'aperçu",
       "generate": "🎨 Générer l'aperçu gratuit",
       "skipPreview": "Passer l'aperçu — je sais déjà ce que je veux →",
