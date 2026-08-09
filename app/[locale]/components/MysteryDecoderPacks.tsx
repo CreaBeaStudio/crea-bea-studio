@@ -1,19 +1,45 @@
 "use client";
 
 // Mystery Coloring Page Decoder -- pre-generated PDFs matching each
-// book's own numbered color-code legend to Guangna marker codes, one
-// file per book per Guangna set size. Same delivery model as
+// book's own numbered color-code legend to marker codes, one file per
+// book per marker-set variant. Same delivery model as
 // ReadyMadePacks.tsx: static files uploaded directly to each
 // LemonSqueezy variant, LS handles delivery on payment, no webhook.
 //
-// v2 layout: instead of one grid-of-tiles section per book (hard to
-// scan, hard to extend), this is a single two-panel selector --
-// left column lists the books as vertical buttons, right side is a
-// Guangna-set dropdown. Selecting a book + set shows one result card
-// (free preview + buy button) below. Adding a new book is just adding
-// an entry to VARIANT_DATA + BOOKS, no new JSX section.
+// v5 restructure (2026-08-09): selector is now a 3-STEP flow instead
+// of a flat 2-column one -- (1) choose brand/family [Guangna/Languo],
+// (2) choose book [filtered to that family only], (3) choose
+// size/code + see the result card. Previously every book that existed
+// in both families (e.g. Princess Vol1 Guangna AND Princess Vol1
+// Languo) showed up as two separate, fully-spelled-out entries in one
+// flat book list -- fine with 6 books, but gets cluttered as more
+// books/families are added. Adding brand as step 1 means the book
+// list at step 2 only ever shows books for the currently selected
+// brand, so the list stays short no matter how many brand families
+// exist. FAMILIES/FAMILY_LABEL below control which brand tabs show and
+// in what order -- add a new family there (plus its own tilesFor
+// logic) to add a third brand tab in the future.
 //
-// v3 addition: each book in BOOKS now has a `published` flag. Only
+// v4 addition (2026-08-09): books can belong to either the "guangna"
+// family (6 shared Guangna set sizes: 168/240/288/360/408/366) or the
+// "languo" family (6 Languo product codes across different Languo
+// lines -- LGG-168/LGG-234 Gel Pens, LGP-144 Plus, LGP-192/240/288
+// Paint -- NOT sizes of one product line, so they don't fit the old
+// size-number model at all). Each BookGroup carries a `family` flag.
+// VARIANT_DATA keys are strings so both a Guangna size ("168") and a
+// Languo code ("LGG-168") can key the same lookup table. The
+// size/code dropdown at step 3 is generated directly from the
+// selected book's own tiles, so it automatically shows the right
+// variant list for whichever book is selected, no separate lookup
+// table to keep in sync.
+//
+// v2 layout: instead of one grid-of-tiles section per book (hard to
+// scan, hard to extend), this became a selector -- pick a book, pick
+// a variant, see one result card (free preview + buy button) below.
+// Adding a new book is just adding an entry to VARIANT_DATA + BOOKS,
+// no new JSX section.
+//
+// v3 addition: each book in BOOKS has a `published` flag. Only
 // published: true books show up anywhere on the page (selector list,
 // default selection). This lets you add a new book's full data --
 // LemonSqueezy links, preview files, everything -- ahead of time and
@@ -31,56 +57,94 @@
 // GN408 reuses the GN360 LemonSqueezy variant/checkout link AND the
 // same free preview file (same match data, same file) -- its result
 // card shows a short note instead of implying a different color match.
+// (Languo family has no equivalent -- each Languo code is its own
+// distinct product line, nothing to alias.)
 //
 // Free previews live in the crea-bea-public-assets GCS bucket, under
-// a new mystery-decoder/ prefix (same pattern as the existing
-// examples/ and coloring-pages/ prefixes) -- upload the 20 files from
-// mystery-decoder-previews.zip there before this goes live.
+// a mystery-decoder/ prefix (same pattern as the existing examples/
+// and coloring-pages/ prefixes) -- upload each book's preview files
+// there before that book goes live. GCS paths are case-sensitive --
+// previewFile values below must match the uploaded filenames exactly,
+// including case.
 //
-// NEW translation keys needed under the "mysteryDecoder" namespace
-// (existing keys are unchanged; these are additions for the v2 layout
-// and the new intro copy -- add to en.json first, then nl/de/es/fr/it):
-//   selectBookLabel, selectSetLabel, whatsIncludedTitle,
-//   featureA4Letter, featureDualCoding, featureCompleteCoverage,
+// NEW/CHANGED translation keys needed under the "mysteryDecoder"
+// namespace -- add to en.json first, then nl/de/es/fr/it:
+//   selectBrandLabel (new, step 1 label), selectBookLabel,
+//   selectSetLabel, whatsIncludedTitle, featureA4Letter,
+//   featureDualCoding, featureCompleteCoverage,
 //   featureFreePreviewLabel, featureFreePreviewText, priceNote
+// Also: the "intro" key's copy should be reworded to remove the
+// "Guangna"-specific mention now that the page covers multiple brands
+// -- that's a content edit in your locale files, no code change needed
+// here.
 //
-// NOTE: princessVol2 and greatClassicsVol3 both need matching entries
-// under "books" in each locale's translation file -- princessVol2 is
-// live so this is needed now; greatClassicsVol3 can wait until it's
-// published.
+// NOTE: princessVol2, greatClassicsVol3, princessLanguo, and
+// greatClassicsVol1Languo all need matching entries under "books" in
+// each locale's translation file -- princessVol2, princessLanguo, and
+// greatClassicsVol1Languo are all published so this is needed now;
+// greatClassicsVol3/Vol4 can wait until they're published. Since brand
+// is now its own step, you can shorten these labels if you like (e.g.
+// "Princess Vol 1" for both the Guangna and Languo entries) rather
+// than needing a "(Languo)" suffix to disambiguate -- your call.
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
+type Family = "guangna" | "languo";
+
+// Order here is the order the brand tabs are shown in at step 1.
+const FAMILIES: Family[] = ["guangna", "languo"];
+const FAMILY_LABEL: Record<Family, string> = {
+  guangna: "Guangna",
+  languo: "Languo",
+};
+
 interface DecoderTile {
-  size: number; // Guangna set size: 168 / 240 / 288 / 360 / 408 / 366
+  variantKey: string; // "168" for guangna sizes, "LGG-168" for languo codes
+  label: string; // "Guangna 168" or "LGG-168 (Gel Pens)" -- shown in the dropdown + result card
   previewUrl: string | null; // static free page-1-preview PDF path
   price: string | null; // null = not priced yet, shows "comingSoon"
   checkoutUrl: string | null;
-  metallicsNote?: boolean; // true for GN408 -- shows the "reuses 360 match" note
+  metallicsNote?: boolean; // true for GN408 -- shows the "reuses 360 match" note (guangna family only)
 }
 
 interface BookGroup {
   id: string;
   titleKey: string; // translation key under mysteryDecoder.books
+  family: Family;
   tiles: DecoderTile[];
   published: boolean; // false = fully hidden from the page, even though its data is here
 }
 
-const SET_SIZES = [168, 240, 288, 360, 408, 366];
+const GUANGNA_SET_SIZES = [168, 240, 288, 360, 408, 366];
+
+// Languo variants are PRODUCT CODES across different Languo lines, not
+// sizes of one line -- order here is the step-3 dropdown order.
+const LANGUO_VARIANTS: { key: string; label: string }[] = [
+  { key: "LGG-168", label: "LGG-168 (Gel Pens)" },
+  { key: "LGG-234", label: "LGG-234 (Gel Pens)" },
+  { key: "LGP-144", label: "LGP-144 (Plus)" },
+  { key: "LGP-192", label: "LGP-192 (Paint)" },
+  { key: "LGP-240", label: "LGP-240 (Paint)" },
+  { key: "LGP-288", label: "LGP-288 (Paint)" },
+];
 
 const PREVIEW_BASE = "https://storage.googleapis.com/crea-bea-public-assets/mystery-decoder";
 
 // ---- Real LemonSqueezy variant data ----
 // "360" and "408" intentionally share the same checkout link/price AND
 // the same preview file (GN408 reuses the GN360 match, per her decision).
+// Keys are strings so both Guangna sizes ("168") and Languo codes
+// ("LGG-168") can key the same table -- numeric literal keys below
+// (168, 240, ...) still work fine as object keys, JS/TS treat them as
+// their string form automatically.
 interface VariantEntry {
   price: string;
   checkoutUrl: string | null;
-  previewFile: string; // filename only, resolved against PREVIEW_BASE below
+  previewFile: string; // filename only, resolved against PREVIEW_BASE below -- CASE SENSITIVE, must match the GCS object exactly
 }
 
-const VARIANT_DATA: Record<string, Partial<Record<number, VariantEntry>>> = {
+const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
   princess: {
     168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/1299349d-710e-4662-ba4e-3e371fcd31b7", previewFile: "Princess_Vol1_GN168_preview.pdf" },
     240: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/89d7b72d-4134-4946-a2ab-49850fe5ef37", previewFile: "Princess_Vol1_GN240_preview.pdf" },
@@ -130,6 +194,24 @@ const VARIANT_DATA: Record<string, Partial<Record<number, VariantEntry>>> = {
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/05866ea0-bd22-48b0-b086-1aaf3c9a7fbb", previewFile: "Princess_Vol2_GN366_preview.pdf" },
   },
 
+  // --- Languo-family books (2026-08-09) ---
+  princessLanguo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/205c3da8-c753-4314-8e37-b48610a3d336", previewFile: "Princess_Vol1_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/ecffd7cc-0d72-4e1c-9ba3-9a17027aa5b7", previewFile: "Princess_Vol1_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/452f5a87-bcfd-4a74-b434-83988f68e6ff", previewFile: "Princess_Vol1_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/492acf19-bea0-4c83-918c-a4d0e6c92ec2", previewFile: "Princess_Vol1_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/94c3ac67-b18b-468d-b8ad-a91e9c7c51e8", previewFile: "Princess_Vol1_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/ec41297a-00b6-40f9-9c94-ab266d6159f8", previewFile: "Princess_Vol1_LGP288_preview.pdf" },
+  },
+  greatClassicsVol1Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/d5f4ff62-f6de-4afa-8432-f6778a1a0109", previewFile: "Great_Classics _Vol1_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/cb60b8a3-2d84-402b-8c38-86156a33e164", previewFile: "Great_Classics _Vol1_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/86a1879a-ca64-4d99-a66e-0becaa4b5208", previewFile: "Great_Classics _Vol1_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/10c4ef76-c939-4933-9dd7-dcd530f0e80f", previewFile: "Great_Classics _Vol1_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/62e01fb6-e403-43f3-b300-606fd48508f7", previewFile: "Great_Classics _Vol1_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0fb992dc-9bf9-4dbf-a6ad-3a1f67264d93", previewFile: "Great_Classics _Vol1_LGP288_preview.pdf" },
+  },
+
   // --- Example of how to stage a future book ahead of time ---
   // Fill in its real VARIANT_DATA here whenever it's ready, add a
   // matching entry to BOOKS below with `published: false`, and it will
@@ -140,16 +222,32 @@ const VARIANT_DATA: Record<string, Partial<Record<number, VariantEntry>>> = {
   // },
 };
 
-function tilesFor(bookId: string): DecoderTile[] {
+function tilesFor(bookId: string, family: Family): DecoderTile[] {
   const data = VARIANT_DATA[bookId] ?? {};
-  return SET_SIZES.map((size) => {
-    const entry = data[size];
+
+  if (family === "guangna") {
+    return GUANGNA_SET_SIZES.map((size) => {
+      const key = String(size);
+      const entry = data[key];
+      return {
+        variantKey: key,
+        label: `Guangna ${size}`,
+        previewUrl: entry ? `${PREVIEW_BASE}/${entry.previewFile}` : null,
+        price: entry?.price ?? null,
+        checkoutUrl: entry?.checkoutUrl ?? null,
+        metallicsNote: size === 408,
+      };
+    });
+  }
+
+  return LANGUO_VARIANTS.map(({ key, label }) => {
+    const entry = data[key];
     return {
-      size,
+      variantKey: key,
+      label,
       previewUrl: entry ? `${PREVIEW_BASE}/${entry.previewFile}` : null,
       price: entry?.price ?? null,
       checkoutUrl: entry?.checkoutUrl ?? null,
-      metallicsNote: size === 408,
     };
   });
 }
@@ -158,13 +256,15 @@ function tilesFor(bookId: string): DecoderTile[] {
 // above, then one entry here with `published: false`. To go live,
 // flip that single value to true.
 const BOOKS: BookGroup[] = [
-  { id: "princess", titleKey: "princess", tiles: tilesFor("princess"), published: true },
-  { id: "princessVol2", titleKey: "princessVol2", tiles: tilesFor("princessVol2"), published: true },
-  { id: "great-classics-vol1", titleKey: "greatClassicsVol1", tiles: tilesFor("greatClassicsVol1"), published: true },
-  { id: "great-classics-vol2", titleKey: "greatClassicsVol2", tiles: tilesFor("greatClassicsVol2"), published: true },
-  { id: "great-classics-vol3", titleKey: "greatClassicsVol3", tiles: tilesFor("greatClassicsVol3"), published: false },
-  { id: "great-classics-vol4", titleKey: "greatClassicsVol3", tiles: tilesFor("greatClassicsVol3"), published: false },
-  // { id: "heroes-vs-villains", titleKey: "heroesVsVillains", tiles: tilesFor("heroesVsVillains"), published: false },
+  { id: "princess", titleKey: "princess", family: "guangna", tiles: tilesFor("princess", "guangna"), published: true },
+  { id: "princessVol2", titleKey: "princessVol2", family: "guangna", tiles: tilesFor("princessVol2", "guangna"), published: true },
+  { id: "great-classics-vol1", titleKey: "greatClassicsVol1", family: "guangna", tiles: tilesFor("greatClassicsVol1", "guangna"), published: true },
+  { id: "great-classics-vol2", titleKey: "greatClassicsVol2", family: "guangna", tiles: tilesFor("greatClassicsVol2", "guangna"), published: true },
+  { id: "great-classics-vol3", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
+  { id: "great-classics-vol4", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
+  { id: "princess-languo", titleKey: "princess", family: "languo", tiles: tilesFor("princessLanguo", "languo"), published: true },
+  { id: "great-classics-vol1-languo", titleKey: "greatClassicsVol1", family: "languo", tiles: tilesFor("greatClassicsVol1Languo", "languo"), published: true },
+  // { id: "heroes-vs-villains", titleKey: "heroesVsVillains", family: "guangna", tiles: tilesFor("heroesVsVillains", "guangna"), published: false },
 ];
 
 function IntroSection() {
@@ -227,7 +327,7 @@ function ResultCard({ book, tile }: { book: BookGroup; tile: DecoderTile }) {
           {t(`books.${book.titleKey}`)}
         </div>
         <div style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)" }}>
-          Guangna {tile.size}
+          {tile.label}
         </div>
       </div>
 
@@ -282,11 +382,35 @@ function ResultCard({ book, tile }: { book: BookGroup; tile: DecoderTile }) {
 
 function DecoderSelector({ books }: { books: BookGroup[] }) {
   const t = useTranslations("mysteryDecoder");
-  const [selectedBookId, setSelectedBookId] = useState<string>(books[0]?.id ?? "");
-  const [selectedSize, setSelectedSize] = useState<number>(SET_SIZES[0]);
 
-  const selectedBook = books.find((b) => b.id === selectedBookId) ?? books[0];
-  const selectedTile = selectedBook?.tiles.find((tile) => tile.size === selectedSize) ?? selectedBook?.tiles[0];
+  const availableFamilies = FAMILIES.filter((f) => books.some((b) => b.family === f));
+
+  const [selectedFamily, setSelectedFamily] = useState<Family>(availableFamilies[0] ?? "guangna");
+  const booksInFamily = books.filter((b) => b.family === selectedFamily);
+
+  const [selectedBookId, setSelectedBookId] = useState<string>(booksInFamily[0]?.id ?? "");
+  const [selectedVariantKey, setSelectedVariantKey] = useState<string>(booksInFamily[0]?.tiles[0]?.variantKey ?? "");
+
+  const selectedBook = booksInFamily.find((b) => b.id === selectedBookId) ?? booksInFamily[0];
+  const selectedTile =
+    selectedBook?.tiles.find((tile) => tile.variantKey === selectedVariantKey) ?? selectedBook?.tiles[0];
+
+  // Switching brand resets book + variant to that brand's first book --
+  // a book id from the old brand won't exist in the new brand's list.
+  function handleFamilyChange(family: Family) {
+    setSelectedFamily(family);
+    const firstBook = books.filter((b) => b.family === family)[0];
+    setSelectedBookId(firstBook?.id ?? "");
+    setSelectedVariantKey(firstBook?.tiles[0]?.variantKey ?? "");
+  }
+
+  // Switching books resets the selected variant to that book's first
+  // tile -- a Guangna size like "360" has no matching tile on a
+  // Languo-family book and vice versa.
+  function handleBookChange(book: BookGroup) {
+    setSelectedBookId(book.id);
+    setSelectedVariantKey(book.tiles[0]?.variantKey ?? "");
+  }
 
   if (!selectedBook || !selectedTile) {
     // Only happens if BOOKS has zero published entries -- shouldn't occur in practice.
@@ -296,37 +420,36 @@ function DecoderSelector({ books }: { books: BookGroup[] }) {
   return (
     <div>
       <style>{`
-        .decoder-selector-grid {
-          display: grid;
-          grid-template-columns: 270px 1fr;
-          gap: 24px;
-          align-items: start;
-        }
-        @media (max-width: 700px) {
-          .decoder-selector-grid { grid-template-columns: 1fr; }
-        }
-        .decoder-book-btn {
-          display: block;
-          width: 100%;
-          text-align: left;
-          padding: 14px 16px;
+        .decoder-step-label {
+          font-size: 12.5px;
+          font-weight: 700;
+          color: var(--muted);
           margin-bottom: 8px;
+          text-transform: uppercase;
+        }
+        .decoder-family-row {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+        .decoder-family-btn {
+          padding: 10px 22px;
           border-radius: 10px;
           border: 1px solid var(--border);
           background: white;
           font-size: 14px;
-          font-weight: 700;
-          line-height: 1.4;
+          font-weight: 800;
           color: var(--ink);
           cursor: pointer;
         }
-        .decoder-book-btn.active {
+        .decoder-family-btn.active {
           border-color: var(--pink);
           background: var(--pink);
           color: white;
         }
         .decoder-size-select {
           width: 100%;
+          max-width: 360px;
           padding: 10px 12px;
           border-radius: 10px;
           border: 1px solid var(--border);
@@ -338,42 +461,56 @@ function DecoderSelector({ books }: { books: BookGroup[] }) {
         }
       `}</style>
 
-      <div className="decoder-selector-grid">
-        <div>
-          <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--muted)", marginBottom: 8, textTransform: "uppercase" }}>
-            {t("selectBookLabel")}
-          </div>
-          {books.map((book) => (
-            <button
-              key={book.id}
-              type="button"
-              className={`decoder-book-btn${book.id === selectedBookId ? " active" : ""}`}
-              onClick={() => setSelectedBookId(book.id)}
-            >
-              {t(`books.${book.titleKey}`)}
-            </button>
-          ))}
-        </div>
-
-        <div>
-          <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--muted)", marginBottom: 8, textTransform: "uppercase" }}>
-            {t("selectSetLabel")}
-          </div>
-          <select
-            className="decoder-size-select"
-            value={selectedSize}
-            onChange={(e) => setSelectedSize(Number(e.target.value))}
+      {/* Step 1 -- brand/family */}
+      <div className="decoder-step-label">{t("selectBrandLabel")}</div>
+      <div className="decoder-family-row">
+        {availableFamilies.map((family) => (
+          <button
+            key={family}
+            type="button"
+            className={`decoder-family-btn${family === selectedFamily ? " active" : ""}`}
+            onClick={() => handleFamilyChange(family)}
           >
-            {SET_SIZES.map((size) => (
-              <option key={size} value={size}>
-                Guangna {size}
-              </option>
-            ))}
-          </select>
-
-          <ResultCard book={selectedBook} tile={selectedTile} />
-        </div>
+            {FAMILY_LABEL[family]}
+          </button>
+        ))}
       </div>
+
+      {/* Step 2 -- book, filtered to the selected brand only. A
+          dropdown rather than buttons: scales cleanly to any number of
+          books with no label-wrapping/sizing to worry about as you
+          add more. */}
+      <div className="decoder-step-label">{t("selectBookLabel")}</div>
+      <select
+        className="decoder-size-select"
+        value={selectedBookId}
+        onChange={(e) => {
+          const book = booksInFamily.find((b) => b.id === e.target.value);
+          if (book) handleBookChange(book);
+        }}
+      >
+        {booksInFamily.map((book) => (
+          <option key={book.id} value={book.id}>
+            {t(`books.${book.titleKey}`)}
+          </option>
+        ))}
+      </select>
+
+      {/* Step 3 -- size/code + result */}
+      <div className="decoder-step-label">{t("selectSetLabel")}</div>
+      <select
+        className="decoder-size-select"
+        value={selectedVariantKey}
+        onChange={(e) => setSelectedVariantKey(e.target.value)}
+      >
+        {selectedBook.tiles.map((tile) => (
+          <option key={tile.variantKey} value={tile.variantKey}>
+            {tile.label}
+          </option>
+        ))}
+      </select>
+
+      <ResultCard book={selectedBook} tile={selectedTile} />
     </div>
   );
 }
