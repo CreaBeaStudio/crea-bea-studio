@@ -4,6 +4,17 @@
 // ABOVE the DIY tool itself (moved 2026-07-24 -- SwatchCreator.tsx
 // renders this first, before its own intro/builder).
 //
+// v4 change (2026-08-09): added a second, separate grid below the
+// original single-brand one for the new "Guangna x Languo" combo
+// packs (LemonSqueezy product 1277743). Combo packs mix two brands +
+// two sizes into one pack (e.g. "Guangna 366 x Languo 288"), which
+// doesn't fit the original Pack shape (one brand, one size) -- so
+// they get their own ComboPack type, COMBO_PACKS array, and
+// ComboPackTile component, rendered as their own heading+grid inside
+// the same collapsible section. Reuses the same VariantInfo shape,
+// the same a4Label/usLabel/linkNeeded/linkNotSetUp translation keys,
+// and the same toUsdEstimate pricing helper as the original packs.
+//
 // v3 change (2026-07-25, i18n round 3 -- "go big" for FR): the last
 // remaining hardcoded strings on this component are now translated --
 // the "Checkout link not set up yet" tooltip, the "A4"/"US" label
@@ -77,6 +88,19 @@ interface Pack {
   us: VariantInfo;
 }
 
+// Combo packs mix two brands/sizes into one pack (e.g. "Guangna 366 x
+// Languo 288") -- doesn't fit the single-brand Pack shape above, so it
+// gets its own type. LemonSqueezy product 1277743 ("Guangna x Languo
+// Swatch Card Sets"), separate from the single-brand product (1240793)
+// the PACKS array above belongs to.
+interface ComboPack {
+  id: string;
+  guangnaSize: number;
+  languoSize: number;
+  a4: VariantInfo;
+  us: VariantInfo;
+}
+
 // Order matters here -- this is exactly the 3x3 grid order (row by row).
 // All 18 checkoutUrl values confirmed 2026-07-24 via her full LemonSqueezy
 // export table -- checked for duplicate UUIDs across variants, none found.
@@ -108,6 +132,18 @@ const PACKS: Pack[] = [
   { id: "languo-288", brand: "languo", size: 288,
     a4: { price: "4,25€", variantId: "1939578", checkoutUrl: `${LS_STORE}/7e8f1b95-d925-407c-8899-9a37497d9604` },
     us: { price: "4,75€", variantId: "1939581", checkoutUrl: `${LS_STORE}/2d49e4ec-c6f9-47c6-a20f-c644b1203980` } },
+];
+
+// New "Guangna x Languo" combo packs (LemonSqueezy product 1277743),
+// added 2026-08-09. All 4 checkoutUrls confirmed unique (no collision
+// with each other or with the PACKS array above).
+const COMBO_PACKS: ComboPack[] = [
+  { id: "guangna366-languo288", guangnaSize: 366, languoSize: 288,
+    a4: { price: "8,00€", variantId: "1997612", checkoutUrl: `${LS_STORE}/46793ab0-be98-4658-8d6e-f68fa3ffcc55` },
+    us: { price: "9,00€", variantId: "1997631", checkoutUrl: `${LS_STORE}/1968a94d-dc6e-4196-8d5b-34793c02ad12` } },
+  { id: "guangna360-languo288", guangnaSize: 360, languoSize: 288,
+    a4: { price: "8,00€", variantId: "1997632", checkoutUrl: `${LS_STORE}/c1858019-593f-4319-ae2f-5bc28c240be6` },
+    us: { price: "9,00€", variantId: "1997633", checkoutUrl: `${LS_STORE}/ccc244a0-650e-455a-b827-f139fec93a17` } },
 ];
 
 const BRAND_LABEL: Record<Pack["brand"], string> = {
@@ -185,6 +221,72 @@ function PackTile({ pack }: { pack: Pack }) {
   );
 }
 
+// Same tile layout as PackTile, but the title combines both brands/sizes
+// ("Guangna 366 x Languo 288") instead of one brand's colorCount string.
+function ComboPackTile({ pack }: { pack: ComboPack }) {
+  const t = useTranslations("readyMadePacks");
+  const title = `Guangna ${pack.guangnaSize} x Languo ${pack.languoSize}`;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        gap: 8,
+        padding: "10px 12px",
+        borderRadius: 12,
+        border: "1px solid var(--border)",
+        background: "white",
+      }}
+    >
+      <div style={{ fontSize: 13.5, fontWeight: 800, color: "var(--ink)" }}>{title}</div>
+      <div style={{ display: "flex", gap: 6 }}>
+        {pack.a4.checkoutUrl ? (
+          <a
+            href={pack.a4.checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center" }}
+          >
+            {t("a4Label")} · {pack.a4.price}
+          </a>
+        ) : (
+          <span
+            title={t("linkNotSetUp")}
+            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
+          >
+            {t("a4Label")} · {t("linkNeeded")}
+          </span>
+        )}
+        {pack.us.checkoutUrl ? (
+          <a
+            href={pack.us.checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{
+              flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center",
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
+            }}
+          >
+            <span style={{ fontWeight: 800 }}>{t("usLabel")} · {toUsdEstimate(pack.us.price)}</span>
+            <span style={{ fontSize: 9.5, opacity: 0.85 }}>≈ {pack.us.price}</span>
+          </a>
+        ) : (
+          <span
+            title={t("linkNotSetUp")}
+            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
+          >
+            {t("usLabel")} · {t("linkNeeded")}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function ReadyMadePacks() {
   const t = useTranslations("readyMadePacks");
   // Collapsible, default open (2026-07-24) -- same pattern
@@ -223,6 +325,18 @@ export default function ReadyMadePacks() {
           <div className="ready-packs-grid">
             {PACKS.map((p) => <PackTile key={p.id} pack={p} />)}
           </div>
+
+          {/* Combo packs -- separate sub-heading + grid, same collapsible
+              section. Sub-heading text is a new translation key
+              (readyMadePacks.comboHeading); no separate description line,
+              reuses the same disclaimer below for both grids. */}
+          <h4 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: 14, color: "var(--pink)", margin: "18px 0 10px" }}>
+            {t("comboHeading")}
+          </h4>
+          <div className="ready-packs-grid">
+            {COMBO_PACKS.map((p) => <ComboPackTile key={p.id} pack={p} />)}
+          </div>
+
           <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 14, fontStyle: "italic" }}>
             {t("disclaimer")}
           </p>
