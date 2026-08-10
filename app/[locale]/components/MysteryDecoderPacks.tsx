@@ -262,8 +262,8 @@ const BOOKS: BookGroup[] = [
   { id: "great-classics-vol2", titleKey: "greatClassicsVol2", family: "guangna", tiles: tilesFor("greatClassicsVol2", "guangna"), published: true },
   { id: "great-classics-vol3", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
   { id: "great-classics-vol4", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
-  { id: "princess-languo", titleKey: "princess", family: "languo", tiles: tilesFor("princessLanguo", "languo"), published: true },
-  { id: "great-classics-vol1-languo", titleKey: "greatClassicsVol1", family: "languo", tiles: tilesFor("greatClassicsVol1Languo", "languo"), published: true },
+  { id: "princess-languo", titleKey: "princess", family: "languo", tiles: tilesFor("princessLanguo", "languo"), published: false },
+  { id: "great-classics-vol1-languo", titleKey: "greatClassicsVol1", family: "languo", tiles: tilesFor("greatClassicsVol1Languo", "languo"), published: false },
   // { id: "heroes-vs-villains", titleKey: "heroesVsVillains", family: "guangna", tiles: tilesFor("heroesVsVillains", "guangna"), published: false },
 ];
 
