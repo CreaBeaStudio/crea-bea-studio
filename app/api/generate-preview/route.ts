@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 // section). Default Vercel serverless timeout is 10s on Hobby, up to
 // 60s on Pro -- this route will 504 on Hobby without an upgrade.
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 120;
 export const preferredRegion = 'fra1';
 
 // Set in Vercel's environment variables (Project Settings -> Environment
