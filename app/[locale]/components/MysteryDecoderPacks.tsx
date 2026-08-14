@@ -116,7 +116,7 @@ interface BookGroup {
   published: boolean; // false = fully hidden from the page, even though its data is here
 }
 
-const GUANGNA_SET_SIZES = [168, 240, 288, 360, 408, 366];
+const GUANGNA_SET_SIZES = [168, 240, 288, 360, 408, 366, "HG-168"];
 
 // Languo variants are PRODUCT CODES across different Languo lines, not
 // sizes of one line -- order here is the step-3 dropdown order.
@@ -152,6 +152,7 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/3ddef4d6-a458-4e01-8d24-e646f7d68d49", previewFile: "Princess_Vol1_GN360_preview.pdf" },
     408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/3ddef4d6-a458-4e01-8d24-e646f7d68d49", previewFile: "Princess_Vol1_GN360_preview.pdf" },
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/f80f9c69-6b46-4915-9e17-e435316c7690", previewFile: "Princess_Vol1_GN366_preview.pdf" },
+  "HG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/95ff3bab-ee9d-4ab1-b61a-0c33caef90a6", previewFile: "Princess_Vol1_HG168_preview.pdf" },
   },
   greatClassicsVol1: {
     168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/4611ab6b-ae98-4927-a099-fbd6c0a74058", previewFile: "great-classics-vol1-gn168-preview.pdf" },
@@ -160,6 +161,7 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/1591367b-67cb-4fee-8bf3-8ad27ebc7f31", previewFile: "great-classics-vol1-gn360-preview.pdf" },
     408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/1591367b-67cb-4fee-8bf3-8ad27ebc7f31", previewFile: "great-classics-vol1-gn360-preview.pdf" },
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/ef5abf47-8043-4cae-8686-d8ea0b0930f3", previewFile: "great-classics-vol1-gn366-preview.pdf" },
+  "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/5049a9b9-03f0-45ff-8f3f-b9a8bd020d48",previewFile: "great_classics_vol1_HG168_preview.pdf" },
   },
   greatClassicsVol2: {
     168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/c3976664-f946-420a-b6b1-691edb527048", previewFile: "great-classics-vol2-gn168-preview.pdf" },
@@ -168,6 +170,7 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/5d045a18-28bd-456c-a432-80c5f32c0639", previewFile: "great-classics-vol2-gn360-preview.pdf" },
     408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/5d045a18-28bd-456c-a432-80c5f32c0639", previewFile: "great-classics-vol2-gn360-preview.pdf" },
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/8e3c80aa-9352-42c0-a19c-c19df65fc8f6", previewFile: "great-classics-vol2-gn366-preview.pdf" },
+    "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/50334cc8-a528-4b9c-843b-1202c7ca6a3a",previewFile: "great_classics_vol2_HG168_preview.pdf" },
   },
   greatClassicsVol3: {
     168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/a4ffa8cc-edd8-470a-a738-cb539bb356e5", previewFile: "great-classics-vol3-gn168-preview.pdf" },
@@ -176,14 +179,16 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/09a8d742-26be-448b-90d3-f01b64a93590", previewFile: "great-classics-vol3-gn360-preview.pdf" },
     408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/09a8d742-26be-448b-90d3-f01b64a93590", previewFile: "great-classics-vol3-gn360-preview.pdf" },
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/a126b924-c8a8-4e02-874a-bfcc41962e5b", previewFile: "great-classics-vol3-gn366-preview.pdf" },
+    "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/14c982e3-6436-414f-8e65-6dc75bc7589b",previewFile: "great_classics_vol3_HG168_preview.pdf" },
   },
   greatClassicsVol4: {
-    168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/e7761efe-6c11-4bf5-ae6d-539f0724910d", previewFile: "great-classics-vol4-gn168-preview.pdf" },
-    240: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/58d531e4-23d0-4cc5-bfe3-5be0ce2cc1e2", previewFile: "great-classics-vol4-gn240-preview.pdf" },
-    288: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/697098bd-04bb-458e-9f95-875bfa93ed9f", previewFile: "great-classics-vol-gn288-preview.pdf" },
-    360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/50bde7b4-d50a-4a26-ae0a-95e5a123e94a", previewFile: "great-classics-vol4-gn360-preview.pdf" },
-    408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/50bde7b4-d50a-4a26-ae0a-95e5a123e94a", previewFile: "great-classics-vol4-gn360-preview.pdf" },
-    366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/fcbf9f91-f7b7-430d-b074-9b72b59a725c", previewFile: "great-classics-vol4-gn366-preview.pdf" },
+    168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/e7761efe-6c11-4bf5-ae6d-539f0724910d", previewFile: "Great_Classics_Vol4_GN168_preview.pdf" },
+    240: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/58d531e4-23d0-4cc5-bfe3-5be0ce2cc1e2", previewFile: "Great_Classics_Vol4_GN240_preview.pdf" },
+    288: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/697098bd-04bb-458e-9f95-875bfa93ed9f", previewFile: "Great_Classics_Vol4_GN288_preview.pdf" },
+    360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/50bde7b4-d50a-4a26-ae0a-95e5a123e94a", previewFile: "Great_Classics_Vol4_GN360_preview.pdf" },
+    408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/50bde7b4-d50a-4a26-ae0a-95e5a123e94a", previewFile: "Great_Classics_Vol4_GN360_preview.pdf" },
+    366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/fcbf9f91-f7b7-430d-b074-9b72b59a725c", previewFile: "Great_Classics_Vol4_GN366_preview.pdf" },
+    "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/aca53eee-f28e-4245-92d6-6053981da01c",previewFile: "Great_Classics_Vol4_HG168_preview.pdf" },
   },
   princessVol2: {
     168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/15bdfc0c-6166-4954-853b-f144bbc9b4bf", previewFile: "Princess_Vol2_GN168_preview.pdf" },
@@ -192,6 +197,25 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/2536d85b-bb10-4e23-b22b-3585413cd7a4", previewFile: "Princess_Vol2_GN360_preview.pdf" },
     408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/2536d85b-bb10-4e23-b22b-3585413cd7a4", previewFile: "Princess_Vol2_GN360_preview.pdf" },
     366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/05866ea0-bd22-48b0-b086-1aaf3c9a7fbb", previewFile: "Princess_Vol2_GN366_preview.pdf" },
+    "HG-168": {price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/d95829e9-04f1-4997-9e26-c9a00222269d", previewFile: "Princess_Vol2_HG168_preview.pdf"}
+  },
+  greatClassicsVol11: {
+    168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/05e94d07-785a-4f59-947a-9ebe9ac134f4", previewFile: "Great_Classics_Vol11_GN168_preview.pdf" },
+    240: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/c9c17d4f-e3ef-45be-8c90-2887448f4450", previewFile: "Great_Classics_Vol11_GN240_preview.pdf" },
+    288: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0f1e5b0e-0485-407a-8939-08c3dccbff3f", previewFile: "Great_Classics_Vol11_GN288_preview.pdf" },
+    360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0f12e095-ea31-4605-8291-3b4b2c9829b0", previewFile: "Great_Classics_Vol11_GN360_preview.pdf" },
+    408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0f12e095-ea31-4605-8291-3b4b2c9829b0", previewFile: "Great_Classics_Vol11_GN360_preview.pdf" },
+    366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/60fe4172-43cd-4b31-84ca-f34e63ad343e", previewFile: "Great_Classics_Vol11_GN366_preview.pdf" },
+    "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/2a0fc7b4-bdd8-4f36-94aa-786af15c7b54",previewFile: "Great_Classics_Vol11_HG168_preview.pdf" },
+  },
+  greatClassicsVol13: {
+    168: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/f1469b3b-6323-411e-ae24-94aaea8c45db", previewFile: "Great_Classics_Vol13_GN168_preview.pdf" },
+    240: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/dbb5a50a-9312-459e-85e2-02f04ce9d092", previewFile: "Great_Classics_Vol13_GN240_preview.pdf" },
+    288: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/cd9faf40-90e7-413f-b0f5-b66844579b8a", previewFile: "Great_Classics_Vol13_GN288_preview.pdf" },
+    360: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/3f5a85e7-0748-4dc2-990f-868bdd05742e", previewFile: "Great_Classics_Vol13_GN360_preview.pdf" },
+    408: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/3f5a85e7-0748-4dc2-990f-868bdd05742e", previewFile: "Great_Classics_Vol13_GN360_preview.pdf" },
+    366: { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/03bbcdf2-56d7-46dd-8970-d93dbf50a225", previewFile: "Great_Classics_Vol13_GN366_preview.pdf" },
+    "HG-168": { price: "7,50€", checkoutUrl:"https://creabeastudio.lemonsqueezy.com/checkout/buy/ac88c888-86c6-4bf8-86d0-5fca52215c3c",previewFile: "Great_Classics_Vol13_HG168_preview.pdf" },
   },
 
   // --- Languo-family books (2026-08-09) ---
@@ -203,6 +227,14 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/94c3ac67-b18b-468d-b8ad-a91e9c7c51e8", previewFile: "Princess_Vol1_LGP240_preview.pdf" },
     "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/ec41297a-00b6-40f9-9c94-ab266d6159f8", previewFile: "Princess_Vol1_LGP288_preview.pdf" },
   },
+  princessVol2Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/bc2eebae-6f7f-4513-9943-143809c6ec1b", previewFile: "Princess_Vol2_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/e2bd2cd4-fc1f-48b9-8918-366a267ee345", previewFile: "Princess_Vol2_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/5ac3660c-30b3-43ed-9eb9-78734754ef7b", previewFile: "Princess_Vol2_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/1fd1093c-498a-42d6-b5f3-aeb528f20e40", previewFile: "Princess_Vol2_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/8de79352-d4fc-4ce6-91bd-7a8e470ca1f2", previewFile: "Princess_Vol2_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/b3c95da8-7681-4fd0-80ec-191b3d4b19de", previewFile: "Princess_Vol2_LGP288_preview.pdf" },
+  },
   greatClassicsVol1Languo: {
     "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/d5f4ff62-f6de-4afa-8432-f6778a1a0109", previewFile: "Great_Classics _Vol1_LGG168_preview.pdf" },
     "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/cb60b8a3-2d84-402b-8c38-86156a33e164", previewFile: "Great_Classics _Vol1_LGG234_preview.pdf" },
@@ -211,6 +243,47 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/62e01fb6-e403-43f3-b300-606fd48508f7", previewFile: "Great_Classics _Vol1_LGP240_preview.pdf" },
     "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0fb992dc-9bf9-4dbf-a6ad-3a1f67264d93", previewFile: "Great_Classics _Vol1_LGP288_preview.pdf" },
   },
+  greatClassicsVol2Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/bd44afbf-23bc-47a0-8dec-3909a77d5156", previewFile: "Great_Classics_Vol1_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/936f7f25-c247-4773-a3ff-144033d66efd", previewFile: "Great_Classics_Vol2_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/18a6790e-f809-465b-bfc7-a38b5c945a2c", previewFile: "Great_Classics_Vol2_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/aff7cca2-bc4e-4fab-ad3b-1b1946663609", previewFile: "Great_Classics_Vol2_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/8d8ca237-4c5e-4f0b-b00d-5a99d8b37cb0", previewFile: "Great_Classics_Vol2_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/553e9a5d-41d5-4ff9-aa79-feb7a003528d", previewFile: "Great_Classics_Vol2_LGP288_preview.pdf" },
+  },
+  greatClassicsVol3Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/87df7cf7-16ab-4a3a-b9a8-bfe48b17164a", previewFile: "Great_Classics_Vol3_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/b6541ea4-6756-4005-a3ae-958e774b8bc5", previewFile: "Great_Classics_Vol3_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/65b36d19-98f5-498b-8c86-d28be8e874e9", previewFile: "Great_Classics_Vol3_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/49d0d251-d360-45b6-9306-a2d8bed56868", previewFile: "Great_Classics_Vol3_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/333ec572-7243-45e8-af8a-4aafba78e90b", previewFile: "Great_Classics_Vol3_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/f6a8bbb0-2261-4d0b-87e6-3c33b5986404", previewFile: "Great_Classics_Vol3_LGP288_preview.pdf" },
+  },
+  greatClassicsVol4Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/aa6c42ce-315b-40f6-8dc4-2662ce9341ba", previewFile: "Great_Classics_Vol4_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/abfa01d9-5bf8-4cc8-ae74-479dc18649fe", previewFile: "Great_Classics_Vol4_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/cc2a3081-985a-4915-8dbb-289f77d173c9", previewFile: "Great_Classics_Vol4_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/4a23ec36-7c62-49a8-b81a-76ba18f378f4", previewFile: "Great_Classics_Vol4_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/7941b360-256e-48b4-87dd-c0c14d15f3e4", previewFile: "Great_Classics_Vol4_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/639c857a-59f7-42cf-97d1-f9ff8eed463c", previewFile: "Great_Classics_Vol4_LGP288_preview.pdf" },
+  },
+  greatClassicsVol11Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/70ce63f1-af9b-45a0-8514-080f08b7a6bd", previewFile: "Great_Classics_Vol11_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/660f6890-2de5-4528-bd83-a6496a24e00f", previewFile: "Great_Classics_Vol11_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/9cdbe77e-ba18-4ff0-84d9-36477fa59405", previewFile: "Great_Classics_Vol11_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/9b54b93e-ddfb-49d6-bb39-73c3dd9fdc54", previewFile: "Great_Classics_Vol11_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/89653fce-48a0-4ff1-a67c-64c3f591a0d5", previewFile: "Great_Classics_Vol11_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/9f98581d-1821-4270-ad85-28ad7104780f", previewFile: "Great_Classics_Vol11_LGP288_preview.pdf" },
+  },
+  greatClassicsVol13Languo: {
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/15f89ab2-facd-4daf-b258-bec507f40e59", previewFile: "Great_Classics_Vol13_LGG168_preview.pdf" },
+    "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/3d06aabf-eed8-45b1-8bc5-9ff8db9f40a3", previewFile: "Great_Classics_Vol13_LGG234_preview.pdf" },
+    "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/b50d2ec5-6321-4076-a1b5-3183a0dc7796", previewFile: "Great_Classics_Vol13_LGP144_preview.pdf" },
+    "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/9a974a66-ca68-448c-ab61-ce9390e54e1c", previewFile: "Great_Classics_Vol13_LGP192_preview.pdf" },
+    "LGP-240": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/fa2bc260-c265-4531-963b-3f30fa105693", previewFile: "Great_Classics_Vol13_LGP240_preview.pdf" },
+    "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/fbe8409f-bbd9-4892-9a77-a708e1362ec2", previewFile: "Great_Classics_Vol13_LGP288_preview.pdf" },
+  },
+
 
   // --- Example of how to stage a future book ahead of time ---
   // Fill in its real VARIANT_DATA here whenever it's ready, add a
@@ -260,10 +333,18 @@ const BOOKS: BookGroup[] = [
   { id: "princessVol2", titleKey: "princessVol2", family: "guangna", tiles: tilesFor("princessVol2", "guangna"), published: true },
   { id: "great-classics-vol1", titleKey: "greatClassicsVol1", family: "guangna", tiles: tilesFor("greatClassicsVol1", "guangna"), published: true },
   { id: "great-classics-vol2", titleKey: "greatClassicsVol2", family: "guangna", tiles: tilesFor("greatClassicsVol2", "guangna"), published: true },
-  { id: "great-classics-vol3", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
-  { id: "great-classics-vol4", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: false },
-  { id: "princess-languo", titleKey: "princess", family: "languo", tiles: tilesFor("princessLanguo", "languo"), published: false },
-  { id: "great-classics-vol1-languo", titleKey: "greatClassicsVol1", family: "languo", tiles: tilesFor("greatClassicsVol1Languo", "languo"), published: false },
+  { id: "great-classics-vol3", titleKey: "greatClassicsVol3", family: "guangna", tiles: tilesFor("greatClassicsVol3", "guangna"), published: true },
+  { id: "great-classics-vol4", titleKey: "greatClassicsVol4", family: "guangna", tiles: tilesFor("greatClassicsVol4", "guangna"), published: true },
+  { id: "great-classics-vol11", titleKey: "greatClassicsVol11", family: "guangna", tiles: tilesFor("greatClassicsVol11", "guangna"), published: true },
+  { id: "great-classics-vol13", titleKey: "greatClassicsVol13", family: "guangna", tiles: tilesFor("greatClassicsVol13", "guangna"), published: true },
+  { id: "princess-languo", titleKey: "princess", family: "languo", tiles: tilesFor("princessLanguo", "languo"), published: true },
+  { id: "princessVol2Languo", titleKey: "princessVol2", family: "languo", tiles: tilesFor("princessVol2Languo", "languo"), published: true },
+  { id: "great-classics-vol1-languo", titleKey: "greatClassicsVol1", family: "languo", tiles: tilesFor("greatClassicsVol1Languo", "languo"), published: true },
+  { id: "great-classics-vol2-languo", titleKey: "greatClassicsVol2", family: "languo", tiles: tilesFor("greatClassicsVol2Languo", "languo"), published: true },
+  { id: "great-classics-vol3-languo", titleKey: "greatClassicsVol3", family: "languo", tiles: tilesFor("greatClassicsVol3Languo", "languo"), published: true },
+  { id: "great-classics-vol4-languo", titleKey: "greatClassicsVol4", family: "languo", tiles: tilesFor("greatClassicsVol4Languo", "languo"), published: true },
+  { id: "great-classics-vol11-languo", titleKey: "greatClassicsVol11", family: "languo", tiles: tilesFor("greatClassicsVol11Languo", "languo"), published: true },
+  { id: "great-classics-vol13-languo", titleKey: "greatClassicsVol13", family: "languo", tiles: tilesFor("greatClassicsVol13Languo", "languo"), published: true },
   // { id: "heroes-vs-villains", titleKey: "heroesVsVillains", family: "guangna", tiles: tilesFor("heroesVsVillains", "guangna"), published: false },
 ];
 

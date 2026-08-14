@@ -749,7 +749,7 @@
     "whatsIncludedTitle": "Was ist in den Decoder-Dateien enthalten?",
     "featureA4Letter": "Perfekt formatiert zum Ausdrucken auf A4 und US Letter.",
     "featureDualCoding": "Doppelte Farbcodierung: Jede Seite zeigt sowohl die Original-Farbcodes als auch die passenden Markercodes deiner Marke, damit du den richtigen Farbton ohne Rätselraten wählen kannst.",
-    "featureCompleteCoverage": "Vollständige Buchabdeckung: Decoder für alle 100 Mystery-Seiten pro Band.",
+    "featureCompleteCoverage": "Vollständige Buch-Abdeckung: Farbcode-Lösungsschlüssel für alle Mystery-Seiten pro Band.",
     "featureFreePreviewLabel": "Vorab testen:",
     "featureFreePreviewText": "lade den Decoder für die erste Seite kostenlos herunter.",
     "priceNote": "Kompletter Band — vollständiger Decoder-Schlüssel für alle 100 Seiten — 7,50 €",
@@ -769,7 +769,9 @@
       "greatClassicsVol2": "Die großen Klassiker Band 2",
       "greatClassicsVol3": "Die großen Klassiker Band 3",
       "princessVol2": "Prinzessin Band 2",
-      "greatClassicsVol4": "Die großen Klassiker Band 4"
+      "greatClassicsVol4": "Die großen Klassiker Band 4",
+      "greatClassicsVol11": "Die großen Klassiker Band 11",
+      "greatClassicsVol13": "Die großen Klassiker Band 13"
     }
   },
   "create": {

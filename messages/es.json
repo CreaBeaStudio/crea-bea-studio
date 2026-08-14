@@ -982,7 +982,7 @@
     "whatsIncludedTitle": "¿Qué incluyen los archivos decodificadores?",
     "featureA4Letter": "Formateado para imprimir perfectamente tanto en papel A4 como US Letter.",
     "featureDualCoding": "Codificación de color doble: cada página muestra tanto los códigos de color originales como los códigos de rotulador correspondientes de tu marca, para que puedas elegir el tono correcto sin adivinar.",
-    "featureCompleteCoverage": "Cobertura completa del libro: decodificadores para las 100 páginas misterio de cada volumen.",
+    "featureCompleteCoverage": "Cobertura completa del libro: guía de colores decodificadora para todas las páginas misteriosas por volumen.",
     "featureFreePreviewLabel": "Pruébalo antes de comprar:",
     "featureFreePreviewText": "descarga gratis el decodificador de la primera página.",
     "priceNote": "Volumen completo — clave decodificadora completa para las 100 páginas — 7,50 €",
@@ -1002,7 +1002,9 @@
       "greatClassicsVol1": "Los Grandes Clásicos Volumen 1",
       "greatClassicsVol2": "Los Grandes Clásicos Volumen 2",
       "greatClassicsVol3": "Los Grandes Clásicos Volumen 3",
-      "greatClassicsVol4": "Los Grandes Clásicos Volumen 4"
+      "greatClassicsVol4": "Los Grandes Clásicos Volumen 4",
+      "greatClassicsVol11": "Los Grandes Clásicos Volumen 11",
+      "greatClassicsVol13": "Los Grandes Clásicos Volumen 13"
     }
   }
 }

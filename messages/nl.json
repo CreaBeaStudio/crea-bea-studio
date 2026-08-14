@@ -805,7 +805,7 @@
       "matchedYourMarkers": "🎨 Gekoppeld aan jouw markers — deze gebruik je bij het inkleuren van je Color by Number.",
       "addingMarkersHelps": "✨ Het toevoegen van deze markers helpt om je resultaat nog dichter bij de originele foto te brengen.",
       "includeFullGuide": "📩 Voeg mijn Volledige Kleurenpalletgids gratis toe aan mijn bestelling, voor het geval ik later meer markers aanschaf.",
-      "beforeLabel": "Gekleurde voorvertoning",
+      "beforeLabel": "Ingekleurd voorbeeld",
       "afterLabel": "Genummerde contouren",
       "happyOrChange": "Ziet er goed uit, of wil je nog iets aanpassen?",
       "largerAreas": "Grotere kleurvlakken",
@@ -826,7 +826,7 @@
       "photo": "Foto",
       "level": "Niveau",
       "markerSets": "Markersets",
-      "preview": "Voorvertoning",
+      "preview": "Voorbeeld",
       "paperSize": "Papierformaat",
       "price": "Prijs",
       "previousOrders": "Eerdere bestellingen ({count})",
@@ -981,7 +981,7 @@
     "whatsIncludedTitle": "Wat zit er in de Decoder-bestanden?",
     "featureA4Letter": "Perfect opgemaakt om af te drukken op zowel A4 als US Letter.",
     "featureDualCoding": "Dubbele codering: elke pagina vermeldt zowel de originele kleurcodes als de overeenkomstige markercodes van je gekozen merk.",
-    "featureCompleteCoverage": "Volledige dekking van het boek: decoders voor alle 100 mystery-pagina's per deel.",
+    "featureCompleteCoverage": "Volledige boek: decoders voor alle mystery-pagina's per deel.",
     "featureFreePreviewLabel": "Probeer voordat je koopt:",
     "featureFreePreviewText": "download de decoder voor de eerste pagina helemaal gratis.",
     "priceNote": "Volledig boek — complete sleutel voor alle 100 pagina's — € 7,50",
@@ -1001,7 +1001,9 @@
       "greatClassicsVol1": "Grote Klassiekers Deel 1",
       "greatClassicsVol2": "Grote Klassiekers Deel 2",
       "greatClassicsVol3": "Grote Klassiekers Deel 3",
-      "greatClassicsVol4": "Grote Klassiekers Deel 4"
+      "greatClassicsVol4": "Grote Klassiekers Deel 4",
+      "greatClassicsVol11": "Grote Klassiekers Deel 11",
+      "greatClassicsVol13": "Grote Klassiekers Deel 13"
     }
   }
 }

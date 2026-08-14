@@ -981,7 +981,7 @@
       "whatsIncludedTitle": "Que contiennent les fichiers de décodage ?",
       "featureA4Letter": "Mise en page parfaite à l'impression, aussi bien en A4 qu'en US Letter.",
       "featureDualCoding": "Double codage couleur : chaque page indique à la fois les codes couleur d'origine et les codes marqueurs correspondants de votre marque, pour choisir la bonne teinte sans deviner.",
-      "featureCompleteCoverage": "Couverture complète du livre : décodage des 100 pages mystère du volume.",
+      "featureCompleteCoverage": "Couverture intégrale du livre : nuancier décodeur pour toutes les pages mystères par tome.",
       "featureFreePreviewLabel": "À l'essai avant d'acheter :",
       "featureFreePreviewText": "téléchargez gratuitement le décodage de la première page.",
       "priceNote": "Volume complet — clé de décodage des 100 pages — 7,50 €",
@@ -1001,7 +1001,9 @@
         "greatClassicsVol1": "Les Grands Classiques Tome 1",
         "greatClassicsVol2": "Les Grands Classiques Tome 2",
         "greatClassicsVol3": "Les Grands Classiques Tome 3",
-        "greatClassicsVol4": "Les Grands Classiques Tome 4"
+        "greatClassicsVol4": "Les Grands Classiques Tome 4",
+        "greatClassicsVol11": "Les Grands Classiques Tome 11",
+        "greatClassicsVol13": "Les Grands Classiques Tome 13"
       }
     }
   }

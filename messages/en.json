@@ -981,7 +981,7 @@
     "whatsIncludedTitle": "What's Included in the Decoder Files?",
     "featureA4Letter": "Formatted to print perfectly on both A4 and US Letter paper.",
     "featureDualCoding": "Dual color coding: every page lists both the original color codes and the matching marker codes of your branc, so you can pick the right shade without guessing.",
-    "featureCompleteCoverage": "Complete book coverage: decoders for all 100 mystery pages per volume.",
+    "featureCompleteCoverage": "Complete book coverage: decoders for all mystery pages per volume.",
     "featureFreePreviewLabel": "Try before you buy:",
     "featureFreePreviewText": "download the first page decoder for free.",
     "priceNote": "Full volume — complete decoder key for all 100 pages — €7.50",
@@ -1001,7 +1001,9 @@
       "greatClassicsVol1": "The Great Classics Volume 1",
       "greatClassicsVol2": "The Great Classics Volume 2",
       "greatClassicsVol3": "The Great Classics Volume 3",
-      "greatClassicsVol4": "The Great Classics Volume 4"
+      "greatClassicsVol4": "The Great Classics Volume 4",
+      "greatClassicsVol11": "The Great Classics Volume 11",
+      "greatClassicsVol13": "The Great Classics Volume 13"
     }
   }
 }
