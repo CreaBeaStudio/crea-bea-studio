@@ -298,7 +298,7 @@ const VARIANT_DATA: Record<string, Partial<Record<string, VariantEntry>>> = {
     "LGP-288": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/0fb992dc-9bf9-4dbf-a6ad-3a1f67264d93", previewFile: "Great_Classics _Vol1_LGP288_preview.pdf" },
   },
   greatClassicsVol2Languo: {
-    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/bd44afbf-23bc-47a0-8dec-3909a77d5156", previewFile: "Great_Classics_Vol1_LGG168_preview.pdf" },
+    "LGG-168": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/bd44afbf-23bc-47a0-8dec-3909a77d5156", previewFile: "Great_Classics_Vol2_LGG168_preview.pdf" },
     "LGG-234": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/936f7f25-c247-4773-a3ff-144033d66efd", previewFile: "Great_Classics_Vol2_LGG234_preview.pdf" },
     "LGP-144": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/18a6790e-f809-465b-bfc7-a38b5c945a2c", previewFile: "Great_Classics_Vol2_LGP144_preview.pdf" },
     "LGP-192": { price: "7,50€", checkoutUrl: "https://creabeastudio.lemonsqueezy.com/checkout/buy/aff7cca2-bc4e-4fab-ad3b-1b1946663609", previewFile: "Great_Classics_Vol2_LGP192_preview.pdf" },
