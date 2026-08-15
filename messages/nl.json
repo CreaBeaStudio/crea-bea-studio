@@ -984,7 +984,7 @@
     "featureCompleteCoverage": "Volledige boek: decoders voor alle mystery-pagina's per deel.",
     "featureFreePreviewLabel": "Probeer voordat je koopt:",
     "featureFreePreviewText": "download de decoder voor de eerste pagina helemaal gratis.",
-    "priceNote": "Volledig boek — complete sleutel voor alle 100 pagina's — € 7,50",
+    "priceNote": "Volledig boek — alle kleurcodes voor elke pagina — € 7,50",
     "selectBookLabel": "Kies een boek",
     "selectSetLabel": "Kies je Guangna-set",
     "selectBrandLabel": "Kies je merk markers",
@@ -1003,7 +1003,13 @@
       "greatClassicsVol3": "Grote Klassiekers Deel 3",
       "greatClassicsVol4": "Grote Klassiekers Deel 4",
       "greatClassicsVol11": "Grote Klassiekers Deel 11",
-      "greatClassicsVol13": "Grote Klassiekers Deel 13"
+      "greatClassicsVol13": "Grote Klassiekers Deel 13",
+      "fantastiques": "Fantastic / Fantastiques",
+      "tresgrandsclassiques": "Tres Grands Classiques",
+      "herosvillains": "Heros vs Villains / Heros vs Mechants",
+      "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
+      "specialportraits": "Special Portraits",
+      "pokemon": "Pokemon"
     }
   }
 }

@@ -984,7 +984,7 @@
       "featureCompleteCoverage": "Couverture intégrale du livre : nuancier décodeur pour toutes les pages mystères par tome.",
       "featureFreePreviewLabel": "À l'essai avant d'acheter :",
       "featureFreePreviewText": "téléchargez gratuitement le décodage de la première page.",
-      "priceNote": "Volume complet — clé de décodage des 100 pages — 7,50 €",
+      "priceNote": "Tome complet — nuancier décodeur pour l'intégralité des pages — 7,50 €",
       "selectBookLabel": "Choisissez un livre",
       "selectSetLabel": "Choisissez votre set Guangna",
       "selectBrandLabel": "Choisissez votre marque",
@@ -1003,7 +1003,13 @@
         "greatClassicsVol3": "Les Grands Classiques Tome 3",
         "greatClassicsVol4": "Les Grands Classiques Tome 4",
         "greatClassicsVol11": "Les Grands Classiques Tome 11",
-        "greatClassicsVol13": "Les Grands Classiques Tome 13"
+        "greatClassicsVol13": "Les Grands Classiques Tome 13",
+        "fantastiques": "Fantastiques",
+        "tresgrandsclassiques": "Tres Grands Classiques",
+        "herosvillains": "Héros vs Méchants",
+        "mondesfantastiques": "Mondes Fantastiques",
+        "specialportraits": "Special Portraits",
+        "pokemon": "Pokemon"
       }
     }
   }

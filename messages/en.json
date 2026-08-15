@@ -984,7 +984,7 @@
     "featureCompleteCoverage": "Complete book coverage: decoders for all mystery pages per volume.",
     "featureFreePreviewLabel": "Try before you buy:",
     "featureFreePreviewText": "download the first page decoder for free.",
-    "priceNote": "Full volume — complete decoder key for all 100 pages — €7.50",
+    "priceNote": "Full volume — complete decoder key for all pages — €7.50",
     "selectBookLabel": "Choose a book",
     "selectSetLabel": "Choose your Marker set",
     "selectBrandLabel": "Choose your brand",
@@ -1003,7 +1003,13 @@
       "greatClassicsVol3": "The Great Classics Volume 3",
       "greatClassicsVol4": "The Great Classics Volume 4",
       "greatClassicsVol11": "The Great Classics Volume 11",
-      "greatClassicsVol13": "The Great Classics Volume 13"
+      "greatClassicsVol13": "The Great Classics Volume 13",
+      "fantastiques": "Fantastic / Fantastiques",
+      "tresgrandsclassiques": "Tres Grands Classiques",
+      "herosvillains": "Heros vs Villains / Heros vs Mechants",
+      "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
+      "specialportraits": "Special Portraits",
+      "pokemon": "Pokemon"
     }
   }
 }

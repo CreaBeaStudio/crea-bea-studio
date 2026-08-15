@@ -985,7 +985,7 @@
     "featureCompleteCoverage": "Cobertura completa del libro: guía de colores decodificadora para todas las páginas misteriosas por volumen.",
     "featureFreePreviewLabel": "Pruébalo antes de comprar:",
     "featureFreePreviewText": "descarga gratis el decodificador de la primera página.",
-    "priceNote": "Volumen completo — clave decodificadora completa para las 100 páginas — 7,50 €",
+    "priceNote": "Tomo completo — guía de colores decodificadora para todas las páginas — 7,50 €",
     "selectBookLabel": "Elige un libro",
     "selectSetLabel": "Elige tu set Guangna",
     "selectBrandLabel": "Elige tu marca",
@@ -1004,7 +1004,13 @@
       "greatClassicsVol3": "Los Grandes Clásicos Volumen 3",
       "greatClassicsVol4": "Los Grandes Clásicos Volumen 4",
       "greatClassicsVol11": "Los Grandes Clásicos Volumen 11",
-      "greatClassicsVol13": "Los Grandes Clásicos Volumen 13"
+      "greatClassicsVol13": "Los Grandes Clásicos Volumen 13",
+      "fantastiques": "Fantastiques",
+      "tresgrandsclassiques": "Tres Grands Classiques",
+      "herosvillains": "Héroes y Villanos",
+      "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
+      "specialportraits": "Retratos.",
+      "pokemon": "Pokemon"
     }
   }
 }

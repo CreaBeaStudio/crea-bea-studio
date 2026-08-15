@@ -752,7 +752,7 @@
     "featureCompleteCoverage": "Vollständige Buch-Abdeckung: Farbcode-Lösungsschlüssel für alle Mystery-Seiten pro Band.",
     "featureFreePreviewLabel": "Vorab testen:",
     "featureFreePreviewText": "lade den Decoder für die erste Seite kostenlos herunter.",
-    "priceNote": "Kompletter Band — vollständiger Decoder-Schlüssel für alle 100 Seiten — 7,50 €",
+    "priceNote": "Kompletter Band — vollständiger Decoder-Schlüssel für alle Seiten — 7,50 €",
     "selectBookLabel": "Wähle ein Buch",
     "selectSetLabel": "Wähle dein Guangna-Set",
     "selectBrandLabel": "Wähle dein Marke",
@@ -771,7 +771,13 @@
       "princessVol2": "Prinzessin Band 2",
       "greatClassicsVol4": "Die großen Klassiker Band 4",
       "greatClassicsVol11": "Die großen Klassiker Band 11",
-      "greatClassicsVol13": "Die großen Klassiker Band 13"
+      "greatClassicsVol13": "Die großen Klassiker Band 13",
+      "fantastiques": "Fantastic / Fantastiques",
+      "tresgrandsclassiques": "Tres Grands Classiques",
+      "herosvillains": "Heros vs Villains / Heros vs Mechants",
+      "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
+      "specialportraits": "Special Portraits",
+      "pokemon": "Pokemon"
     }
   },
   "create": {

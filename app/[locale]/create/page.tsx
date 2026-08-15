@@ -1287,6 +1287,7 @@ function CreateInner() {
                         ? t("step3.naturalPreviewLabel")
                         : `${t("step3.yourMarkers")}${selectedMarkersLabel ? ` — ${selectedMarkersLabel}` : ""}`}
                     </p>
+                    <div style={{ maxWidth: "600px", margin: "0 auto" }}>
                     <BeforeAfterSlider
                       beforeImage={`data:image/png;base64,${previewBranch.preview_png_base64}`}
                       afterImage={`data:image/png;base64,${previewBranch.outline_png_base64}`}
@@ -1294,6 +1295,7 @@ function CreateInner() {
                       afterLabel={t("step3.afterLabel")}
                       aspectRatio={4 / 3}
                     />
+                    </div>
                     {previewIsNatural ? (
                       <p style={{fontSize:12, color:"var(--muted)", marginTop:4}}>
                         {t("step3.naturalPreviewNote")}
