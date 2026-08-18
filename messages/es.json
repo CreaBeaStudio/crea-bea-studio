@@ -978,6 +978,8 @@
   },
   "mysteryDecoder": {
     "pageTitle": "Menos tiempo emparejando, más tiempo coloreando",
+    "modeReadyMadeLabel": "Decodificadores listos",
+    "modeCustomLabel": "Crea el tuyo",
     "intro": "Si te encantan las páginas misterio para colorear por números pero no te gusta emparejar los colores — o simplemente no estás seguro/a de haber elegido los mejores tonos posibles — te tenemos cubierto/a. Para ayudarte a conseguir los mejores resultados al instante con tus rotuladores, hemos creado PDF completos de claves decodificadoras de color para los libros de colorear misterio más populares, desde Princesas hasta los Clásicos.",
     "whatsIncludedTitle": "¿Qué incluyen los archivos decodificadores?",
     "featureA4Letter": "Formateado para imprimir perfectamente tanto en papel A4 como US Letter.",
@@ -1012,5 +1014,58 @@
       "specialportraits": "Retratos.",
       "pokemon": "Pokemon"
     }
+    },
+    "mysteryDecoderCustom": {
+    "selectBookLabel": "Elige tu libro",
+    "selectGuangnaSetsLabel": "Tus sets de rotuladores Guangna",
+    "selectLanguoSetsLabel": "Tus sets de rotuladores Languo",
+    "multiSelectHint": "Mantén pulsado Ctrl (Windows) o Cmd (Mac) para seleccionar más de uno.",
+    "extraCodesLabel": "Códigos individuales extra que tengas (opcional)",
+    "extraCodesPlaceholder": "ej. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Generar vista previa gratis",
+    "generatingButton": "Generando vista previa...",
+    "unlockFullDecoderButton": "Desbloquear decodificador completo ({price})",
+    "unlockingButton": "Redirigiendo a la pantalla de pago...",
+    "noSetsSelectedError": "Elige al menos un set de rotuladores (o escribe algunos códigos que tengas) antes de generar una vista previa.",
+    "noMatchError": "No se encontraron coincidencias de códigos para este libro; prueba a seleccionar un set diferente.",
+    "generationFailedError": "Algo salió mal al generar tu vista previa. Inténtalo de nuevo.",
+    "unlockFailedError": "Algo salió mal al iniciar el pago. Inténtalo de nuevo o contáctanos si el problema persiste.",
+    "freePreviewCaption": "Vista previa gratuita (primera página); desbloquea el decodificador completo para obtener el libro entero.",
+    "viewPreviewButton": "Ver PDF de la vista previa",
+    "languoLinePaint": "Rotuladores acrílicos",
+    "languoLineGel": "Bolígrafos de gel",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "Tus rotuladores"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Confirmando tu pago…",
+    "checkingBody": "Esto suele tardar solo unos segundos. Por favor, no cierres esta página.",
+    "readyTitle": "¡Tu decodificador está listo!",
+    "readyBody": "Se está preparando tu decodificador completo; la descarga debería empezar automáticamente.",
+    "orderReferenceNote": "Referencia del pedido: {orderId}",
+    "timedOutTitle": "Seguimos confirmando tu pago",
+    "timedOutBody": "Esto está tardando más de lo habitual. Si ya has pagado, no te preocupes: tu pedido está guardado.",
+    "timedOutEmailPrefix": "Si no se resuelve en breve, escríbenos a",
+    "timedOutRefSuffix": "con tu referencia de pedido",
+    "errorTitle": "Algo salió mal",
+    "errorEmailPrefix": "Por favor, escríbenos a",
+    "errorRefSuffix": "con tu referencia de pedido",
+    "errorNoRefSuffix": "y te ayudaremos a solucionarlo.",
+    "pdfGenerationError": "No pudimos generar el PDF de tu decodificador. Intenta pulsar el botón de descarga de nuevo o escríbenos.",
+    "noMatchError": "No pudimos encontrar coincidencias de códigos para este libro. Escríbenos para que te ayudemos.",
+    "waitingForPayment": "Confirmando tu pago…",
+    "generating": "Generando tu decodificador completo…",
+    "ready": "¡Tu decodificador está listo!",
+    "downloadButton": "Descargar tu Decodificador",
+    "errorPrefix": "Algo salió mal:",
+    "errors": {
+      "ORDER_ID_REQUIRED": "No se encontró ningún pedido en el enlace. Usa el enlace de tu correo de confirmación.",
+      "ORDER_NOT_FOUND": "No pudimos encontrar este pedido.",
+      "STATUS_CHECK_FAILED": "No pudimos verificar el estado de tu pedido. Actualiza la página.",
+      "PAYMENT_TIMEOUT": "Aún no hemos recibido la confirmación del pago. Si ya pagaste, actualiza la página en un minuto o contáctanos.",
+      "GENERATION_FAILED": "No pudimos generar tu decodificador. Actualiza la página o contáctanos para ayudarte.",
+      "UNKNOWN": "Por favor, actualiza la página o contáctanos para ayudarte."
+    }
+    }
   }
-}

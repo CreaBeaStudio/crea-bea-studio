@@ -977,6 +977,8 @@
   },
   "mysteryDecoder": {
     "pageTitle": "Minder Tijd Kwijt aan Kleuren Zoeken, Meer Tijd om te Kleuren",
+    "modeReadyMadeLabel": "Kant-en-klare decoders",
+    "modeCustomLabel": "Maak je eigen",
     "intro": "Als je gek bent op Kleuren op Nummer Mystery-boeken, maar een hekel hebt aan het uitzoeken van de juiste kleuren — of niet zeker weet of je de beste tinten gekozen hebt — dan helpen wij je verder. Om met je markers direct het mooiste resultaat te krijgen, hebben we uitgebreide Color Decoder Key PDF's gemaakt voor de populairste mystery-kleurboeken.",
     "whatsIncludedTitle": "Wat zit er in de Decoder-bestanden?",
     "featureA4Letter": "Perfect opgemaakt om af te drukken op zowel A4 als US Letter.",
@@ -1010,6 +1012,59 @@
       "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
       "specialportraits": "Special Portraits",
       "pokemon": "Pokemon"
+    }
+  },
+  "mysteryDecoderCustom": {
+    "selectBookLabel": "Kies je boek",
+    "selectGuangnaSetsLabel": "Jouw Guangna marker sets",
+    "selectLanguoSetsLabel": "Jouw Languo marker sets",
+    "multiSelectHint": "Houd Ctrl (Windows) of Cmd (Mac) ingedrukt om er meer dan één te selecteren.",
+    "extraCodesLabel": "Extra losse codes die je hebt (optioneel)",
+    "extraCodesPlaceholder": "bijv. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Gratis voorbeeld genereren",
+    "generatingButton": "Voorbeeld wordt gegenereerd...",
+    "unlockFullDecoderButton": "Volledige decoder ontgrendelen ({price})",
+    "unlockingButton": "Doorsturen naar afrekenen...",
+    "noSetsSelectedError": "Kies minimaal één marker set (of typ eigen codes in) voordat je een voorbeeld genereert.",
+    "noMatchError": "Geen overeenkomende codes gevonden voor dit boek — probeer een andere set te kiezen.",
+    "generationFailedError": "Er is iets misgegaan bij het genereren van je voorbeeld. Probeer het opnieuw.",
+    "unlockFailedError": "Er is iets misgegaan bij het starten van het afrekenen. Probeer het opnieuw of neem contact met ons op.",
+    "freePreviewCaption": "Gratis voorbeeld (eerste pagina) — ontgrendel de volledige decoder om alle pagina's te krijgen.",
+    "viewPreviewButton": "Voorbeeld-PDF bekijken",
+    "languoLinePaint": "Acrylic markers",
+    "languoLineGel": "Gelpennen",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "Jouw markers"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Je betaling wordt bevestigd…",
+    "checkingBody": "Dit duurt meestal maar een paar seconden. Sluit deze pagina niet.",
+    "readyTitle": "Je decoder is klaar!",
+    "readyBody": "Je volledige decoder wordt gegenereerd — de download zou automatisch moeten starten.",
+    "orderReferenceNote": "Bestelreferentie: {orderId}",
+    "timedOutTitle": "Betaling wordt nog steeds gecontroleerd",
+    "timedOutBody": "Dit duurt langer dan normaal. Als je al hebt betaald, maak je geen zorgen — je bestelling is opgeslagen.",
+    "timedOutEmailPrefix": "Als dit niet snel wordt opgelost, neem dan contact met ons op via",
+    "timedOutRefSuffix": "met je bestelreferentie",
+    "errorTitle": "Er is iets misgegaan",
+    "errorEmailPrefix": "Neem contact met ons op via",
+    "errorRefSuffix": "met je bestelreferentie",
+    "errorNoRefSuffix": "en we helpen je verder.",
+    "pdfGenerationError": "We konden de PDF van je decoder niet genereren. Klik nogmaals op de downloadknop of neem contact op.",
+    "noMatchError": "We konden geen overeenkomende codes vinden voor dit boek. Neem contact op zodat we je kunnen helpen.",
+    "waitingForPayment": "Je betaling wordt bevestigd…",
+    "generating": "Je volledige decoder wordt gegenereerd…",
+    "ready": "Je decoder is klaar!",
+    "downloadButton": "Download je Decoder",
+    "errorPrefix": "Er is iets misgegaan:",
+    "errors": {
+      "ORDER_ID_REQUIRED": "Geen bestelling gevonden in de link. Gebruik de link uit je bevestigingsmail.",
+      "ORDER_NOT_FOUND": "We konden deze bestelling niet vinden.",
+      "STATUS_CHECK_FAILED": "We konden de status van je bestelling niet controleren. Vernieuw de pagina.",
+      "PAYMENT_TIMEOUT": "We hebben nog geen betalingsbevestiging ontvangen. Als je al hebt betaald, vernieuw deze pagina dan over een minuutje of neem contact op.",
+      "GENERATION_FAILED": "We konden je decoder niet genereren. Vernieuw de pagina of neem contact met ons op voor hulp.",
+      "UNKNOWN": "Vernieuw de pagina of neem contact op voor hulp."
     }
   }
 }

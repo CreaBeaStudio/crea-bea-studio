@@ -977,6 +977,8 @@
   },
     "mysteryDecoder": {
       "pageTitle": "Moins de temps à assortir, plus de temps à colorier",
+      "modeReadyMadeLabel": "Nuanciers prêts à l'emploi",
+      "modeCustomLabel": "Crée le tien",
       "intro": "Si vous aimez le coloriage mystère numéroté mais que l'association des couleurs vous freine — ou que vous n'êtes tout simplement pas sûr(e) d'avoir choisi les meilleures teintes — nous avons la solution. Pour obtenir instantanément les meilleurs résultats avec vos feutres, nous avons créé des guides de décodage couleur complets pour les livres de coloriage mystère les plus populaires, de Princesses aux Grands Classiques.",
       "whatsIncludedTitle": "Que contiennent les fichiers de décodage ?",
       "featureA4Letter": "Mise en page parfaite à l'impression, aussi bien en A4 qu'en US Letter.",
@@ -1010,6 +1012,59 @@
         "mondesfantastiques": "Mondes Fantastiques",
         "specialportraits": "Special Portraits",
         "pokemon": "Pokemon"
-      }
+    }
+  },
+      "mysteryDecoderCustom": {
+    "selectBookLabel": "Choisis ton livre",
+    "selectGuangnaSetsLabel": "Tes sets de feutres Guangna",
+    "selectLanguoSetsLabel": "Tes sets de feutres Languo",
+    "multiSelectHint": "Maintiens Ctrl (Windows) ou Cmd (Mac) pour en sélectionner plusieurs.",
+    "extraCodesLabel": "Codes individuels supplémentaires en ta possession (optionnel)",
+    "extraCodesPlaceholder": "ex. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Générer un aperçu gratuit",
+    "generatingButton": "Génération de l'aperçu...",
+    "unlockFullDecoderButton": "Débloquer le nuancier complet ({price})",
+    "unlockingButton": "Redirection vers le paiement...",
+    "noSetsSelectedError": "Choisis au moins un set de feutres (ou saisis quelques codes en ta possession) avant de générer un aperçu.",
+    "noMatchError": "Aucun code ne correspond à ce livre — essaie de sélectionner un autre set.",
+    "generationFailedError": "Un problème est survenu lors de la génération de ton aperçu. Réessaie.",
+    "unlockFailedError": "Un problème est survenu lors du lancement du paiement. Réessaie ou contacte-nous si le problème persiste.",
+    "freePreviewCaption": "Aperçu gratuit (première page) — débloque le nuancier complet pour obtenir le livre entier.",
+    "viewPreviewButton": "Voir le PDF d'aperçu",
+    "languoLinePaint": "Feutres acryliques",
+    "languoLineGel": "Stylos gel",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "Tes feutres"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Confirmation de ton paiement…",
+    "checkingBody": "Cela ne prend généralement que quelques secondes. Ne ferme pas cette page.",
+    "readyTitle": "Ton nuancier est prêt !",
+    "readyBody": "Ton nuancier complet est en cours de préparation — le téléchargement devrait lancer automatiquement.",
+    "orderReferenceNote": "Référence de commande : {orderId}",
+    "timedOutTitle": "Confirmation du paiement toujours en cours",
+    "timedOutBody": "Cela prend plus de temps que prévu. Si tu as déjà payé, pas d'inquiétude — ta commande est bien enregistrée.",
+    "timedOutEmailPrefix": "Si la situation ne se règle pas rapidement, contacte-nous à",
+    "timedOutRefSuffix": "avec ta référence de commande",
+    "errorTitle": "Un problème est survenu",
+    "errorEmailPrefix": "Contacte-nous à",
+    "errorRefSuffix": "avec ta référence de commande",
+    "errorNoRefSuffix": "et nous t'aiderons à régler ça.",
+    "pdfGenerationError": "Nous n'avons pas pu générer le PDF de ton nuancier. Réessaie avec le bouton de téléchargement ou contacte-nous.",
+    "noMatchError": "Aucun code ne correspond à ce livre. Contacte-nous pour qu'on puisse t'aider.",
+    "waitingForPayment": "Confirmation de ton paiement…",
+    "generating": "Génération de ton nuancier complet…",
+    "ready": "Ton nuancier est prêt !",
+    "downloadButton": "Télécharger ton nuancier",
+    "errorPrefix": "Un problème est survenu :",
+    "errors": {
+      "ORDER_ID_REQUIRED": "Aucune commande trouvée dans le lien. Utilise le lien présent dans ton e-mail de confirmation.",
+      "ORDER_NOT_FOUND": "Impossible de trouver cette commande.",
+      "STATUS_CHECK_FAILED": "Impossible de vérifier le statut de ta commande. Rafraîchis la page.",
+      "PAYMENT_TIMEOUT": "Nous n'avons pas encore reçu la confirmation de paiement. Si tu as déjà payé, rafraîchis cette page dans une minute ou contacte-nous.",
+      "GENERATION_FAILED": "Impossible de générer ton nuancier. Rafraîchis la page ou contacte-nous.",
+      "UNKNOWN": "Rafraîchis la page ou contacte-nous pour obtenir de l'aide."
+    }
     }
   }

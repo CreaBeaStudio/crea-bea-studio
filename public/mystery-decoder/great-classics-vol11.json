@@ -1,0 +1,11892 @@
+[
+  {
+    "line": "1",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "1",
+    "label": "2",
+    "hex": "#525251"
+  },
+  {
+    "line": "1",
+    "label": "3",
+    "hex": "#8a8989"
+  },
+  {
+    "line": "1",
+    "label": "4",
+    "hex": "#bab0ae"
+  },
+  {
+    "line": "1",
+    "label": "5",
+    "hex": "#cdeafc"
+  },
+  {
+    "line": "1",
+    "label": "6",
+    "hex": "#86d1f5"
+  },
+  {
+    "line": "1",
+    "label": "7",
+    "hex": "#0073bd"
+  },
+  {
+    "line": "1",
+    "label": "8",
+    "hex": "#41516c"
+  },
+  {
+    "line": "1",
+    "label": "9",
+    "hex": "#567794"
+  },
+  {
+    "line": "1",
+    "label": "0",
+    "hex": "#9ac3d9"
+  },
+  {
+    "line": "1",
+    "label": "a",
+    "hex": "#00937c"
+  },
+  {
+    "line": "1",
+    "label": "b",
+    "hex": "#006460"
+  },
+  {
+    "line": "1",
+    "label": "c",
+    "hex": "#005956"
+  },
+  {
+    "line": "1",
+    "label": "d",
+    "hex": "#004849"
+  },
+  {
+    "line": "1",
+    "label": "e",
+    "hex": "#b2cb07"
+  },
+  {
+    "line": "1",
+    "label": "f",
+    "hex": "#35a936"
+  },
+  {
+    "line": "1",
+    "label": "h",
+    "hex": "#007b34"
+  },
+  {
+    "line": "1",
+    "label": "J",
+    "hex": "#005522"
+  },
+  {
+    "line": "1",
+    "label": "k",
+    "hex": "#003012"
+  },
+  {
+    "line": "1",
+    "label": "m",
+    "hex": "#547956"
+  },
+  {
+    "line": "1",
+    "label": "n",
+    "hex": "#93a27a"
+  },
+  {
+    "line": "1",
+    "label": "p",
+    "hex": "#c8d38b"
+  },
+  {
+    "line": "1",
+    "label": "q",
+    "hex": "#726f30"
+  },
+  {
+    "line": "1",
+    "label": "r",
+    "hex": "#4d5626"
+  },
+  {
+    "line": "1",
+    "label": "t",
+    "hex": "#894c2c"
+  },
+  {
+    "line": "1",
+    "label": "u",
+    "hex": "#8f6035"
+  },
+  {
+    "line": "1",
+    "label": "w",
+    "hex": "#bc8152"
+  },
+  {
+    "line": "1",
+    "label": "x",
+    "hex": "#ebbb74"
+  },
+  {
+    "line": "1",
+    "label": "y",
+    "hex": "#ffe9b7"
+  },
+  {
+    "line": "1",
+    "label": "z",
+    "hex": "#c46a42"
+  },
+  {
+    "line": "1",
+    "label": "\u00a7",
+    "hex": "#823300"
+  },
+  {
+    "line": "2",
+    "label": "\u00b6",
+    "hex": "#b26518"
+  },
+  {
+    "line": "2",
+    "label": "$",
+    "hex": "#df941e"
+  },
+  {
+    "line": "2",
+    "label": "\u03ea",
+    "hex": "#f6ae5c"
+  },
+  {
+    "line": "2",
+    "label": "\u263c",
+    "hex": "#aa2e09"
+  },
+  {
+    "line": "2",
+    "label": "\u03a8",
+    "hex": "#d4572c"
+  },
+  {
+    "line": "2",
+    "label": "\u0466",
+    "hex": "#f08100"
+  },
+  {
+    "line": "2",
+    "label": "\u00a5",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "2",
+    "label": "\u0238",
+    "hex": "#f3d25d"
+  },
+  {
+    "line": "2",
+    "label": "\u27b0",
+    "hex": "#672120"
+  },
+  {
+    "line": "2",
+    "label": "\u0276",
+    "hex": "#9b3633"
+  },
+  {
+    "line": "2",
+    "label": "\u0394",
+    "hex": "#c3493e"
+  },
+  {
+    "line": "2",
+    "label": "\u026e",
+    "hex": "#e57f69"
+  },
+  {
+    "line": "2",
+    "label": "\u25a1",
+    "hex": "#e30613"
+  },
+  {
+    "line": "2",
+    "label": "\u25ca",
+    "hex": "#a81526"
+  },
+  {
+    "line": "2",
+    "label": "\u03a3",
+    "hex": "#c0373c"
+  },
+  {
+    "line": "2",
+    "label": "\u03df",
+    "hex": "#f8d2e5"
+  },
+  {
+    "line": "2",
+    "label": "\u046a",
+    "hex": "#f092b3"
+  },
+  {
+    "line": "2",
+    "label": "\u040a",
+    "hex": "#e74c8a"
+  },
+  {
+    "line": "2",
+    "label": "\u20aa",
+    "hex": "#c9166a"
+  },
+  {
+    "line": "2",
+    "label": "\u2248",
+    "hex": "#a3014b"
+  },
+  {
+    "line": "2",
+    "label": "#",
+    "hex": "#7e114d"
+  },
+  {
+    "line": "2",
+    "label": "\u01be",
+    "hex": "#cd6191"
+  },
+  {
+    "line": "2",
+    "label": "\u0277",
+    "hex": "#af1280"
+  },
+  {
+    "line": "2",
+    "label": "\u0416",
+    "hex": "#813e7f"
+  },
+  {
+    "line": "2",
+    "label": "\u2640",
+    "hex": "#ac72ae"
+  },
+  {
+    "line": "2",
+    "label": "\u2642",
+    "hex": "#d1b6d8"
+  },
+  {
+    "line": "2",
+    "label": "\u0126",
+    "hex": "#46201f"
+  },
+  {
+    "line": "2",
+    "label": "\u00d8",
+    "hex": "#7b484c"
+  },
+  {
+    "line": "2",
+    "label": "\u0244",
+    "hex": "#955d52"
+  },
+  {
+    "line": "2",
+    "label": ">",
+    "hex": "#cd9584"
+  },
+  {
+    "line": "3",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "3",
+    "label": "2",
+    "hex": "#c6c5c9"
+  },
+  {
+    "line": "3",
+    "label": "3",
+    "hex": "#e9e9e9"
+  },
+  {
+    "line": "3",
+    "label": "4",
+    "hex": "#a3d5f3"
+  },
+  {
+    "line": "3",
+    "label": "5",
+    "hex": "#35a9e1"
+  },
+  {
+    "line": "3",
+    "label": "6",
+    "hex": "#006db4"
+  },
+  {
+    "line": "3",
+    "label": "7",
+    "hex": "#007853"
+  },
+  {
+    "line": "3",
+    "label": "8",
+    "hex": "#005241"
+  },
+  {
+    "line": "3",
+    "label": "9",
+    "hex": "#006a34"
+  },
+  {
+    "line": "3",
+    "label": "0",
+    "hex": "#008c3e"
+  },
+  {
+    "line": "3",
+    "label": "a",
+    "hex": "#64ad30"
+  },
+  {
+    "line": "3",
+    "label": "b",
+    "hex": "#c8d000"
+  },
+  {
+    "line": "3",
+    "label": "c",
+    "hex": "#f7b55f"
+  },
+  {
+    "line": "3",
+    "label": "d",
+    "hex": "#f08944"
+  },
+  {
+    "line": "3",
+    "label": "e",
+    "hex": "#d86c25"
+  },
+  {
+    "line": "3",
+    "label": "f",
+    "hex": "#fad9b6"
+  },
+  {
+    "line": "3",
+    "label": "h",
+    "hex": "#e5b390"
+  },
+  {
+    "line": "3",
+    "label": "j",
+    "hex": "#b87e6a"
+  },
+  {
+    "line": "3",
+    "label": "k",
+    "hex": "#8f6c66"
+  },
+  {
+    "line": "3",
+    "label": "m",
+    "hex": "#74524d"
+  },
+  {
+    "line": "3",
+    "label": "n",
+    "hex": "#d0b696"
+  },
+  {
+    "line": "3",
+    "label": "p",
+    "hex": "#ab8864"
+  },
+  {
+    "line": "3",
+    "label": "q",
+    "hex": "#f4aa90"
+  },
+  {
+    "line": "3",
+    "label": "r",
+    "hex": "#e75465"
+  },
+  {
+    "line": "3",
+    "label": "t",
+    "hex": "#973c3b"
+  },
+  {
+    "line": "3",
+    "label": "u",
+    "hex": "#7c1c0f"
+  },
+  {
+    "line": "3",
+    "label": "w",
+    "hex": "#be1818"
+  },
+  {
+    "line": "3",
+    "label": "x",
+    "hex": "#dc0d15"
+  },
+  {
+    "line": "3",
+    "label": "y",
+    "hex": "#e1006c"
+  },
+  {
+    "line": "3",
+    "label": "z",
+    "hex": "#e84f93"
+  },
+  {
+    "line": "3",
+    "label": "\u03ea",
+    "hex": "#ef8bb7"
+  },
+  {
+    "line": "3",
+    "label": "\u00d8",
+    "hex": "#b387af"
+  },
+  {
+    "line": "3",
+    "label": "\u0471",
+    "hex": "#8b529a"
+  },
+  {
+    "line": "3",
+    "label": "\u00a5",
+    "hex": "#1f3b79"
+  },
+  {
+    "line": "4",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "4",
+    "label": "2",
+    "hex": "#3c2f45"
+  },
+  {
+    "line": "4",
+    "label": "3",
+    "hex": "#00539d"
+  },
+  {
+    "line": "4",
+    "label": "4",
+    "hex": "#008fd4"
+  },
+  {
+    "line": "4",
+    "label": "5",
+    "hex": "#8dd0f4"
+  },
+  {
+    "line": "4",
+    "label": "6",
+    "hex": "#bacfe4"
+  },
+  {
+    "line": "4",
+    "label": "7",
+    "hex": "#009093"
+  },
+  {
+    "line": "4",
+    "label": "8",
+    "hex": "#00706b"
+  },
+  {
+    "line": "4",
+    "label": "9",
+    "hex": "#064b4c"
+  },
+  {
+    "line": "4",
+    "label": "0",
+    "hex": "#08371f"
+  },
+  {
+    "line": "4",
+    "label": "a",
+    "hex": "#005c2e"
+  },
+  {
+    "line": "4",
+    "label": "b",
+    "hex": "#007f3b"
+  },
+  {
+    "line": "4",
+    "label": "c",
+    "hex": "#8eba23"
+  },
+  {
+    "line": "4",
+    "label": "d",
+    "hex": "#fff490"
+  },
+  {
+    "line": "4",
+    "label": "e",
+    "hex": "#ffea00"
+  },
+  {
+    "line": "4",
+    "label": "f",
+    "hex": "#f5a900"
+  },
+  {
+    "line": "4",
+    "label": "h",
+    "hex": "#e8690a"
+  },
+  {
+    "line": "4",
+    "label": "j",
+    "hex": "#d46f13"
+  },
+  {
+    "line": "4",
+    "label": "k",
+    "hex": "#a3381e"
+  },
+  {
+    "line": "4",
+    "label": "m",
+    "hex": "#50271d"
+  },
+  {
+    "line": "4",
+    "label": "n",
+    "hex": "#723e27"
+  },
+  {
+    "line": "4",
+    "label": "p",
+    "hex": "#c4734e"
+  },
+  {
+    "line": "4",
+    "label": "q",
+    "hex": "#bd482c"
+  },
+  {
+    "line": "4",
+    "label": "r",
+    "hex": "#dd7244"
+  },
+  {
+    "line": "4",
+    "label": "t",
+    "hex": "#f29c5c"
+  },
+  {
+    "line": "4",
+    "label": "u",
+    "hex": "#eb6c7d"
+  },
+  {
+    "line": "4",
+    "label": "w",
+    "hex": "#dd3759"
+  },
+  {
+    "line": "4",
+    "label": "x",
+    "hex": "#e10072"
+  },
+  {
+    "line": "4",
+    "label": "y",
+    "hex": "#f6c3dc"
+  },
+  {
+    "line": "4",
+    "label": "z",
+    "hex": "#c994c2"
+  },
+  {
+    "line": "4",
+    "label": "\u03ea",
+    "hex": "#c05095"
+  },
+  {
+    "line": "5",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "5",
+    "label": "2",
+    "hex": "#50504f"
+  },
+  {
+    "line": "5",
+    "label": "3",
+    "hex": "#2b3089"
+  },
+  {
+    "line": "5",
+    "label": "4",
+    "hex": "#0059a6"
+  },
+  {
+    "line": "5",
+    "label": "5",
+    "hex": "#0084cc"
+  },
+  {
+    "line": "5",
+    "label": "6",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "5",
+    "label": "7",
+    "hex": "#accaec"
+  },
+  {
+    "line": "5",
+    "label": "8",
+    "hex": "#d4edfc"
+  },
+  {
+    "line": "5",
+    "label": "9",
+    "hex": "#f1f2fa"
+  },
+  {
+    "line": "5",
+    "label": "0",
+    "hex": "#00a76d"
+  },
+  {
+    "line": "5",
+    "label": "a",
+    "hex": "#127950"
+  },
+  {
+    "line": "5",
+    "label": "b",
+    "hex": "#115b39"
+  },
+  {
+    "line": "5",
+    "label": "c",
+    "hex": "#00452b"
+  },
+  {
+    "line": "5",
+    "label": "d",
+    "hex": "#cadfab"
+  },
+  {
+    "line": "5",
+    "label": "e",
+    "hex": "#92b85f"
+  },
+  {
+    "line": "5",
+    "label": "f",
+    "hex": "#596d42"
+  },
+  {
+    "line": "5",
+    "label": "h",
+    "hex": "#667e29"
+  },
+  {
+    "line": "5",
+    "label": "j",
+    "hex": "#93b822"
+  },
+  {
+    "line": "5",
+    "label": "k",
+    "hex": "#6a561b"
+  },
+  {
+    "line": "5",
+    "label": "m",
+    "hex": "#937c1a"
+  },
+  {
+    "line": "5",
+    "label": "n",
+    "hex": "#c3c002"
+  },
+  {
+    "line": "5",
+    "label": "p",
+    "hex": "#ffef8b"
+  },
+  {
+    "line": "5",
+    "label": "q",
+    "hex": "#ffd500"
+  },
+  {
+    "line": "5",
+    "label": "r",
+    "hex": "#fbba00"
+  },
+  {
+    "line": "5",
+    "label": "t",
+    "hex": "#f6a000"
+  },
+  {
+    "line": "5",
+    "label": "u",
+    "hex": "#e27b00"
+  },
+  {
+    "line": "5",
+    "label": "w",
+    "hex": "#e6550f"
+  },
+  {
+    "line": "5",
+    "label": "x",
+    "hex": "#fcc983"
+  },
+  {
+    "line": "5",
+    "label": "y",
+    "hex": "#cd7541"
+  },
+  {
+    "line": "5",
+    "label": "z",
+    "hex": "#7c3e30"
+  },
+  {
+    "line": "5",
+    "label": "\u03ea",
+    "hex": "#955c3d"
+  },
+  {
+    "line": "6",
+    "label": "\u00d8",
+    "hex": "#b88661"
+  },
+  {
+    "line": "6",
+    "label": "\u0471",
+    "hex": "#fac8ac"
+  },
+  {
+    "line": "6",
+    "label": "\u0466",
+    "hex": "#f4a189"
+  },
+  {
+    "line": "6",
+    "label": "\u00a5",
+    "hex": "#d05a54"
+  },
+  {
+    "line": "6",
+    "label": "\u0238",
+    "hex": "#701001"
+  },
+  {
+    "line": "6",
+    "label": "\u00b6",
+    "hex": "#a31008"
+  },
+  {
+    "line": "6",
+    "label": "\u0276",
+    "hex": "#e30613"
+  },
+  {
+    "line": "6",
+    "label": "\u0275",
+    "hex": "#c21543"
+  },
+  {
+    "line": "6",
+    "label": "\u026e",
+    "hex": "#e60959"
+  },
+  {
+    "line": "6",
+    "label": "\u03a9",
+    "hex": "#e94889"
+  },
+  {
+    "line": "6",
+    "label": "\u03c6",
+    "hex": "#f6b7d4"
+  },
+  {
+    "line": "6",
+    "label": "\u03a3",
+    "hex": "#a02379"
+  },
+  {
+    "line": "6",
+    "label": "\u03df",
+    "hex": "#c8568f"
+  },
+  {
+    "line": "6",
+    "label": "\u046a",
+    "hex": "#d88dbc"
+  },
+  {
+    "line": "6",
+    "label": "\u040a",
+    "hex": "#64257a"
+  },
+  {
+    "line": "6",
+    "label": "\u20aa",
+    "hex": "#834896"
+  },
+  {
+    "line": "6",
+    "label": "\u2248",
+    "hex": "#ae83ba"
+  },
+  {
+    "line": "7",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "7",
+    "label": "2",
+    "hex": "#352657"
+  },
+  {
+    "line": "7",
+    "label": "3",
+    "hex": "#5a3671"
+  },
+  {
+    "line": "7",
+    "label": "4",
+    "hex": "#77549e"
+  },
+  {
+    "line": "7",
+    "label": "5",
+    "hex": "#d0ebfc"
+  },
+  {
+    "line": "7",
+    "label": "6",
+    "hex": "#6abb96"
+  },
+  {
+    "line": "7",
+    "label": "7",
+    "hex": "#007b6e"
+  },
+  {
+    "line": "7",
+    "label": "8",
+    "hex": "#af0753"
+  },
+  {
+    "line": "7",
+    "label": "9",
+    "hex": "#e82d88"
+  },
+  {
+    "line": "7",
+    "label": "0",
+    "hex": "#ed6ca5"
+  },
+  {
+    "line": "7",
+    "label": "a",
+    "hex": "#f5b0d0"
+  },
+  {
+    "line": "7",
+    "label": "b",
+    "hex": "#fbd9cd"
+  },
+  {
+    "line": "7",
+    "label": "c",
+    "hex": "#f7b8a1"
+  },
+  {
+    "line": "7",
+    "label": "d",
+    "hex": "#cf7b65"
+  },
+  {
+    "line": "7",
+    "label": "e",
+    "hex": "#6b2e0f"
+  },
+  {
+    "line": "7",
+    "label": "f",
+    "hex": "#824317"
+  },
+  {
+    "line": "7",
+    "label": "h",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "7",
+    "label": "j",
+    "hex": "#ed9f20"
+  },
+  {
+    "line": "7",
+    "label": "k",
+    "hex": "#d7472d"
+  },
+  {
+    "line": "7",
+    "label": "m",
+    "hex": "#a33217"
+  },
+  {
+    "line": "8",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "8",
+    "label": "2",
+    "hex": "#5a5f66"
+  },
+  {
+    "line": "8",
+    "label": "3",
+    "hex": "#778288"
+  },
+  {
+    "line": "8",
+    "label": "4",
+    "hex": "#b1b5b8"
+  },
+  {
+    "line": "8",
+    "label": "5",
+    "hex": "#e6e9e9"
+  },
+  {
+    "line": "8",
+    "label": "6",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "8",
+    "label": "7",
+    "hex": "#60b5e6"
+  },
+  {
+    "line": "8",
+    "label": "8",
+    "hex": "#008dd1"
+  },
+  {
+    "line": "8",
+    "label": "9",
+    "hex": "#9eadd9"
+  },
+  {
+    "line": "8",
+    "label": "0",
+    "hex": "#4b5ca6"
+  },
+  {
+    "line": "8",
+    "label": "a",
+    "hex": "#35428c"
+  },
+  {
+    "line": "8",
+    "label": "b",
+    "hex": "#03314b"
+  },
+  {
+    "line": "8",
+    "label": "c",
+    "hex": "#00a086"
+  },
+  {
+    "line": "8",
+    "label": "d",
+    "hex": "#82c495"
+  },
+  {
+    "line": "8",
+    "label": "e",
+    "hex": "#008438"
+  },
+  {
+    "line": "8",
+    "label": "f",
+    "hex": "#45ac34"
+  },
+  {
+    "line": "8",
+    "label": "h",
+    "hex": "#cdcc00"
+  },
+  {
+    "line": "8",
+    "label": "j",
+    "hex": "#f6e700"
+  },
+  {
+    "line": "8",
+    "label": "k",
+    "hex": "#ef7900"
+  },
+  {
+    "line": "8",
+    "label": "m",
+    "hex": "#cb511a"
+  },
+  {
+    "line": "8",
+    "label": "n",
+    "hex": "#6d2f25"
+  },
+  {
+    "line": "8",
+    "label": "p",
+    "hex": "#b24e3d"
+  },
+  {
+    "line": "8",
+    "label": "q",
+    "hex": "#c96650"
+  },
+  {
+    "line": "8",
+    "label": "r",
+    "hex": "#dc8a59"
+  },
+  {
+    "line": "8",
+    "label": "t",
+    "hex": "#f9bb80"
+  },
+  {
+    "line": "8",
+    "label": "u",
+    "hex": "#c70458"
+  },
+  {
+    "line": "8",
+    "label": "w",
+    "hex": "#ec6085"
+  },
+  {
+    "line": "8",
+    "label": "x",
+    "hex": "#ea4f77"
+  },
+  {
+    "line": "8",
+    "label": "y",
+    "hex": "#d62e4e"
+  },
+  {
+    "line": "8",
+    "label": "z",
+    "hex": "#b70e0c"
+  },
+  {
+    "line": "8",
+    "label": "\u03ea",
+    "hex": "#6a0d00"
+  },
+  {
+    "line": "8",
+    "label": "\u00d8",
+    "hex": "#d582b5"
+  },
+  {
+    "line": "8",
+    "label": "\u00a5",
+    "hex": "#b44794"
+  },
+  {
+    "line": "9",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "9",
+    "label": "2",
+    "hex": "#5e4c4c"
+  },
+  {
+    "line": "9",
+    "label": "3",
+    "hex": "#c9c3c6"
+  },
+  {
+    "line": "9",
+    "label": "4",
+    "hex": "#cfddf3"
+  },
+  {
+    "line": "9",
+    "label": "5",
+    "hex": "#3a424b"
+  },
+  {
+    "line": "9",
+    "label": "6",
+    "hex": "#00708e"
+  },
+  {
+    "line": "9",
+    "label": "7",
+    "hex": "#00a8a9"
+  },
+  {
+    "line": "9",
+    "label": "8",
+    "hex": "#524716"
+  },
+  {
+    "line": "9",
+    "label": "9",
+    "hex": "#f5b55d"
+  },
+  {
+    "line": "9",
+    "label": "0",
+    "hex": "#d08038"
+  },
+  {
+    "line": "9",
+    "label": "a",
+    "hex": "#9d6000"
+  },
+  {
+    "line": "9",
+    "label": "b",
+    "hex": "#7d4100"
+  },
+  {
+    "line": "9",
+    "label": "c",
+    "hex": "#653311"
+  },
+  {
+    "line": "9",
+    "label": "d",
+    "hex": "#401e0c"
+  },
+  {
+    "line": "9",
+    "label": "e",
+    "hex": "#fbccae"
+  },
+  {
+    "line": "9",
+    "label": "f",
+    "hex": "#f5a98f"
+  },
+  {
+    "line": "9",
+    "label": "h",
+    "hex": "#e1755e"
+  },
+  {
+    "line": "9",
+    "label": "j",
+    "hex": "#b75445"
+  },
+  {
+    "line": "9",
+    "label": "k",
+    "hex": "#712103"
+  },
+  {
+    "line": "9",
+    "label": "m",
+    "hex": "#c03e4c"
+  },
+  {
+    "line": "9",
+    "label": "n",
+    "hex": "#f0828a"
+  },
+  {
+    "line": "10",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "10",
+    "label": "2",
+    "hex": "#2c2318"
+  },
+  {
+    "line": "10",
+    "label": "3",
+    "hex": "#645140"
+  },
+  {
+    "line": "10",
+    "label": "4",
+    "hex": "#7f786c"
+  },
+  {
+    "line": "10",
+    "label": "5",
+    "hex": "#a6a6a5"
+  },
+  {
+    "line": "10",
+    "label": "6",
+    "hex": "#c6e8fb"
+  },
+  {
+    "line": "10",
+    "label": "7",
+    "hex": "#009dda"
+  },
+  {
+    "line": "10",
+    "label": "8",
+    "hex": "#3c5da8"
+  },
+  {
+    "line": "10",
+    "label": "9",
+    "hex": "#005f67"
+  },
+  {
+    "line": "10",
+    "label": "0",
+    "hex": "#528880"
+  },
+  {
+    "line": "10",
+    "label": "a",
+    "hex": "#fff155"
+  },
+  {
+    "line": "10",
+    "label": "b",
+    "hex": "#cc8700"
+  },
+  {
+    "line": "10",
+    "label": "c",
+    "hex": "#824716"
+  },
+  {
+    "line": "10",
+    "label": "d",
+    "hex": "#5d2f0c"
+  },
+  {
+    "line": "10",
+    "label": "e",
+    "hex": "#3d1900"
+  },
+  {
+    "line": "10",
+    "label": "f",
+    "hex": "#c84434"
+  },
+  {
+    "line": "10",
+    "label": "h",
+    "hex": "#e06f5b"
+  },
+  {
+    "line": "10",
+    "label": "j",
+    "hex": "#f6aa88"
+  },
+  {
+    "line": "10",
+    "label": "k",
+    "hex": "#bf0932"
+  },
+  {
+    "line": "10",
+    "label": "m",
+    "hex": "#dc2942"
+  },
+  {
+    "line": "10",
+    "label": "n",
+    "hex": "#e2616f"
+  },
+  {
+    "line": "10",
+    "label": "p",
+    "hex": "#f6b9d5"
+  },
+  {
+    "line": "10",
+    "label": "q",
+    "hex": "#754151"
+  },
+  {
+    "line": "11",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "11",
+    "label": "2",
+    "hex": "#b7e2fa"
+  },
+  {
+    "line": "11",
+    "label": "3",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "11",
+    "label": "4",
+    "hex": "#006eb8"
+  },
+  {
+    "line": "11",
+    "label": "5",
+    "hex": "#93b32f"
+  },
+  {
+    "line": "11",
+    "label": "6",
+    "hex": "#d2db59"
+  },
+  {
+    "line": "11",
+    "label": "7",
+    "hex": "#fff594"
+  },
+  {
+    "line": "11",
+    "label": "8",
+    "hex": "#ffd635"
+  },
+  {
+    "line": "11",
+    "label": "9",
+    "hex": "#fab200"
+  },
+  {
+    "line": "11",
+    "label": "0",
+    "hex": "#e47200"
+  },
+  {
+    "line": "11",
+    "label": "a",
+    "hex": "#a04f00"
+  },
+  {
+    "line": "11",
+    "label": "b",
+    "hex": "#742e1d"
+  },
+  {
+    "line": "11",
+    "label": "c",
+    "hex": "#792122"
+  },
+  {
+    "line": "11",
+    "label": "d",
+    "hex": "#9e2e30"
+  },
+  {
+    "line": "11",
+    "label": "e",
+    "hex": "#e30613"
+  },
+  {
+    "line": "11",
+    "label": "f",
+    "hex": "#ed9b77"
+  },
+  {
+    "line": "11",
+    "label": "h",
+    "hex": "#f4cba0"
+  },
+  {
+    "line": "12",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "12",
+    "label": "2",
+    "hex": "#83979a"
+  },
+  {
+    "line": "12",
+    "label": "3",
+    "hex": "#4a6c87"
+  },
+  {
+    "line": "12",
+    "label": "4",
+    "hex": "#0060ac"
+  },
+  {
+    "line": "12",
+    "label": "5",
+    "hex": "#006eb8"
+  },
+  {
+    "line": "12",
+    "label": "6",
+    "hex": "#0086cd"
+  },
+  {
+    "line": "12",
+    "label": "7",
+    "hex": "#00ace9"
+  },
+  {
+    "line": "12",
+    "label": "8",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "12",
+    "label": "9",
+    "hex": "#008683"
+  },
+  {
+    "line": "12",
+    "label": "0",
+    "hex": "#5cbdb1"
+  },
+  {
+    "line": "12",
+    "label": "a",
+    "hex": "#93cfc3"
+  },
+  {
+    "line": "12",
+    "label": "b",
+    "hex": "#ffea9a"
+  },
+  {
+    "line": "12",
+    "label": "c",
+    "hex": "#fecc55"
+  },
+  {
+    "line": "12",
+    "label": "d",
+    "hex": "#dc7d0f"
+  },
+  {
+    "line": "12",
+    "label": "e",
+    "hex": "#9a451f"
+  },
+  {
+    "line": "12",
+    "label": "f",
+    "hex": "#77271a"
+  },
+  {
+    "line": "12",
+    "label": "h",
+    "hex": "#cb7050"
+  },
+  {
+    "line": "12",
+    "label": "j",
+    "hex": "#f5a793"
+  },
+  {
+    "line": "12",
+    "label": "k",
+    "hex": "#fbd2b6"
+  },
+  {
+    "line": "12",
+    "label": "m",
+    "hex": "#f6bbd6"
+  },
+  {
+    "line": "12",
+    "label": "n",
+    "hex": "#e61a66"
+  },
+  {
+    "line": "12",
+    "label": "p",
+    "hex": "#a8063c"
+  },
+  {
+    "line": "12",
+    "label": "q",
+    "hex": "#c32a86"
+  },
+  {
+    "line": "12",
+    "label": "r",
+    "hex": "#8b2562"
+  },
+  {
+    "line": "12",
+    "label": "t",
+    "hex": "#5a1839"
+  },
+  {
+    "line": "12",
+    "label": "u",
+    "hex": "#bd6ba8"
+  },
+  {
+    "line": "13",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "13",
+    "label": "2",
+    "hex": "#5e5257"
+  },
+  {
+    "line": "13",
+    "label": "3",
+    "hex": "#7e7978"
+  },
+  {
+    "line": "13",
+    "label": "4",
+    "hex": "#bbc2bc"
+  },
+  {
+    "line": "13",
+    "label": "5",
+    "hex": "#624a6d"
+  },
+  {
+    "line": "13",
+    "label": "6",
+    "hex": "#588cbc"
+  },
+  {
+    "line": "13",
+    "label": "7",
+    "hex": "#1e3c79"
+  },
+  {
+    "line": "13",
+    "label": "8",
+    "hex": "#054d9a"
+  },
+  {
+    "line": "13",
+    "label": "9",
+    "hex": "#0099db"
+  },
+  {
+    "line": "13",
+    "label": "0",
+    "hex": "#8fc6ec"
+  },
+  {
+    "line": "13",
+    "label": "a",
+    "hex": "#d3e7f8"
+  },
+  {
+    "line": "13",
+    "label": "b",
+    "hex": "#45a790"
+  },
+  {
+    "line": "13",
+    "label": "c",
+    "hex": "#b2d1b5"
+  },
+  {
+    "line": "13",
+    "label": "d",
+    "hex": "#8b6058"
+  },
+  {
+    "line": "13",
+    "label": "e",
+    "hex": "#653f39"
+  },
+  {
+    "line": "13",
+    "label": "f",
+    "hex": "#a31938"
+  },
+  {
+    "line": "13",
+    "label": "h",
+    "hex": "#81192b"
+  },
+  {
+    "line": "13",
+    "label": "j",
+    "hex": "#9c1a16"
+  },
+  {
+    "line": "13",
+    "label": "k",
+    "hex": "#de1a1c"
+  },
+  {
+    "line": "13",
+    "label": "m",
+    "hex": "#e3383d"
+  },
+  {
+    "line": "13",
+    "label": "n",
+    "hex": "#d95154"
+  },
+  {
+    "line": "13",
+    "label": "p",
+    "hex": "#ec787a"
+  },
+  {
+    "line": "13",
+    "label": "q",
+    "hex": "#ef896c"
+  },
+  {
+    "line": "13",
+    "label": "r",
+    "hex": "#f4ad91"
+  },
+  {
+    "line": "13",
+    "label": "t",
+    "hex": "#c86b36"
+  },
+  {
+    "line": "13",
+    "label": "u",
+    "hex": "#8e311d"
+  },
+  {
+    "line": "13",
+    "label": "w",
+    "hex": "#8e311d"
+  },
+  {
+    "line": "13",
+    "label": "x",
+    "hex": "#e0672c"
+  },
+  {
+    "line": "13",
+    "label": "y",
+    "hex": "#f8b325"
+  },
+  {
+    "line": "13",
+    "label": "z",
+    "hex": "#ffd853"
+  },
+  {
+    "line": "13",
+    "label": "\u03ea",
+    "hex": "#ffe1a7"
+  },
+  {
+    "line": "14",
+    "label": "\u0238",
+    "hex": "#eeba74"
+  },
+  {
+    "line": "14",
+    "label": "\u0471",
+    "hex": "#ba8946"
+  },
+  {
+    "line": "15",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "15",
+    "label": "2",
+    "hex": "#31383e"
+  },
+  {
+    "line": "15",
+    "label": "3",
+    "hex": "#707077"
+  },
+  {
+    "line": "15",
+    "label": "4",
+    "hex": "#838382"
+  },
+  {
+    "line": "15",
+    "label": "5",
+    "hex": "#b0b0b0"
+  },
+  {
+    "line": "15",
+    "label": "6",
+    "hex": "#bfe5fb"
+  },
+  {
+    "line": "15",
+    "label": "7",
+    "hex": "#989cce"
+  },
+  {
+    "line": "15",
+    "label": "8",
+    "hex": "#a4a9cc"
+  },
+  {
+    "line": "15",
+    "label": "9",
+    "hex": "#b8bfd3"
+  },
+  {
+    "line": "15",
+    "label": "0",
+    "hex": "#5f9851"
+  },
+  {
+    "line": "15",
+    "label": "a",
+    "hex": "#a3c886"
+  },
+  {
+    "line": "15",
+    "label": "b",
+    "hex": "#78762c"
+  },
+  {
+    "line": "15",
+    "label": "c",
+    "hex": "#96b223"
+  },
+  {
+    "line": "15",
+    "label": "d",
+    "hex": "#feeeda"
+  },
+  {
+    "line": "15",
+    "label": "e",
+    "hex": "#f4cca7"
+  },
+  {
+    "line": "15",
+    "label": "f",
+    "hex": "#edacac"
+  },
+  {
+    "line": "15",
+    "label": "h",
+    "hex": "#d68283"
+  },
+  {
+    "line": "15",
+    "label": "j",
+    "hex": "#a0142e"
+  },
+  {
+    "line": "15",
+    "label": "k",
+    "hex": "#cc3752"
+  },
+  {
+    "line": "15",
+    "label": "m",
+    "hex": "#ea5923"
+  },
+  {
+    "line": "15",
+    "label": "n",
+    "hex": "#ec9600"
+  },
+  {
+    "line": "15",
+    "label": "p",
+    "hex": "#fadb00"
+  },
+  {
+    "line": "15",
+    "label": "q",
+    "hex": "#dc9552"
+  },
+  {
+    "line": "15",
+    "label": "r",
+    "hex": "#b45429"
+  },
+  {
+    "line": "15",
+    "label": "t",
+    "hex": "#843f1a"
+  },
+  {
+    "line": "15",
+    "label": "v",
+    "hex": "#622f0f"
+  },
+  {
+    "line": "15",
+    "label": "w",
+    "hex": "#361e17"
+  },
+  {
+    "line": "16",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "16",
+    "label": "2",
+    "hex": "#2f302c"
+  },
+  {
+    "line": "16",
+    "label": "3",
+    "hex": "#574a40"
+  },
+  {
+    "line": "16",
+    "label": "4",
+    "hex": "#84796b"
+  },
+  {
+    "line": "16",
+    "label": "5",
+    "hex": "#b1aca0"
+  },
+  {
+    "line": "16",
+    "label": "6",
+    "hex": "#005189"
+  },
+  {
+    "line": "16",
+    "label": "7",
+    "hex": "#636ba4"
+  },
+  {
+    "line": "16",
+    "label": "8",
+    "hex": "#99a0c2"
+  },
+  {
+    "line": "16",
+    "label": "9",
+    "hex": "#afd9f5"
+  },
+  {
+    "line": "16",
+    "label": "0",
+    "hex": "#009a91"
+  },
+  {
+    "line": "16",
+    "label": "a",
+    "hex": "#34472c"
+  },
+  {
+    "line": "16",
+    "label": "b",
+    "hex": "#5d691e"
+  },
+  {
+    "line": "16",
+    "label": "c",
+    "hex": "#afab1b"
+  },
+  {
+    "line": "16",
+    "label": "d",
+    "hex": "#ffe07a"
+  },
+  {
+    "line": "16",
+    "label": "e",
+    "hex": "#ffdf00"
+  },
+  {
+    "line": "16",
+    "label": "f",
+    "hex": "#f7a82d"
+  },
+  {
+    "line": "16",
+    "label": "h",
+    "hex": "#ec6907"
+  },
+  {
+    "line": "16",
+    "label": "j",
+    "hex": "#700e00"
+  },
+  {
+    "line": "16",
+    "label": "k",
+    "hex": "#a31008"
+  },
+  {
+    "line": "16",
+    "label": "m",
+    "hex": "#e30613"
+  },
+  {
+    "line": "16",
+    "label": "n",
+    "hex": "#f08786"
+  },
+  {
+    "line": "16",
+    "label": "p",
+    "hex": "#8c4a73"
+  },
+  {
+    "line": "16",
+    "label": "q",
+    "hex": "#b27ba9"
+  },
+  {
+    "line": "17",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "17",
+    "label": "2",
+    "hex": "#453f41"
+  },
+  {
+    "line": "17",
+    "label": "3",
+    "hex": "#6e7775"
+  },
+  {
+    "line": "17",
+    "label": "4",
+    "hex": "#a5aca3"
+  },
+  {
+    "line": "17",
+    "label": "5",
+    "hex": "#cfdde5"
+  },
+  {
+    "line": "17",
+    "label": "6",
+    "hex": "#5a93ce"
+  },
+  {
+    "line": "17",
+    "label": "7",
+    "hex": "#0062ae"
+  },
+  {
+    "line": "17",
+    "label": "8",
+    "hex": "#22398e"
+  },
+  {
+    "line": "17",
+    "label": "9",
+    "hex": "#007170"
+  },
+  {
+    "line": "17",
+    "label": "0",
+    "hex": "#009e7b"
+  },
+  {
+    "line": "17",
+    "label": "a",
+    "hex": "#006128"
+  },
+  {
+    "line": "17",
+    "label": "b",
+    "hex": "#3b9635"
+  },
+  {
+    "line": "17",
+    "label": "c",
+    "hex": "#918123"
+  },
+  {
+    "line": "17",
+    "label": "d",
+    "hex": "#dfd069"
+  },
+  {
+    "line": "17",
+    "label": "e",
+    "hex": "#fff596"
+  },
+  {
+    "line": "17",
+    "label": "f",
+    "hex": "#ffef20"
+  },
+  {
+    "line": "17",
+    "label": "h",
+    "hex": "#fab400"
+  },
+  {
+    "line": "17",
+    "label": "j",
+    "hex": "#f18700"
+  },
+  {
+    "line": "17",
+    "label": "k",
+    "hex": "#cc6106"
+  },
+  {
+    "line": "17",
+    "label": "m",
+    "hex": "#b85b18"
+  },
+  {
+    "line": "17",
+    "label": "n",
+    "hex": "#e0820a"
+  },
+  {
+    "line": "17",
+    "label": "p",
+    "hex": "#e8a43c"
+  },
+  {
+    "line": "17",
+    "label": "q",
+    "hex": "#a65b20"
+  },
+  {
+    "line": "17",
+    "label": "r",
+    "hex": "#7e3d13"
+  },
+  {
+    "line": "17",
+    "label": "t",
+    "hex": "#4e2c13"
+  },
+  {
+    "line": "17",
+    "label": "u",
+    "hex": "#704a38"
+  },
+  {
+    "line": "17",
+    "label": "w",
+    "hex": "#9a6b54"
+  },
+  {
+    "line": "17",
+    "label": "x",
+    "hex": "#b08660"
+  },
+  {
+    "line": "17",
+    "label": "y",
+    "hex": "#dec197"
+  },
+  {
+    "line": "17",
+    "label": "z",
+    "hex": "#eee1bb"
+  },
+  {
+    "line": "17",
+    "label": "\u00a7",
+    "hex": "#8c8382"
+  },
+  {
+    "line": "18",
+    "label": "\u03ea",
+    "hex": "#c8b4af"
+  },
+  {
+    "line": "18",
+    "label": "\u03a8",
+    "hex": "#ad1b67"
+  },
+  {
+    "line": "18",
+    "label": "\u0466",
+    "hex": "#ef85b4"
+  },
+  {
+    "line": "18",
+    "label": "\u00a5",
+    "hex": "#f8c1b3"
+  },
+  {
+    "line": "18",
+    "label": "\u0238",
+    "hex": "#f18d7f"
+  },
+  {
+    "line": "18",
+    "label": "\u0276",
+    "hex": "#be5247"
+  },
+  {
+    "line": "18",
+    "label": "\u25a1",
+    "hex": "#9d474d"
+  },
+  {
+    "line": "18",
+    "label": "\u03c6",
+    "hex": "#7c252e"
+  },
+  {
+    "line": "18",
+    "label": "\u20aa",
+    "hex": "#90130f"
+  },
+  {
+    "line": "18",
+    "label": "\u040a",
+    "hex": "#e30613"
+  },
+  {
+    "line": "19",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "19",
+    "label": "2",
+    "hex": "#cbe9fc"
+  },
+  {
+    "line": "19",
+    "label": "3",
+    "hex": "#7fc3ed"
+  },
+  {
+    "line": "19",
+    "label": "4",
+    "hex": "#7d4a97"
+  },
+  {
+    "line": "19",
+    "label": "5",
+    "hex": "#af79b3"
+  },
+  {
+    "line": "19",
+    "label": "6",
+    "hex": "#ad154a"
+  },
+  {
+    "line": "19",
+    "label": "7",
+    "hex": "#cd455c"
+  },
+  {
+    "line": "19",
+    "label": "8",
+    "hex": "#ee7878"
+  },
+  {
+    "line": "19",
+    "label": "9",
+    "hex": "#e8306c"
+  },
+  {
+    "line": "19",
+    "label": "0",
+    "hex": "#b32630"
+  },
+  {
+    "line": "19",
+    "label": "a",
+    "hex": "#d63a46"
+  },
+  {
+    "line": "19",
+    "label": "b",
+    "hex": "#d06866"
+  },
+  {
+    "line": "19",
+    "label": "c",
+    "hex": "#ec9475"
+  },
+  {
+    "line": "19",
+    "label": "d",
+    "hex": "#f1c0aa"
+  },
+  {
+    "line": "19",
+    "label": "e",
+    "hex": "#713a32"
+  },
+  {
+    "line": "19",
+    "label": "f",
+    "hex": "#872a1c"
+  },
+  {
+    "line": "19",
+    "label": "h",
+    "hex": "#c44c31"
+  },
+  {
+    "line": "19",
+    "label": "j",
+    "hex": "#ee9553"
+  },
+  {
+    "line": "19",
+    "label": "k",
+    "hex": "#bdce00"
+  },
+  {
+    "line": "19",
+    "label": "m",
+    "hex": "#61b12f"
+  },
+  {
+    "line": "19",
+    "label": "n",
+    "hex": "#008d3f"
+  },
+  {
+    "line": "19",
+    "label": "p",
+    "hex": "#00753c"
+  },
+  {
+    "line": "20",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "20",
+    "label": "2",
+    "hex": "#3c3d52"
+  },
+  {
+    "line": "20",
+    "label": "3",
+    "hex": "#5c5b6c"
+  },
+  {
+    "line": "20",
+    "label": "4",
+    "hex": "#c8c1c5"
+  },
+  {
+    "line": "20",
+    "label": "5",
+    "hex": "#cceafc"
+  },
+  {
+    "line": "20",
+    "label": "6",
+    "hex": "#7fc4ed"
+  },
+  {
+    "line": "20",
+    "label": "7",
+    "hex": "#5887c6"
+  },
+  {
+    "line": "20",
+    "label": "8",
+    "hex": "#004899"
+  },
+  {
+    "line": "20",
+    "label": "9",
+    "hex": "#006236"
+  },
+  {
+    "line": "20",
+    "label": "0",
+    "hex": "#008d3f"
+  },
+  {
+    "line": "20",
+    "label": "a",
+    "hex": "#63b22f"
+  },
+  {
+    "line": "20",
+    "label": "b",
+    "hex": "#bdcf00"
+  },
+  {
+    "line": "20",
+    "label": "c",
+    "hex": "#6e6821"
+  },
+  {
+    "line": "20",
+    "label": "d",
+    "hex": "#fdc623"
+  },
+  {
+    "line": "20",
+    "label": "e",
+    "hex": "#e08e28"
+  },
+  {
+    "line": "20",
+    "label": "f",
+    "hex": "#a93a05"
+  },
+  {
+    "line": "20",
+    "label": "h",
+    "hex": "#733820"
+  },
+  {
+    "line": "20",
+    "label": "j",
+    "hex": "#af6644"
+  },
+  {
+    "line": "20",
+    "label": "k",
+    "hex": "#d08c62"
+  },
+  {
+    "line": "20",
+    "label": "m",
+    "hex": "#744d3f"
+  },
+  {
+    "line": "20",
+    "label": "n",
+    "hex": "#4a2d2a"
+  },
+  {
+    "line": "20",
+    "label": "p",
+    "hex": "#960e2d"
+  },
+  {
+    "line": "20",
+    "label": "q",
+    "hex": "#ce3d53"
+  },
+  {
+    "line": "20",
+    "label": "r",
+    "hex": "#e76e88"
+  },
+  {
+    "line": "21",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "21",
+    "label": "2",
+    "hex": "#5d5f63"
+  },
+  {
+    "line": "21",
+    "label": "3",
+    "hex": "#9e98a1"
+  },
+  {
+    "line": "21",
+    "label": "4",
+    "hex": "#c9bfcb"
+  },
+  {
+    "line": "21",
+    "label": "5",
+    "hex": "#eae0e4"
+  },
+  {
+    "line": "21",
+    "label": "6",
+    "hex": "#75649c"
+  },
+  {
+    "line": "21",
+    "label": "7",
+    "hex": "#b29aca"
+  },
+  {
+    "line": "21",
+    "label": "8",
+    "hex": "#dff2fd"
+  },
+  {
+    "line": "21",
+    "label": "9",
+    "hex": "#bfd3ee"
+  },
+  {
+    "line": "21",
+    "label": "0",
+    "hex": "#7d93c7"
+  },
+  {
+    "line": "21",
+    "label": "a",
+    "hex": "#5171aa"
+  },
+  {
+    "line": "21",
+    "label": "b",
+    "hex": "#61c4f1"
+  },
+  {
+    "line": "21",
+    "label": "c",
+    "hex": "#3da652"
+  },
+  {
+    "line": "21",
+    "label": "d",
+    "hex": "#b4cc04"
+  },
+  {
+    "line": "21",
+    "label": "e",
+    "hex": "#9cae03"
+  },
+  {
+    "line": "21",
+    "label": "f",
+    "hex": "#007331"
+  },
+  {
+    "line": "21",
+    "label": "h",
+    "hex": "#41431d"
+  },
+  {
+    "line": "21",
+    "label": "j",
+    "hex": "#505814"
+  },
+  {
+    "line": "21",
+    "label": "k",
+    "hex": "#647526"
+  },
+  {
+    "line": "21",
+    "label": "m",
+    "hex": "#9b7826"
+  },
+  {
+    "line": "21",
+    "label": "n",
+    "hex": "#c99b2f"
+  },
+  {
+    "line": "21",
+    "label": "p",
+    "hex": "#75421a"
+  },
+  {
+    "line": "21",
+    "label": "q",
+    "hex": "#a46630"
+  },
+  {
+    "line": "21",
+    "label": "r",
+    "hex": "#be7b2c"
+  },
+  {
+    "line": "21",
+    "label": "t",
+    "hex": "#ce9953"
+  },
+  {
+    "line": "21",
+    "label": "u",
+    "hex": "#e79700"
+  },
+  {
+    "line": "21",
+    "label": "w",
+    "hex": "#ffd86c"
+  },
+  {
+    "line": "21",
+    "label": "x",
+    "hex": "#ffea98"
+  },
+  {
+    "line": "21",
+    "label": "y",
+    "hex": "#fff9bf"
+  },
+  {
+    "line": "21",
+    "label": "z",
+    "hex": "#a44216"
+  },
+  {
+    "line": "21",
+    "label": "\u00a7",
+    "hex": "#d8582f"
+  },
+  {
+    "line": "22",
+    "label": "\u00b6",
+    "hex": "#ee7357"
+  },
+  {
+    "line": "22",
+    "label": "$",
+    "hex": "#f18b63"
+  },
+  {
+    "line": "22",
+    "label": "\u03ea",
+    "hex": "#f6ae5c"
+  },
+  {
+    "line": "22",
+    "label": "\u263c",
+    "hex": "#fedaa3"
+  },
+  {
+    "line": "22",
+    "label": "\u03a8",
+    "hex": "#84402a"
+  },
+  {
+    "line": "22",
+    "label": "\u0466",
+    "hex": "#b35d36"
+  },
+  {
+    "line": "22",
+    "label": "\u00a5",
+    "hex": "#be785d"
+  },
+  {
+    "line": "22",
+    "label": "\u0238",
+    "hex": "#e50056"
+  },
+  {
+    "line": "22",
+    "label": "\u0394",
+    "hex": "#a8263e"
+  },
+  {
+    "line": "22",
+    "label": "\u026e",
+    "hex": "#bb4247"
+  },
+  {
+    "line": "22",
+    "label": "\u25a1",
+    "hex": "#cd665e"
+  },
+  {
+    "line": "22",
+    "label": "\u03a3",
+    "hex": "#f5a796"
+  },
+  {
+    "line": "22",
+    "label": "\u0276",
+    "hex": "#facaad"
+  },
+  {
+    "line": "22",
+    "label": "\u2640",
+    "hex": "#c39691"
+  },
+  {
+    "line": "23",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "23",
+    "label": "2",
+    "hex": "#644a6a"
+  },
+  {
+    "line": "23",
+    "label": "3",
+    "hex": "#92759d"
+  },
+  {
+    "line": "23",
+    "label": "4",
+    "hex": "#cbe9fc"
+  },
+  {
+    "line": "23",
+    "label": "5",
+    "hex": "#007886"
+  },
+  {
+    "line": "23",
+    "label": "6",
+    "hex": "#1baf90"
+  },
+  {
+    "line": "23",
+    "label": "7",
+    "hex": "#41491a"
+  },
+  {
+    "line": "23",
+    "label": "8",
+    "hex": "#586e25"
+  },
+  {
+    "line": "23",
+    "label": "9",
+    "hex": "#8a9c35"
+  },
+  {
+    "line": "23",
+    "label": "0",
+    "hex": "#00653a"
+  },
+  {
+    "line": "23",
+    "label": "a",
+    "hex": "#35a936"
+  },
+  {
+    "line": "23",
+    "label": "b",
+    "hex": "#ced83a"
+  },
+  {
+    "line": "23",
+    "label": "c",
+    "hex": "#ffe04e"
+  },
+  {
+    "line": "23",
+    "label": "d",
+    "hex": "#fec800"
+  },
+  {
+    "line": "23",
+    "label": "e",
+    "hex": "#f39400"
+  },
+  {
+    "line": "23",
+    "label": "f",
+    "hex": "#ea6b08"
+  },
+  {
+    "line": "23",
+    "label": "h",
+    "hex": "#c94619"
+  },
+  {
+    "line": "23",
+    "label": "j",
+    "hex": "#6c3823"
+  },
+  {
+    "line": "23",
+    "label": "k",
+    "hex": "#a25625"
+  },
+  {
+    "line": "23",
+    "label": "m",
+    "hex": "#dca67f"
+  },
+  {
+    "line": "23",
+    "label": "n",
+    "hex": "#fad1a7"
+  },
+  {
+    "line": "23",
+    "label": "p",
+    "hex": "#ae0f0a"
+  },
+  {
+    "line": "23",
+    "label": "q",
+    "hex": "#e30613"
+  },
+  {
+    "line": "24",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "24",
+    "label": "2",
+    "hex": "#3c393b"
+  },
+  {
+    "line": "24",
+    "label": "3",
+    "hex": "#515359"
+  },
+  {
+    "line": "24",
+    "label": "4",
+    "hex": "#78787f"
+  },
+  {
+    "line": "24",
+    "label": "5",
+    "hex": "#a0a0a5"
+  },
+  {
+    "line": "24",
+    "label": "6",
+    "hex": "#504b71"
+  },
+  {
+    "line": "24",
+    "label": "7",
+    "hex": "#44365d"
+  },
+  {
+    "line": "24",
+    "label": "8",
+    "hex": "#543089"
+  },
+  {
+    "line": "24",
+    "label": "9",
+    "hex": "#724695"
+  },
+  {
+    "line": "24",
+    "label": "0",
+    "hex": "#ac7cb5"
+  },
+  {
+    "line": "24",
+    "label": "a",
+    "hex": "#4164a1"
+  },
+  {
+    "line": "24",
+    "label": "b",
+    "hex": "#688cc8"
+  },
+  {
+    "line": "24",
+    "label": "c",
+    "hex": "#cfe2f6"
+  },
+  {
+    "line": "24",
+    "label": "d",
+    "hex": "#006664"
+  },
+  {
+    "line": "24",
+    "label": "e",
+    "hex": "#4e9d99"
+  },
+  {
+    "line": "24",
+    "label": "f",
+    "hex": "#475425"
+  },
+  {
+    "line": "24",
+    "label": "h",
+    "hex": "#607932"
+  },
+  {
+    "line": "24",
+    "label": "j",
+    "hex": "#008037"
+  },
+  {
+    "line": "24",
+    "label": "k",
+    "hex": "#9dc41a"
+  },
+  {
+    "line": "24",
+    "label": "m",
+    "hex": "#fdd000"
+  },
+  {
+    "line": "24",
+    "label": "n",
+    "hex": "#f29b00"
+  },
+  {
+    "line": "24",
+    "label": "p",
+    "hex": "#ea6d07"
+  },
+  {
+    "line": "24",
+    "label": "q",
+    "hex": "#f6ce87"
+  },
+  {
+    "line": "24",
+    "label": "r",
+    "hex": "#cb9854"
+  },
+  {
+    "line": "24",
+    "label": "t",
+    "hex": "#6e061e"
+  },
+  {
+    "line": "24",
+    "label": "u",
+    "hex": "#e40524"
+  },
+  {
+    "line": "24",
+    "label": "w",
+    "hex": "#ee708b"
+  },
+  {
+    "line": "24",
+    "label": "x",
+    "hex": "#f5afbc"
+  },
+  {
+    "line": "24",
+    "label": "\u03ea",
+    "hex": "#bbaf9f"
+  },
+  {
+    "line": "24",
+    "label": "\u0424",
+    "hex": "#d6cfc7"
+  },
+  {
+    "line": "25",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "25",
+    "label": "2",
+    "hex": "#2a2f46"
+  },
+  {
+    "line": "25",
+    "label": "3",
+    "hex": "#485996"
+  },
+  {
+    "line": "25",
+    "label": "4",
+    "hex": "#7281bf"
+  },
+  {
+    "line": "25",
+    "label": "5",
+    "hex": "#a8b3d9"
+  },
+  {
+    "line": "25",
+    "label": "6",
+    "hex": "#0052a1"
+  },
+  {
+    "line": "25",
+    "label": "7",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "25",
+    "label": "8",
+    "hex": "#71cbf4"
+  },
+  {
+    "line": "25",
+    "label": "9",
+    "hex": "#c6e8fb"
+  },
+  {
+    "line": "25",
+    "label": "0",
+    "hex": "#008da9"
+  },
+  {
+    "line": "25",
+    "label": "a",
+    "hex": "#006b74"
+  },
+  {
+    "line": "25",
+    "label": "b",
+    "hex": "#009983"
+  },
+  {
+    "line": "25",
+    "label": "c",
+    "hex": "#006d34"
+  },
+  {
+    "line": "25",
+    "label": "d",
+    "hex": "#009640"
+  },
+  {
+    "line": "25",
+    "label": "e",
+    "hex": "#5d8d20"
+  },
+  {
+    "line": "25",
+    "label": "f",
+    "hex": "#7ab929"
+  },
+  {
+    "line": "25",
+    "label": "h",
+    "hex": "#707227"
+  },
+  {
+    "line": "25",
+    "label": "j",
+    "hex": "#a4ac1f"
+  },
+  {
+    "line": "25",
+    "label": "k",
+    "hex": "#d4bb00"
+  },
+  {
+    "line": "25",
+    "label": "m",
+    "hex": "#ffecae"
+  },
+  {
+    "line": "25",
+    "label": "n",
+    "hex": "#fdc100"
+  },
+  {
+    "line": "25",
+    "label": "p",
+    "hex": "#ca683f"
+  },
+  {
+    "line": "25",
+    "label": "q",
+    "hex": "#6f2618"
+  },
+  {
+    "line": "25",
+    "label": "r",
+    "hex": "#a43121"
+  },
+  {
+    "line": "25",
+    "label": "t",
+    "hex": "#bf4e05"
+  },
+  {
+    "line": "25",
+    "label": "u",
+    "hex": "#eb6c30"
+  },
+  {
+    "line": "25",
+    "label": "w",
+    "hex": "#f8b056"
+  },
+  {
+    "line": "25",
+    "label": "x",
+    "hex": "#fde4d4"
+  },
+  {
+    "line": "25",
+    "label": "y",
+    "hex": "#f9c4ab"
+  },
+  {
+    "line": "25",
+    "label": "z",
+    "hex": "#e30613"
+  },
+  {
+    "line": "25",
+    "label": "\u03ea",
+    "hex": "#c01818"
+  },
+  {
+    "line": "26",
+    "label": "\u00d8",
+    "hex": "#f7bfd9"
+  },
+  {
+    "line": "26",
+    "label": "\u03a8",
+    "hex": "#ee78a5"
+  },
+  {
+    "line": "26",
+    "label": "\u0466",
+    "hex": "#eb589a"
+  },
+  {
+    "line": "26",
+    "label": "\u00a5",
+    "hex": "#e50069"
+  },
+  {
+    "line": "26",
+    "label": "\u0238",
+    "hex": "#b31765"
+  },
+  {
+    "line": "26",
+    "label": "\u0276",
+    "hex": "#c93e8f"
+  },
+  {
+    "line": "26",
+    "label": "\u25a1",
+    "hex": "#5e2c41"
+  },
+  {
+    "line": "26",
+    "label": "\u03a3",
+    "hex": "#4b2234"
+  },
+  {
+    "line": "26",
+    "label": "\u026e",
+    "hex": "#762470"
+  },
+  {
+    "line": "26",
+    "label": "\u03a9",
+    "hex": "#9e2e88"
+  },
+  {
+    "line": "26",
+    "label": "\u03c6",
+    "hex": "#b95a9e"
+  },
+  {
+    "line": "26",
+    "label": "#",
+    "hex": "#cf9fc9"
+  },
+  {
+    "line": "27",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "27",
+    "label": "2",
+    "hex": "#60686b"
+  },
+  {
+    "line": "27",
+    "label": "3",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "27",
+    "label": "4",
+    "hex": "#69bcd5"
+  },
+  {
+    "line": "27",
+    "label": "5",
+    "hex": "#006fb7"
+  },
+  {
+    "line": "27",
+    "label": "6",
+    "hex": "#005f66"
+  },
+  {
+    "line": "27",
+    "label": "7",
+    "hex": "#007c7c"
+  },
+  {
+    "line": "27",
+    "label": "8",
+    "hex": "#4bb8a9"
+  },
+  {
+    "line": "27",
+    "label": "9",
+    "hex": "#a28f4a"
+  },
+  {
+    "line": "27",
+    "label": "0",
+    "hex": "#766734"
+  },
+  {
+    "line": "27",
+    "label": "a",
+    "hex": "#7b3c2c"
+  },
+  {
+    "line": "27",
+    "label": "b",
+    "hex": "#aa6237"
+  },
+  {
+    "line": "27",
+    "label": "c",
+    "hex": "#f8aa2a"
+  },
+  {
+    "line": "27",
+    "label": "d",
+    "hex": "#eb5d0b"
+  },
+  {
+    "line": "27",
+    "label": "e",
+    "hex": "#cb3d0b"
+  },
+  {
+    "line": "27",
+    "label": "f",
+    "hex": "#b0230c"
+  },
+  {
+    "line": "27",
+    "label": "h",
+    "hex": "#ec8777"
+  },
+  {
+    "line": "27",
+    "label": "j",
+    "hex": "#f7b7a9"
+  },
+  {
+    "line": "27",
+    "label": "k",
+    "hex": "#ed6d8a"
+  },
+  {
+    "line": "27",
+    "label": "m",
+    "hex": "#c85b75"
+  },
+  {
+    "line": "28",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "28",
+    "label": "2",
+    "hex": "#77563d"
+  },
+  {
+    "line": "28",
+    "label": "3",
+    "hex": "#ad8369"
+  },
+  {
+    "line": "28",
+    "label": "4",
+    "hex": "#632b21"
+  },
+  {
+    "line": "28",
+    "label": "5",
+    "hex": "#893f3d"
+  },
+  {
+    "line": "28",
+    "label": "6",
+    "hex": "#b92f3e"
+  },
+  {
+    "line": "28",
+    "label": "7",
+    "hex": "#991925"
+  },
+  {
+    "line": "28",
+    "label": "8",
+    "hex": "#c50057"
+  },
+  {
+    "line": "28",
+    "label": "9",
+    "hex": "#cf4276"
+  },
+  {
+    "line": "28",
+    "label": "0",
+    "hex": "#eb5e9d"
+  },
+  {
+    "line": "28",
+    "label": "a",
+    "hex": "#f29fc5"
+  },
+  {
+    "line": "28",
+    "label": "b",
+    "hex": "#fbcbaa"
+  },
+  {
+    "line": "28",
+    "label": "c",
+    "hex": "#f5a379"
+  },
+  {
+    "line": "28",
+    "label": "d",
+    "hex": "#c05b3d"
+  },
+  {
+    "line": "28",
+    "label": "e",
+    "hex": "#943b1d"
+  },
+  {
+    "line": "28",
+    "label": "f",
+    "hex": "#c7662a"
+  },
+  {
+    "line": "28",
+    "label": "h",
+    "hex": "#de8943"
+  },
+  {
+    "line": "28",
+    "label": "j",
+    "hex": "#ecc8aa"
+  },
+  {
+    "line": "28",
+    "label": "k",
+    "hex": "#cbe9fc"
+  },
+  {
+    "line": "28",
+    "label": "m",
+    "hex": "#aec2e6"
+  },
+  {
+    "line": "28",
+    "label": "n",
+    "hex": "#779ad0"
+  },
+  {
+    "line": "28",
+    "label": "p",
+    "hex": "#bfabd3"
+  },
+  {
+    "line": "28",
+    "label": "q",
+    "hex": "#a87db6"
+  },
+  {
+    "line": "28",
+    "label": "r",
+    "hex": "#815ea5"
+  },
+  {
+    "line": "28",
+    "label": "t",
+    "hex": "#5b4579"
+  },
+  {
+    "line": "28",
+    "label": "v",
+    "hex": "#cba369"
+  },
+  {
+    "line": "29",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "29",
+    "label": "2",
+    "hex": "#40525e"
+  },
+  {
+    "line": "29",
+    "label": "3",
+    "hex": "#6d7682"
+  },
+  {
+    "line": "29",
+    "label": "4",
+    "hex": "#809d9d"
+  },
+  {
+    "line": "29",
+    "label": "5",
+    "hex": "#e2e2db"
+  },
+  {
+    "line": "29",
+    "label": "6",
+    "hex": "#00b8ee"
+  },
+  {
+    "line": "29",
+    "label": "7",
+    "hex": "#2a62ac"
+  },
+  {
+    "line": "29",
+    "label": "8",
+    "hex": "#242f7e"
+  },
+  {
+    "line": "29",
+    "label": "9",
+    "hex": "#191b52"
+  },
+  {
+    "line": "29",
+    "label": "0",
+    "hex": "#1f3b33"
+  },
+  {
+    "line": "29",
+    "label": "a",
+    "hex": "#296459"
+  },
+  {
+    "line": "29",
+    "label": "b",
+    "hex": "#00a984"
+  },
+  {
+    "line": "29",
+    "label": "c",
+    "hex": "#cadfa6"
+  },
+  {
+    "line": "29",
+    "label": "d",
+    "hex": "#2f3c26"
+  },
+  {
+    "line": "29",
+    "label": "e",
+    "hex": "#465d3d"
+  },
+  {
+    "line": "29",
+    "label": "f",
+    "hex": "#788a40"
+  },
+  {
+    "line": "29",
+    "label": "h",
+    "hex": "#c2d193"
+  },
+  {
+    "line": "29",
+    "label": "j",
+    "hex": "#7d815f"
+  },
+  {
+    "line": "29",
+    "label": "k",
+    "hex": "#991e82"
+  },
+  {
+    "line": "29",
+    "label": "m",
+    "hex": "#491d54"
+  },
+  {
+    "line": "29",
+    "label": "n",
+    "hex": "#6e2579"
+  },
+  {
+    "line": "29",
+    "label": "p",
+    "hex": "#994795"
+  },
+  {
+    "line": "29",
+    "label": "q",
+    "hex": "#cf7eb3"
+  },
+  {
+    "line": "29",
+    "label": "r",
+    "hex": "#ba4279"
+  },
+  {
+    "line": "29",
+    "label": "t",
+    "hex": "#981e54"
+  },
+  {
+    "line": "29",
+    "label": "u",
+    "hex": "#bf005f"
+  },
+  {
+    "line": "29",
+    "label": "w",
+    "hex": "#e72277"
+  },
+  {
+    "line": "29",
+    "label": "x",
+    "hex": "#ed6ea7"
+  },
+  {
+    "line": "29",
+    "label": "y",
+    "hex": "#650e1f"
+  },
+  {
+    "line": "29",
+    "label": "z",
+    "hex": "#ab0c45"
+  },
+  {
+    "line": "29",
+    "label": "\u00a7",
+    "hex": "#df4067"
+  },
+  {
+    "line": "30",
+    "label": "\u00b6",
+    "hex": "#f18a9d"
+  },
+  {
+    "line": "30",
+    "label": "$",
+    "hex": "#e50043"
+  },
+  {
+    "line": "30",
+    "label": "\u03ea",
+    "hex": "#d84553"
+  },
+  {
+    "line": "30",
+    "label": "\u263c",
+    "hex": "#e76d72"
+  },
+  {
+    "line": "30",
+    "label": "\u03a8",
+    "hex": "#ed8487"
+  },
+  {
+    "line": "30",
+    "label": "\u0466",
+    "hex": "#f6ae9b"
+  },
+  {
+    "line": "30",
+    "label": "\u00a5",
+    "hex": "#ffeabf"
+  },
+  {
+    "line": "30",
+    "label": "\u0238",
+    "hex": "#dc7262"
+  },
+  {
+    "line": "30",
+    "label": "\u00d8",
+    "hex": "#a74616"
+  },
+  {
+    "line": "30",
+    "label": "\u0276",
+    "hex": "#48250b"
+  },
+  {
+    "line": "30",
+    "label": "\u0394",
+    "hex": "#5f3520"
+  },
+  {
+    "line": "30",
+    "label": "\u026e",
+    "hex": "#864b31"
+  },
+  {
+    "line": "30",
+    "label": "\u25a1",
+    "hex": "#b07648"
+  },
+  {
+    "line": "30",
+    "label": "\u25ca",
+    "hex": "#c6a20f"
+  },
+  {
+    "line": "30",
+    "label": "\u03a3",
+    "hex": "#ee7203"
+  },
+  {
+    "line": "30",
+    "label": "\u03df",
+    "hex": "#f9ba78"
+  },
+  {
+    "line": "30",
+    "label": "\u046a",
+    "hex": "#f18647"
+  },
+  {
+    "line": "30",
+    "label": "\u040a",
+    "hex": "#ea572e"
+  },
+  {
+    "line": "30",
+    "label": "\u20aa",
+    "hex": "#dc3215"
+  },
+  {
+    "line": "30",
+    "label": "\u2248",
+    "hex": "#c92a13"
+  },
+  {
+    "line": "30",
+    "label": "\u0277",
+    "hex": "#b71d21"
+  },
+  {
+    "line": "30",
+    "label": "#",
+    "hex": "#e7363a"
+  },
+  {
+    "line": "31",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "31",
+    "label": "2",
+    "hex": "#574e46"
+  },
+  {
+    "line": "31",
+    "label": "3",
+    "hex": "#87867f"
+  },
+  {
+    "line": "31",
+    "label": "4",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "31",
+    "label": "5",
+    "hex": "#89b1a2"
+  },
+  {
+    "line": "31",
+    "label": "6",
+    "hex": "#438a82"
+  },
+  {
+    "line": "31",
+    "label": "7",
+    "hex": "#3c6e71"
+  },
+  {
+    "line": "31",
+    "label": "8",
+    "hex": "#5c4a6c"
+  },
+  {
+    "line": "31",
+    "label": "9",
+    "hex": "#a16f91"
+  },
+  {
+    "line": "31",
+    "label": "0",
+    "hex": "#be9bc8"
+  },
+  {
+    "line": "31",
+    "label": "a",
+    "hex": "#6d6b23"
+  },
+  {
+    "line": "31",
+    "label": "b",
+    "hex": "#323e21"
+  },
+  {
+    "line": "31",
+    "label": "c",
+    "hex": "#4b6d30"
+  },
+  {
+    "line": "31",
+    "label": "d",
+    "hex": "#84931c"
+  },
+  {
+    "line": "31",
+    "label": "e",
+    "hex": "#b8bd0e"
+  },
+  {
+    "line": "31",
+    "label": "f",
+    "hex": "#854826"
+  },
+  {
+    "line": "31",
+    "label": "h",
+    "hex": "#af6233"
+  },
+  {
+    "line": "31",
+    "label": "j",
+    "hex": "#d08a2e"
+  },
+  {
+    "line": "31",
+    "label": "k",
+    "hex": "#d2a986"
+  },
+  {
+    "line": "31",
+    "label": "m",
+    "hex": "#bf8357"
+  },
+  {
+    "line": "31",
+    "label": "n",
+    "hex": "#937059"
+  },
+  {
+    "line": "31",
+    "label": "p",
+    "hex": "#6e493f"
+  },
+  {
+    "line": "31",
+    "label": "q",
+    "hex": "#4a272a"
+  },
+  {
+    "line": "32",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "32",
+    "label": "2",
+    "hex": "#a9a299"
+  },
+  {
+    "line": "32",
+    "label": "3",
+    "hex": "#d9d8da"
+  },
+  {
+    "line": "32",
+    "label": "4",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "32",
+    "label": "5",
+    "hex": "#6194cf"
+  },
+  {
+    "line": "32",
+    "label": "6",
+    "hex": "#335d9d"
+  },
+  {
+    "line": "32",
+    "label": "7",
+    "hex": "#a16f91"
+  },
+  {
+    "line": "32",
+    "label": "8",
+    "hex": "#904292"
+  },
+  {
+    "line": "32",
+    "label": "9",
+    "hex": "#b863a4"
+  },
+  {
+    "line": "32",
+    "label": "0",
+    "hex": "#c98fbf"
+  },
+  {
+    "line": "32",
+    "label": "a",
+    "hex": "#dfc0dc"
+  },
+  {
+    "line": "32",
+    "label": "b",
+    "hex": "#ec5f77"
+  },
+  {
+    "line": "32",
+    "label": "c",
+    "hex": "#ef81a1"
+  },
+  {
+    "line": "32",
+    "label": "d",
+    "hex": "#f5b0d0"
+  },
+  {
+    "line": "32",
+    "label": "e",
+    "hex": "#323e21"
+  },
+  {
+    "line": "32",
+    "label": "f",
+    "hex": "#4b6d30"
+  },
+  {
+    "line": "32",
+    "label": "h",
+    "hex": "#84931c"
+  },
+  {
+    "line": "32",
+    "label": "j",
+    "hex": "#b8bd0e"
+  },
+  {
+    "line": "32",
+    "label": "k",
+    "hex": "#d08a2e"
+  },
+  {
+    "line": "32",
+    "label": "m",
+    "hex": "#542d12"
+  },
+  {
+    "line": "32",
+    "label": "n",
+    "hex": "#854826"
+  },
+  {
+    "line": "32",
+    "label": "p",
+    "hex": "#af6233"
+  },
+  {
+    "line": "32",
+    "label": "q",
+    "hex": "#d18353"
+  },
+  {
+    "line": "32",
+    "label": "r",
+    "hex": "#d2a986"
+  },
+  {
+    "line": "33",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "33",
+    "label": "2",
+    "hex": "#e0b29e"
+  },
+  {
+    "line": "33",
+    "label": "3",
+    "hex": "#feefe1"
+  },
+  {
+    "line": "33",
+    "label": "4",
+    "hex": "#f195b9"
+  },
+  {
+    "line": "33",
+    "label": "5",
+    "hex": "#d26aa6"
+  },
+  {
+    "line": "33",
+    "label": "6",
+    "hex": "#af4483"
+  },
+  {
+    "line": "33",
+    "label": "7",
+    "hex": "#7d4488"
+  },
+  {
+    "line": "33",
+    "label": "8",
+    "hex": "#c6e8fb"
+  },
+  {
+    "line": "33",
+    "label": "9",
+    "hex": "#f8c2a7"
+  },
+  {
+    "line": "33",
+    "label": "0",
+    "hex": "#e3896e"
+  },
+  {
+    "line": "33",
+    "label": "a",
+    "hex": "#e30613"
+  },
+  {
+    "line": "33",
+    "label": "b",
+    "hex": "#b61210"
+  },
+  {
+    "line": "33",
+    "label": "c",
+    "hex": "#552814"
+  },
+  {
+    "line": "33",
+    "label": "d",
+    "hex": "#863613"
+  },
+  {
+    "line": "33",
+    "label": "e",
+    "hex": "#ad5425"
+  },
+  {
+    "line": "33",
+    "label": "f",
+    "hex": "#e38b00"
+  },
+  {
+    "line": "33",
+    "label": "h",
+    "hex": "#f1b800"
+  },
+  {
+    "line": "33",
+    "label": "j",
+    "hex": "#ffdf8c"
+  },
+  {
+    "line": "33",
+    "label": "k",
+    "hex": "#795d29"
+  },
+  {
+    "line": "33",
+    "label": "m",
+    "hex": "#a8882f"
+  },
+  {
+    "line": "34",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "34",
+    "label": "2",
+    "hex": "#797d87"
+  },
+  {
+    "line": "34",
+    "label": "3",
+    "hex": "#adb7c2"
+  },
+  {
+    "line": "34",
+    "label": "4",
+    "hex": "#e7ebee"
+  },
+  {
+    "line": "34",
+    "label": "5",
+    "hex": "#a7dcf8"
+  },
+  {
+    "line": "34",
+    "label": "6",
+    "hex": "#5bc5f2"
+  },
+  {
+    "line": "34",
+    "label": "7",
+    "hex": "#008ed5"
+  },
+  {
+    "line": "34",
+    "label": "8",
+    "hex": "#0050a0"
+  },
+  {
+    "line": "34",
+    "label": "9",
+    "hex": "#4c7bbe"
+  },
+  {
+    "line": "34",
+    "label": "0",
+    "hex": "#88acdc"
+  },
+  {
+    "line": "34",
+    "label": "a",
+    "hex": "#89c9b1"
+  },
+  {
+    "line": "34",
+    "label": "b",
+    "hex": "#007c60"
+  },
+  {
+    "line": "34",
+    "label": "c",
+    "hex": "#00a24c"
+  },
+  {
+    "line": "34",
+    "label": "d",
+    "hex": "#ffde00"
+  },
+  {
+    "line": "34",
+    "label": "e",
+    "hex": "#f6a200"
+  },
+  {
+    "line": "34",
+    "label": "f",
+    "hex": "#b9642a"
+  },
+  {
+    "line": "34",
+    "label": "h",
+    "hex": "#713a1a"
+  },
+  {
+    "line": "34",
+    "label": "j",
+    "hex": "#836f65"
+  },
+  {
+    "line": "34",
+    "label": "k",
+    "hex": "#c1906e"
+  },
+  {
+    "line": "34",
+    "label": "m",
+    "hex": "#cc705e"
+  },
+  {
+    "line": "34",
+    "label": "n",
+    "hex": "#e39c8c"
+  },
+  {
+    "line": "34",
+    "label": "p",
+    "hex": "#d64d59"
+  },
+  {
+    "line": "34",
+    "label": "q",
+    "hex": "#9f0737"
+  },
+  {
+    "line": "34",
+    "label": "r",
+    "hex": "#c7145c"
+  },
+  {
+    "line": "34",
+    "label": "s",
+    "hex": "#ec66a2"
+  },
+  {
+    "line": "34",
+    "label": "t",
+    "hex": "#97669b"
+  },
+  {
+    "line": "34",
+    "label": "u",
+    "hex": "#97669b"
+  },
+  {
+    "line": "34",
+    "label": "w",
+    "hex": "#d5ecef"
+  },
+  {
+    "line": "35",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "35",
+    "label": "2",
+    "hex": "#666666"
+  },
+  {
+    "line": "35",
+    "label": "3",
+    "hex": "#929292"
+  },
+  {
+    "line": "35",
+    "label": "4",
+    "hex": "#c5c4c4"
+  },
+  {
+    "line": "35",
+    "label": "5",
+    "hex": "#c7e8fb"
+  },
+  {
+    "line": "35",
+    "label": "6",
+    "hex": "#57c4f2"
+  },
+  {
+    "line": "35",
+    "label": "7",
+    "hex": "#0093d9"
+  },
+  {
+    "line": "35",
+    "label": "8",
+    "hex": "#6c653a"
+  },
+  {
+    "line": "35",
+    "label": "9",
+    "hex": "#977f46"
+  },
+  {
+    "line": "35",
+    "label": "0",
+    "hex": "#9aa959"
+  },
+  {
+    "line": "35",
+    "label": "a",
+    "hex": "#f9bd00"
+  },
+  {
+    "line": "35",
+    "label": "b",
+    "hex": "#ee7501"
+  },
+  {
+    "line": "35",
+    "label": "c",
+    "hex": "#ba4a09"
+  },
+  {
+    "line": "35",
+    "label": "d",
+    "hex": "#402719"
+  },
+  {
+    "line": "35",
+    "label": "e",
+    "hex": "#613921"
+  },
+  {
+    "line": "35",
+    "label": "f",
+    "hex": "#783d23"
+  },
+  {
+    "line": "35",
+    "label": "h",
+    "hex": "#c87850"
+  },
+  {
+    "line": "35",
+    "label": "j",
+    "hex": "#ee9e68"
+  },
+  {
+    "line": "35",
+    "label": "k",
+    "hex": "#d07257"
+  },
+  {
+    "line": "35",
+    "label": "m",
+    "hex": "#8e4b3e"
+  },
+  {
+    "line": "35",
+    "label": "n",
+    "hex": "#bd0832"
+  },
+  {
+    "line": "35",
+    "label": "p",
+    "hex": "#630f1e"
+  },
+  {
+    "line": "35",
+    "label": "q",
+    "hex": "#b5250a"
+  },
+  {
+    "line": "35",
+    "label": "r",
+    "hex": "#dd3d29"
+  },
+  {
+    "line": "35",
+    "label": "t",
+    "hex": "#ef775c"
+  },
+  {
+    "line": "35",
+    "label": "u",
+    "hex": "#f29375"
+  },
+  {
+    "line": "35",
+    "label": "w",
+    "hex": "#f8b89b"
+  },
+  {
+    "line": "36",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "36",
+    "label": "2",
+    "hex": "#302f2f"
+  },
+  {
+    "line": "36",
+    "label": "3",
+    "hex": "#5a5550"
+  },
+  {
+    "line": "36",
+    "label": "4",
+    "hex": "#a1948e"
+  },
+  {
+    "line": "36",
+    "label": "5",
+    "hex": "#bcdff7"
+  },
+  {
+    "line": "36",
+    "label": "6",
+    "hex": "#0096d7"
+  },
+  {
+    "line": "36",
+    "label": "7",
+    "hex": "#006cb6"
+  },
+  {
+    "line": "36",
+    "label": "8",
+    "hex": "#312783"
+  },
+  {
+    "line": "36",
+    "label": "9",
+    "hex": "#005c2f"
+  },
+  {
+    "line": "36",
+    "label": "0",
+    "hex": "#0e8d43"
+  },
+  {
+    "line": "36",
+    "label": "a",
+    "hex": "#8fbf21"
+  },
+  {
+    "line": "36",
+    "label": "b",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "36",
+    "label": "c",
+    "hex": "#f8a800"
+  },
+  {
+    "line": "36",
+    "label": "d",
+    "hex": "#ec640d"
+  },
+  {
+    "line": "36",
+    "label": "e",
+    "hex": "#cd4f08"
+  },
+  {
+    "line": "36",
+    "label": "f",
+    "hex": "#e19e67"
+  },
+  {
+    "line": "36",
+    "label": "h",
+    "hex": "#c9783d"
+  },
+  {
+    "line": "36",
+    "label": "j",
+    "hex": "#a65a31"
+  },
+  {
+    "line": "36",
+    "label": "k",
+    "hex": "#6b371b"
+  },
+  {
+    "line": "36",
+    "label": "m",
+    "hex": "#be967e"
+  },
+  {
+    "line": "36",
+    "label": "n",
+    "hex": "#e7cab7"
+  },
+  {
+    "line": "36",
+    "label": "p",
+    "hex": "#591f30"
+  },
+  {
+    "line": "36",
+    "label": "q",
+    "hex": "#863152"
+  },
+  {
+    "line": "36",
+    "label": "r",
+    "hex": "#eb5e92"
+  },
+  {
+    "line": "36",
+    "label": "t",
+    "hex": "#e40523"
+  },
+  {
+    "line": "36",
+    "label": "u",
+    "hex": "#c40c1c"
+  },
+  {
+    "line": "36",
+    "label": "w",
+    "hex": "#921115"
+  },
+  {
+    "line": "36",
+    "label": "x",
+    "hex": "#ed6a59"
+  },
+  {
+    "line": "36",
+    "label": "y",
+    "hex": "#f39474"
+  },
+  {
+    "line": "37",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "37",
+    "label": "2",
+    "hex": "#3b3535"
+  },
+  {
+    "line": "37",
+    "label": "3",
+    "hex": "#636268"
+  },
+  {
+    "line": "37",
+    "label": "4",
+    "hex": "#7c7b7e"
+  },
+  {
+    "line": "37",
+    "label": "5",
+    "hex": "#979795"
+  },
+  {
+    "line": "37",
+    "label": "6",
+    "hex": "#c0c1c1"
+  },
+  {
+    "line": "37",
+    "label": "7",
+    "hex": "#e5e4e4"
+  },
+  {
+    "line": "37",
+    "label": "8",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "37",
+    "label": "9",
+    "hex": "#7ccef4"
+  },
+  {
+    "line": "37",
+    "label": "0",
+    "hex": "#0099df"
+  },
+  {
+    "line": "37",
+    "label": "a",
+    "hex": "#3c68b0"
+  },
+  {
+    "line": "37",
+    "label": "b",
+    "hex": "#669a85"
+  },
+  {
+    "line": "37",
+    "label": "c",
+    "hex": "#006959"
+  },
+  {
+    "line": "37",
+    "label": "d",
+    "hex": "#00612e"
+  },
+  {
+    "line": "37",
+    "label": "e",
+    "hex": "#00863e"
+  },
+  {
+    "line": "37",
+    "label": "f",
+    "hex": "#7db928"
+  },
+  {
+    "line": "37",
+    "label": "h",
+    "hex": "#d8da00"
+  },
+  {
+    "line": "37",
+    "label": "j",
+    "hex": "#ffe68b"
+  },
+  {
+    "line": "37",
+    "label": "k",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "37",
+    "label": "m",
+    "hex": "#ffd200"
+  },
+  {
+    "line": "37",
+    "label": "n",
+    "hex": "#f8aa00"
+  },
+  {
+    "line": "37",
+    "label": "p",
+    "hex": "#ee7402"
+  },
+  {
+    "line": "37",
+    "label": "q",
+    "hex": "#fee2bf"
+  },
+  {
+    "line": "37",
+    "label": "r",
+    "hex": "#e9b17b"
+  },
+  {
+    "line": "37",
+    "label": "t",
+    "hex": "#ce7538"
+  },
+  {
+    "line": "37",
+    "label": "u",
+    "hex": "#ab5525"
+  },
+  {
+    "line": "37",
+    "label": "w",
+    "hex": "#b94d2a"
+  },
+  {
+    "line": "37",
+    "label": "x",
+    "hex": "#9b3c1f"
+  },
+  {
+    "line": "37",
+    "label": "y",
+    "hex": "#792d11"
+  },
+  {
+    "line": "37",
+    "label": "z",
+    "hex": "#662c21"
+  },
+  {
+    "line": "37",
+    "label": "\u00a7",
+    "hex": "#6c3b28"
+  },
+  {
+    "line": "38",
+    "label": "\u00b6",
+    "hex": "#7d4839"
+  },
+  {
+    "line": "38",
+    "label": "$",
+    "hex": "#9d6d53"
+  },
+  {
+    "line": "38",
+    "label": "\u03ea",
+    "hex": "#7e5d39"
+  },
+  {
+    "line": "38",
+    "label": "#",
+    "hex": "#9b764d"
+  },
+  {
+    "line": "38",
+    "label": "\u03a8",
+    "hex": "#b7894b"
+  },
+  {
+    "line": "38",
+    "label": "\u0466",
+    "hex": "#d2ae74"
+  },
+  {
+    "line": "38",
+    "label": "\u00a5",
+    "hex": "#de4844"
+  },
+  {
+    "line": "38",
+    "label": "\u0238",
+    "hex": "#ef7b5c"
+  },
+  {
+    "line": "38",
+    "label": "\u0276",
+    "hex": "#a01007"
+  },
+  {
+    "line": "38",
+    "label": "\u0394",
+    "hex": "#a6183e"
+  },
+  {
+    "line": "38",
+    "label": "\u026e",
+    "hex": "#e62356"
+  },
+  {
+    "line": "38",
+    "label": "\u25a1",
+    "hex": "#e93e8f"
+  },
+  {
+    "line": "38",
+    "label": "\u25ca",
+    "hex": "#f8c9df"
+  },
+  {
+    "line": "38",
+    "label": "\u03a3",
+    "hex": "#da85b6"
+  },
+  {
+    "line": "38",
+    "label": "\u03df",
+    "hex": "#c95299"
+  },
+  {
+    "line": "38",
+    "label": "\u046a",
+    "hex": "#9b2f88"
+  },
+  {
+    "line": "38",
+    "label": "\u040a",
+    "hex": "#72508a"
+  },
+  {
+    "line": "38",
+    "label": "\u20aa",
+    "hex": "#cea1ca"
+  },
+  {
+    "line": "38",
+    "label": "\u2248",
+    "hex": "#b68b85"
+  },
+  {
+    "line": "38",
+    "label": "\u2640",
+    "hex": "#8d5d59"
+  },
+  {
+    "line": "38",
+    "label": "\u2642",
+    "hex": "#774643"
+  },
+  {
+    "line": "39",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "39",
+    "label": "2",
+    "hex": "#3d3a38"
+  },
+  {
+    "line": "39",
+    "label": "3",
+    "hex": "#696764"
+  },
+  {
+    "line": "39",
+    "label": "4",
+    "hex": "#878480"
+  },
+  {
+    "line": "39",
+    "label": "5",
+    "hex": "#b7b6b6"
+  },
+  {
+    "line": "39",
+    "label": "6",
+    "hex": "#0075bf"
+  },
+  {
+    "line": "39",
+    "label": "7",
+    "hex": "#52c3f1"
+  },
+  {
+    "line": "39",
+    "label": "8",
+    "hex": "#d4e7f8"
+  },
+  {
+    "line": "39",
+    "label": "9",
+    "hex": "#009640"
+  },
+  {
+    "line": "39",
+    "label": "0",
+    "hex": "#b4cc04"
+  },
+  {
+    "line": "39",
+    "label": "a",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "39",
+    "label": "b",
+    "hex": "#f9ae00"
+  },
+  {
+    "line": "39",
+    "label": "c",
+    "hex": "#e16d28"
+  },
+  {
+    "line": "39",
+    "label": "d",
+    "hex": "#793812"
+  },
+  {
+    "line": "39",
+    "label": "e",
+    "hex": "#dc9a45"
+  },
+  {
+    "line": "39",
+    "label": "f",
+    "hex": "#f8cc77"
+  },
+  {
+    "line": "39",
+    "label": "h",
+    "hex": "#ffeda8"
+  },
+  {
+    "line": "39",
+    "label": "j",
+    "hex": "#841001"
+  },
+  {
+    "line": "39",
+    "label": "k",
+    "hex": "#ef7a73"
+  },
+  {
+    "line": "39",
+    "label": "m",
+    "hex": "#f7bdbe"
+  },
+  {
+    "line": "40",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "40",
+    "label": "2",
+    "hex": "#62524e"
+  },
+  {
+    "line": "40",
+    "label": "3",
+    "hex": "#978985"
+  },
+  {
+    "line": "40",
+    "label": "4",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "40",
+    "label": "5",
+    "hex": "#8ca5d6"
+  },
+  {
+    "line": "40",
+    "label": "6",
+    "hex": "#375981"
+  },
+  {
+    "line": "40",
+    "label": "7",
+    "hex": "#28345d"
+  },
+  {
+    "line": "40",
+    "label": "8",
+    "hex": "#40b5b0"
+  },
+  {
+    "line": "40",
+    "label": "9",
+    "hex": "#65425e"
+  },
+  {
+    "line": "40",
+    "label": "0",
+    "hex": "#886d81"
+  },
+  {
+    "line": "40",
+    "label": "a",
+    "hex": "#f4a7be"
+  },
+  {
+    "line": "40",
+    "label": "b",
+    "hex": "#e26767"
+  },
+  {
+    "line": "40",
+    "label": "c",
+    "hex": "#e84246"
+  },
+  {
+    "line": "40",
+    "label": "d",
+    "hex": "#cd212b"
+  },
+  {
+    "line": "40",
+    "label": "e",
+    "hex": "#f7b49e"
+  },
+  {
+    "line": "40",
+    "label": "f",
+    "hex": "#fcdac4"
+  },
+  {
+    "line": "40",
+    "label": "h",
+    "hex": "#915f3a"
+  },
+  {
+    "line": "40",
+    "label": "j",
+    "hex": "#6d4930"
+  },
+  {
+    "line": "40",
+    "label": "k",
+    "hex": "#4c2e1d"
+  },
+  {
+    "line": "40",
+    "label": "m",
+    "hex": "#9b4f32"
+  },
+  {
+    "line": "40",
+    "label": "n",
+    "hex": "#d26c2c"
+  },
+  {
+    "line": "40",
+    "label": "p",
+    "hex": "#fece63"
+  },
+  {
+    "line": "41",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "41",
+    "label": "2",
+    "hex": "#565858"
+  },
+  {
+    "line": "41",
+    "label": "3",
+    "hex": "#8a8989"
+  },
+  {
+    "line": "41",
+    "label": "4",
+    "hex": "#adb0b9"
+  },
+  {
+    "line": "41",
+    "label": "5",
+    "hex": "#dbdbdb"
+  },
+  {
+    "line": "41",
+    "label": "6",
+    "hex": "#bfbcd1"
+  },
+  {
+    "line": "41",
+    "label": "7",
+    "hex": "#88819e"
+  },
+  {
+    "line": "41",
+    "label": "8",
+    "hex": "#3f466e"
+  },
+  {
+    "line": "41",
+    "label": "9",
+    "hex": "#606ca5"
+  },
+  {
+    "line": "41",
+    "label": "0",
+    "hex": "#c1e6fb"
+  },
+  {
+    "line": "41",
+    "label": "a",
+    "hex": "#8dccc1"
+  },
+  {
+    "line": "41",
+    "label": "b",
+    "hex": "#399f94"
+  },
+  {
+    "line": "41",
+    "label": "c",
+    "hex": "#006868"
+  },
+  {
+    "line": "41",
+    "label": "d",
+    "hex": "#ffe8ad"
+  },
+  {
+    "line": "41",
+    "label": "e",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "41",
+    "label": "f",
+    "hex": "#ffd000"
+  },
+  {
+    "line": "41",
+    "label": "h",
+    "hex": "#f7a600"
+  },
+  {
+    "line": "41",
+    "label": "j",
+    "hex": "#ee7a00"
+  },
+  {
+    "line": "41",
+    "label": "\u046a",
+    "hex": "#612a17"
+  },
+  {
+    "line": "41",
+    "label": "$",
+    "hex": "#5f311c"
+  },
+  {
+    "line": "41",
+    "label": "k",
+    "hex": "#823d2a"
+  },
+  {
+    "line": "41",
+    "label": "m",
+    "hex": "#b55a3a"
+  },
+  {
+    "line": "41",
+    "label": "\u25ca",
+    "hex": "#b1482b"
+  },
+  {
+    "line": "41",
+    "label": "n",
+    "hex": "#e49869"
+  },
+  {
+    "line": "41",
+    "label": "p",
+    "hex": "#fac5a4"
+  },
+  {
+    "line": "41",
+    "label": "q",
+    "hex": "#f49d7d"
+  },
+  {
+    "line": "41",
+    "label": "r",
+    "hex": "#e6746f"
+  },
+  {
+    "line": "41",
+    "label": "t",
+    "hex": "#881001"
+  },
+  {
+    "line": "41",
+    "label": "u",
+    "hex": "#b70e0c"
+  },
+  {
+    "line": "41",
+    "label": "w",
+    "hex": "#e30613"
+  },
+  {
+    "line": "41",
+    "label": "x",
+    "hex": "#eb5a6d"
+  },
+  {
+    "line": "42",
+    "label": "y",
+    "hex": "#f089ab"
+  },
+  {
+    "line": "42",
+    "label": "z",
+    "hex": "#c763a3"
+  },
+  {
+    "line": "42",
+    "label": "\u03ea",
+    "hex": "#b2358b"
+  },
+  {
+    "line": "42",
+    "label": "\u00d8",
+    "hex": "#cb9fc9"
+  },
+  {
+    "line": "42",
+    "label": "\u03a8",
+    "hex": "#a676b2"
+  },
+  {
+    "line": "42",
+    "label": "\u0466",
+    "hex": "#823f8f"
+  },
+  {
+    "line": "43",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "43",
+    "label": "2",
+    "hex": "#323735"
+  },
+  {
+    "line": "43",
+    "label": "3",
+    "hex": "#a1a1a1"
+  },
+  {
+    "line": "43",
+    "label": "4",
+    "hex": "#dadada"
+  },
+  {
+    "line": "43",
+    "label": "5",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "43",
+    "label": "6",
+    "hex": "#006065"
+  },
+  {
+    "line": "43",
+    "label": "7",
+    "hex": "#008073"
+  },
+  {
+    "line": "43",
+    "label": "8",
+    "hex": "#71be8f"
+  },
+  {
+    "line": "43",
+    "label": "9",
+    "hex": "#006932"
+  },
+  {
+    "line": "43",
+    "label": "0",
+    "hex": "#46a735"
+  },
+  {
+    "line": "43",
+    "label": "a",
+    "hex": "#98a623"
+  },
+  {
+    "line": "43",
+    "label": "b",
+    "hex": "#c0ce3c"
+  },
+  {
+    "line": "43",
+    "label": "c",
+    "hex": "#f9b000"
+  },
+  {
+    "line": "43",
+    "label": "d",
+    "hex": "#e78900"
+  },
+  {
+    "line": "43",
+    "label": "e",
+    "hex": "#d26517"
+  },
+  {
+    "line": "43",
+    "label": "f",
+    "hex": "#a74324"
+  },
+  {
+    "line": "43",
+    "label": "h",
+    "hex": "#7e2e19"
+  },
+  {
+    "line": "43",
+    "label": "j",
+    "hex": "#5a210b"
+  },
+  {
+    "line": "43",
+    "label": "k",
+    "hex": "#ce8459"
+  },
+  {
+    "line": "43",
+    "label": "m",
+    "hex": "#edbd80"
+  },
+  {
+    "line": "43",
+    "label": "n",
+    "hex": "#ef85b4"
+  },
+  {
+    "line": "43",
+    "label": "p",
+    "hex": "#ea4893"
+  },
+  {
+    "line": "43",
+    "label": "q",
+    "hex": "#941a04"
+  },
+  {
+    "line": "43",
+    "label": "r",
+    "hex": "#f5a889"
+  },
+  {
+    "line": "43",
+    "label": "t",
+    "hex": "#fbd5bf"
+  },
+  {
+    "line": "44",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "44",
+    "label": "2",
+    "hex": "#5c5956"
+  },
+  {
+    "line": "44",
+    "label": "3",
+    "hex": "#7e7873"
+  },
+  {
+    "line": "44",
+    "label": "4",
+    "hex": "#beb1a7"
+  },
+  {
+    "line": "44",
+    "label": "5",
+    "hex": "#ece6e1"
+  },
+  {
+    "line": "44",
+    "label": "6",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "44",
+    "label": "7",
+    "hex": "#71cbf4"
+  },
+  {
+    "line": "44",
+    "label": "8",
+    "hex": "#009dc3"
+  },
+  {
+    "line": "44",
+    "label": "9",
+    "hex": "#2173ae"
+  },
+  {
+    "line": "44",
+    "label": "0",
+    "hex": "#006d6a"
+  },
+  {
+    "line": "44",
+    "label": "a",
+    "hex": "#008e85"
+  },
+  {
+    "line": "44",
+    "label": "b",
+    "hex": "#005524"
+  },
+  {
+    "line": "44",
+    "label": "c",
+    "hex": "#008c35"
+  },
+  {
+    "line": "44",
+    "label": "d",
+    "hex": "#9dc41a"
+  },
+  {
+    "line": "44",
+    "label": "e",
+    "hex": "#ffe187"
+  },
+  {
+    "line": "44",
+    "label": "f",
+    "hex": "#fab74b"
+  },
+  {
+    "line": "44",
+    "label": "h",
+    "hex": "#fbba00"
+  },
+  {
+    "line": "44",
+    "label": "j",
+    "hex": "#f18500"
+  },
+  {
+    "line": "44",
+    "label": "k",
+    "hex": "#c0551e"
+  },
+  {
+    "line": "44",
+    "label": "m",
+    "hex": "#803412"
+  },
+  {
+    "line": "44",
+    "label": "n",
+    "hex": "#704732"
+  },
+  {
+    "line": "44",
+    "label": "p",
+    "hex": "#a06d4c"
+  },
+  {
+    "line": "44",
+    "label": "q",
+    "hex": "#5a0800"
+  },
+  {
+    "line": "44",
+    "label": "r",
+    "hex": "#a90f09"
+  },
+  {
+    "line": "44",
+    "label": "t",
+    "hex": "#d90912"
+  },
+  {
+    "line": "44",
+    "label": "u",
+    "hex": "#df3b5b"
+  },
+  {
+    "line": "44",
+    "label": "w",
+    "hex": "#ee7c8e"
+  },
+  {
+    "line": "44",
+    "label": "x",
+    "hex": "#f6bcb6"
+  },
+  {
+    "line": "44",
+    "label": "y",
+    "hex": "#882b86"
+  },
+  {
+    "line": "45",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "45",
+    "label": "2",
+    "hex": "#35322f"
+  },
+  {
+    "line": "45",
+    "label": "3",
+    "hex": "#565251"
+  },
+  {
+    "line": "45",
+    "label": "4",
+    "hex": "#8b8786"
+  },
+  {
+    "line": "45",
+    "label": "5",
+    "hex": "#aeabaa"
+  },
+  {
+    "line": "45",
+    "label": "6",
+    "hex": "#c7def4"
+  },
+  {
+    "line": "45",
+    "label": "7",
+    "hex": "#0bb5ea"
+  },
+  {
+    "line": "45",
+    "label": "8",
+    "hex": "#007ac3"
+  },
+  {
+    "line": "45",
+    "label": "9",
+    "hex": "#08577a"
+  },
+  {
+    "line": "45",
+    "label": "0",
+    "hex": "#004148"
+  },
+  {
+    "line": "45",
+    "label": "a",
+    "hex": "#00808d"
+  },
+  {
+    "line": "45",
+    "label": "b",
+    "hex": "#6dc1b2"
+  },
+  {
+    "line": "45",
+    "label": "c",
+    "hex": "#009579"
+  },
+  {
+    "line": "45",
+    "label": "d",
+    "hex": "#417c6d"
+  },
+  {
+    "line": "45",
+    "label": "e",
+    "hex": "#3c5551"
+  },
+  {
+    "line": "45",
+    "label": "f",
+    "hex": "#00644c"
+  },
+  {
+    "line": "45",
+    "label": "h",
+    "hex": "#00963c"
+  },
+  {
+    "line": "45",
+    "label": "j",
+    "hex": "#008540"
+  },
+  {
+    "line": "45",
+    "label": "k",
+    "hex": "#007438"
+  },
+  {
+    "line": "45",
+    "label": "m",
+    "hex": "#006030"
+  },
+  {
+    "line": "45",
+    "label": "n",
+    "hex": "#183b24"
+  },
+  {
+    "line": "45",
+    "label": "p",
+    "hex": "#456832"
+  },
+  {
+    "line": "45",
+    "label": "q",
+    "hex": "#5c862f"
+  },
+  {
+    "line": "45",
+    "label": "r",
+    "hex": "#80ad2a"
+  },
+  {
+    "line": "45",
+    "label": "t",
+    "hex": "#8e8b29"
+  },
+  {
+    "line": "45",
+    "label": "u",
+    "hex": "#6f7e28"
+  },
+  {
+    "line": "45",
+    "label": "w",
+    "hex": "#5f6b25"
+  },
+  {
+    "line": "45",
+    "label": "x",
+    "hex": "#455421"
+  },
+  {
+    "line": "45",
+    "label": "y",
+    "hex": "#bea632"
+  },
+  {
+    "line": "45",
+    "label": "z",
+    "hex": "#9d831d"
+  },
+  {
+    "line": "45",
+    "label": "\u00a7",
+    "hex": "#9b7031"
+  },
+  {
+    "line": "45",
+    "label": "\u00b6",
+    "hex": "#e49542"
+  },
+  {
+    "line": "46",
+    "label": "$",
+    "hex": "#e6b37b"
+  },
+  {
+    "line": "46",
+    "label": "\u03ea",
+    "hex": "#ab7950"
+  },
+  {
+    "line": "46",
+    "label": "\u03a8",
+    "hex": "#865543"
+  },
+  {
+    "line": "46",
+    "label": "\u0466",
+    "hex": "#5c392f"
+  },
+  {
+    "line": "46",
+    "label": "\u00a5",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "46",
+    "label": "#",
+    "hex": "#ffca00"
+  },
+  {
+    "line": "46",
+    "label": "\u0276",
+    "hex": "#eca600"
+  },
+  {
+    "line": "46",
+    "label": "\u0394",
+    "hex": "#e68f00"
+  },
+  {
+    "line": "46",
+    "label": "\u25a1",
+    "hex": "#e8b84b"
+  },
+  {
+    "line": "46",
+    "label": "\u026e",
+    "hex": "#e09601"
+  },
+  {
+    "line": "46",
+    "label": "\u25ca",
+    "hex": "#ca6c32"
+  },
+  {
+    "line": "46",
+    "label": "\u03a3",
+    "hex": "#a74a18"
+  },
+  {
+    "line": "46",
+    "label": "\u03df",
+    "hex": "#98432f"
+  },
+  {
+    "line": "46",
+    "label": "\u046a",
+    "hex": "#803017"
+  },
+  {
+    "line": "46",
+    "label": "\u040a",
+    "hex": "#942a15"
+  },
+  {
+    "line": "46",
+    "label": "\u20aa",
+    "hex": "#bf3c18"
+  },
+  {
+    "line": "46",
+    "label": "\u2248",
+    "hex": "#f6b7a2"
+  },
+  {
+    "line": "46",
+    "label": "\u01be",
+    "hex": "#f08d79"
+  },
+  {
+    "line": "46",
+    "label": "\u0277",
+    "hex": "#cf563f"
+  },
+  {
+    "line": "46",
+    "label": "\u0416",
+    "hex": "#7c1c1a"
+  },
+  {
+    "line": "46",
+    "label": "\u2640",
+    "hex": "#ad363d"
+  },
+  {
+    "line": "46",
+    "label": "\u2642",
+    "hex": "#c15a66"
+  },
+  {
+    "line": "46",
+    "label": "\u0126",
+    "hex": "#ed709a"
+  },
+  {
+    "line": "46",
+    "label": "\u00d8",
+    "hex": "#cd2b5c"
+  },
+  {
+    "line": "46",
+    "label": "\u0244",
+    "hex": "#e50057"
+  },
+  {
+    "line": "46",
+    "label": ">",
+    "hex": "#e30613"
+  },
+  {
+    "line": "46",
+    "label": "\u2663",
+    "hex": "#c2908a"
+  },
+  {
+    "line": "46",
+    "label": "\u266a",
+    "hex": "#9b6467"
+  },
+  {
+    "line": "46",
+    "label": "\u266b",
+    "hex": "#a43e8b"
+  },
+  {
+    "line": "46",
+    "label": "\u00ab",
+    "hex": "#634071"
+  },
+  {
+    "line": "46",
+    "label": "\u0238",
+    "hex": "#85659e"
+  },
+  {
+    "line": "46",
+    "label": "\u04a9",
+    "hex": "#cfb8da"
+  },
+  {
+    "line": "47",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "47",
+    "label": "2",
+    "hex": "#453f54"
+  },
+  {
+    "line": "47",
+    "label": "3",
+    "hex": "#7d859f"
+  },
+  {
+    "line": "47",
+    "label": "4",
+    "hex": "#d0d3ec"
+  },
+  {
+    "line": "47",
+    "label": "5",
+    "hex": "#45244b"
+  },
+  {
+    "line": "47",
+    "label": "6",
+    "hex": "#69254a"
+  },
+  {
+    "line": "47",
+    "label": "7",
+    "hex": "#a4768c"
+  },
+  {
+    "line": "47",
+    "label": "8",
+    "hex": "#5d3846"
+  },
+  {
+    "line": "47",
+    "label": "9",
+    "hex": "#f39e9e"
+  },
+  {
+    "line": "47",
+    "label": "0",
+    "hex": "#ea546f"
+  },
+  {
+    "line": "47",
+    "label": "a",
+    "hex": "#7a100c"
+  },
+  {
+    "line": "47",
+    "label": "b",
+    "hex": "#995555"
+  },
+  {
+    "line": "47",
+    "label": "c",
+    "hex": "#ecae98"
+  },
+  {
+    "line": "47",
+    "label": "d",
+    "hex": "#fbd3bf"
+  },
+  {
+    "line": "47",
+    "label": "e",
+    "hex": "#568e2f"
+  },
+  {
+    "line": "47",
+    "label": "f",
+    "hex": "#b4cc04"
+  },
+  {
+    "line": "47",
+    "label": "h",
+    "hex": "#ede173"
+  },
+  {
+    "line": "47",
+    "label": "j",
+    "hex": "#a38725"
+  },
+  {
+    "line": "47",
+    "label": "k",
+    "hex": "#7b5d47"
+  },
+  {
+    "line": "47",
+    "label": "m",
+    "hex": "#b3967f"
+  },
+  {
+    "line": "47",
+    "label": "n",
+    "hex": "#ffebc5"
+  },
+  {
+    "line": "48",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "48",
+    "label": "2",
+    "hex": "#4d4442"
+  },
+  {
+    "line": "48",
+    "label": "3",
+    "hex": "#6b6b6a"
+  },
+  {
+    "line": "48",
+    "label": "4",
+    "hex": "#c8dcf3"
+  },
+  {
+    "line": "48",
+    "label": "5",
+    "hex": "#6c5482"
+  },
+  {
+    "line": "48",
+    "label": "6",
+    "hex": "#aa6999"
+  },
+  {
+    "line": "48",
+    "label": "7",
+    "hex": "#f08fba"
+  },
+  {
+    "line": "48",
+    "label": "8",
+    "hex": "#5b783c"
+  },
+  {
+    "line": "48",
+    "label": "9",
+    "hex": "#89a366"
+  },
+  {
+    "line": "48",
+    "label": "0",
+    "hex": "#ffd64d"
+  },
+  {
+    "line": "48",
+    "label": "a",
+    "hex": "#f9af3f"
+  },
+  {
+    "line": "48",
+    "label": "b",
+    "hex": "#ad6145"
+  },
+  {
+    "line": "48",
+    "label": "c",
+    "hex": "#fbd3c2"
+  },
+  {
+    "line": "48",
+    "label": "d",
+    "hex": "#f6ad96"
+  },
+  {
+    "line": "48",
+    "label": "e",
+    "hex": "#d08775"
+  },
+  {
+    "line": "48",
+    "label": "f",
+    "hex": "#aa5b5d"
+  },
+  {
+    "line": "48",
+    "label": "h",
+    "hex": "#813a36"
+  },
+  {
+    "line": "49",
+    "label": "1",
+    "hex": "#241f1f"
+  },
+  {
+    "line": "49",
+    "label": "2",
+    "hex": "#696c7c"
+  },
+  {
+    "line": "49",
+    "label": "3",
+    "hex": "#a0a3aa"
+  },
+  {
+    "line": "49",
+    "label": "4",
+    "hex": "#9e787e"
+  },
+  {
+    "line": "49",
+    "label": "5",
+    "hex": "#d6a699"
+  },
+  {
+    "line": "49",
+    "label": "6",
+    "hex": "#fddbba"
+  },
+  {
+    "line": "49",
+    "label": "7",
+    "hex": "#9d2a86"
+  },
+  {
+    "line": "49",
+    "label": "8",
+    "hex": "#d087b9"
+  },
+  {
+    "line": "49",
+    "label": "9",
+    "hex": "#f4accd"
+  },
+  {
+    "line": "49",
+    "label": "0",
+    "hex": "#8c85bf"
+  },
+  {
+    "line": "49",
+    "label": "a",
+    "hex": "#604d88"
+  },
+  {
+    "line": "49",
+    "label": "b",
+    "hex": "#0065a8"
+  },
+  {
+    "line": "49",
+    "label": "c",
+    "hex": "#0098de"
+  },
+  {
+    "line": "49",
+    "label": "d",
+    "hex": "#97b4d1"
+  },
+  {
+    "line": "49",
+    "label": "e",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "49",
+    "label": "f",
+    "hex": "#00706b"
+  },
+  {
+    "line": "49",
+    "label": "h",
+    "hex": "#00987e"
+  },
+  {
+    "line": "49",
+    "label": "j",
+    "hex": "#7dbd68"
+  },
+  {
+    "line": "49",
+    "label": "k",
+    "hex": "#00803d"
+  },
+  {
+    "line": "49",
+    "label": "m",
+    "hex": "#8fbf21"
+  },
+  {
+    "line": "49",
+    "label": "n",
+    "hex": "#b2760e"
+  },
+  {
+    "line": "49",
+    "label": "p",
+    "hex": "#fdc53a"
+  },
+  {
+    "line": "49",
+    "label": "q",
+    "hex": "#fff3d4"
+  },
+  {
+    "line": "49",
+    "label": "r",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "49",
+    "label": "t",
+    "hex": "#f7a400"
+  },
+  {
+    "line": "49",
+    "label": "u",
+    "hex": "#e87002"
+  },
+  {
+    "line": "49",
+    "label": "w",
+    "hex": "#b74918"
+  },
+  {
+    "line": "49",
+    "label": "x",
+    "hex": "#953314"
+  },
+  {
+    "line": "49",
+    "label": "y",
+    "hex": "#c38242"
+  },
+  {
+    "line": "49",
+    "label": "z",
+    "hex": "#964f24"
+  },
+  {
+    "line": "49",
+    "label": "\u03ea",
+    "hex": "#683920"
+  },
+  {
+    "line": "49",
+    "label": "\u20aa",
+    "hex": "#b31a18"
+  },
+  {
+    "line": "49",
+    "label": "\u00a5",
+    "hex": "#e83e2e"
+  },
+  {
+    "line": "50",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "50",
+    "label": "2",
+    "hex": "#313c44"
+  },
+  {
+    "line": "50",
+    "label": "3",
+    "hex": "#6d6968"
+  },
+  {
+    "line": "50",
+    "label": "4",
+    "hex": "#959190"
+  },
+  {
+    "line": "50",
+    "label": "5",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "50",
+    "label": "6",
+    "hex": "#0387ca"
+  },
+  {
+    "line": "50",
+    "label": "7",
+    "hex": "#254825"
+  },
+  {
+    "line": "50",
+    "label": "8",
+    "hex": "#4a6c2a"
+  },
+  {
+    "line": "50",
+    "label": "9",
+    "hex": "#668624"
+  },
+  {
+    "line": "50",
+    "label": "0",
+    "hex": "#9cb421"
+  },
+  {
+    "line": "50",
+    "label": "a",
+    "hex": "#d6d909"
+  },
+  {
+    "line": "50",
+    "label": "b",
+    "hex": "#fcbf00"
+  },
+  {
+    "line": "50",
+    "label": "c",
+    "hex": "#f28c46"
+  },
+  {
+    "line": "50",
+    "label": "d",
+    "hex": "#ee7601"
+  },
+  {
+    "line": "50",
+    "label": "e",
+    "hex": "#a35000"
+  },
+  {
+    "line": "50",
+    "label": "f",
+    "hex": "#842912"
+  },
+  {
+    "line": "50",
+    "label": "h",
+    "hex": "#54220c"
+  },
+  {
+    "line": "50",
+    "label": "j",
+    "hex": "#733924"
+  },
+  {
+    "line": "50",
+    "label": "k",
+    "hex": "#9a4b34"
+  },
+  {
+    "line": "50",
+    "label": "m",
+    "hex": "#792029"
+  },
+  {
+    "line": "50",
+    "label": "n",
+    "hex": "#e83270"
+  },
+  {
+    "line": "50",
+    "label": "p",
+    "hex": "#ec619f"
+  },
+  {
+    "line": "50",
+    "label": "q",
+    "hex": "#e5656a"
+  },
+  {
+    "line": "50",
+    "label": "r",
+    "hex": "#d2424c"
+  },
+  {
+    "line": "50",
+    "label": "t",
+    "hex": "#9f2f33"
+  },
+  {
+    "line": "50",
+    "label": "u",
+    "hex": "#7e1712"
+  },
+  {
+    "line": "50",
+    "label": "w",
+    "hex": "#a70f08"
+  },
+  {
+    "line": "50",
+    "label": "x",
+    "hex": "#e30613"
+  },
+  {
+    "line": "50",
+    "label": "\u03ea",
+    "hex": "#ed8365"
+  },
+  {
+    "line": "50",
+    "label": "\u0424",
+    "hex": "#f6af97"
+  },
+  {
+    "line": "51",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "51",
+    "label": "2",
+    "hex": "#9b9b9a"
+  },
+  {
+    "line": "51",
+    "label": "3",
+    "hex": "#c1e6fb"
+  },
+  {
+    "line": "51",
+    "label": "4",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "51",
+    "label": "5",
+    "hex": "#0062ae"
+  },
+  {
+    "line": "51",
+    "label": "6",
+    "hex": "#27348b"
+  },
+  {
+    "line": "51",
+    "label": "7",
+    "hex": "#80c6ab"
+  },
+  {
+    "line": "51",
+    "label": "8",
+    "hex": "#8b150d"
+  },
+  {
+    "line": "51",
+    "label": "9",
+    "hex": "#b12514"
+  },
+  {
+    "line": "51",
+    "label": "0",
+    "hex": "#d13618"
+  },
+  {
+    "line": "51",
+    "label": "a",
+    "hex": "#e7580e"
+  },
+  {
+    "line": "51",
+    "label": "b",
+    "hex": "#ee7203"
+  },
+  {
+    "line": "51",
+    "label": "c",
+    "hex": "#f6a000"
+  },
+  {
+    "line": "51",
+    "label": "d",
+    "hex": "#ffd300"
+  },
+  {
+    "line": "51",
+    "label": "e",
+    "hex": "#f29ac2"
+  },
+  {
+    "line": "51",
+    "label": "f",
+    "hex": "#f8bf9f"
+  },
+  {
+    "line": "51",
+    "label": "h",
+    "hex": "#f29673"
+  },
+  {
+    "line": "51",
+    "label": "j",
+    "hex": "#ee7265"
+  },
+  {
+    "line": "51",
+    "label": "k",
+    "hex": "#d84b37"
+  },
+  {
+    "line": "52",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "52",
+    "label": "2",
+    "hex": "#d0c3aa"
+  },
+  {
+    "line": "52",
+    "label": "3",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "52",
+    "label": "4",
+    "hex": "#3a81a6"
+  },
+  {
+    "line": "52",
+    "label": "5",
+    "hex": "#567a83"
+  },
+  {
+    "line": "52",
+    "label": "6",
+    "hex": "#2d516e"
+  },
+  {
+    "line": "52",
+    "label": "7",
+    "hex": "#484863"
+  },
+  {
+    "line": "52",
+    "label": "8",
+    "hex": "#006f72"
+  },
+  {
+    "line": "52",
+    "label": "9",
+    "hex": "#437647"
+  },
+  {
+    "line": "52",
+    "label": "0",
+    "hex": "#0b9749"
+  },
+  {
+    "line": "52",
+    "label": "a",
+    "hex": "#b4c50b"
+  },
+  {
+    "line": "52",
+    "label": "b",
+    "hex": "#bf9e14"
+  },
+  {
+    "line": "52",
+    "label": "c",
+    "hex": "#9a7a1d"
+  },
+  {
+    "line": "52",
+    "label": "d",
+    "hex": "#976915"
+  },
+  {
+    "line": "52",
+    "label": "e",
+    "hex": "#714817"
+  },
+  {
+    "line": "52",
+    "label": "f",
+    "hex": "#572f16"
+  },
+  {
+    "line": "52",
+    "label": "h",
+    "hex": "#483026"
+  },
+  {
+    "line": "52",
+    "label": "j",
+    "hex": "#775337"
+  },
+  {
+    "line": "52",
+    "label": "k",
+    "hex": "#fae588"
+  },
+  {
+    "line": "52",
+    "label": "m",
+    "hex": "#ffd321"
+  },
+  {
+    "line": "52",
+    "label": "n",
+    "hex": "#f2a000"
+  },
+  {
+    "line": "52",
+    "label": "p",
+    "hex": "#c54e07"
+  },
+  {
+    "line": "52",
+    "label": "q",
+    "hex": "#4b0700"
+  },
+  {
+    "line": "52",
+    "label": "r",
+    "hex": "#801409"
+  },
+  {
+    "line": "52",
+    "label": "t",
+    "hex": "#d52635"
+  },
+  {
+    "line": "52",
+    "label": "u",
+    "hex": "#ea545e"
+  },
+  {
+    "line": "52",
+    "label": "w",
+    "hex": "#f8c9df"
+  },
+  {
+    "line": "53",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "53",
+    "label": "2",
+    "hex": "#4a3b38"
+  },
+  {
+    "line": "53",
+    "label": "3",
+    "hex": "#6c5754"
+  },
+  {
+    "line": "53",
+    "label": "4",
+    "hex": "#292428"
+  },
+  {
+    "line": "53",
+    "label": "5",
+    "hex": "#2a344f"
+  },
+  {
+    "line": "53",
+    "label": "6",
+    "hex": "#3a4859"
+  },
+  {
+    "line": "53",
+    "label": "7",
+    "hex": "#517ba0"
+  },
+  {
+    "line": "53",
+    "label": "8",
+    "hex": "#1b408d"
+  },
+  {
+    "line": "53",
+    "label": "9",
+    "hex": "#0f68b1"
+  },
+  {
+    "line": "53",
+    "label": "0",
+    "hex": "#e6f5fe"
+  },
+  {
+    "line": "53",
+    "label": "a",
+    "hex": "#c9c4e3"
+  },
+  {
+    "line": "53",
+    "label": "b",
+    "hex": "#a39fce"
+  },
+  {
+    "line": "53",
+    "label": "f",
+    "hex": "#8076b5"
+  },
+  {
+    "line": "53",
+    "label": "c",
+    "hex": "#5c618f"
+  },
+  {
+    "line": "53",
+    "label": "d",
+    "hex": "#673b89"
+  },
+  {
+    "line": "53",
+    "label": "e",
+    "hex": "#5f1f4c"
+  },
+  {
+    "line": "53",
+    "label": "h",
+    "hex": "#3c1838"
+  },
+  {
+    "line": "53",
+    "label": "j",
+    "hex": "#56305d"
+  },
+  {
+    "line": "53",
+    "label": "k",
+    "hex": "#76487c"
+  },
+  {
+    "line": "53",
+    "label": "m",
+    "hex": "#9d68a9"
+  },
+  {
+    "line": "53",
+    "label": "n",
+    "hex": "#5d4273"
+  },
+  {
+    "line": "53",
+    "label": "p",
+    "hex": "#915b7d"
+  },
+  {
+    "line": "53",
+    "label": "q",
+    "hex": "#c16a7a"
+  },
+  {
+    "line": "53",
+    "label": "r",
+    "hex": "#ee7671"
+  },
+  {
+    "line": "53",
+    "label": "t",
+    "hex": "#ae4134"
+  },
+  {
+    "line": "53",
+    "label": "u",
+    "hex": "#cb8655"
+  },
+  {
+    "line": "53",
+    "label": "w",
+    "hex": "#e8a16f"
+  },
+  {
+    "line": "53",
+    "label": "x",
+    "hex": "#572b23"
+  },
+  {
+    "line": "53",
+    "label": "y",
+    "hex": "#7b3f2b"
+  },
+  {
+    "line": "53",
+    "label": "z",
+    "hex": "#944a3c"
+  },
+  {
+    "line": "53",
+    "label": "\u00a7",
+    "hex": "#f3e0c6"
+  },
+  {
+    "line": "54",
+    "label": "\u00b6",
+    "hex": "#d2ab8f"
+  },
+  {
+    "line": "54",
+    "label": "$",
+    "hex": "#ae8164"
+  },
+  {
+    "line": "54",
+    "label": "\u03ea",
+    "hex": "#fff595"
+  },
+  {
+    "line": "54",
+    "label": "\u263c",
+    "hex": "#f9b100"
+  },
+  {
+    "line": "54",
+    "label": "\u03a8",
+    "hex": "#e78400"
+  },
+  {
+    "line": "54",
+    "label": "\u0466",
+    "hex": "#e15e08"
+  },
+  {
+    "line": "54",
+    "label": "\u00a5",
+    "hex": "#c8320c"
+  },
+  {
+    "line": "54",
+    "label": "\u0238",
+    "hex": "#951a1f"
+  },
+  {
+    "line": "54",
+    "label": "\u27b0",
+    "hex": "#861201"
+  },
+  {
+    "line": "54",
+    "label": "\u0276",
+    "hex": "#b4120b"
+  },
+  {
+    "line": "54",
+    "label": "\u0394",
+    "hex": "#f6b9d5"
+  },
+  {
+    "line": "54",
+    "label": "\u026e",
+    "hex": "#ed6e97"
+  },
+  {
+    "line": "54",
+    "label": "\u25a1",
+    "hex": "#c92a45"
+  },
+  {
+    "line": "54",
+    "label": "\u25ca",
+    "hex": "#a41049"
+  },
+  {
+    "line": "54",
+    "label": "\u03a3",
+    "hex": "#d60264"
+  },
+  {
+    "line": "54",
+    "label": "\u03df",
+    "hex": "#123a46"
+  },
+  {
+    "line": "54",
+    "label": "\u046a",
+    "hex": "#13605e"
+  },
+  {
+    "line": "54",
+    "label": "\u040a",
+    "hex": "#009e6d"
+  },
+  {
+    "line": "55",
+    "label": "1",
+    "hex": "#241f1f"
+  },
+  {
+    "line": "55",
+    "label": "2",
+    "hex": "#79a8b8"
+  },
+  {
+    "line": "55",
+    "label": "3",
+    "hex": "#bfe5fb"
+  },
+  {
+    "line": "55",
+    "label": "4",
+    "hex": "#4d295f"
+  },
+  {
+    "line": "55",
+    "label": "5",
+    "hex": "#574889"
+  },
+  {
+    "line": "55",
+    "label": "6",
+    "hex": "#9067a9"
+  },
+  {
+    "line": "55",
+    "label": "7",
+    "hex": "#d93884"
+  },
+  {
+    "line": "55",
+    "label": "8",
+    "hex": "#ed6ca5"
+  },
+  {
+    "line": "55",
+    "label": "9",
+    "hex": "#f191bc"
+  },
+  {
+    "line": "55",
+    "label": "0",
+    "hex": "#f7c3dc"
+  },
+  {
+    "line": "55",
+    "label": "a",
+    "hex": "#fbd3b6"
+  },
+  {
+    "line": "55",
+    "label": "b",
+    "hex": "#f4a391"
+  },
+  {
+    "line": "55",
+    "label": "c",
+    "hex": "#ef8069"
+  },
+  {
+    "line": "55",
+    "label": "d",
+    "hex": "#fbd18f"
+  },
+  {
+    "line": "55",
+    "label": "e",
+    "hex": "#e9a854"
+  },
+  {
+    "line": "55",
+    "label": "f",
+    "hex": "#d48d42"
+  },
+  {
+    "line": "55",
+    "label": "h",
+    "hex": "#a04b18"
+  },
+  {
+    "line": "55",
+    "label": "j",
+    "hex": "#793715"
+  },
+  {
+    "line": "55",
+    "label": "k",
+    "hex": "#e2780b"
+  },
+  {
+    "line": "55",
+    "label": "m",
+    "hex": "#f7a600"
+  },
+  {
+    "line": "55",
+    "label": "n",
+    "hex": "#fff59b"
+  },
+  {
+    "line": "55",
+    "label": "p",
+    "hex": "#c05b9f"
+  },
+  {
+    "line": "55",
+    "label": "q",
+    "hex": "#a53484"
+  },
+  {
+    "line": "56",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "56",
+    "label": "2",
+    "hex": "#8a8c8d"
+  },
+  {
+    "line": "56",
+    "label": "3",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "56",
+    "label": "4",
+    "hex": "#8dc3eb"
+  },
+  {
+    "line": "56",
+    "label": "5",
+    "hex": "#0072bb"
+  },
+  {
+    "line": "56",
+    "label": "6",
+    "hex": "#164194"
+  },
+  {
+    "line": "56",
+    "label": "7",
+    "hex": "#2e454f"
+  },
+  {
+    "line": "56",
+    "label": "8",
+    "hex": "#008a83"
+  },
+  {
+    "line": "56",
+    "label": "9",
+    "hex": "#5eb991"
+  },
+  {
+    "line": "56",
+    "label": "0",
+    "hex": "#a094b3"
+  },
+  {
+    "line": "56",
+    "label": "a",
+    "hex": "#ad0836"
+  },
+  {
+    "line": "56",
+    "label": "b",
+    "hex": "#ea4b90"
+  },
+  {
+    "line": "56",
+    "label": "c",
+    "hex": "#ef84aa"
+  },
+  {
+    "line": "56",
+    "label": "d",
+    "hex": "#6e0e00"
+  },
+  {
+    "line": "56",
+    "label": "e",
+    "hex": "#bb0e0c"
+  },
+  {
+    "line": "56",
+    "label": "f",
+    "hex": "#e30613"
+  },
+  {
+    "line": "56",
+    "label": "h",
+    "hex": "#f9c2a4"
+  },
+  {
+    "line": "56",
+    "label": "j",
+    "hex": "#f39778"
+  },
+  {
+    "line": "56",
+    "label": "k",
+    "hex": "#ed694c"
+  },
+  {
+    "line": "56",
+    "label": "m",
+    "hex": "#bb4e39"
+  },
+  {
+    "line": "56",
+    "label": "n",
+    "hex": "#5d371d"
+  },
+  {
+    "line": "56",
+    "label": "p",
+    "hex": "#98643c"
+  },
+  {
+    "line": "56",
+    "label": "q",
+    "hex": "#c2711d"
+  },
+  {
+    "line": "56",
+    "label": "r",
+    "hex": "#eb9f39"
+  },
+  {
+    "line": "56",
+    "label": "t",
+    "hex": "#f5c475"
+  },
+  {
+    "line": "56",
+    "label": "v",
+    "hex": "#fff8bf"
+  },
+  {
+    "line": "57",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "57",
+    "label": "2",
+    "hex": "#2b2f38"
+  },
+  {
+    "line": "57",
+    "label": "3",
+    "hex": "#3f4050"
+  },
+  {
+    "line": "57",
+    "label": "4",
+    "hex": "#555967"
+  },
+  {
+    "line": "57",
+    "label": "5",
+    "hex": "#676b78"
+  },
+  {
+    "line": "57",
+    "label": "6",
+    "hex": "#7d7e8b"
+  },
+  {
+    "line": "57",
+    "label": "7",
+    "hex": "#96979e"
+  },
+  {
+    "line": "57",
+    "label": "8",
+    "hex": "#b9c6cd"
+  },
+  {
+    "line": "57",
+    "label": "9",
+    "hex": "#e4eff7"
+  },
+  {
+    "line": "57",
+    "label": "0",
+    "hex": "#5bc5f2"
+  },
+  {
+    "line": "57",
+    "label": "a",
+    "hex": "#0075bf"
+  },
+  {
+    "line": "57",
+    "label": "b",
+    "hex": "#0055a3"
+  },
+  {
+    "line": "57",
+    "label": "c",
+    "hex": "#92a2bc"
+  },
+  {
+    "line": "57",
+    "label": "d",
+    "hex": "#009a96"
+  },
+  {
+    "line": "57",
+    "label": "e",
+    "hex": "#7dc4a7"
+  },
+  {
+    "line": "57",
+    "label": "f",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "57",
+    "label": "h",
+    "hex": "#ffcd1c"
+  },
+  {
+    "line": "57",
+    "label": "j",
+    "hex": "#f9ad00"
+  },
+  {
+    "line": "57",
+    "label": "k",
+    "hex": "#f28c00"
+  },
+  {
+    "line": "57",
+    "label": "m",
+    "hex": "#da6e00"
+  },
+  {
+    "line": "57",
+    "label": "n",
+    "hex": "#914200"
+  },
+  {
+    "line": "57",
+    "label": "p",
+    "hex": "#d59367"
+  },
+  {
+    "line": "57",
+    "label": "q",
+    "hex": "#911004"
+  },
+  {
+    "line": "57",
+    "label": "r",
+    "hex": "#e30613"
+  },
+  {
+    "line": "57",
+    "label": "t",
+    "hex": "#f5b0d0"
+  },
+  {
+    "line": "57",
+    "label": "u",
+    "hex": "#a65ea2"
+  },
+  {
+    "line": "59",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "59",
+    "label": "2",
+    "hex": "#004373"
+  },
+  {
+    "line": "59",
+    "label": "3",
+    "hex": "#1d7887"
+  },
+  {
+    "line": "59",
+    "label": "4",
+    "hex": "#4aa8b0"
+  },
+  {
+    "line": "59",
+    "label": "5",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "59",
+    "label": "6",
+    "hex": "#6e2383"
+  },
+  {
+    "line": "59",
+    "label": "7",
+    "hex": "#8d3a7c"
+  },
+  {
+    "line": "59",
+    "label": "8",
+    "hex": "#995ca2"
+  },
+  {
+    "line": "59",
+    "label": "9",
+    "hex": "#bc7eb5"
+  },
+  {
+    "line": "59",
+    "label": "0",
+    "hex": "#deadd1"
+  },
+  {
+    "line": "59",
+    "label": "a",
+    "hex": "#fad6e8"
+  },
+  {
+    "line": "59",
+    "label": "b",
+    "hex": "#f193bd"
+  },
+  {
+    "line": "59",
+    "label": "c",
+    "hex": "#dc7aaf"
+  },
+  {
+    "line": "59",
+    "label": "d",
+    "hex": "#e60062"
+  },
+  {
+    "line": "59",
+    "label": "e",
+    "hex": "#ac0050"
+  },
+  {
+    "line": "59",
+    "label": "f",
+    "hex": "#8e150c"
+  },
+  {
+    "line": "59",
+    "label": "h",
+    "hex": "#b21715"
+  },
+  {
+    "line": "59",
+    "label": "j",
+    "hex": "#e15047"
+  },
+  {
+    "line": "59",
+    "label": "k",
+    "hex": "#f39685"
+  },
+  {
+    "line": "59",
+    "label": "m",
+    "hex": "#f8baa6"
+  },
+  {
+    "line": "59",
+    "label": "n",
+    "hex": "#f8ac00"
+  },
+  {
+    "line": "59",
+    "label": "p",
+    "hex": "#da6d2e"
+  },
+  {
+    "line": "60",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "60",
+    "label": "2",
+    "hex": "#251f1b"
+  },
+  {
+    "line": "60",
+    "label": "3",
+    "hex": "#64524d"
+  },
+  {
+    "line": "60",
+    "label": "4",
+    "hex": "#f0c7ac"
+  },
+  {
+    "line": "60",
+    "label": "5",
+    "hex": "#fff8d8"
+  },
+  {
+    "line": "60",
+    "label": "6",
+    "hex": "#d9b700"
+  },
+  {
+    "line": "60",
+    "label": "7",
+    "hex": "#ea590c"
+  },
+  {
+    "line": "60",
+    "label": "8",
+    "hex": "#e30613"
+  },
+  {
+    "line": "60",
+    "label": "9",
+    "hex": "#720e00"
+  },
+  {
+    "line": "60",
+    "label": "0",
+    "hex": "#628784"
+  },
+  {
+    "line": "60",
+    "label": "a",
+    "hex": "#3f6c67"
+  },
+  {
+    "line": "60",
+    "label": "b",
+    "hex": "#1e2821"
+  },
+  {
+    "line": "60",
+    "label": "c",
+    "hex": "#122939"
+  },
+  {
+    "line": "60",
+    "label": "d",
+    "hex": "#0b3d5d"
+  },
+  {
+    "line": "60",
+    "label": "e",
+    "hex": "#44587e"
+  },
+  {
+    "line": "60",
+    "label": "f",
+    "hex": "#63769f"
+  },
+  {
+    "line": "60",
+    "label": "h",
+    "hex": "#465063"
+  },
+  {
+    "line": "60",
+    "label": "j",
+    "hex": "#2f3547"
+  },
+  {
+    "line": "60",
+    "label": "k",
+    "hex": "#2c2736"
+  },
+  {
+    "line": "60",
+    "label": "m",
+    "hex": "#3e2152"
+  },
+  {
+    "line": "60",
+    "label": "n",
+    "hex": "#724e91"
+  },
+  {
+    "line": "60",
+    "label": "p",
+    "hex": "#9c75ad"
+  },
+  {
+    "line": "61",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "61",
+    "label": "2",
+    "hex": "#776964"
+  },
+  {
+    "line": "61",
+    "label": "3",
+    "hex": "#917f79"
+  },
+  {
+    "line": "61",
+    "label": "4",
+    "hex": "#968b8b"
+  },
+  {
+    "line": "61",
+    "label": "5",
+    "hex": "#b5a7a7"
+  },
+  {
+    "line": "61",
+    "label": "6",
+    "hex": "#d4d1d4"
+  },
+  {
+    "line": "61",
+    "label": "7",
+    "hex": "#a6a4a9"
+  },
+  {
+    "line": "61",
+    "label": "8",
+    "hex": "#848488"
+  },
+  {
+    "line": "61",
+    "label": "9",
+    "hex": "#545454"
+  },
+  {
+    "line": "61",
+    "label": "0",
+    "hex": "#49474a"
+  },
+  {
+    "line": "61",
+    "label": "a",
+    "hex": "#1d1d28"
+  },
+  {
+    "line": "61",
+    "label": "b",
+    "hex": "#474755"
+  },
+  {
+    "line": "61",
+    "label": "c",
+    "hex": "#7c839d"
+  },
+  {
+    "line": "61",
+    "label": "d",
+    "hex": "#c4dff6"
+  },
+  {
+    "line": "61",
+    "label": "e",
+    "hex": "#66bee7"
+  },
+  {
+    "line": "61",
+    "label": "f",
+    "hex": "#0065b0"
+  },
+  {
+    "line": "61",
+    "label": "h",
+    "hex": "#004f8f"
+  },
+  {
+    "line": "61",
+    "label": "j",
+    "hex": "#00ab9c"
+  },
+  {
+    "line": "61",
+    "label": "k",
+    "hex": "#00766f"
+  },
+  {
+    "line": "61",
+    "label": "m",
+    "hex": "#635e20"
+  },
+  {
+    "line": "61",
+    "label": "n",
+    "hex": "#868224"
+  },
+  {
+    "line": "61",
+    "label": "p",
+    "hex": "#d29f26"
+  },
+  {
+    "line": "61",
+    "label": "q",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "61",
+    "label": "r",
+    "hex": "#fdc100"
+  },
+  {
+    "line": "61",
+    "label": "t",
+    "hex": "#ef7b00"
+  },
+  {
+    "line": "61",
+    "label": "u",
+    "hex": "#cc5a05"
+  },
+  {
+    "line": "61",
+    "label": "w",
+    "hex": "#9f4a11"
+  },
+  {
+    "line": "61",
+    "label": "x",
+    "hex": "#683318"
+  },
+  {
+    "line": "61",
+    "label": "y",
+    "hex": "#eca866"
+  },
+  {
+    "line": "61",
+    "label": "z",
+    "hex": "#fccb84"
+  },
+  {
+    "line": "61",
+    "label": "\u00a7",
+    "hex": "#e8b97f"
+  },
+  {
+    "line": "62",
+    "label": "\u00b6",
+    "hex": "#c7925e"
+  },
+  {
+    "line": "62",
+    "label": "$",
+    "hex": "#925b26"
+  },
+  {
+    "line": "62",
+    "label": "\u03ea",
+    "hex": "#6d451a"
+  },
+  {
+    "line": "62",
+    "label": "\u03a8",
+    "hex": "#845944"
+  },
+  {
+    "line": "62",
+    "label": "\u0466",
+    "hex": "#af6d58"
+  },
+  {
+    "line": "62",
+    "label": "\u00a5",
+    "hex": "#965341"
+  },
+  {
+    "line": "62",
+    "label": "\u0238",
+    "hex": "#7a2d1e"
+  },
+  {
+    "line": "62",
+    "label": "\u0277",
+    "hex": "#992810"
+  },
+  {
+    "line": "62",
+    "label": "\u0276",
+    "hex": "#bd3d15"
+  },
+  {
+    "line": "62",
+    "label": "\u0394",
+    "hex": "#d57c59"
+  },
+  {
+    "line": "62",
+    "label": "\u026e",
+    "hex": "#bf5f42"
+  },
+  {
+    "line": "62",
+    "label": "\u25a1",
+    "hex": "#a43c2d"
+  },
+  {
+    "line": "62",
+    "label": "\u25ca",
+    "hex": "#430600"
+  },
+  {
+    "line": "62",
+    "label": "\u03a3",
+    "hex": "#810f00"
+  },
+  {
+    "line": "62",
+    "label": "\u03df",
+    "hex": "#a31008"
+  },
+  {
+    "line": "62",
+    "label": "\u046a",
+    "hex": "#e30613"
+  },
+  {
+    "line": "62",
+    "label": "\u040a",
+    "hex": "#cf3c4e"
+  },
+  {
+    "line": "62",
+    "label": "\u20aa",
+    "hex": "#ed6869"
+  },
+  {
+    "line": "62",
+    "label": "\u2248",
+    "hex": "#ef81a0"
+  },
+  {
+    "line": "62",
+    "label": "#",
+    "hex": "#f4a7b3"
+  },
+  {
+    "line": "62",
+    "label": "\u0416",
+    "hex": "#9d3f35"
+  },
+  {
+    "line": "62",
+    "label": "\u0126",
+    "hex": "#9a6f4d"
+  },
+  {
+    "line": "62",
+    "label": "\u25a1",
+    "hex": "#b49171"
+  },
+  {
+    "line": "62",
+    "label": "\u2640",
+    "hex": "#6a5345"
+  },
+  {
+    "line": "62",
+    "label": "\u2642",
+    "hex": "#816655"
+  },
+  {
+    "line": "62",
+    "label": "\u01be",
+    "hex": "#e13e11"
+  },
+  {
+    "line": "62",
+    "label": "\u0244",
+    "hex": "#b43409"
+  },
+  {
+    "line": "63",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "63",
+    "label": "2",
+    "hex": "#c1c4c6"
+  },
+  {
+    "line": "63",
+    "label": "3",
+    "hex": "#b2e0f9"
+  },
+  {
+    "line": "63",
+    "label": "4",
+    "hex": "#00a4e0"
+  },
+  {
+    "line": "63",
+    "label": "5",
+    "hex": "#0070ba"
+  },
+  {
+    "line": "63",
+    "label": "6",
+    "hex": "#25354e"
+  },
+  {
+    "line": "63",
+    "label": "7",
+    "hex": "#1d0d45"
+  },
+  {
+    "line": "63",
+    "label": "8",
+    "hex": "#2e6272"
+  },
+  {
+    "line": "63",
+    "label": "9",
+    "hex": "#00867b"
+  },
+  {
+    "line": "63",
+    "label": "0",
+    "hex": "#69bd93"
+  },
+  {
+    "line": "63",
+    "label": "a",
+    "hex": "#ec6408"
+  },
+  {
+    "line": "63",
+    "label": "b",
+    "hex": "#f6a200"
+  },
+  {
+    "line": "63",
+    "label": "c",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "63",
+    "label": "d",
+    "hex": "#fff7b2"
+  },
+  {
+    "line": "63",
+    "label": "e",
+    "hex": "#efba73"
+  },
+  {
+    "line": "63",
+    "label": "f",
+    "hex": "#915b19"
+  },
+  {
+    "line": "63",
+    "label": "h",
+    "hex": "#f28e77"
+  },
+  {
+    "line": "63",
+    "label": "j",
+    "hex": "#e30613"
+  },
+  {
+    "line": "63",
+    "label": "k",
+    "hex": "#a21007"
+  },
+  {
+    "line": "63",
+    "label": "m",
+    "hex": "#ec83ab"
+  },
+  {
+    "line": "63",
+    "label": "n",
+    "hex": "#c85c97"
+  },
+  {
+    "line": "63",
+    "label": "p",
+    "hex": "#a63179"
+  },
+  {
+    "line": "63",
+    "label": "q",
+    "hex": "#721c51"
+  },
+  {
+    "line": "63",
+    "label": "r",
+    "hex": "#441932"
+  },
+  {
+    "line": "63",
+    "label": "t",
+    "hex": "#5d3f5e"
+  },
+  {
+    "line": "63",
+    "label": "u",
+    "hex": "#9b608d"
+  },
+  {
+    "line": "64",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "64",
+    "label": "2",
+    "hex": "#2f2b26"
+  },
+  {
+    "line": "64",
+    "label": "3",
+    "hex": "#59534d"
+  },
+  {
+    "line": "64",
+    "label": "4",
+    "hex": "#999b9d"
+  },
+  {
+    "line": "64",
+    "label": "5",
+    "hex": "#cccccc"
+  },
+  {
+    "line": "64",
+    "label": "6",
+    "hex": "#bcdef6"
+  },
+  {
+    "line": "64",
+    "label": "7",
+    "hex": "#0092d8"
+  },
+  {
+    "line": "64",
+    "label": "8",
+    "hex": "#164194"
+  },
+  {
+    "line": "64",
+    "label": "9",
+    "hex": "#948db2"
+  },
+  {
+    "line": "64",
+    "label": "0",
+    "hex": "#9f559c"
+  },
+  {
+    "line": "64",
+    "label": "a",
+    "hex": "#6e2881"
+  },
+  {
+    "line": "64",
+    "label": "b",
+    "hex": "#8c1737"
+  },
+  {
+    "line": "64",
+    "label": "c",
+    "hex": "#b4063d"
+  },
+  {
+    "line": "64",
+    "label": "d",
+    "hex": "#e94664"
+  },
+  {
+    "line": "64",
+    "label": "e",
+    "hex": "#f5b5d2"
+  },
+  {
+    "line": "64",
+    "label": "f",
+    "hex": "#9c1006"
+  },
+  {
+    "line": "64",
+    "label": "h",
+    "hex": "#d70911"
+  },
+  {
+    "line": "64",
+    "label": "j",
+    "hex": "#f49e80"
+  },
+  {
+    "line": "64",
+    "label": "k",
+    "hex": "#fac6a7"
+  },
+  {
+    "line": "64",
+    "label": "m",
+    "hex": "#d39c7d"
+  },
+  {
+    "line": "64",
+    "label": "n",
+    "hex": "#ac674b"
+  },
+  {
+    "line": "64",
+    "label": "p",
+    "hex": "#543020"
+  },
+  {
+    "line": "64",
+    "label": "q",
+    "hex": "#955123"
+  },
+  {
+    "line": "64",
+    "label": "r",
+    "hex": "#ef7d00"
+  },
+  {
+    "line": "64",
+    "label": "t",
+    "hex": "#fbba00"
+  },
+  {
+    "line": "64",
+    "label": "u",
+    "hex": "#ffd66f"
+  },
+  {
+    "line": "64",
+    "label": "w",
+    "hex": "#e3b236"
+  },
+  {
+    "line": "64",
+    "label": "x",
+    "hex": "#a2962e"
+  },
+  {
+    "line": "64",
+    "label": "y",
+    "hex": "#7c7119"
+  },
+  {
+    "line": "64",
+    "label": "z",
+    "hex": "#00a174"
+  },
+  {
+    "line": "64",
+    "label": "\u03ea",
+    "hex": "#007046"
+  },
+  {
+    "line": "65",
+    "label": "1",
+    "hex": "#de704b"
+  },
+  {
+    "line": "65",
+    "label": "2",
+    "hex": "#f39670"
+  },
+  {
+    "line": "65",
+    "label": "3",
+    "hex": "#fcca83"
+  },
+  {
+    "line": "65",
+    "label": "4",
+    "hex": "#fff4a8"
+  },
+  {
+    "line": "65",
+    "label": "5",
+    "hex": "#c4deb2"
+  },
+  {
+    "line": "65",
+    "label": "6",
+    "hex": "#7ec49f"
+  },
+  {
+    "line": "65",
+    "label": "7",
+    "hex": "#009a9a"
+  },
+  {
+    "line": "65",
+    "label": "8",
+    "hex": "#0056a4"
+  },
+  {
+    "line": "65",
+    "label": "9",
+    "hex": "#0074be"
+  },
+  {
+    "line": "65",
+    "label": "0",
+    "hex": "#0089d0"
+  },
+  {
+    "line": "65",
+    "label": "a",
+    "hex": "#00ace9"
+  },
+  {
+    "line": "65",
+    "label": "b",
+    "hex": "#cbe9fc"
+  },
+  {
+    "line": "65",
+    "label": "c",
+    "hex": "#96c2e9"
+  },
+  {
+    "line": "65",
+    "label": "d",
+    "hex": "#6c8ac6"
+  },
+  {
+    "line": "65",
+    "label": "e",
+    "hex": "#5a68af"
+  },
+  {
+    "line": "65",
+    "label": "f",
+    "hex": "#9c69aa"
+  },
+  {
+    "line": "65",
+    "label": "h",
+    "hex": "#c08bbd"
+  },
+  {
+    "line": "65",
+    "label": "j",
+    "hex": "#cdacd2"
+  },
+  {
+    "line": "65",
+    "label": "k",
+    "hex": "#da5c98"
+  },
+  {
+    "line": "65",
+    "label": "m",
+    "hex": "#ee79ad"
+  },
+  {
+    "line": "65",
+    "label": "n",
+    "hex": "#f4a8bc"
+  },
+  {
+    "line": "65",
+    "label": "p",
+    "hex": "#facfc2"
+  },
+  {
+    "line": "67",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "67",
+    "label": "2",
+    "hex": "#62605f"
+  },
+  {
+    "line": "67",
+    "label": "3",
+    "hex": "#9e8b8e"
+  },
+  {
+    "line": "67",
+    "label": "4",
+    "hex": "#d1b2a5"
+  },
+  {
+    "line": "67",
+    "label": "5",
+    "hex": "#838f95"
+  },
+  {
+    "line": "67",
+    "label": "6",
+    "hex": "#9d9d9c"
+  },
+  {
+    "line": "67",
+    "label": "7",
+    "hex": "#bebebe"
+  },
+  {
+    "line": "67",
+    "label": "8",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "67",
+    "label": "9",
+    "hex": "#75ccf4"
+  },
+  {
+    "line": "67",
+    "label": "0",
+    "hex": "#00a1e4"
+  },
+  {
+    "line": "67",
+    "label": "a",
+    "hex": "#2e81c4"
+  },
+  {
+    "line": "67",
+    "label": "b",
+    "hex": "#008f93"
+  },
+  {
+    "line": "67",
+    "label": "c",
+    "hex": "#007766"
+  },
+  {
+    "line": "67",
+    "label": "d",
+    "hex": "#005247"
+  },
+  {
+    "line": "67",
+    "label": "e",
+    "hex": "#002c2c"
+  },
+  {
+    "line": "67",
+    "label": "f",
+    "hex": "#45501f"
+  },
+  {
+    "line": "67",
+    "label": "h",
+    "hex": "#5d7c2c"
+  },
+  {
+    "line": "67",
+    "label": "j",
+    "hex": "#a2a866"
+  },
+  {
+    "line": "67",
+    "label": "k",
+    "hex": "#007e35"
+  },
+  {
+    "line": "67",
+    "label": "m",
+    "hex": "#409f30"
+  },
+  {
+    "line": "67",
+    "label": "n",
+    "hex": "#8fbf21"
+  },
+  {
+    "line": "67",
+    "label": "p",
+    "hex": "#ffdf00"
+  },
+  {
+    "line": "67",
+    "label": "q",
+    "hex": "#f6a200"
+  },
+  {
+    "line": "67",
+    "label": "r",
+    "hex": "#c06d17"
+  },
+  {
+    "line": "67",
+    "label": "t",
+    "hex": "#915418"
+  },
+  {
+    "line": "67",
+    "label": "u",
+    "hex": "#95654a"
+  },
+  {
+    "line": "67",
+    "label": "w",
+    "hex": "#bc845a"
+  },
+  {
+    "line": "67",
+    "label": "x",
+    "hex": "#e1b27d"
+  },
+  {
+    "line": "67",
+    "label": "y",
+    "hex": "#fef5c1"
+  },
+  {
+    "line": "67",
+    "label": "z",
+    "hex": "#f0844f"
+  },
+  {
+    "line": "67",
+    "label": "\u03ea",
+    "hex": "#d4532e"
+  },
+  {
+    "line": "68",
+    "label": "\u03a3",
+    "hex": "#ac3418"
+  },
+  {
+    "line": "68",
+    "label": "\u0471",
+    "hex": "#e30613"
+  },
+  {
+    "line": "68",
+    "label": "\u0466",
+    "hex": "#f5b5d2"
+  },
+  {
+    "line": "68",
+    "label": "\u00a5",
+    "hex": "#927eb9"
+  },
+  {
+    "line": "68",
+    "label": "\u0238",
+    "hex": "#9b467c"
+  },
+  {
+    "line": "69",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "69",
+    "label": "2",
+    "hex": "#927268"
+  },
+  {
+    "line": "69",
+    "label": "3",
+    "hex": "#af9287"
+  },
+  {
+    "line": "69",
+    "label": "4",
+    "hex": "#c5b69a"
+  },
+  {
+    "line": "69",
+    "label": "5",
+    "hex": "#e3dbc9"
+  },
+  {
+    "line": "69",
+    "label": "6",
+    "hex": "#7994ac"
+  },
+  {
+    "line": "69",
+    "label": "7",
+    "hex": "#4e6c8a"
+  },
+  {
+    "line": "69",
+    "label": "8",
+    "hex": "#3d4e78"
+  },
+  {
+    "line": "69",
+    "label": "9",
+    "hex": "#007fbb"
+  },
+  {
+    "line": "69",
+    "label": "0",
+    "hex": "#5fb7e7"
+  },
+  {
+    "line": "69",
+    "label": "a",
+    "hex": "#90d4f6"
+  },
+  {
+    "line": "69",
+    "label": "b",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "69",
+    "label": "c",
+    "hex": "#c1dfc0"
+  },
+  {
+    "line": "69",
+    "label": "d",
+    "hex": "#46b7a7"
+  },
+  {
+    "line": "69",
+    "label": "e",
+    "hex": "#009483"
+  },
+  {
+    "line": "69",
+    "label": "f",
+    "hex": "#026457"
+  },
+  {
+    "line": "69",
+    "label": "h",
+    "hex": "#184b26"
+  },
+  {
+    "line": "69",
+    "label": "j",
+    "hex": "#00703a"
+  },
+  {
+    "line": "69",
+    "label": "k",
+    "hex": "#519035"
+  },
+  {
+    "line": "69",
+    "label": "m",
+    "hex": "#93b124"
+  },
+  {
+    "line": "69",
+    "label": "n",
+    "hex": "#ccd84b"
+  },
+  {
+    "line": "69",
+    "label": "p",
+    "hex": "#ffe700"
+  },
+  {
+    "line": "69",
+    "label": "q",
+    "hex": "#f8ac00"
+  },
+  {
+    "line": "69",
+    "label": "r",
+    "hex": "#d1601d"
+  },
+  {
+    "line": "69",
+    "label": "t",
+    "hex": "#ea8c44"
+  },
+  {
+    "line": "69",
+    "label": "u",
+    "hex": "#f7d092"
+  },
+  {
+    "line": "69",
+    "label": "w",
+    "hex": "#e3a360"
+  },
+  {
+    "line": "69",
+    "label": "x",
+    "hex": "#c98a59"
+  },
+  {
+    "line": "69",
+    "label": "y",
+    "hex": "#884a38"
+  },
+  {
+    "line": "69",
+    "label": "z",
+    "hex": "#bf4738"
+  },
+  {
+    "line": "69",
+    "label": "\u03ea",
+    "hex": "#8c3029"
+  },
+  {
+    "line": "70",
+    "label": "\u0424",
+    "hex": "#900e17"
+  },
+  {
+    "line": "70",
+    "label": "\u0471",
+    "hex": "#b50e0b"
+  },
+  {
+    "line": "70",
+    "label": "\u0466",
+    "hex": "#e30613"
+  },
+  {
+    "line": "70",
+    "label": "\u00a5",
+    "hex": "#e45588"
+  },
+  {
+    "line": "70",
+    "label": "\u0238",
+    "hex": "#f08fba"
+  },
+  {
+    "line": "70",
+    "label": "\u1d25",
+    "hex": "#f7b8b9"
+  },
+  {
+    "line": "70",
+    "label": "\u0276",
+    "hex": "#e0b0d2"
+  },
+  {
+    "line": "70",
+    "label": "\u0275",
+    "hex": "#cf82b6"
+  },
+  {
+    "line": "70",
+    "label": "\u026e",
+    "hex": "#9f85bc"
+  },
+  {
+    "line": "71",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "71",
+    "label": "2",
+    "hex": "#6f717c"
+  },
+  {
+    "line": "71",
+    "label": "3",
+    "hex": "#9c6ead"
+  },
+  {
+    "line": "71",
+    "label": "4",
+    "hex": "#713e8a"
+  },
+  {
+    "line": "71",
+    "label": "5",
+    "hex": "#bfe5fb"
+  },
+  {
+    "line": "71",
+    "label": "6",
+    "hex": "#37a3aa"
+  },
+  {
+    "line": "71",
+    "label": "7",
+    "hex": "#2e5928"
+  },
+  {
+    "line": "71",
+    "label": "8",
+    "hex": "#608e33"
+  },
+  {
+    "line": "71",
+    "label": "9",
+    "hex": "#7c3735"
+  },
+  {
+    "line": "71",
+    "label": "0",
+    "hex": "#a7494d"
+  },
+  {
+    "line": "71",
+    "label": "a",
+    "hex": "#d76d67"
+  },
+  {
+    "line": "71",
+    "label": "b",
+    "hex": "#f1a582"
+  },
+  {
+    "line": "71",
+    "label": "c",
+    "hex": "#de7f66"
+  },
+  {
+    "line": "71",
+    "label": "d",
+    "hex": "#e6007f"
+  },
+  {
+    "line": "71",
+    "label": "e",
+    "hex": "#af172e"
+  },
+  {
+    "line": "71",
+    "label": "f",
+    "hex": "#e11331"
+  },
+  {
+    "line": "71",
+    "label": "h",
+    "hex": "#ef7900"
+  },
+  {
+    "line": "71",
+    "label": "j",
+    "hex": "#ffce00"
+  },
+  {
+    "line": "71",
+    "label": "k",
+    "hex": "#fee3b6"
+  },
+  {
+    "line": "71",
+    "label": "m",
+    "hex": "#edbd6a"
+  },
+  {
+    "line": "71",
+    "label": "n",
+    "hex": "#b46633"
+  },
+  {
+    "line": "71",
+    "label": "p",
+    "hex": "#7d3d24"
+  },
+  {
+    "line": "71",
+    "label": "q",
+    "hex": "#63301a"
+  },
+  {
+    "line": "71",
+    "label": "r",
+    "hex": "#c5b8a2"
+  },
+  {
+    "line": "71",
+    "label": "t",
+    "hex": "#a28e69"
+  },
+  {
+    "line": "71",
+    "label": "u",
+    "hex": "#007773"
+  },
+  {
+    "line": "72",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "72",
+    "label": "2",
+    "hex": "#464748"
+  },
+  {
+    "line": "72",
+    "label": "3",
+    "hex": "#7d7d7f"
+  },
+  {
+    "line": "72",
+    "label": "4",
+    "hex": "#a1a09c"
+  },
+  {
+    "line": "72",
+    "label": "5",
+    "hex": "#678199"
+  },
+  {
+    "line": "72",
+    "label": "6",
+    "hex": "#271c65"
+  },
+  {
+    "line": "72",
+    "label": "7",
+    "hex": "#005eaa"
+  },
+  {
+    "line": "72",
+    "label": "8",
+    "hex": "#3e77bc"
+  },
+  {
+    "line": "72",
+    "label": "9",
+    "hex": "#8aa9d8"
+  },
+  {
+    "line": "72",
+    "label": "0",
+    "hex": "#c0e4f8"
+  },
+  {
+    "line": "72",
+    "label": "a",
+    "hex": "#1ebaed"
+  },
+  {
+    "line": "72",
+    "label": "b",
+    "hex": "#005a61"
+  },
+  {
+    "line": "72",
+    "label": "c",
+    "hex": "#008b97"
+  },
+  {
+    "line": "72",
+    "label": "d",
+    "hex": "#67826b"
+  },
+  {
+    "line": "72",
+    "label": "e",
+    "hex": "#8e3310"
+  },
+  {
+    "line": "72",
+    "label": "f",
+    "hex": "#5c4331"
+  },
+  {
+    "line": "72",
+    "label": "h",
+    "hex": "#a96a24"
+  },
+  {
+    "line": "72",
+    "label": "j",
+    "hex": "#d98408"
+  },
+  {
+    "line": "72",
+    "label": "k",
+    "hex": "#df9c42"
+  },
+  {
+    "line": "72",
+    "label": "m",
+    "hex": "#fbd45f"
+  },
+  {
+    "line": "72",
+    "label": "n",
+    "hex": "#ffee00"
+  },
+  {
+    "line": "72",
+    "label": "p",
+    "hex": "#f9ae00"
+  },
+  {
+    "line": "72",
+    "label": "q",
+    "hex": "#ea5b0c"
+  },
+  {
+    "line": "72",
+    "label": "r",
+    "hex": "#e30613"
+  },
+  {
+    "line": "72",
+    "label": "t",
+    "hex": "#a70f08"
+  },
+  {
+    "line": "72",
+    "label": "u",
+    "hex": "#4b0700"
+  },
+  {
+    "line": "72",
+    "label": "w",
+    "hex": "#9f3c35"
+  },
+  {
+    "line": "72",
+    "label": "x",
+    "hex": "#f3b3d1"
+  },
+  {
+    "line": "72",
+    "label": "y",
+    "hex": "#b98289"
+  },
+  {
+    "line": "72",
+    "label": "z",
+    "hex": "#c8378c"
+  },
+  {
+    "line": "72",
+    "label": "\u00a5",
+    "hex": "#8f1c5b"
+  },
+  {
+    "line": "72",
+    "label": "\u0466",
+    "hex": "#7b5a6e"
+  },
+  {
+    "line": "72",
+    "label": "\u0238",
+    "hex": "#91759a"
+  },
+  {
+    "line": "72",
+    "label": "\u0394",
+    "hex": "#73578a"
+  },
+  {
+    "line": "72",
+    "label": "\u03a8",
+    "hex": "#5d2b7f"
+  },
+  {
+    "line": "73",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "73",
+    "label": "2",
+    "hex": "#4a4a46"
+  },
+  {
+    "line": "73",
+    "label": "3",
+    "hex": "#b7e2fa"
+  },
+  {
+    "line": "73",
+    "label": "4",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "73",
+    "label": "5",
+    "hex": "#0062ae"
+  },
+  {
+    "line": "73",
+    "label": "6",
+    "hex": "#8a92ae"
+  },
+  {
+    "line": "73",
+    "label": "7",
+    "hex": "#ee6f61"
+  },
+  {
+    "line": "73",
+    "label": "8",
+    "hex": "#b72740"
+  },
+  {
+    "line": "73",
+    "label": "9",
+    "hex": "#952926"
+  },
+  {
+    "line": "73",
+    "label": "0",
+    "hex": "#781a17"
+  },
+  {
+    "line": "73",
+    "label": "a",
+    "hex": "#430500"
+  },
+  {
+    "line": "73",
+    "label": "b",
+    "hex": "#ae0f0a"
+  },
+  {
+    "line": "73",
+    "label": "c",
+    "hex": "#e30613"
+  },
+  {
+    "line": "73",
+    "label": "d",
+    "hex": "#ed6c53"
+  },
+  {
+    "line": "73",
+    "label": "e",
+    "hex": "#ef906e"
+  },
+  {
+    "line": "73",
+    "label": "f",
+    "hex": "#f9c19e"
+  },
+  {
+    "line": "73",
+    "label": "h",
+    "hex": "#752d03"
+  },
+  {
+    "line": "73",
+    "label": "j",
+    "hex": "#a9490f"
+  },
+  {
+    "line": "73",
+    "label": "k",
+    "hex": "#cc4e08"
+  },
+  {
+    "line": "73",
+    "label": "m",
+    "hex": "#f3911f"
+  },
+  {
+    "line": "73",
+    "label": "n",
+    "hex": "#e74011"
+  },
+  {
+    "line": "73",
+    "label": "p",
+    "hex": "#ee7203"
+  },
+  {
+    "line": "73",
+    "label": "q",
+    "hex": "#f9b000"
+  },
+  {
+    "line": "73",
+    "label": "r",
+    "hex": "#ffdf00"
+  },
+  {
+    "line": "73",
+    "label": "t",
+    "hex": "#fff151"
+  },
+  {
+    "line": "75",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "75",
+    "label": "2",
+    "hex": "#8a827c"
+  },
+  {
+    "line": "75",
+    "label": "3",
+    "hex": "#7a97a7"
+  },
+  {
+    "line": "75",
+    "label": "4",
+    "hex": "#505563"
+  },
+  {
+    "line": "75",
+    "label": "5",
+    "hex": "#003766"
+  },
+  {
+    "line": "75",
+    "label": "6",
+    "hex": "#00497c"
+  },
+  {
+    "line": "75",
+    "label": "7",
+    "hex": "#456389"
+  },
+  {
+    "line": "75",
+    "label": "8",
+    "hex": "#5f83b9"
+  },
+  {
+    "line": "75",
+    "label": "9",
+    "hex": "#a5b5de"
+  },
+  {
+    "line": "75",
+    "label": "0",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "75",
+    "label": "a",
+    "hex": "#69c8f3"
+  },
+  {
+    "line": "75",
+    "label": "b",
+    "hex": "#335d6f"
+  },
+  {
+    "line": "75",
+    "label": "c",
+    "hex": "#00a278"
+  },
+  {
+    "line": "75",
+    "label": "d",
+    "hex": "#005c51"
+  },
+  {
+    "line": "75",
+    "label": "e",
+    "hex": "#29601e"
+  },
+  {
+    "line": "75",
+    "label": "f",
+    "hex": "#739555"
+  },
+  {
+    "line": "75",
+    "label": "h",
+    "hex": "#806e45"
+  },
+  {
+    "line": "75",
+    "label": "j",
+    "hex": "#d4c374"
+  },
+  {
+    "line": "75",
+    "label": "k",
+    "hex": "#f3c57e"
+  },
+  {
+    "line": "75",
+    "label": "m",
+    "hex": "#f08100"
+  },
+  {
+    "line": "75",
+    "label": "n",
+    "hex": "#d46502"
+  },
+  {
+    "line": "75",
+    "label": "p",
+    "hex": "#8d2d11"
+  },
+  {
+    "line": "75",
+    "label": "q",
+    "hex": "#4e1300"
+  },
+  {
+    "line": "75",
+    "label": "r",
+    "hex": "#c85c43"
+  },
+  {
+    "line": "75",
+    "label": "t",
+    "hex": "#f2937f"
+  },
+  {
+    "line": "75",
+    "label": "u",
+    "hex": "#f7b89e"
+  },
+  {
+    "line": "75",
+    "label": "w",
+    "hex": "#881001"
+  },
+  {
+    "line": "75",
+    "label": "x",
+    "hex": "#ac0f09"
+  },
+  {
+    "line": "75",
+    "label": "y",
+    "hex": "#d50911"
+  },
+  {
+    "line": "75",
+    "label": "z",
+    "hex": "#f18a9a"
+  },
+  {
+    "line": "75",
+    "label": "\u03ea",
+    "hex": "#eb5d8d"
+  },
+  {
+    "line": "75",
+    "label": "\u0424",
+    "hex": "#e83972"
+  },
+  {
+    "line": "75",
+    "label": "\u0471",
+    "hex": "#cf2868"
+  },
+  {
+    "line": "75",
+    "label": "\u0466",
+    "hex": "#7c3d90"
+  },
+  {
+    "line": "76",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "76",
+    "label": "2",
+    "hex": "#9d9d9c"
+  },
+  {
+    "line": "76",
+    "label": "3",
+    "hex": "#11314a"
+  },
+  {
+    "line": "76",
+    "label": "4",
+    "hex": "#4f5b78"
+  },
+  {
+    "line": "76",
+    "label": "5",
+    "hex": "#5f7395"
+  },
+  {
+    "line": "76",
+    "label": "6",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "76",
+    "label": "7",
+    "hex": "#009ee3"
+  },
+  {
+    "line": "76",
+    "label": "8",
+    "hex": "#0079b3"
+  },
+  {
+    "line": "76",
+    "label": "9",
+    "hex": "#3a4a9a"
+  },
+  {
+    "line": "76",
+    "label": "0",
+    "hex": "#312783"
+  },
+  {
+    "line": "76",
+    "label": "a",
+    "hex": "#2a2e60"
+  },
+  {
+    "line": "76",
+    "label": "b",
+    "hex": "#5b4f81"
+  },
+  {
+    "line": "76",
+    "label": "c",
+    "hex": "#27224d"
+  },
+  {
+    "line": "76",
+    "label": "d",
+    "hex": "#6a0d00"
+  },
+  {
+    "line": "76",
+    "label": "e",
+    "hex": "#d4164f"
+  },
+  {
+    "line": "76",
+    "label": "f",
+    "hex": "#e83b8d"
+  },
+  {
+    "line": "76",
+    "label": "h",
+    "hex": "#f39d70"
+  },
+  {
+    "line": "76",
+    "label": "j",
+    "hex": "#e07855"
+  },
+  {
+    "line": "76",
+    "label": "k",
+    "hex": "#c9493f"
+  },
+  {
+    "line": "76",
+    "label": "m",
+    "hex": "#853416"
+  },
+  {
+    "line": "76",
+    "label": "n",
+    "hex": "#b05127"
+  },
+  {
+    "line": "76",
+    "label": "p",
+    "hex": "#ce7b4e"
+  },
+  {
+    "line": "76",
+    "label": "q",
+    "hex": "#ebc37f"
+  },
+  {
+    "line": "76",
+    "label": "r",
+    "hex": "#f9bc49"
+  },
+  {
+    "line": "76",
+    "label": "t",
+    "hex": "#ee9724"
+  },
+  {
+    "line": "76",
+    "label": "v",
+    "hex": "#c95c1b"
+  },
+  {
+    "line": "77",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "77",
+    "label": "2",
+    "hex": "#2e2a33"
+  },
+  {
+    "line": "77",
+    "label": "3",
+    "hex": "#4c4555"
+  },
+  {
+    "line": "77",
+    "label": "4",
+    "hex": "#698493"
+  },
+  {
+    "line": "77",
+    "label": "5",
+    "hex": "#9ba5c0"
+  },
+  {
+    "line": "77",
+    "label": "6",
+    "hex": "#213c5c"
+  },
+  {
+    "line": "77",
+    "label": "7",
+    "hex": "#37677e"
+  },
+  {
+    "line": "77",
+    "label": "8",
+    "hex": "#292c67"
+  },
+  {
+    "line": "77",
+    "label": "9",
+    "hex": "#00538a"
+  },
+  {
+    "line": "77",
+    "label": "0",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "77",
+    "label": "a",
+    "hex": "#79cdf4"
+  },
+  {
+    "line": "77",
+    "label": "b",
+    "hex": "#00afea"
+  },
+  {
+    "line": "77",
+    "label": "c",
+    "hex": "#0083cb"
+  },
+  {
+    "line": "77",
+    "label": "d",
+    "hex": "#0061ad"
+  },
+  {
+    "line": "77",
+    "label": "e",
+    "hex": "#009a93"
+  },
+  {
+    "line": "77",
+    "label": "f",
+    "hex": "#1c5656"
+  },
+  {
+    "line": "77",
+    "label": "h",
+    "hex": "#006457"
+  },
+  {
+    "line": "77",
+    "label": "j",
+    "hex": "#009067"
+  },
+  {
+    "line": "77",
+    "label": "k",
+    "hex": "#5cb382"
+  },
+  {
+    "line": "77",
+    "label": "m",
+    "hex": "#9dcdae"
+  },
+  {
+    "line": "77",
+    "label": "n",
+    "hex": "#d4e5c9"
+  },
+  {
+    "line": "77",
+    "label": "p",
+    "hex": "#006642"
+  },
+  {
+    "line": "77",
+    "label": "q",
+    "hex": "#1e7c4a"
+  },
+  {
+    "line": "77",
+    "label": "r",
+    "hex": "#60b453"
+  },
+  {
+    "line": "77",
+    "label": "t",
+    "hex": "#b3ce48"
+  },
+  {
+    "line": "77",
+    "label": "u",
+    "hex": "#759f2d"
+  },
+  {
+    "line": "77",
+    "label": "w",
+    "hex": "#326a43"
+  },
+  {
+    "line": "77",
+    "label": "x",
+    "hex": "#144837"
+  },
+  {
+    "line": "77",
+    "label": "y",
+    "hex": "#373f49"
+  },
+  {
+    "line": "77",
+    "label": "z",
+    "hex": "#5e6c64"
+  },
+  {
+    "line": "77",
+    "label": "\u03ea",
+    "hex": "#a7b17c"
+  },
+  {
+    "line": "78",
+    "label": "\u00d8",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "78",
+    "label": "\u0471",
+    "hex": "#f9ba00"
+  },
+  {
+    "line": "78",
+    "label": "\u0466",
+    "hex": "#f49600"
+  },
+  {
+    "line": "78",
+    "label": "\u00a5",
+    "hex": "#ee7203"
+  },
+  {
+    "line": "78",
+    "label": "\u0238",
+    "hex": "#cc6919"
+  },
+  {
+    "line": "78",
+    "label": "\u0276",
+    "hex": "#facaa1"
+  },
+  {
+    "line": "78",
+    "label": "\u0275",
+    "hex": "#f19773"
+  },
+  {
+    "line": "78",
+    "label": "\u026e",
+    "hex": "#bb4c39"
+  },
+  {
+    "line": "78",
+    "label": "\u03a9",
+    "hex": "#f4a5a4"
+  },
+  {
+    "line": "78",
+    "label": "\u03c6",
+    "hex": "#e07d7f"
+  },
+  {
+    "line": "78",
+    "label": "\u03a3",
+    "hex": "#d65c5e"
+  },
+  {
+    "line": "78",
+    "label": "\u03df",
+    "hex": "#a7464b"
+  },
+  {
+    "line": "78",
+    "label": "\u046a",
+    "hex": "#e12c21"
+  },
+  {
+    "line": "78",
+    "label": "\u040a",
+    "hex": "#ba261b"
+  },
+  {
+    "line": "78",
+    "label": "\u20aa",
+    "hex": "#6a0c05"
+  },
+  {
+    "line": "78",
+    "label": "\u2248",
+    "hex": "#911841"
+  },
+  {
+    "line": "78",
+    "label": "$",
+    "hex": "#e53a61"
+  },
+  {
+    "line": "78",
+    "label": "\u03ea",
+    "hex": "#c63758"
+  },
+  {
+    "line": "78",
+    "label": "#",
+    "hex": "#cd004c"
+  },
+  {
+    "line": "78",
+    "label": "\u0153",
+    "hex": "#a7014d"
+  },
+  {
+    "line": "78",
+    "label": "\u01ba",
+    "hex": "#921241"
+  },
+  {
+    "line": "78",
+    "label": "\u02a5",
+    "hex": "#c8006e"
+  },
+  {
+    "line": "78",
+    "label": "\u00b6",
+    "hex": "#e26aa5"
+  },
+  {
+    "line": "78",
+    "label": "\u0394",
+    "hex": "#b3467e"
+  },
+  {
+    "line": "78",
+    "label": "\u25a1",
+    "hex": "#8e3c7c"
+  },
+  {
+    "line": "78",
+    "label": "\u25ca",
+    "hex": "#541e66"
+  },
+  {
+    "line": "78",
+    "label": "\u0416",
+    "hex": "#73338a"
+  },
+  {
+    "line": "78",
+    "label": "\u2640",
+    "hex": "#995a9f"
+  },
+  {
+    "line": "78",
+    "label": "\u2642",
+    "hex": "#b586bb"
+  },
+  {
+    "line": "79",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "79",
+    "label": "2",
+    "hex": "#413f36"
+  },
+  {
+    "line": "79",
+    "label": "3",
+    "hex": "#5e5950"
+  },
+  {
+    "line": "79",
+    "label": "4",
+    "hex": "#7a7666"
+  },
+  {
+    "line": "79",
+    "label": "5",
+    "hex": "#aca194"
+  },
+  {
+    "line": "79",
+    "label": "6",
+    "hex": "#394527"
+  },
+  {
+    "line": "79",
+    "label": "7",
+    "hex": "#57602a"
+  },
+  {
+    "line": "79",
+    "label": "8",
+    "hex": "#646d35"
+  },
+  {
+    "line": "79",
+    "label": "9",
+    "hex": "#868c3c"
+  },
+  {
+    "line": "79",
+    "label": "0",
+    "hex": "#b3b847"
+  },
+  {
+    "line": "79",
+    "label": "a",
+    "hex": "#006128"
+  },
+  {
+    "line": "79",
+    "label": "b",
+    "hex": "#00923a"
+  },
+  {
+    "line": "79",
+    "label": "c",
+    "hex": "#b2cb07"
+  },
+  {
+    "line": "79",
+    "label": "d",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "79",
+    "label": "e",
+    "hex": "#fbb800"
+  },
+  {
+    "line": "79",
+    "label": "f",
+    "hex": "#ef7d00"
+  },
+  {
+    "line": "79",
+    "label": "h",
+    "hex": "#824d11"
+  },
+  {
+    "line": "79",
+    "label": "j",
+    "hex": "#ffd125"
+  },
+  {
+    "line": "80",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "80",
+    "label": "2",
+    "hex": "#282528"
+  },
+  {
+    "line": "80",
+    "label": "3",
+    "hex": "#474349"
+  },
+  {
+    "line": "80",
+    "label": "4",
+    "hex": "#6a6362"
+  },
+  {
+    "line": "80",
+    "label": "5",
+    "hex": "#cceafc"
+  },
+  {
+    "line": "80",
+    "label": "6",
+    "hex": "#0087cc"
+  },
+  {
+    "line": "80",
+    "label": "7",
+    "hex": "#2c549f"
+  },
+  {
+    "line": "80",
+    "label": "8",
+    "hex": "#535a7c"
+  },
+  {
+    "line": "80",
+    "label": "9",
+    "hex": "#3b405d"
+  },
+  {
+    "line": "80",
+    "label": "0",
+    "hex": "#2c3a14"
+  },
+  {
+    "line": "80",
+    "label": "a",
+    "hex": "#3d4f17"
+  },
+  {
+    "line": "80",
+    "label": "b",
+    "hex": "#5f6015"
+  },
+  {
+    "line": "80",
+    "label": "c",
+    "hex": "#797e1d"
+  },
+  {
+    "line": "80",
+    "label": "d",
+    "hex": "#e5bd00"
+  },
+  {
+    "line": "80",
+    "label": "e",
+    "hex": "#b89219"
+  },
+  {
+    "line": "80",
+    "label": "f",
+    "hex": "#fff482"
+  },
+  {
+    "line": "80",
+    "label": "h",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "80",
+    "label": "j",
+    "hex": "#ffde43"
+  },
+  {
+    "line": "80",
+    "label": "k",
+    "hex": "#e59e2a"
+  },
+  {
+    "line": "80",
+    "label": "m",
+    "hex": "#ae6d03"
+  },
+  {
+    "line": "80",
+    "label": "n",
+    "hex": "#774c00"
+  },
+  {
+    "line": "80",
+    "label": "p",
+    "hex": "#533200"
+  },
+  {
+    "line": "80",
+    "label": "q",
+    "hex": "#80361e"
+  },
+  {
+    "line": "80",
+    "label": "r",
+    "hex": "#b2511a"
+  },
+  {
+    "line": "80",
+    "label": "t",
+    "hex": "#c39366"
+  },
+  {
+    "line": "80",
+    "label": "u",
+    "hex": "#f9c7b2"
+  },
+  {
+    "line": "80",
+    "label": "w",
+    "hex": "#f5a486"
+  },
+  {
+    "line": "80",
+    "label": "x",
+    "hex": "#bc5a54"
+  },
+  {
+    "line": "80",
+    "label": "y",
+    "hex": "#e30613"
+  },
+  {
+    "line": "80",
+    "label": "z",
+    "hex": "#da497c"
+  },
+  {
+    "line": "80",
+    "label": "\u03ea",
+    "hex": "#ee79a9"
+  },
+  {
+    "line": "80",
+    "label": "\u0424",
+    "hex": "#f5b0ca"
+  },
+  {
+    "line": "81",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "81",
+    "label": "2",
+    "hex": "#6a6c69"
+  },
+  {
+    "line": "81",
+    "label": "3",
+    "hex": "#b3a8b5"
+  },
+  {
+    "line": "81",
+    "label": "4",
+    "hex": "#9b9d83"
+  },
+  {
+    "line": "81",
+    "label": "5",
+    "hex": "#c0baaf"
+  },
+  {
+    "line": "81",
+    "label": "6",
+    "hex": "#e3e3e0"
+  },
+  {
+    "line": "81",
+    "label": "7",
+    "hex": "#806057"
+  },
+  {
+    "line": "81",
+    "label": "8",
+    "hex": "#a48a78"
+  },
+  {
+    "line": "81",
+    "label": "9",
+    "hex": "#25378d"
+  },
+  {
+    "line": "81",
+    "label": "0",
+    "hex": "#3a53a1"
+  },
+  {
+    "line": "81",
+    "label": "a",
+    "hex": "#3f76bb"
+  },
+  {
+    "line": "81",
+    "label": "b",
+    "hex": "#5797d1"
+  },
+  {
+    "line": "81",
+    "label": "c",
+    "hex": "#6dcaf3"
+  },
+  {
+    "line": "81",
+    "label": "d",
+    "hex": "#c9e8fb"
+  },
+  {
+    "line": "81",
+    "label": "e",
+    "hex": "#6876af"
+  },
+  {
+    "line": "81",
+    "label": "f",
+    "hex": "#345060"
+  },
+  {
+    "line": "81",
+    "label": "h",
+    "hex": "#213436"
+  },
+  {
+    "line": "81",
+    "label": "j",
+    "hex": "#00979e"
+  },
+  {
+    "line": "81",
+    "label": "k",
+    "hex": "#52875a"
+  },
+  {
+    "line": "81",
+    "label": "m",
+    "hex": "#78a57e"
+  },
+  {
+    "line": "81",
+    "label": "n",
+    "hex": "#144b36"
+  },
+  {
+    "line": "81",
+    "label": "p",
+    "hex": "#007552"
+  },
+  {
+    "line": "81",
+    "label": "q",
+    "hex": "#4fb04f"
+  },
+  {
+    "line": "81",
+    "label": "r",
+    "hex": "#c9bb10"
+  },
+  {
+    "line": "81",
+    "label": "t",
+    "hex": "#938721"
+  },
+  {
+    "line": "81",
+    "label": "u",
+    "hex": "#bfab3e"
+  },
+  {
+    "line": "81",
+    "label": "w",
+    "hex": "#737237"
+  },
+  {
+    "line": "81",
+    "label": "x",
+    "hex": "#988c2d"
+  },
+  {
+    "line": "81",
+    "label": "y",
+    "hex": "#c09e22"
+  },
+  {
+    "line": "81",
+    "label": "z",
+    "hex": "#cfa140"
+  },
+  {
+    "line": "81",
+    "label": "\u00a7",
+    "hex": "#ffe15b"
+  },
+  {
+    "line": "82",
+    "label": "\u00b6",
+    "hex": "#fab745"
+  },
+  {
+    "line": "82",
+    "label": "#",
+    "hex": "#fdc300"
+  },
+  {
+    "line": "82",
+    "label": "\u0276",
+    "hex": "#f08100"
+  },
+  {
+    "line": "82",
+    "label": "\u0394",
+    "hex": "#8c4925"
+  },
+  {
+    "line": "82",
+    "label": "\u25a1",
+    "hex": "#b66b00"
+  },
+  {
+    "line": "82",
+    "label": "\u25ca",
+    "hex": "#dc8f17"
+  },
+  {
+    "line": "82",
+    "label": "\u03a3",
+    "hex": "#c1914f"
+  },
+  {
+    "line": "82",
+    "label": "\u03df",
+    "hex": "#9e6b31"
+  },
+  {
+    "line": "82",
+    "label": "\u046a",
+    "hex": "#ebb67b"
+  },
+  {
+    "line": "82",
+    "label": "\u040a",
+    "hex": "#c78950"
+  },
+  {
+    "line": "82",
+    "label": "\u20aa",
+    "hex": "#b86e3c"
+  },
+  {
+    "line": "82",
+    "label": "\u2248",
+    "hex": "#984f32"
+  },
+  {
+    "line": "82",
+    "label": "\u01be",
+    "hex": "#732a12"
+  },
+  {
+    "line": "82",
+    "label": "\u0277",
+    "hex": "#a66c64"
+  },
+  {
+    "line": "82",
+    "label": "\u0416",
+    "hex": "#6c4342"
+  },
+  {
+    "line": "82",
+    "label": "\u2640",
+    "hex": "#8c433d"
+  },
+  {
+    "line": "82",
+    "label": "\u00ab",
+    "hex": "#be624c"
+  },
+  {
+    "line": "82",
+    "label": "\u0126",
+    "hex": "#ee726b"
+  },
+  {
+    "line": "82",
+    "label": "\u00d8",
+    "hex": "#f39886"
+  },
+  {
+    "line": "82",
+    "label": "\u0244",
+    "hex": "#f6af93"
+  },
+  {
+    "line": "82",
+    "label": ">",
+    "hex": "#fbd4bb"
+  },
+  {
+    "line": "82",
+    "label": "\u2663",
+    "hex": "#671711"
+  },
+  {
+    "line": "82",
+    "label": "\u266a",
+    "hex": "#971005"
+  },
+  {
+    "line": "82",
+    "label": "\u266b",
+    "hex": "#c20d0e"
+  },
+  {
+    "line": "82",
+    "label": "\u2642",
+    "hex": "#e30613"
+  },
+  {
+    "line": "82",
+    "label": "\u0238",
+    "hex": "#ec6773"
+  },
+  {
+    "line": "82",
+    "label": "\u04a9",
+    "hex": "#dd0059"
+  },
+  {
+    "line": "82",
+    "label": "\u01c1",
+    "hex": "#b0184b"
+  },
+  {
+    "line": "82",
+    "label": "\u00a3",
+    "hex": "#9c498d"
+  },
+  {
+    "line": "82",
+    "label": "\u2260",
+    "hex": "#c380b5"
+  },
+  {
+    "line": "83",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "83",
+    "label": "2",
+    "hex": "#727271"
+  },
+  {
+    "line": "83",
+    "label": "3",
+    "hex": "#b7b6b6"
+  },
+  {
+    "line": "83",
+    "label": "4",
+    "hex": "#533a2e"
+  },
+  {
+    "line": "83",
+    "label": "5",
+    "hex": "#97867b"
+  },
+  {
+    "line": "83",
+    "label": "6",
+    "hex": "#262c33"
+  },
+  {
+    "line": "83",
+    "label": "7",
+    "hex": "#0083bf"
+  },
+  {
+    "line": "83",
+    "label": "8",
+    "hex": "#4cc2f1"
+  },
+  {
+    "line": "83",
+    "label": "9",
+    "hex": "#d4e1e8"
+  },
+  {
+    "line": "83",
+    "label": "0",
+    "hex": "#2a234b"
+  },
+  {
+    "line": "83",
+    "label": "a",
+    "hex": "#393267"
+  },
+  {
+    "line": "83",
+    "label": "b",
+    "hex": "#6d64aa"
+  },
+  {
+    "line": "83",
+    "label": "c",
+    "hex": "#3f2545"
+  },
+  {
+    "line": "83",
+    "label": "d",
+    "hex": "#592e5c"
+  },
+  {
+    "line": "83",
+    "label": "e",
+    "hex": "#8b618f"
+  },
+  {
+    "line": "83",
+    "label": "f",
+    "hex": "#e08993"
+  },
+  {
+    "line": "83",
+    "label": "h",
+    "hex": "#3f0d00"
+  },
+  {
+    "line": "83",
+    "label": "j",
+    "hex": "#5e0b00"
+  },
+  {
+    "line": "83",
+    "label": "k",
+    "hex": "#8e2114"
+  },
+  {
+    "line": "83",
+    "label": "m",
+    "hex": "#d58b75"
+  },
+  {
+    "line": "83",
+    "label": "n",
+    "hex": "#eeb08d"
+  },
+  {
+    "line": "83",
+    "label": "p",
+    "hex": "#f5cab3"
+  },
+  {
+    "line": "83",
+    "label": "q",
+    "hex": "#d9b597"
+  },
+  {
+    "line": "83",
+    "label": "r",
+    "hex": "#b4673e"
+  },
+  {
+    "line": "83",
+    "label": "t",
+    "hex": "#5d3427"
+  },
+  {
+    "line": "83",
+    "label": "u",
+    "hex": "#db952f"
+  },
+  {
+    "line": "83",
+    "label": "w",
+    "hex": "#b76520"
+  },
+  {
+    "line": "83",
+    "label": "x",
+    "hex": "#e84b0f"
+  },
+  {
+    "line": "83",
+    "label": "y",
+    "hex": "#f9ae00"
+  },
+  {
+    "line": "83",
+    "label": "z",
+    "hex": "#ffd611"
+  },
+  {
+    "line": "83",
+    "label": "\u03ea",
+    "hex": "#d8da00"
+  },
+  {
+    "line": "83",
+    "label": "\u00d8",
+    "hex": "#6aa42f"
+  },
+  {
+    "line": "84",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "84",
+    "label": "2",
+    "hex": "#586576"
+  },
+  {
+    "line": "84",
+    "label": "3",
+    "hex": "#a1a1a0"
+  },
+  {
+    "line": "84",
+    "label": "4",
+    "hex": "#c6c6c5"
+  },
+  {
+    "line": "84",
+    "label": "5",
+    "hex": "#473d62"
+  },
+  {
+    "line": "84",
+    "label": "6",
+    "hex": "#9a85bd"
+  },
+  {
+    "line": "84",
+    "label": "7",
+    "hex": "#cabedf"
+  },
+  {
+    "line": "84",
+    "label": "8",
+    "hex": "#005d61"
+  },
+  {
+    "line": "84",
+    "label": "9",
+    "hex": "#008687"
+  },
+  {
+    "line": "84",
+    "label": "0",
+    "hex": "#00a794"
+  },
+  {
+    "line": "84",
+    "label": "a",
+    "hex": "#c4e7fb"
+  },
+  {
+    "line": "84",
+    "label": "b",
+    "hex": "#00883d"
+  },
+  {
+    "line": "84",
+    "label": "c",
+    "hex": "#76b82a"
+  },
+  {
+    "line": "84",
+    "label": "d",
+    "hex": "#fee99e"
+  },
+  {
+    "line": "84",
+    "label": "e",
+    "hex": "#fbc813"
+  },
+  {
+    "line": "84",
+    "label": "f",
+    "hex": "#e09400"
+  },
+  {
+    "line": "84",
+    "label": "h",
+    "hex": "#9b611c"
+  },
+  {
+    "line": "84",
+    "label": "j",
+    "hex": "#b23f06"
+  },
+  {
+    "line": "84",
+    "label": "k",
+    "hex": "#c85707"
+  },
+  {
+    "line": "84",
+    "label": "m",
+    "hex": "#ec6608"
+  },
+  {
+    "line": "84",
+    "label": "n",
+    "hex": "#7c4228"
+  },
+  {
+    "line": "84",
+    "label": "p",
+    "hex": "#ac6e3d"
+  },
+  {
+    "line": "84",
+    "label": "q",
+    "hex": "#ce8f51"
+  },
+  {
+    "line": "84",
+    "label": "r",
+    "hex": "#f7c489"
+  },
+  {
+    "line": "84",
+    "label": "t",
+    "hex": "#f19b68"
+  },
+  {
+    "line": "84",
+    "label": "u",
+    "hex": "#ae0f0a"
+  },
+  {
+    "line": "84",
+    "label": "w",
+    "hex": "#ea4e59"
+  },
+  {
+    "line": "84",
+    "label": "x",
+    "hex": "#ef8195"
+  },
+  {
+    "line": "85",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "85",
+    "label": "2",
+    "hex": "#4a4345"
+  },
+  {
+    "line": "85",
+    "label": "3",
+    "hex": "#72676b"
+  },
+  {
+    "line": "85",
+    "label": "4",
+    "hex": "#9b969b"
+  },
+  {
+    "line": "85",
+    "label": "5",
+    "hex": "#00b9ee"
+  },
+  {
+    "line": "85",
+    "label": "6",
+    "hex": "#0091bd"
+  },
+  {
+    "line": "85",
+    "label": "7",
+    "hex": "#0078b1"
+  },
+  {
+    "line": "85",
+    "label": "8",
+    "hex": "#0060a0"
+  },
+  {
+    "line": "85",
+    "label": "9",
+    "hex": "#173f62"
+  },
+  {
+    "line": "85",
+    "label": "0",
+    "hex": "#006568"
+  },
+  {
+    "line": "85",
+    "label": "a",
+    "hex": "#008a6b"
+  },
+  {
+    "line": "85",
+    "label": "b",
+    "hex": "#3a5724"
+  },
+  {
+    "line": "85",
+    "label": "c",
+    "hex": "#093d2e"
+  },
+  {
+    "line": "85",
+    "label": "d",
+    "hex": "#006028"
+  },
+  {
+    "line": "85",
+    "label": "e",
+    "hex": "#007834"
+  },
+  {
+    "line": "85",
+    "label": "f",
+    "hex": "#009541"
+  },
+  {
+    "line": "85",
+    "label": "h",
+    "hex": "#95c11f"
+  },
+  {
+    "line": "85",
+    "label": "j",
+    "hex": "#ebe331"
+  },
+  {
+    "line": "85",
+    "label": "k",
+    "hex": "#fff03e"
+  },
+  {
+    "line": "85",
+    "label": "m",
+    "hex": "#fcc627"
+  },
+  {
+    "line": "85",
+    "label": "n",
+    "hex": "#f29816"
+  },
+  {
+    "line": "85",
+    "label": "p",
+    "hex": "#ed6d05"
+  },
+  {
+    "line": "85",
+    "label": "q",
+    "hex": "#e63b11"
+  },
+  {
+    "line": "85",
+    "label": "r",
+    "hex": "#761227"
+  },
+  {
+    "line": "85",
+    "label": "t",
+    "hex": "#a70f08"
+  },
+  {
+    "line": "85",
+    "label": "u",
+    "hex": "#e40426"
+  },
+  {
+    "line": "85",
+    "label": "w",
+    "hex": "#f2927d"
+  },
+  {
+    "line": "85",
+    "label": "x",
+    "hex": "#d45b4b"
+  },
+  {
+    "line": "85",
+    "label": "y",
+    "hex": "#bd4039"
+  },
+  {
+    "line": "85",
+    "label": "z",
+    "hex": "#a43735"
+  },
+  {
+    "line": "85",
+    "label": "\u00a7",
+    "hex": "#8c2f2c"
+  },
+  {
+    "line": "86",
+    "label": "\u00b6",
+    "hex": "#ed6e7b"
+  },
+  {
+    "line": "86",
+    "label": "$",
+    "hex": "#d64456"
+  },
+  {
+    "line": "86",
+    "label": "\u03ea",
+    "hex": "#b5286c"
+  },
+  {
+    "line": "86",
+    "label": "\u03a8",
+    "hex": "#d72a75"
+  },
+  {
+    "line": "86",
+    "label": "\u0466",
+    "hex": "#5a2e68"
+  },
+  {
+    "line": "86",
+    "label": "\u00a5",
+    "hex": "#86245a"
+  },
+  {
+    "line": "86",
+    "label": "\u0276",
+    "hex": "#a24191"
+  },
+  {
+    "line": "86",
+    "label": "\u0394",
+    "hex": "#d17cad"
+  },
+  {
+    "line": "86",
+    "label": "\u026e",
+    "hex": "#f3dbc9"
+  },
+  {
+    "line": "86",
+    "label": "\u25a1",
+    "hex": "#cfa38a"
+  },
+  {
+    "line": "86",
+    "label": "\u0238",
+    "hex": "#c4946b"
+  },
+  {
+    "line": "86",
+    "label": "\u03a3",
+    "hex": "#633e31"
+  },
+  {
+    "line": "86",
+    "label": "\u046a",
+    "hex": "#8f5e40"
+  },
+  {
+    "line": "86",
+    "label": "\u20aa",
+    "hex": "#af674d"
+  },
+  {
+    "line": "86",
+    "label": "\u040a",
+    "hex": "#efac70"
+  },
+  {
+    "line": "86",
+    "label": "\u2640",
+    "hex": "#fed790"
+  },
+  {
+    "line": "86",
+    "label": "\u03df",
+    "hex": "#ffe5bd"
+  },
+  {
+    "line": "87",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "87",
+    "label": "2",
+    "hex": "#4d4050"
+  },
+  {
+    "line": "87",
+    "label": "3",
+    "hex": "#55606e"
+  },
+  {
+    "line": "87",
+    "label": "4",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "87",
+    "label": "5",
+    "hex": "#4a4999"
+  },
+  {
+    "line": "87",
+    "label": "6",
+    "hex": "#382f83"
+  },
+  {
+    "line": "87",
+    "label": "7",
+    "hex": "#182b3c"
+  },
+  {
+    "line": "87",
+    "label": "8",
+    "hex": "#0d4b51"
+  },
+  {
+    "line": "87",
+    "label": "9",
+    "hex": "#00656c"
+  },
+  {
+    "line": "87",
+    "label": "0",
+    "hex": "#3b481b"
+  },
+  {
+    "line": "87",
+    "label": "a",
+    "hex": "#566c31"
+  },
+  {
+    "line": "87",
+    "label": "b",
+    "hex": "#78863b"
+  },
+  {
+    "line": "87",
+    "label": "c",
+    "hex": "#fcbf00"
+  },
+  {
+    "line": "87",
+    "label": "d",
+    "hex": "#ee7601"
+  },
+  {
+    "line": "87",
+    "label": "e",
+    "hex": "#cc4017"
+  },
+  {
+    "line": "87",
+    "label": "f",
+    "hex": "#b06933"
+  },
+  {
+    "line": "87",
+    "label": "h",
+    "hex": "#7c4724"
+  },
+  {
+    "line": "87",
+    "label": "j",
+    "hex": "#f18660"
+  },
+  {
+    "line": "87",
+    "label": "k",
+    "hex": "#d66350"
+  },
+  {
+    "line": "87",
+    "label": "m",
+    "hex": "#982e23"
+  },
+  {
+    "line": "87",
+    "label": "n",
+    "hex": "#530d04"
+  },
+  {
+    "line": "87",
+    "label": "p",
+    "hex": "#e62339"
+  },
+  {
+    "line": "87",
+    "label": "q",
+    "hex": "#e9426e"
+  },
+  {
+    "line": "87",
+    "label": "r",
+    "hex": "#b10d7b"
+  },
+  {
+    "line": "87",
+    "label": "t",
+    "hex": "#8a125a"
+  },
+  {
+    "line": "87",
+    "label": "u",
+    "hex": "#5c1a6b"
+  },
+  {
+    "line": "88",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "88",
+    "label": "2",
+    "hex": "#46464a"
+  },
+  {
+    "line": "88",
+    "label": "3",
+    "hex": "#65666a"
+  },
+  {
+    "line": "88",
+    "label": "4",
+    "hex": "#a8a7af"
+  },
+  {
+    "line": "88",
+    "label": "5",
+    "hex": "#bae3fa"
+  },
+  {
+    "line": "88",
+    "label": "6",
+    "hex": "#009cb8"
+  },
+  {
+    "line": "88",
+    "label": "7",
+    "hex": "#005f7f"
+  },
+  {
+    "line": "88",
+    "label": "8",
+    "hex": "#98932e"
+  },
+  {
+    "line": "88",
+    "label": "9",
+    "hex": "#6c6f23"
+  },
+  {
+    "line": "88",
+    "label": "0",
+    "hex": "#5a4e1c"
+  },
+  {
+    "line": "88",
+    "label": "a",
+    "hex": "#fab200"
+  },
+  {
+    "line": "88",
+    "label": "b",
+    "hex": "#ef7d00"
+  },
+  {
+    "line": "88",
+    "label": "c",
+    "hex": "#e74510"
+  },
+  {
+    "line": "88",
+    "label": "d",
+    "hex": "#ac3612"
+  },
+  {
+    "line": "88",
+    "label": "e",
+    "hex": "#7f3923"
+  },
+  {
+    "line": "88",
+    "label": "f",
+    "hex": "#f7b38f"
+  },
+  {
+    "line": "88",
+    "label": "h",
+    "hex": "#e48d72"
+  },
+  {
+    "line": "88",
+    "label": "j",
+    "hex": "#c25d4d"
+  },
+  {
+    "line": "88",
+    "label": "k",
+    "hex": "#860926"
+  },
+  {
+    "line": "88",
+    "label": "m",
+    "hex": "#e56269"
+  },
+  {
+    "line": "88",
+    "label": "n",
+    "hex": "#ec9cb9"
+  },
+  {
+    "line": "88",
+    "label": "p",
+    "hex": "#ddd6ec"
+  },
+  {
+    "line": "88",
+    "label": "q",
+    "hex": "#9c93aa"
+  },
+  {
+    "line": "89",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "89",
+    "label": "2",
+    "hex": "#3c3636"
+  },
+  {
+    "line": "89",
+    "label": "3",
+    "hex": "#5a5a59"
+  },
+  {
+    "line": "89",
+    "label": "4",
+    "hex": "#8f989e"
+  },
+  {
+    "line": "89",
+    "label": "5",
+    "hex": "#5a455a"
+  },
+  {
+    "line": "89",
+    "label": "6",
+    "hex": "#77667c"
+  },
+  {
+    "line": "89",
+    "label": "7",
+    "hex": "#5f3073"
+  },
+  {
+    "line": "89",
+    "label": "8",
+    "hex": "#6d4293"
+  },
+  {
+    "line": "89",
+    "label": "9",
+    "hex": "#8268ab"
+  },
+  {
+    "line": "89",
+    "label": "0",
+    "hex": "#acb0d9"
+  },
+  {
+    "line": "89",
+    "label": "a",
+    "hex": "#97b9e2"
+  },
+  {
+    "line": "89",
+    "label": "b",
+    "hex": "#007ba1"
+  },
+  {
+    "line": "89",
+    "label": "c",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "89",
+    "label": "d",
+    "hex": "#00afea"
+  },
+  {
+    "line": "89",
+    "label": "e",
+    "hex": "#0083cb"
+  },
+  {
+    "line": "89",
+    "label": "f",
+    "hex": "#0061ad"
+  },
+  {
+    "line": "89",
+    "label": "h",
+    "hex": "#005484"
+  },
+  {
+    "line": "89",
+    "label": "j",
+    "hex": "#009a90"
+  },
+  {
+    "line": "89",
+    "label": "k",
+    "hex": "#005c4d"
+  },
+  {
+    "line": "89",
+    "label": "m",
+    "hex": "#006f4f"
+  },
+  {
+    "line": "89",
+    "label": "n",
+    "hex": "#008864"
+  },
+  {
+    "line": "89",
+    "label": "p",
+    "hex": "#56b57b"
+  },
+  {
+    "line": "89",
+    "label": "q",
+    "hex": "#9dcc8f"
+  },
+  {
+    "line": "89",
+    "label": "r",
+    "hex": "#364824"
+  },
+  {
+    "line": "89",
+    "label": "t",
+    "hex": "#2b5235"
+  },
+  {
+    "line": "89",
+    "label": "u",
+    "hex": "#006c37"
+  },
+  {
+    "line": "89",
+    "label": "w",
+    "hex": "#00a538"
+  },
+  {
+    "line": "89",
+    "label": "x",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "89",
+    "label": "y",
+    "hex": "#fab600"
+  },
+  {
+    "line": "89",
+    "label": "$",
+    "hex": "#f08300"
+  },
+  {
+    "line": "89",
+    "label": "\u03ea",
+    "hex": "#ee7203"
+  },
+  {
+    "line": "90",
+    "label": "\u0424",
+    "hex": "#af4b03"
+  },
+  {
+    "line": "90",
+    "label": "\u0471",
+    "hex": "#5f3829"
+  },
+  {
+    "line": "90",
+    "label": "\u0466",
+    "hex": "#764626"
+  },
+  {
+    "line": "90",
+    "label": "\u00a5",
+    "hex": "#aa643a"
+  },
+  {
+    "line": "90",
+    "label": "\u0238",
+    "hex": "#e39f62"
+  },
+  {
+    "line": "90",
+    "label": "\u27b0",
+    "hex": "#facaa0"
+  },
+  {
+    "line": "90",
+    "label": "\u0276",
+    "hex": "#f19773"
+  },
+  {
+    "line": "90",
+    "label": "\u0275",
+    "hex": "#bb4c39"
+  },
+  {
+    "line": "90",
+    "label": "\u026e",
+    "hex": "#8d1f2e"
+  },
+  {
+    "line": "90",
+    "label": "\u03a9",
+    "hex": "#83160d"
+  },
+  {
+    "line": "90",
+    "label": "\u03c6",
+    "hex": "#b81514"
+  },
+  {
+    "line": "90",
+    "label": "\u03a3",
+    "hex": "#e30613"
+  },
+  {
+    "line": "90",
+    "label": "\u03df",
+    "hex": "#e12c21"
+  },
+  {
+    "line": "90",
+    "label": "\u046a",
+    "hex": "#e85b61"
+  },
+  {
+    "line": "90",
+    "label": "\u040a",
+    "hex": "#cb4349"
+  },
+  {
+    "line": "90",
+    "label": "\u20aa",
+    "hex": "#e53a61"
+  },
+  {
+    "line": "90",
+    "label": "\u2248",
+    "hex": "#cd004c"
+  },
+  {
+    "line": "90",
+    "label": "#",
+    "hex": "#f7bfd9"
+  },
+  {
+    "line": "90",
+    "label": "\u01be",
+    "hex": "#f08cb8"
+  },
+  {
+    "line": "90",
+    "label": "\u03d6",
+    "hex": "#ea4b94"
+  },
+  {
+    "line": "90",
+    "label": "\u0416",
+    "hex": "#e6007e"
+  },
+  {
+    "line": "90",
+    "label": "\u05e9",
+    "hex": "#c8266d"
+  },
+  {
+    "line": "90",
+    "label": "\u1d79",
+    "hex": "#b03485"
+  },
+  {
+    "line": "91",
+    "label": "1",
+    "hex": "#241f1f"
+  },
+  {
+    "line": "91",
+    "label": "2",
+    "hex": "#847068"
+  },
+  {
+    "line": "91",
+    "label": "3",
+    "hex": "#cbb5b8"
+  },
+  {
+    "line": "91",
+    "label": "4",
+    "hex": "#343c3f"
+  },
+  {
+    "line": "91",
+    "label": "5",
+    "hex": "#4a5458"
+  },
+  {
+    "line": "91",
+    "label": "6",
+    "hex": "#bfe5fb"
+  },
+  {
+    "line": "91",
+    "label": "7",
+    "hex": "#b961a3"
+  },
+  {
+    "line": "91",
+    "label": "8",
+    "hex": "#fad6e8"
+  },
+  {
+    "line": "91",
+    "label": "9",
+    "hex": "#f6aea0"
+  },
+  {
+    "line": "91",
+    "label": "0",
+    "hex": "#ed7175"
+  },
+  {
+    "line": "91",
+    "label": "a",
+    "hex": "#c94e48"
+  },
+  {
+    "line": "91",
+    "label": "b",
+    "hex": "#e06d54"
+  },
+  {
+    "line": "91",
+    "label": "c",
+    "hex": "#f49b76"
+  },
+  {
+    "line": "91",
+    "label": "d",
+    "hex": "#f9bd99"
+  },
+  {
+    "line": "91",
+    "label": "e",
+    "hex": "#6a301e"
+  },
+  {
+    "line": "91",
+    "label": "f",
+    "hex": "#903916"
+  },
+  {
+    "line": "91",
+    "label": "h",
+    "hex": "#ce6a0c"
+  },
+  {
+    "line": "91",
+    "label": "j",
+    "hex": "#de9d00"
+  },
+  {
+    "line": "91",
+    "label": "k",
+    "hex": "#fff268"
+  },
+  {
+    "line": "91",
+    "label": "m",
+    "hex": "#9f5c16"
+  },
+  {
+    "line": "91",
+    "label": "n",
+    "hex": "#552a21"
+  },
+  {
+    "line": "91",
+    "label": "p",
+    "hex": "#6f3827"
+  },
+  {
+    "line": "91",
+    "label": "q",
+    "hex": "#9b4730"
+  },
+  {
+    "line": "91",
+    "label": "r",
+    "hex": "#a66c4b"
+  },
+  {
+    "line": "91",
+    "label": "t",
+    "hex": "#bf7b4f"
+  },
+  {
+    "line": "91",
+    "label": "u",
+    "hex": "#e1a77d"
+  },
+  {
+    "line": "91",
+    "label": "w",
+    "hex": "#fcd4a8"
+  },
+  {
+    "line": "91",
+    "label": "x",
+    "hex": "#474b23"
+  },
+  {
+    "line": "91",
+    "label": "y",
+    "hex": "#667532"
+  },
+  {
+    "line": "92",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "92",
+    "label": "2",
+    "hex": "#403447"
+  },
+  {
+    "line": "92",
+    "label": "3",
+    "hex": "#4f475b"
+  },
+  {
+    "line": "92",
+    "label": "4",
+    "hex": "#625e6c"
+  },
+  {
+    "line": "92",
+    "label": "5",
+    "hex": "#736f80"
+  },
+  {
+    "line": "92",
+    "label": "6",
+    "hex": "#807c88"
+  },
+  {
+    "line": "92",
+    "label": "8",
+    "hex": "#dad3eb"
+  },
+  {
+    "line": "92",
+    "label": "9",
+    "hex": "#c6e8fb"
+  },
+  {
+    "line": "92",
+    "label": "0",
+    "hex": "#6dcaf3"
+  },
+  {
+    "line": "92",
+    "label": "a",
+    "hex": "#00a2e5"
+  },
+  {
+    "line": "92",
+    "label": "b",
+    "hex": "#0084c7"
+  },
+  {
+    "line": "92",
+    "label": "c",
+    "hex": "#0061ac"
+  },
+  {
+    "line": "92",
+    "label": "d",
+    "hex": "#164193"
+  },
+  {
+    "line": "92",
+    "label": "e",
+    "hex": "#1b3278"
+  },
+  {
+    "line": "92",
+    "label": "f",
+    "hex": "#007856"
+  },
+  {
+    "line": "92",
+    "label": "h",
+    "hex": "#009f3c"
+  },
+  {
+    "line": "92",
+    "label": "j",
+    "hex": "#ffd784"
+  },
+  {
+    "line": "92",
+    "label": "k",
+    "hex": "#fab63f"
+  },
+  {
+    "line": "92",
+    "label": "m",
+    "hex": "#e05c11"
+  },
+  {
+    "line": "92",
+    "label": "n",
+    "hex": "#9a6874"
+  },
+  {
+    "line": "92",
+    "label": "p",
+    "hex": "#875462"
+  },
+  {
+    "line": "92",
+    "label": "q",
+    "hex": "#703a43"
+  },
+  {
+    "line": "92",
+    "label": "r",
+    "hex": "#aa3354"
+  },
+  {
+    "line": "92",
+    "label": "t",
+    "hex": "#bb4565"
+  },
+  {
+    "line": "92",
+    "label": "u",
+    "hex": "#d80f2d"
+  },
+  {
+    "line": "92",
+    "label": "w",
+    "hex": "#af1123"
+  },
+  {
+    "line": "92",
+    "label": "x",
+    "hex": "#6b1204"
+  },
+  {
+    "line": "93",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "93",
+    "label": "2",
+    "hex": "#0067b2"
+  },
+  {
+    "line": "93",
+    "label": "3",
+    "hex": "#009fe3"
+  },
+  {
+    "line": "93",
+    "label": "4",
+    "hex": "#bce4fa"
+  },
+  {
+    "line": "93",
+    "label": "5",
+    "hex": "#fffbd8"
+  },
+  {
+    "line": "93",
+    "label": "6",
+    "hex": "#ecc7ae"
+  },
+  {
+    "line": "93",
+    "label": "7",
+    "hex": "#d26c4b"
+  },
+  {
+    "line": "93",
+    "label": "8",
+    "hex": "#b4563e"
+  },
+  {
+    "line": "93",
+    "label": "9",
+    "hex": "#982d1c"
+  },
+  {
+    "line": "93",
+    "label": "0",
+    "hex": "#b64910"
+  },
+  {
+    "line": "93",
+    "label": "a",
+    "hex": "#eb5d0b"
+  },
+  {
+    "line": "93",
+    "label": "b",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "93",
+    "label": "c",
+    "hex": "#7d150b"
+  },
+  {
+    "line": "93",
+    "label": "d",
+    "hex": "#bf1456"
+  },
+  {
+    "line": "93",
+    "label": "e",
+    "hex": "#ea4f7d"
+  },
+  {
+    "line": "93",
+    "label": "f",
+    "hex": "#a91b82"
+  },
+  {
+    "line": "95",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "95",
+    "label": "2",
+    "hex": "#6f7478"
+  },
+  {
+    "line": "95",
+    "label": "3",
+    "hex": "#929292"
+  },
+  {
+    "line": "95",
+    "label": "4",
+    "hex": "#b7d6f2"
+  },
+  {
+    "line": "95",
+    "label": "5",
+    "hex": "#007130"
+  },
+  {
+    "line": "95",
+    "label": "6",
+    "hex": "#709937"
+  },
+  {
+    "line": "95",
+    "label": "7",
+    "hex": "#7bbb54"
+  },
+  {
+    "line": "95",
+    "label": "8",
+    "hex": "#d3da44"
+  },
+  {
+    "line": "95",
+    "label": "9",
+    "hex": "#fff374"
+  },
+  {
+    "line": "95",
+    "label": "0",
+    "hex": "#fce500"
+  },
+  {
+    "line": "95",
+    "label": "a",
+    "hex": "#da6c01"
+  },
+  {
+    "line": "95",
+    "label": "b",
+    "hex": "#622b15"
+  },
+  {
+    "line": "95",
+    "label": "c",
+    "hex": "#834014"
+  },
+  {
+    "line": "95",
+    "label": "d",
+    "hex": "#9c4c18"
+  },
+  {
+    "line": "95",
+    "label": "e",
+    "hex": "#c27235"
+  },
+  {
+    "line": "95",
+    "label": "f",
+    "hex": "#5a1729"
+  },
+  {
+    "line": "95",
+    "label": "h",
+    "hex": "#8e183d"
+  },
+  {
+    "line": "95",
+    "label": "j",
+    "hex": "#ba1c57"
+  },
+  {
+    "line": "95",
+    "label": "k",
+    "hex": "#d8436e"
+  },
+  {
+    "line": "95",
+    "label": "m",
+    "hex": "#f191bc"
+  },
+  {
+    "line": "95",
+    "label": "n",
+    "hex": "#c91552"
+  },
+  {
+    "line": "95",
+    "label": "p",
+    "hex": "#790f00"
+  },
+  {
+    "line": "95",
+    "label": "q",
+    "hex": "#e30613"
+  },
+  {
+    "line": "95",
+    "label": "r",
+    "hex": "#f6cdaa"
+  },
+  {
+    "line": "95",
+    "label": "t",
+    "hex": "#da9d72"
+  },
+  {
+    "line": "95",
+    "label": "v",
+    "hex": "#9a5c4f"
+  },
+  {
+    "line": "96",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "96",
+    "label": "2",
+    "hex": "#d9decf"
+  },
+  {
+    "line": "96",
+    "label": "3",
+    "hex": "#aaddf9"
+  },
+  {
+    "line": "96",
+    "label": "4",
+    "hex": "#6b9ed5"
+  },
+  {
+    "line": "96",
+    "label": "5",
+    "hex": "#2a63a7"
+  },
+  {
+    "line": "96",
+    "label": "6",
+    "hex": "#24387d"
+  },
+  {
+    "line": "96",
+    "label": "7",
+    "hex": "#095234"
+  },
+  {
+    "line": "96",
+    "label": "8",
+    "hex": "#57852d"
+  },
+  {
+    "line": "96",
+    "label": "9",
+    "hex": "#6cab2e"
+  },
+  {
+    "line": "96",
+    "label": "0",
+    "hex": "#c0d23c"
+  },
+  {
+    "line": "96",
+    "label": "a",
+    "hex": "#b5a73b"
+  },
+  {
+    "line": "96",
+    "label": "b",
+    "hex": "#7a7b25"
+  },
+  {
+    "line": "96",
+    "label": "c",
+    "hex": "#4f4c1b"
+  },
+  {
+    "line": "96",
+    "label": "d",
+    "hex": "#7d5f22"
+  },
+  {
+    "line": "96",
+    "label": "e",
+    "hex": "#e6b148"
+  },
+  {
+    "line": "96",
+    "label": "h",
+    "hex": "#7c665d"
+  },
+  {
+    "line": "96",
+    "label": "j",
+    "hex": "#7f2760"
+  },
+  {
+    "line": "96",
+    "label": "k",
+    "hex": "#b968a7"
+  },
+  {
+    "line": "96",
+    "label": "m",
+    "hex": "#642529"
+  },
+  {
+    "line": "96",
+    "label": "n",
+    "hex": "#9e2b31"
+  },
+  {
+    "line": "96",
+    "label": "p",
+    "hex": "#db635d"
+  },
+  {
+    "line": "96",
+    "label": "q",
+    "hex": "#f2917b"
+  },
+  {
+    "line": "96",
+    "label": "r",
+    "hex": "#fac9b8"
+  },
+  {
+    "line": "96",
+    "label": "t",
+    "hex": "#e30613"
+  },
+  {
+    "line": "96",
+    "label": "u",
+    "hex": "#a70f08"
+  },
+  {
+    "line": "96",
+    "label": "w",
+    "hex": "#770f00"
+  },
+  {
+    "line": "96",
+    "label": "x",
+    "hex": "#b3542e"
+  },
+  {
+    "line": "96",
+    "label": "y",
+    "hex": "#73300f"
+  },
+  {
+    "line": "97",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "97",
+    "label": "2",
+    "hex": "#1f1740"
+  },
+  {
+    "line": "97",
+    "label": "3",
+    "hex": "#242757"
+  },
+  {
+    "line": "97",
+    "label": "4",
+    "hex": "#0b4697"
+  },
+  {
+    "line": "97",
+    "label": "5",
+    "hex": "#6c8ac6"
+  },
+  {
+    "line": "97",
+    "label": "6",
+    "hex": "#a6c5e9"
+  },
+  {
+    "line": "97",
+    "label": "7",
+    "hex": "#d2ecfc"
+  },
+  {
+    "line": "97",
+    "label": "8",
+    "hex": "#0082c7"
+  },
+  {
+    "line": "97",
+    "label": "9",
+    "hex": "#733213"
+  },
+  {
+    "line": "97",
+    "label": "0",
+    "hex": "#c8530d"
+  },
+  {
+    "line": "97",
+    "label": "a",
+    "hex": "#f2a045"
+  },
+  {
+    "line": "97",
+    "label": "b",
+    "hex": "#fdcb68"
+  },
+  {
+    "line": "97",
+    "label": "c",
+    "hex": "#f4bba0"
+  },
+  {
+    "line": "97",
+    "label": "d",
+    "hex": "#f09b7e"
+  },
+  {
+    "line": "97",
+    "label": "e",
+    "hex": "#ca5d5c"
+  },
+  {
+    "line": "97",
+    "label": "f",
+    "hex": "#841001"
+  },
+  {
+    "line": "97",
+    "label": "h",
+    "hex": "#cd0923"
+  },
+  {
+    "line": "97",
+    "label": "j",
+    "hex": "#e46a96"
+  },
+  {
+    "line": "98",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "98",
+    "label": "2",
+    "hex": "#4f4c51"
+  },
+  {
+    "line": "98",
+    "label": "3",
+    "hex": "#5d5b5a"
+  },
+  {
+    "line": "98",
+    "label": "4",
+    "hex": "#797878"
+  },
+  {
+    "line": "98",
+    "label": "5",
+    "hex": "#9b9897"
+  },
+  {
+    "line": "98",
+    "label": "6",
+    "hex": "#d4c1b9"
+  },
+  {
+    "line": "98",
+    "label": "7",
+    "hex": "#a98b82"
+  },
+  {
+    "line": "98",
+    "label": "8",
+    "hex": "#80645c"
+  },
+  {
+    "line": "98",
+    "label": "9",
+    "hex": "#5f3d3b"
+  },
+  {
+    "line": "98",
+    "label": "0",
+    "hex": "#954749"
+  },
+  {
+    "line": "98",
+    "label": "a",
+    "hex": "#f29dc3"
+  },
+  {
+    "line": "98",
+    "label": "b",
+    "hex": "#ec6579"
+  },
+  {
+    "line": "98",
+    "label": "c",
+    "hex": "#761e0e"
+  },
+  {
+    "line": "98",
+    "label": "d",
+    "hex": "#b20f0b"
+  },
+  {
+    "line": "98",
+    "label": "e",
+    "hex": "#e30613"
+  },
+  {
+    "line": "98",
+    "label": "f",
+    "hex": "#e6af75"
+  },
+  {
+    "line": "98",
+    "label": "h",
+    "hex": "#be7946"
+  },
+  {
+    "line": "98",
+    "label": "j",
+    "hex": "#b7cd00"
+  },
+  {
+    "line": "98",
+    "label": "k",
+    "hex": "#3b9e31"
+  },
+  {
+    "line": "98",
+    "label": "m",
+    "hex": "#007038"
+  },
+  {
+    "line": "98",
+    "label": "n",
+    "hex": "#004a29"
+  },
+  {
+    "line": "98",
+    "label": "p",
+    "hex": "#52af85"
+  },
+  {
+    "line": "98",
+    "label": "q",
+    "hex": "#007488"
+  },
+  {
+    "line": "98",
+    "label": "r",
+    "hex": "#004e51"
+  },
+  {
+    "line": "98",
+    "label": "t",
+    "hex": "#cde3f7"
+  },
+  {
+    "line": "99",
+    "label": "1",
+    "hex": "#1d1d1b"
+  },
+  {
+    "line": "99",
+    "label": "2",
+    "hex": "#a3a4aa"
+  },
+  {
+    "line": "99",
+    "label": "3",
+    "hex": "#ededed"
+  },
+  {
+    "line": "99",
+    "label": "4",
+    "hex": "#c2dcec"
+  },
+  {
+    "line": "99",
+    "label": "5",
+    "hex": "#89d2f6"
+  },
+  {
+    "line": "99",
+    "label": "6",
+    "hex": "#00a6e2"
+  },
+  {
+    "line": "99",
+    "label": "7",
+    "hex": "#0083cb"
+  },
+  {
+    "line": "99",
+    "label": "8",
+    "hex": "#006fa1"
+  },
+  {
+    "line": "99",
+    "label": "9",
+    "hex": "#2a366a"
+  },
+  {
+    "line": "99",
+    "label": "0",
+    "hex": "#7e2e87"
+  },
+  {
+    "line": "99",
+    "label": "a",
+    "hex": "#a94f93"
+  },
+  {
+    "line": "99",
+    "label": "b",
+    "hex": "#c978af"
+  },
+  {
+    "line": "99",
+    "label": "c",
+    "hex": "#f3a6c9"
+  },
+  {
+    "line": "99",
+    "label": "d",
+    "hex": "#df206a"
+  },
+  {
+    "line": "99",
+    "label": "e",
+    "hex": "#a4024b"
+  },
+  {
+    "line": "99",
+    "label": "f",
+    "hex": "#c96467"
+  },
+  {
+    "line": "99",
+    "label": "h",
+    "hex": "#f29277"
+  },
+  {
+    "line": "99",
+    "label": "j",
+    "hex": "#f7b393"
+  },
+  {
+    "line": "99",
+    "label": "k",
+    "hex": "#ec6565"
+  },
+  {
+    "line": "99",
+    "label": "m",
+    "hex": "#df3b56"
+  },
+  {
+    "line": "99",
+    "label": "n",
+    "hex": "#7b1714"
+  },
+  {
+    "line": "99",
+    "label": "p",
+    "hex": "#941919"
+  },
+  {
+    "line": "99",
+    "label": "q",
+    "hex": "#da6c01"
+  },
+  {
+    "line": "99",
+    "label": "r",
+    "hex": "#f8b100"
+  },
+  {
+    "line": "99",
+    "label": "t",
+    "hex": "#ffed00"
+  },
+  {
+    "line": "99",
+    "label": "u",
+    "hex": "#fabc6f"
+  },
+  {
+    "line": "99",
+    "label": "w",
+    "hex": "#cc6f33"
+  },
+  {
+    "line": "99",
+    "label": "x",
+    "hex": "#ab5020"
+  },
+  {
+    "line": "99",
+    "label": "y",
+    "hex": "#843f16"
+  }
+]

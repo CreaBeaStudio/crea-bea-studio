@@ -744,6 +744,8 @@
     }
   },
   "mysteryDecoder": {
+    "modeReadyMadeLabel": "Fertige Decoder",
+    "modeCustomLabel": "Eigenen erstellen",
     "pageTitle": "Weniger Farben suchen, mehr Zeit zum Ausmalen",
     "intro": "Wenn du Mystery-Malen-nach-Zahlen liebst, aber die Farbzuordnung nervt — oder du dir einfach nicht sicher bist, ob du die bestmöglichen Farbtöne gewählt hast — haben wir die Lösung für dich. Damit du mit deinen Markern sofort die besten Ergebnisse erzielst, haben wir umfassende Farb-Decoder-PDFs für die beliebtesten Mystery-Malbücher erstellt, von Prinzessin bis zu den Klassikern.",
     "whatsIncludedTitle": "Was ist in den Decoder-Dateien enthalten?",
@@ -1011,5 +1013,58 @@
     "errorRefSuffix": "mit dieser Bestellreferenz:",
     "errorNoRefSuffix": "um Hilfe zu erhalten.",
     "pdfGenerationError": "Beim Erstellen deines PDFs ist etwas schiefgelaufen. Versuche es erneut über den Button oder kontaktiere hello@creabeastudio.com mit deiner Bestellreferenz."
+  },
+"mysteryDecoderCustom": {
+    "selectBookLabel": "Wähle dein Buch",
+    "selectGuangnaSetsLabel": "Deine Guangna-Marker-Sets",
+    "selectLanguoSetsLabel": "Deine Languo-Marker-Sets",
+    "multiSelectHint": "Halte Strg (Windows) oder Cmd (Mac) gedrückt, um mehrere auszuwählen.",
+    "extraCodesLabel": "Zusätzliche Farbcodes, die du besitzt (optional)",
+    "extraCodesPlaceholder": "z. B. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Kostenlose Vorschau erstellen",
+    "generatingButton": "Vorschau wird erstellt...",
+    "unlockFullDecoderButton": "Vollständigen Decoder freischalten ({price})",
+    "unlockingButton": "Weiterleitung zur Kasse...",
+    "noSetsSelectedError": "Wähle mindestens ein Marker-Set aus (oder gib eigene Codes ein), bevor du eine Vorschau erstellst.",
+    "noMatchError": "Es konnten keine Codes für dieses Buch zugeordnet werden – versuche ein anderes Set auszuwählen.",
+    "generationFailedError": "Beim Erstellen deiner Vorschau ist etwas schiefgelaufen. Bitte versuche es erneut.",
+    "unlockFailedError": "Beim Starten des Bezahlvorgangs ist etwas schiefgelaufen. Bitte versuche es erneut oder kontaktiere uns.",
+    "freePreviewCaption": "Kostenlose Vorschau (erste Seite) – schalte den vollständigen Decoder frei, um das gesamte Buch zu erhalten.",
+    "viewPreviewButton": "Vorschau-PDF anzeigen",
+    "languoLinePaint": "Acrylstifte",
+    "languoLineGel": "Gelstifte",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "Deine Marker"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Deine Zahlung wird bestätigt…",
+    "checkingBody": "Das dauert meist nur wenige Sekunden. Bitte schließe diese Seite nicht.",
+    "readyTitle": "Dein Decoder ist fertig!",
+    "readyBody": "Dein vollständiger Decoder wird vorbereitet – der Download sollte automatisch starten.",
+    "orderReferenceNote": "Bestellnummer: {orderId}",
+    "timedOutTitle": "Zahlung wird immer noch überprüft",
+    "timedOutBody": "Das dauert länger als gewöhnlich. Wenn du bereits bezahlt hast, keine Sorge – deine Bestellung ist gespeichert.",
+    "timedOutEmailPrefix": "Falls sich das nicht gleich von selbst löst, kontaktiere uns unter",
+    "timedOutRefSuffix": "mit deiner Bestellnummer",
+    "errorTitle": "Etwas ist schiefgelaufen",
+    "errorEmailPrefix": "Bitte kontaktiere uns unter",
+    "errorRefSuffix": "mit deiner Bestellnummer",
+    "errorNoRefSuffix": "und wir helfen dir weiter.",
+    "pdfGenerationError": "Wir konnten deine Decoder-PDF nicht erstellen. Bitte klicke erneut auf den Download-Button oder kontaktiere uns.",
+    "noMatchError": "Wir konnten keine Codes für dieses Buch zuordnen. Bitte kontaktiere uns, damit wir dir helfen können.",
+    "waitingForPayment": "Deine Zahlung wird bestätigt…",
+    "generating": "Dein vollständiger Decoder wird erstellt…",
+    "ready": "Dein Decoder ist fertig!",
+    "downloadButton": "Decoder herunterladen",
+    "errorPrefix": "Etwas ist schiefgelaufen:",
+    "errors": {
+      "ORDER_ID_REQUIRED": "Keine Bestellung im Link gefunden. Bitte nutze den Link aus deiner Bestätigungs-E-Mail.",
+      "ORDER_NOT_FOUND": "Wir konnten diese Bestellung nicht finden.",
+      "STATUS_CHECK_FAILED": "Der Bestellstatus konnte nicht geprüft werden. Bitte aktualisiere die Seite.",
+      "PAYMENT_TIMEOUT": "Wir haben noch keine Zahlungsbestätigung erhalten. Wenn du bereits bezahlt hast, aktualisiere die Seite bitte in einer Minute oder kontaktiere uns.",
+      "GENERATION_FAILED": "Dein Decoder konnte nicht erstellt werden. Bitte aktualisiere die Seite oder kontaktiere uns.",
+      "UNKNOWN": "Bitte aktualisiere die Seite oder kontaktiere uns."
+    }
   }
 }

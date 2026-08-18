@@ -976,6 +976,8 @@
     "pdfGenerationError": "Something went wrong generating your PDF. Try the button again, or contact hello@creabeastudio.com with your order reference."
   },
   "mysteryDecoder": {
+    "modeReadyMadeLabel": "Ready-made Decoders",
+    "modeCustomLabel": "Build Your Own",
     "pageTitle": "Less Time Matching, More Time Coloring",
     "intro": "If you love mystery coloring-by-number but don't like the color matching — or you're just not sure you've picked the best possible shades — we've got you covered. To help you get the best results instantly with your markers, we've created comprehensive Color Decoder Key PDFs for the most popular mystery coloring books, from Princess to the Classics.",
     "whatsIncludedTitle": "What's Included in the Decoder Files?",
@@ -1011,5 +1013,58 @@
       "specialportraits": "Special Portraits",
       "pokemon": "Pokemon"
     }
-  }
+  },
+  "mysteryDecoderCustom": {
+    "selectBookLabel": "Choose your book",
+    "selectGuangnaSetsLabel": "Your Guangna marker sets",
+    "selectLanguoSetsLabel": "Your Languo marker sets",
+    "multiSelectHint": "Hold Ctrl (Windows) or Cmd (Mac) to select more than one.",
+    "extraCodesLabel": "Extra individual codes you own (optional)",
+    "extraCodesPlaceholder": "e.g. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Generate free preview",
+    "generatingButton": "Generating preview...",
+    "unlockFullDecoderButton": "Unlock full decoder ({price})",
+    "unlockingButton": "Redirecting to checkout...",
+    "noSetsSelectedError": "Pick at least one marker set (or type in some codes you own) before generating a preview.",
+    "noMatchError": "Couldn't match any codes for this book -- try selecting a different set.",
+    "generationFailedError": "Something went wrong generating your preview. Please try again.",
+    "unlockFailedError": "Something went wrong starting checkout. Please try again, or contact us if it keeps happening.",
+    "freePreviewCaption": "Free preview (first page) -- unlock the full decoder to get the entire book.",
+    "viewPreviewButton": "View free preview PDF",
+    "languoLinePaint": "Paint",
+    "languoLineGel": "Gel Pens",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "Your markers"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Confirming your payment…",
+    "checkingBody": "This usually only takes a few seconds. Please don't close this page.",
+    "readyTitle": "Your decoder is ready!",
+    "readyBody": "Your complete decoder is being prepared -- the download should start automatically.",
+    "orderReferenceNote": "Order reference: {orderId}",
+    "timedOutTitle": "Still confirming your payment",
+    "timedOutBody": "This is taking longer than usual. If you already paid, don't worry -- your order is saved.",
+    "timedOutEmailPrefix": "If this doesn't resolve shortly, contact us at",
+    "timedOutRefSuffix": "with your order reference",
+    "errorTitle": "Something went wrong",
+    "errorEmailPrefix": "Please contact us at",
+    "errorRefSuffix": "with your order reference",
+    "errorNoRefSuffix": "and we'll help sort it out.",
+    "pdfGenerationError": "We couldn't generate your decoder PDF. Please try the download button again, or contact us for help.",
+    "noMatchError": "We couldn't match any codes for this book. Please contact us so we can help.",
+      "waitingForPayment": "Confirming your payment…",
+      "generating": "Generating your full decoder…",
+      "ready": "Your decoder is ready!",
+      "downloadButton": "Download your Decoder",
+      "errorPrefix": "Something went wrong:",
+      "errors": {
+        "ORDER_ID_REQUIRED": "No order was found in the link. Please use the link from your confirmation email.",
+        "ORDER_NOT_FOUND": "We couldn't find this order.",
+        "STATUS_CHECK_FAILED": "We couldn't check your order status. Please refresh the page.",
+        "PAYMENT_TIMEOUT": "We haven't received payment confirmation yet. If you already paid, please refresh this page in a minute, or contact us.",
+        "GENERATION_FAILED": "We couldn't generate your decoder. Please refresh the page, or contact us for help.",
+        "UNKNOWN": "Please refresh the page, or contact us for help."
+      }
+    }
 }

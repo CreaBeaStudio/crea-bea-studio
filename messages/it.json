@@ -977,6 +977,8 @@
   },
   "mysteryDecoder": {
     "pageTitle": "Meno tempo ad abbinare, più tempo a colorare",
+    "modeReadyMadeLabel": "Decoder pronti",
+    "modeCustomLabel": "Crea il tuo",
     "intro": "Se ami i disegni misteriosi da colorare per numeri ma non ti piace l'abbinamento dei colori — o semplicemente non sei sicuro/a di aver scelto le tonalità migliori — ci pensiamo noi. Per aiutarti a ottenere subito i migliori risultati con i tuoi pennarelli, abbiamo creato PDF completi con le chiavi di decodifica colore per i libri da colorare misteriosi più popolari, dalle Principesse ai Classici.",
     "whatsIncludedTitle": "Cosa è incluso nei file decodificatore?",
     "featureA4Letter": "Formattato per stampare perfettamente sia su carta A4 che US Letter.",
@@ -1010,6 +1012,59 @@
       "mondesfantastiques": "Fantastic Creatures / Mondes Fantastiques",
       "specialportraits": "Special Portraits",
       "pokemon": "Pokemon"
+    }
+  },
+    "mysteryDecoderCustom": {
+    "selectBookLabel": "Scegli il tuo libro",
+    "selectGuangnaSetsLabel": "I tuoi set di pennarelli Guangna",
+    "selectLanguoSetsLabel": "I tuoi set di pennarelli Languo",
+    "multiSelectHint": "Tieni premuto Ctrl (Windows) o Cmd (Mac) per selezionarne più di uno.",
+    "extraCodesLabel": "Codici singoli extra in tuo possesso (opzionale)",
+    "extraCodesPlaceholder": "es. GN-605, HG-F01, BR-702",
+    "generatePreviewButton": "Genera anteprima gratuita",
+    "generatingButton": "Generazione anteprima in corso...",
+    "unlockFullDecoderButton": "Sblocca decoder completo ({price})",
+    "unlockingButton": "Reindirizzamento al pagamento...",
+    "noSetsSelectedError": "Scegli almeno un set di pennarelli (o inserisci alcuni codici) prima di generare l'anteprima.",
+    "noMatchError": "Impossibile trovare corrispondenze di codici per questo libro — prova a selezionare un set diverso.",
+    "generationFailedError": "Qualcosa è andato storto durante la generazione dell'anteprima. Riprova.",
+    "unlockFailedError": "Qualcosa è andato storto con il pagamento. Riprova o contattaci se il problema persiste.",
+    "freePreviewCaption": "Anteprima gratuita (prima pagina) — sblocca il decoder completo per ottenere l'intero libro.",
+    "viewPreviewButton": "Visualizza PDF di anteprima",
+    "languoLinePaint": "Pennarelli acrilic",
+    "languoLineGel": "Penne Gel",
+    "languoLinePlus": "Plus",
+    "languoLineQimiart": "Languo x Qimiart",
+    "defaultSetLabel": "I tuoi pennarelli"
+  },
+  "mysteryDecoderDownload": {
+    "checkingTitle": "Conferma del pagamento in corso…",
+    "checkingBody": "Di solito ci vogliono solo pochi secondi. Per favore non chiudere questa pagina.",
+    "readyTitle": "Il tuo decoder è pronto!",
+    "readyBody": "Stiamo preparando il tuo decoder completo — il download dovrebbe avviarsi automaticamente.",
+    "orderReferenceNote": "Riferimento ordine: {orderId}",
+    "timedOutTitle": "Stiamo ancora verificando il tuo pagamento",
+    "timedOutBody": "Ci sta prendendo più tempo del solito. Se hai già pagato, non preoccuparti: il tuo ordine è salvato.",
+    "timedOutEmailPrefix": "Se non si risolve a breve, contattaci a",
+    "timedOutRefSuffix": "indicando il tuo riferimento ordine",
+    "errorTitle": "Si è verificato un errore",
+    "errorEmailPrefix": "Contattaci a",
+    "errorRefSuffix": "indicando il tuo riferimento ordine",
+    "errorNoRefSuffix": "e ti aiuteremo a risolvere.",
+    "pdfGenerationError": "Non siamo riusciti a generare il PDF del tuo decoder. Riprova con il pulsante di download o contattaci.",
+    "noMatchError": "Non siamo riusciti a trovare corrispondenze di codici per questo libro. Contattaci così possiamo aiutarti.",
+    "waitingForPayment": "Conferma del pagamento in corso…",
+    "generating": "Generazione del decoder completo in corso…",
+    "ready": "Il tuo decoder è pronto!",
+    "downloadButton": "Scarica il tuo Decoder",
+    "errorPrefix": "Si è verificato un errore:",
+    "errors": {
+      "ORDER_ID_REQUIRED": "Nessun ordine trovato nel link. Usa il link presente nella tua e-mail di conferma.",
+      "ORDER_NOT_FOUND": "Non siamo riusciti a trovare questo ordine.",
+      "STATUS_CHECK_FAILED": "Impossibile verificare lo stato dell'ordine. Ricarica la pagina.",
+      "PAYMENT_TIMEOUT": "Non abbiamo ancora ricevuto la conferma di pagamento. Se hai già pagato, ricarica la pagina tra un minuto o contattaci.",
+      "GENERATION_FAILED": "Impossibile generare il tuo decoder. Ricarica la pagina o contattaci per aiuto.",
+      "UNKNOWN": "Ricarica la pagina o contattaci per ricevere assistenza."
     }
   }
 }
