@@ -356,6 +356,62 @@ const EN_GUIDES = {
       label: "Try the DIY Swatch Card Creator →",
     },
   },
+ 
+"custom-mystery-decoder-guide": {
+  title: "Build Your Own Custom Mystery Decoder",
+  description:
+    "Pick any Mystery coloring book and match it to your own marker collection — Guangna, Languo, or both. Free first-page preview, full decoder for a flat price.",
+  intro:
+    "Mystery coloring books come with their own secret color codes — great fun, until you realize the codes don't match the markers you actually own. The Custom Mystery Decoder fixes that: choose your book, tell us which marker sets you have, and get a matching key built just for your collection.",
+  sections: [
+    {
+      heading: "How it works",
+      body:
+        "Open the Mystery Decoder page and switch to \"Build Your Own\" mode. Pick your book from the dropdown — we support a growing library of predefined titles. Then select the marker sets you own: Guangna sets, Languo sets (grouped by line — Paint, Gel, Plus, QimiArt), or a mix of both. Already own a few loose markers outside a full set? Add their codes in the extra-codes field and we'll include them in the match too."
+    },
+    {
+      heading: "See it before you buy it",
+      body:
+        "Generate a free preview of the first page instantly, right in your browser — no account, no payment. It's the same layout and matching logic as the full decoder, so you know exactly what you're getting before unlocking the rest."
+    },
+    {
+      heading: "One page, two codes",
+      body:
+        "Each row shows the book's own original code exactly as printed, with your best-matching marker code placed directly underneath. Nothing about the book's original numbering changes — you're just adding a translation layer on top of it."
+    },
+    {
+      heading: "Unlock the full book",
+      body:
+        "Like the full decoder for a single flat price, no matter how many marker sets you selected or how big the book is. Available in A4 or US Letter — the price stays the same, only the page layout adjusts. Your download link stays valid so you can come back for it later."
+    },
+    {
+      heading: "Q: Which marker sets can I match against?",
+      body:
+        "Any combination of Guangna sets and Languo sets (Paint, Gel, Plus, or QimiArt lines). You can also list individual codes you own outside a full set, and they'll be considered alongside your selected sets."
+    },
+    {
+      heading: "Q: Does the preview cost anything?",
+      body:
+        "No — the first page generates for free, with no account required, so you can check the match quality before deciding to unlock the full book."
+    },
+    {
+      heading: "Q: Will my matches change if I select more sets?",
+      body:
+        "Yes. Every code you own is pooled together across both brands, and each book color gets matched to the single closest marker across your whole pool — so adding more sets can only improve, never worsen, your matches."
+    },
+    {
+      heading: "Q: Which books are available in Custom mode?",
+      body:
+        "A growing library of predefined Mystery titles. If your book isn't listed yet, check back soon — new books are added regularly."
+    },
+    {
+      heading: "Q: What's the difference between the ready-made Mystery Decoders and the Custom one?",
+      body:
+        "Ready-made decoders are pre-generated for a specific book and a specific brand's full set. The Custom Decoder is built live for the exact marker sets you personally own, so it's the better fit if your collection is mixed or partial."
+    }
+  ],
+  cta: "Open the Mystery Decoder and build your custom key — free preview, no account needed."
+},
 };
 
 const FR_GUIDES = {
@@ -699,6 +755,62 @@ const FR_GUIDES = {
       label: "Essayer le créateur de cartes d'échantillons DIY →",
     },
   },
+
+"custom-mystery-decoder-guide": {
+  title: "Créez votre propre décodeur Mystery personnalisé",
+  description:
+    "Choisissez n'importe quel carnet de coloriage Mystery et faites-le correspondre à votre propre collection de feutres — Guangna, Languo, ou les deux. Aperçu gratuit de la première page, décodeur complet à prix fixe.",
+  intro:
+    "Les carnets de coloriage Mystery ont leurs propres codes couleur secrets — amusant, jusqu'à ce qu'on réalise que ces codes ne correspondent pas aux feutres qu'on possède réellement. Le décodeur Mystery personnalisé résout ce problème : choisissez votre carnet, indiquez les sets de feutres que vous possédez, et obtenez une clé de correspondance conçue pour votre collection.",
+  sections: [
+    {
+      heading: "Comment ça marche",
+      body:
+        "Ouvrez la page Mystery Decoder et passez en mode « Créez le vôtre ». Choisissez votre carnet dans la liste déroulante — notre bibliothèque de titres prédéfinis s'agrandit régulièrement. Sélectionnez ensuite les sets que vous possédez : sets Guangna, sets Languo (regroupés par gamme — Paint, Gel, Plus, QimiArt), ou un mélange des deux. Vous possédez quelques feutres isolés en dehors d'un set complet ? Ajoutez leurs codes dans le champ dédié et ils seront inclus dans la correspondance."
+    },
+    {
+      heading: "Voyez avant d'acheter",
+      body:
+        "Générez instantanément un aperçu gratuit de la première page, directement dans votre navigateur — sans compte, sans paiement. C'est exactement la même mise en page et la même logique de correspondance que le décodeur complet, pour savoir précisément ce que vous obtiendrez avant de débloquer la suite."
+    },
+    {
+      heading: "Une page, deux codes",
+      body:
+        "Chaque ligne affiche le code d'origine du carnet tel qu'imprimé, avec le code du feutre correspondant placé juste en dessous. La numérotation d'origine du carnet reste inchangée — vous ajoutez simplement une couche de traduction par-dessus."
+    },
+    {
+      heading: "Débloquez le carnet complet",
+      body:
+        "Le décodeur complet est proposé à un prix fixe unique, quel que soit le nombre de sets sélectionnés ou la taille du carnet. Disponible en A4 ou US Letter — le prix reste identique, seule la mise en page s'ajuste. Votre lien de téléchargement reste valable pour y revenir plus tard."
+    },
+    {
+      heading: "Q : Quels sets de feutres puis-je utiliser pour la correspondance ?",
+      body:
+        "N'importe quelle combinaison de sets Guangna et de sets Languo (gammes Paint, Gel, Plus ou QimiArt). Vous pouvez aussi lister des codes individuels que vous possédez en dehors d'un set complet, ils seront pris en compte avec vos sets sélectionnés."
+    },
+    {
+      heading: "Q : L'aperçu est-il payant ?",
+      body:
+        "Non — la première page est générée gratuitement, sans compte requis, pour vérifier la qualité de la correspondance avant de décider de débloquer le carnet complet."
+    },
+    {
+      heading: "Q : Mes correspondances changent-elles si je sélectionne plus de sets ?",
+      body:
+        "Oui. Tous les codes que vous possédez sont regroupés entre les deux marques, et chaque couleur du carnet est associée au feutre le plus proche dans l'ensemble de votre pool — ajouter des sets ne peut donc qu'améliorer vos correspondances, jamais les dégrader."
+    },
+    {
+      heading: "Q : Quels carnets sont disponibles en mode personnalisé ?",
+      body:
+        "Une bibliothèque de titres Mystery prédéfinis, en constante expansion. Si votre carnet n'y figure pas encore, revenez bientôt — de nouveaux titres sont ajoutés régulièrement."
+    },
+    {
+      heading: "Q : Quelle différence entre les décodeurs Mystery prêts à l'emploi et le décodeur personnalisé ?",
+      body:
+        "Les décodeurs prêts à l'emploi sont générés à l'avance pour un carnet précis et le set complet d'une marque donnée. Le décodeur personnalisé est généré en direct pour les sets que vous possédez réellement — plus adapté si votre collection est mixte ou partielle."
+    }
+  ],
+  cta: "Ouvrez le Mystery Decoder et créez votre clé personnalisée — aperçu gratuit, sans compte."
+},
 };
 
 export const GUIDES_DATA = {
