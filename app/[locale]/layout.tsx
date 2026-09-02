@@ -25,6 +25,9 @@ export async function generateMetadata({
     verification: {
       google: "FZhMCwmmuDQRt-KikXkqK5EKfE8dDzeguVvn0pbarmU",
     },
+    other: {
+      'p:domain_verify': 'e4e8455a1cd867442dab4654ff9fcd02',
+    },
     openGraph: {
       title: t('title'),
       description: t('description'),
