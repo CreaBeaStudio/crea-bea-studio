@@ -6,7 +6,7 @@ import SetAutocomplete from "../components/SetAutocomplete";
 import { useState, useMemo, useRef, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_COLORS, GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_COLORS, GN_366_IDS, GN_ALL_MATCHING_IDS, GN_MATCHING_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, findClosestN, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "@/lib/guangna";
@@ -15,48 +15,6 @@ import {
   type LanguoMatchResult,
 } from "@/lib/languo";
 import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
-// This file must be saved as app/[locale]/languo-converter/page.tsx --
-// route path kept as-is for now even though the feature/component is
-// renamed to "Brand Converter" (avoids breaking existing links/SEO from
-// the old name). Rename the folder to app/[locale]/brand-converter/ if
-// Mirjam decides she wants the URL renamed too -- flagged, not done here.
-//
-// 2026-08-05: added a second top-level mode alongside the existing
-// single-code lookup: "set" mode matches an ENTIRE owned set against a
-// target set (or the largest default set per brand if no target is
-// chosen), producing one closest-match row per owned code. Direction
-// ("toGuangna"/"toLanguo") now governs both modes -- in single mode it
-// still means "which code you're typing"; in set mode it means "which
-// brand's set you own" (source) vs "which brand's set you're matching
-// into" (target), so the meaning is consistent (source brand -> target
-// brand either way).
-//
-// Translation namespace renamed "LanguoConverter" -> "BrandConverter" to
-// match the rename. This ONLY updates en.json here -- nl/de/es/fr/it.json
-// still have the old "LanguoConverter" key and need the same rename +
-// the new setMatch/mode/errors.noSetSelected keys added, same as the
-// existing translation backlog for this page.
-//
-// DATA BUGS FOUND while building set-mode defaults (not fixed here,
-// flagging for her confirmation before touching the underlying files):
-//   1. lib/languoSets.ts: LANGUO_SET_OPTIONS lists the 288-color Languo
-//      set under key "288 Set", but LANGUO_SETS itself only has that data
-//      under the key "Brush 288 Set" -- so selecting "Paint 288 Set" in
-//      the UI (both here and in the existing single-code "My Markers"
-//      picker) silently resolves to an empty/no-match set today. Fixed
-//      in the delivered lib/languoSets.ts replacement below (option key
-//      changed to match the real data key) -- low-risk, one-line rename,
-//      no data reshuffling.
-//   2. lib/guangna.ts: GUANGNA_SETS["GN.8101-366 (366 colors)"] is
-//      defined as `Object.keys(GN_COLORS)`, which includes BOTH the 366
-//      classic GN- codes AND the 168 HG- (High Gloss) codes -- so it's
-//      actually ~534 codes despite the "366" label. NOT changed here
-//      (it's used elsewhere and changing it would silently change
-//      existing matching results) -- for this page's own "largest
-//      Guangna set" default I used GN_ONLY_IDS instead (the already-
-//      exported, correctly-sized 366-only list), sidestepping the bug
-//      rather than fixing it. Worth a decision from her on whether to
-//      correct GUANGNA_SETS itself.
 
 const MATCH_COUNT = 3;
 const MAX_SUGGESTIONS = 8;
@@ -67,10 +25,6 @@ type Mode = "single" | "set";
 const LANGUO_NON_GLITTER_SET = new Set(LANGUO_NON_GLITTER_IDS);
 const LANGUO_BRUSH_288_DEFAULT = (LANGUO_SETS["Brush 288 Set"]?.codes || []).filter(id => LANGUO_NON_GLITTER_SET.has(id));
 
-// Same noise-overlay technique as ColorConverter's ProtectedSwatch, so a
-// browser eyedropper/color-picker samples noisy pixels instead of the
-// exact marker color. Each instance gets its own unique filter id via
-// useId() since this page can show many swatches at once.
 function Swatch({ rgb, size = 56 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -89,8 +43,6 @@ function Swatch({ rgb, size = 56 }: { rgb: [number, number, number]; size?: numb
   );
 }
 
-// name is omitted for Languo matches -- Languo codes have no marker
-// "name" the way GN_COLORS entries do (see LanguoMatchResult).
 function MatchRow({ rank, code, name, rgb }: { rank: number; code: string; name?: string; rgb: [number, number, number] }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 12px", borderRadius: 10, background: "var(--cream)" }}>
@@ -109,15 +61,11 @@ type Results = {
   inputCode: string;
   inputRgb: [number, number, number];
   fullMatches: { code: string; name?: string; rgb: [number, number, number] }[];
-  fullGNFallback: MatchResult | null; // only ever set when direction === "toGuangna"
+  fullGNFallback: MatchResult | null;
   ownedMatches: { code: string; name?: string; rgb: [number, number, number] }[] | null;
   ownedIds: string[];
 };
 
-// One row of a full-set match: the code she owns, plus its single
-// closest match in the target set. Set-mode always shows the single
-// best match per owned code (not top-3 like single-code mode) -- a
-// top-3-per-row table would get unwieldy fast for a 100+ code set.
 type SetMatchRow = {
   sourceCode: string;
   sourceRgb: [number, number, number];
@@ -140,7 +88,6 @@ export default function BrandConverter() {
   const [mode, setMode] = useState<Mode>("single");
   const [direction, setDirection] = useState<Direction>("toGuangna");
 
-  // --- Single-code mode state ---
   const [codeInput, setCodeInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -150,7 +97,6 @@ export default function BrandConverter() {
   const [matching, setMatching] = useState(false);
   const blurTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // --- Set-match mode state ---
   const [yourSet, setYourSet] = useState("");
   const [matchToSet, setMatchToSet] = useState("");
   const [setModeResults, setSetResults] = useState<SetResults | null>(null);
@@ -161,9 +107,6 @@ export default function BrandConverter() {
   const switchDirection = (d: Direction) => {
     if (d === direction) return;
     setDirection(d);
-    // The typed code / chosen sets / any results all belong to the
-    // previous direction's code namespace (Languo vs Guangna) -- none
-    // of them carry over meaningfully, so reset everything in both modes.
     setCodeInput("");
     setMySet("");
     setExtraCodes("");
@@ -182,9 +125,6 @@ export default function BrandConverter() {
     setSetError(null);
   };
 
-  // Custom autocomplete instead of a native <datalist> -- only shows a
-  // short filtered slice, and only once the person has actually typed
-  // something.
   const suggestions = useMemo(() => {
     const q = codeInput.trim().toUpperCase();
     if (!q) return [];
@@ -192,10 +132,6 @@ export default function BrandConverter() {
     return pool.filter(code => code.includes(q)).slice(0, MAX_SUGGESTIONS);
   }, [codeInput, direction]);
 
-  // "My Markers" describes what the person owns of the OUTPUT type --
-  // Guangna markers when matching toGuangna, Languo markers when
-  // matching toLanguo -- since that's what the owned-match filter
-  // narrows down. Only used in single-code mode.
   const getOwnedIds = (): string[] => {
     const ids: string[] = [];
     if (direction === "toGuangna") {
@@ -237,9 +173,9 @@ export default function BrandConverter() {
       let ownedMatches: { code: string; name?: string; rgb: [number, number, number] }[] | null = null;
 
       if (direction === "toGuangna") {
-        const gnMatches = findClosestN(rgb, GN_366_IDS, MATCH_COUNT);
+        const gnMatches = findClosestN(rgb, GN_ALL_MATCHING_IDS, MATCH_COUNT);
         fullMatches = gnMatches;
-        fullGNFallback = gnMatches[0]?.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null;
+        fullGNFallback = gnMatches[0]?.code.startsWith("HG-") ? findClosest(rgb, GN_MATCHING_IDS) : null;
         ownedMatches = ownedIds.length > 0 ? findClosestN(rgb, ownedIds, MATCH_COUNT) : null;
       } else {
         const languoMatches = findClosestLanguoN(rgb, LANGUO_NON_GLITTER_IDS, MATCH_COUNT);
@@ -253,11 +189,6 @@ export default function BrandConverter() {
     }
   };
 
-  // Path to the CreaBeaStudio logo used in the PDF footer -- confirmed
-  // by her as public/marketing/logo-full.png. loadLogoDataUrl() below
-  // still tolerates a bad/missing path (returns null, PDF still
-  // generates without a logo) so this never breaks the export even if
-  // the file moves later.
   const LOGO_PATH = "/marketing/logo-full.png";
 
   const loadLogoDataUrl = async (): Promise<{ dataUrl: string; width: number; height: number } | null> => {
@@ -283,16 +214,6 @@ export default function BrandConverter() {
     }
   };
 
-  // Builds a downloadable PDF of a full-set match: a condensed 3-column
-  // layout (source code + swatch -> matched code + swatch per row),
-  // repeated across as many pages as the set size needs. A4/Letter are
-  // both supported via pdfPaperSize; margins are sized to the smaller
-  // of the two (Letter) so the same layout prints cleanly on either
-  // without re-flowing content. Dynamic import keeps jsPDF out of the
-  // SSR bundle (same pattern Legend Converter's PDF export already
-  // relies on -- ASSUMES `jspdf` is already an installed dependency
-  // there; if it isn't, `npm install jspdf` first).
-  // Brand pink, from :root { --pink: #F4607A } in her CSS.
   const BRAND_PINK: [number, number, number] = [244, 96, 122];
 
   const handleDownloadPdf = async () => {
@@ -308,7 +229,7 @@ export default function BrandConverter() {
     const columnWidth = (pageWidth - margin * 2 - columnGap * (numColumns - 1)) / numColumns;
     const rowHeight = 15;
     const swatchSize = 8;
-    const footerReserve = 46; // room for the logo/footer at the bottom of every page
+    const footerReserve = 46;
 
     const isToGuangna = setModeResults.direction === "toGuangna";
     const referenceBrand = isToGuangna ? "Languo" : "Guangna";
@@ -324,10 +245,6 @@ export default function BrandConverter() {
       doc.text("CreaBeaStudio - Brand Converter", margin, y);
       y += 20;
 
-      // Single combined line ("<your set> - <brand> vs <matched-to set>
-      // - <brand>") -- replaces the earlier two-line "REFERENCE (what
-      // you own) / TARGET (matched codes below)" wording, which read as
-      // too literal/formal per her feedback.
       doc.setFontSize(11);
       doc.setTextColor(20, 20, 20);
       doc.text(
@@ -345,10 +262,6 @@ export default function BrandConverter() {
       doc.line(margin, y, pageWidth - margin, y);
       y += 12;
 
-      // Per-column brand headers ("Languo" / "Guangna"), mirroring the
-      // on-screen table's <th> labels -- repeated above every column
-      // pair since this is a condensed 3-column layout, not one wide
-      // table with a single header row.
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8);
       doc.setTextColor(140, 140, 140);
@@ -419,25 +332,12 @@ export default function BrandConverter() {
   const bestNotOwned = !!(results?.ownedMatches && results.fullMatches.length > 0
     && !results.ownedIds.includes(results.fullMatches[0].code));
 
-  // setOptions here means "the OUTPUT-brand set list" -- used by single
-  // mode's "My Markers" picker (unchanged from before).
   const setOptions = direction === "toGuangna" ? SET_OPTIONS : LANGUO_SET_OPTIONS;
   const glitterOrMetallicNote = direction === "toGuangna" ? t("myMarkers.metallicNote") : t("myMarkers.glitterNote");
 
-  // In set mode, "your set" is the SOURCE brand (the opposite of
-  // single-mode's "My Markers", which is the output/target brand) --
-  // Languo sets when going toGuangna, Guangna sets when going toLanguo.
   const yourSetOptions = direction === "toGuangna" ? LANGUO_SET_OPTIONS : SET_OPTIONS;
-  // "Match to" is the TARGET brand -- same brand as single mode's
-  // setOptions, reused here under a clearer local name.
   const matchToOptions = setOptions;
 
-  // Resolves a stored set KEY (e.g. "GN.8101-288 (288 colors)") to its
-  // human-readable LABEL (e.g. "Classic brush-288") for display in the
-  // results heading and the PDF header -- previously the raw key was
-  // stored directly as the "label", which is why the PDF showed keys
-  // like "GN.8101-288 (288 colors)" instead of the friendly set name
-  // the dropdown itself shows.
   const labelForSetKey = (key: string, options: { label: string; key: string }[]): string =>
     options.find(o => o.key === key)?.label || key;
 
@@ -457,7 +357,7 @@ export default function BrandConverter() {
         : (GUANGNA_SETS[yourSet] || []);
 
       const targetIds = isToGuangna
-        ? (matchToSet ? (GUANGNA_SETS[matchToSet] || []) : GN_ONLY_IDS)
+        ? (matchToSet ? (GUANGNA_SETS[matchToSet] || []) : GN_MATCHING_IDS)
         : (matchToSet
           ? (LANGUO_SETS[matchToSet]?.codes || []).filter(id => LANGUO_NON_GLITTER_SET.has(id))
           : LANGUO_BRUSH_288_DEFAULT);
@@ -511,7 +411,6 @@ export default function BrandConverter() {
           {t("subtitle")}
         </p>
 
-        {/* Mode toggle: single code lookup vs matching a whole owned set */}
         <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
           {(["single", "set"] as Mode[]).map(m => (
             <button key={m} onClick={() => switchMode(m)} style={{
@@ -525,7 +424,6 @@ export default function BrandConverter() {
           ))}
         </div>
 
-        {/* Direction toggle */}
         <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
           {(["toGuangna", "toLanguo"] as Direction[]).map(d => (
             <button key={d} onClick={() => switchDirection(d)} style={{
@@ -561,7 +459,6 @@ export default function BrandConverter() {
 
         {mode === "single" && (
           <>
-            {/* Code input + My Markers, side by side */}
             <div className="languo-grid" style={{ marginBottom: 20 }}>
               <div className="card">
                 <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t(`step1.heading${direction === "toGuangna" ? "ToGuangna" : "ToLanguo"}`)}</h3>
@@ -708,8 +605,6 @@ export default function BrandConverter() {
 
         {mode === "set" && (
           <>
-            {/* Set-to-set matching: pick the set she owns, optionally pick
-                a target set, get one closest match per owned code. */}
             <div className="languo-grid" style={{ marginBottom: 20 }}>
               <div className="card">
                 <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{t("setMatch.yourSetHeading")}</h3>
@@ -750,14 +645,6 @@ export default function BrandConverter() {
               </button>
             </div>
 
-            {/* Quick-actions card: everything needed to get the PDF or
-                order links, placed right after the match button so she
-                doesn't have to scroll past a potentially 300+ row table
-                to reach it. Duplicates the page's "buy me a coffee"
-                donate button here (the original at the true page bottom
-                stays put too, since it still serves single-code mode
-                and anyone who does scroll all the way down) -- flagged
-                as a deliberate choice, not an oversight. */}
             {setModeResults && (
               <div className="card" style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
@@ -780,11 +667,6 @@ export default function BrandConverter() {
                   </button>
                 </div>
 
-                {/* Every row here is a code she'll need to buy in the
-                    target brand -- unlike single mode's "not owned"
-                    notice, this always shows once a set match completes,
-                    since matching FROM a set means she doesn't already
-                    own the target brand's codes. */}
                 {setModeResults.direction === "toGuangna" ? (
                   <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: 10, background: "#fff7f9", border: "1px solid var(--pink)", fontSize: 13, color: "var(--muted)" }}>
                     💡 {t("setMatch.orderNoticeToGuangna")}{" "}

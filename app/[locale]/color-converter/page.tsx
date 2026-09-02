@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { useState, useCallback, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_COLORS, GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_COLORS, GN_ALL_MATCHING_IDS, GN_MATCHING_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, hexToRgb, rgbToHex, normalizeExtraCode,
   type MatchResult,
 } from "@/lib/guangna";
@@ -14,49 +14,10 @@ import {
   type LanguoMatchResult,
 } from "@/lib/languo";
 import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
-//
-// 2026-08-04 (part 4): removed the "Search across" Guangna/Languo toggle
-// entirely -- it was redundant with "My Markers": once results are two
-// independent per-brand boxes (part 3), which brand actually matters to
-// a given person is already shown by whether THAT box has a "best match
-// from your set" section (i.e. whether they filled in anything under
-// that brand in My Markers). A separate toggle just asked the same
-// question a second time. Both boxes now always compute and render on
-// every search -- no brand gating left anywhere. targetGuangna/
-// targetLanguo state, toggleTargetBrand(), and the whole "Search
-// across" UI block are gone. selectedBrandLabel() is gone too --
-// searchButton no longer takes a {brand} param (see en.json note).
-//
-// Also: the disclaimer text no longer names "Guangna" specifically --
-// see en.json note below.
-//
-// en.json changes needed:
-//   - ColorConverter.searchButton: drop the {brand} interpolation --
-//     becomes a static string, e.g. "Find My Marker Match →"
-//   - ColorConverter.disclaimer: reword to remove "Guangna", e.g.:
-//     "Matches are calculated by finding the closest marker to your
-//      input color from each supported brand, using Delta E (CIE 1976)
-//      color distance. Because this is a digital comparison, visual
-//      results will vary depending on your screen, lighting, and paper
-//      type. Our measured color values may differ slightly from the
-//      actual ink, so please always test your markers on a scrap piece.
-//      Treat these matches as a helpful starting point rather than a
-//      perfect guarantee."
-//   - ColorConverter.matchAgainst.* (heading/guangna/languo) are now
-//     unused on this page -- safe to remove once LegendConverter (if it
-//     still has its own copy) is migrated the same way
-//   - "common" namespace (brands.guangna/.languo/.both, setsSelected)
-//     unchanged; brands.both is no longer used on THIS page specifically
-//     but may still be needed elsewhere (e.g. LegendConverter), so keep
-//     it defined
 
 type SimpleMatch = { code: string; name?: string; rgb: [number, number, number] };
 type BrandCode = { brand: "guangna" | "languo"; code: string };
 
-// Tries Guangna's code format first, then Languo's -- the two formats
-// don't overlap (Guangna: digits-only or "GN-"/"HG-" prefixed; Languo:
-// always a 2-letter prefix + hyphen + digits), so trying one first never
-// shadows a valid code from the other brand.
 function normalizeCombinedCode(token: string): BrandCode | null {
   const g = normalizeExtraCode(token);
   if (g) return { brand: "guangna", code: g };
@@ -65,10 +26,6 @@ function normalizeCombinedCode(token: string): BrandCode | null {
   return null;
 }
 
-// Plain, unprotected swatch — used for input-preview colors (the hex/rgb
-// echo, the extracted photo dominant color). These reflect what the
-// person themselves typed or photographed, not a matched marker, so
-// there's nothing here worth hiding from a color picker.
 function Swatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
   const hex = rgbToHex(rgb);
   return (
@@ -76,11 +33,6 @@ function Swatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) 
   );
 }
 
-// Noise-protected swatch — used only for the matched-marker "answer"
-// swatches in the Results column, so a browser eyedropper/color-picker
-// samples noisy pixels instead of the exact marker color. Each instance
-// gets its own filter id via useId() -- reusing a static id="noise"
-// across multiple <svg> elements on the same page is invalid HTML.
 function ProtectedSwatch({ rgb, size=64 }: { rgb:[number,number,number]; size?:number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -116,9 +68,6 @@ function getDominantColor(dataUrl:string): Promise<[number,number,number]> {
   });
 }
 
-// Shared result box, fed brand-specific props. Renders:
-//   Best Match -> (optional) fallback notice -> (optional) owned-match
-//   box -> (optional) "not in your set, order it" notice.
 function BrandResultPanel({
   brandName, full, fallback, owned, hasOwned,
   orderHref, orderNoticeKey, affiliateDisclosure, t,
@@ -236,14 +185,10 @@ export default function ColorConverter() {
   const [dominantRgb,setDominantRgb] = useState<[number,number,number]|null>(null);
   const [searching,setSearching]   = useState(false);
 
-  // "My Markers": multi-select set list per brand + ONE combined
-  // extra-codes field covering both brands.
   const [mySetsGuangna,setMySetsGuangna] = useState<string[]>([]);
   const [mySetsLanguo,setMySetsLanguo]   = useState<string[]>([]);
   const [myExtraCodes,setMyExtraCodes]   = useState("");
 
-  // Results: two fully independent boxes, one per brand -- ALWAYS both
-  // computed and shown now, no brand-gating toggle.
   const [bestFullGuangna,setBestFullGuangna]             = useState<MatchResult|null>(null);
   const [bestFullGuangnaFallback,setBestFullGuangnaFallback] = useState<MatchResult|null>(null);
   const [bestOwnedGuangna,setBestOwnedGuangna]           = useState<MatchResult|null>(null);
@@ -286,8 +231,6 @@ export default function ColorConverter() {
       ? [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0]
       : dominantRgb||[0,0,0];
 
-  // Splits the ONE combined extra-codes field into per-brand id lists,
-  // using normalizeCombinedCode()'s try-Guangna-then-Languo resolution.
   const getOwnedGuangnaIds = (): string[] => {
     const ids: string[] = [];
     for (const setKey of mySetsGuangna) {
@@ -326,10 +269,9 @@ export default function ColorConverter() {
         rgb = [parseInt(rInput)||0,parseInt(gInput)||0,parseInt(bInput)||0];
       }
 
-      // Guangna box -- always computed.
-      const fullG = findClosest(rgb, GN_366_IDS);
+      const fullG = findClosest(rgb, GN_ALL_MATCHING_IDS);
       setBestFullGuangna(fullG);
-      setBestFullGuangnaFallback(fullG.code.startsWith("HG-") ? findClosest(rgb, GN_ONLY_IDS) : null);
+      setBestFullGuangnaFallback(fullG.code.startsWith("HG-") ? findClosest(rgb, GN_MATCHING_IDS) : null);
       const ownedGIds = getOwnedGuangnaIds();
       if (ownedGIds.length > 0) {
         setBestOwnedGuangna(findClosest(rgb, ownedGIds));
@@ -339,7 +281,6 @@ export default function ColorConverter() {
         setHasOwnedGuangna(false);
       }
 
-      // Languo box -- always computed.
       const fullL = findClosestLanguoN(rgb, LANGUO_NON_GLITTER_IDS, 1)[0] ?? null;
       setBestFullLanguo(fullL);
       const ownedLIds = getOwnedLanguoIds();
@@ -399,8 +340,6 @@ export default function ColorConverter() {
           </a>
         </p>
 
-        {/* How-it-works / accuracy disclaimer, shown up front rather than
-            only after results — no longer names a specific brand. */}
         <div style={{
           background: "var(--cream)", borderRadius: 10, padding: "10px 14px",
           fontSize: 12, color: "var(--muted)", marginBottom: 36, lineHeight: 1.5,
@@ -410,13 +349,8 @@ export default function ColorConverter() {
 
         <div className="converter-grid">
 
-          {/* ── LEFT ── */}
           <div style={{display:"flex",flexDirection:"column",gap:20}}>
 
-            {/* My Markers -- both brands' set lists shown together, ONE
-                combined extra-codes field for both. This is now the ONLY
-                place brand relevance is expressed -- no separate
-                "Search across" toggle. */}
             <div className="card">
               <h3 style={{fontWeight:800,fontSize:15,marginBottom:4}}>{t("myMarkers.heading")} <span style={{fontWeight:400,fontSize:12,color:"var(--muted)"}}>{t("myMarkers.optional")}</span></h3>
               <p style={{fontSize:12,color:"var(--muted)",marginBottom:12}}>{t("myMarkers.description")}</p>
@@ -464,7 +398,6 @@ export default function ColorConverter() {
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{width:"100%"}}/>
             </div>
 
-            {/* Color input */}
             <div className="card">
               <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap"}}>
                 {(["hex","rgb","photo"] as InputMode[]).map(m=>(
@@ -554,7 +487,6 @@ export default function ColorConverter() {
             </div>
           </div>
 
-          {/* ── RIGHT: Results ── */}
           <div>
             <h2 style={{fontWeight:800,fontSize:17,marginBottom:16}}>{t("results.heading")}</h2>
 

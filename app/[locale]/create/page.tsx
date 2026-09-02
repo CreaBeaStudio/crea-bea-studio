@@ -77,6 +77,8 @@ import { SET_OPTIONS as GUANGNA_SET_OPTIONS_RAW, normalizeExtraCode } from "@/li
 // Gloss) falls back to the original size-descending sort, appended
 // after all of these.
 const GUANGNA_SET_PRIORITY_ORDER: string[] = [
+  // --- Classic Brush ---
+  "GN.8101-488 (488 colors)",
   "GN.8101-366 (366 colors)",
   "GN.8101-408 (360 colors)",
   "GN.8101-360 (360 colors)",
@@ -93,15 +95,63 @@ const GUANGNA_SET_PRIORITY_ORDER: string[] = [
   "GN.8101-12 (12 colors)",
   "GN.8201F-24 (24 colors)",
   "GN.8201B-12 (12 colors)",
+  "GN.8201M-24 (24 colors)",
+  
+
+  // --- High Gloss ---
+  "GN.586-288 (288 colors)",
+  "GN.586-168 (168 colors)",
+  "GN.586A-12 (12 colors)",
+  "GN.586B-12 (12 colors)",
+  "GN.586C-12 (12 colors)",
+  "GN.586D-12 (12 colors)",
+  "GN.586E-12 (12 colors)",
+  "GN.586F-12 (12 colors)",
+  "GN.586G-12 (12 colors)",
+  "GN.586H-12 (12 colors)",
+  "GN.586I-12 (12 colors)",
+  "GN.586J-12 (12 colors)",
+  "GN.586K-12 (12 colors)",
+  "GN.586L-12 (12 colors)",
+  "GN.586M-12 (12 colors)",
+  "GN.586N-12 (12 colors)",
+  "GN.586O-12 (12 colors)",
+  "GN.586P-12 (12 colors)",
+  "GN.586Q-12 (12 colors)",
+  "GN.586R-12 (12 colors)",
+  "GN.586S-12 (12 colors)",
+  "GN.586T-12 (12 colors)",
+  "GN.586U-12 (12 colors)",
+  "GN.586V-12 (12 colors)",
+  "GN.586W-12 (12 colors)",
+  "GN.586X-12 (12 colors)",
+
+  // --- Dual tip / Dual colors ---
   "GN.8106-84 (168 colors)",
   "GN.8106-60 (120 colors)",
   "GN.8106-30 (60 colors)",
   "GN.8109-240 (240 colors)",
   "GN.8109-72 (72 colors)",
   "GN.8102-36 (36 colors)",
+  "GN.8109A-12 (12 colors)",
+  "GN.8109B-12 (12 colors)",
+  "GN.8109C-12 (12 colors)",
+  "GN.8109D-12 (12 colors)",
+  "GN.8109E-12 (12 colors)",
+  "GN.8109F-12 (12 colors)",
+  "GN.8109G-12 (12 colors)",
+  "GN.8109H-12 (12 colors)",
+  "GN.8109I-12 (12 colors)",
+  "GN.8109K-12 (12 colors)",
 ];
 
-const GUANGNA_SET_OPTIONS = [...GUANGNA_SET_OPTIONS_RAW].sort((a, b) => {
+const GUANGNA_SET_OPTIONS = [...GUANGNA_SET_OPTIONS_RAW]
+  // Not matched by pbn-webservice's owned-set matching yet -- hide from
+  // this picker until that's supported, even though the set exists in
+  // lib/guangna.ts for the other tools (Color Converter, Reference
+  // Guide, etc.) that do support it.
+  .filter(s => !s.key.startsWith("GN.8301-Metallic"))
+  .sort((a, b) => {
   const ia = GUANGNA_SET_PRIORITY_ORDER.indexOf(a.key);
   const ib = GUANGNA_SET_PRIORITY_ORDER.indexOf(b.key);
   if (ia !== -1 && ib !== -1) return ia - ib;

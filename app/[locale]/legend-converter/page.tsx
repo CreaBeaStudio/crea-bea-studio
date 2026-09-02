@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { useState, useCallback, useRef, useEffect, useId } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import {
-  GN_366_IDS, GN_ONLY_IDS, GUANGNA_SETS, SET_OPTIONS,
+  GN_ALL_MATCHING_IDS, GN_MATCHING_IDS, GUANGNA_SETS, SET_OPTIONS,
   findClosest, rgbToHex, normalizeExtraCode,
   rgbToLab, deltaE,
   type MatchResult,
@@ -14,61 +14,6 @@ import {
   LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
 } from "@/lib/languo";
 import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
-// This file must be saved as app/[locale]/legend-converter/page.tsx —
-// Next.js only turns it into a route at that exact path/filename.
-// lib/ lives at the project root, so that's 3 levels up from here.
-//
-// 2026-08-04 (part 6): brings LegendConverter in line with
-// ColorConverter's combined, tie-aware matching (same rule agreed
-// there), AND extends the PDF to include Languo -- previously the PDF
-// was Guangna-only.
-//
-//  - Per swatch, ONE combined match is computed instead of a separate
-//    Guangna match and Languo match: if My Markers has ANY selections
-//    (either brand), the search pool is your owned codes only, per
-//    brand; if nothing is selected, the pool is the full Guangna 366 +
-//    full Languo PAINT line (LANGUO_SETS["Brush 288 Set"] -- see the
-//    key-mismatch note below). This is a single hasOwnedResult flag for
-//    the whole match run (not per swatch), since My Markers doesn't
-//    change per swatch.
-//  - TIE RULE (same as ColorConverter): best Guangna candidate vs best
-//    Languo candidate compared by actual Delta E to the swatch color.
-//    If they differ by less than TIE_THRESHOLD (2.0), BOTH show for
-//    that swatch, brand-tagged. Otherwise only the closer one shows.
-//  - Results render as ONE grid (not two brand blocks) -- each card
-//    shows 1 or 2 tagged matches per swatch. When nothing is owned, one
-//    order banner appears above the grid (not per-card) linking to
-//    whichever store(s) are actually relevant, since repeating the same
-//    two links on every one of up to 72 cards would be noisy.
-//  - PDF now includes Languo: each row draws 1 or 2 blocks (same
-//    tie logic as on-page), brand-labeled inline next to the code.
-//    Column headers become "Guangna"/"Languo" (only shown when at
-//    least one row actually has a tie -- most rows will just be a
-//    single full-width block otherwise). Filename changed to the
-//    brand-neutral "marker-palette-guide.pdf".
-//  - The Guangna HG -> Classic-GN fallback note is unchanged: applies
-//    whenever a SHOWN match (on page or in the PDF) is a Guangna High
-//    Gloss code, tie or not.
-//
-// Using the real LANGUO_SETS key directly for the no-selection fallback
-// pool, rather than going through LANGUO_SET_OPTIONS (which is a plain
-// checklist of every Languo set/line, not scoped to Paint specifically).
-//
-//
-// Removed: the old flat SwatchResult shape (full/fullGNFallback/owned),
-// the two separate "Guangna block"/"Languo block" result sections, and
-// renderBrandBlock(). Replaced by SwatchResult { matches: TaggedMatch[],
-// fallback }, hasOwnedResult, and a single results grid + order banner.
-//
-// en.json changes needed (LegendConverter namespace unless noted):
-//   - results.tieNotice (NEW, same wording as ColorConverter's)
-//   - results.orderBannerText / .pdf.columnGuangna / .pdf.columnLanguo (NEW)
-//   - results.notInSetHeading/.notInSetHeadingLanguo/.notInSetSubheading/
-//     .notInSetSubheadingLanguo/.bestMatchOwned/.youHaveIt/.fromYourSet/
-//     .noOwnedMatch/.pdfGuangnaOnlyNote/.pdf.columnInSet/.pdf.columnAvailable:
-//     no longer used, safe to remove
-//   - "common" namespace (brands.guangna/.languo, setsSelected):
-//     unchanged, reused here
 
 type Swatch = { x: number; y: number; rgb: [number, number, number] } | null;
 type Brand = "guangna" | "languo";
@@ -78,15 +23,8 @@ type SwatchResult = { originalIndex: number; matches: TaggedMatch[]; fallback: M
 
 const DISPLAY_MAX_W = 640;
 const TIE_THRESHOLD = 2.0;
-// The original Languo Acrylic 288 ("Paint") line only -- NOT the newer
-// Gel Pens / PLUS / LanguoxQimiart product lines. Pulled directly from
-// LANGUO_SETS by its real key, since LANGUO_SET_OPTIONS is an unscoped
-// list of every Languo set across all lines.
 const LANGUO_PAINT_IDS: string[] = LANGUO_SETS["Brush 288 Set"]?.codes ?? LANGUO_NON_GLITTER_IDS;
 
-// Tries Guangna's code format first, then Languo's -- the two formats
-// don't overlap (Guangna: digits-only or "GN-"/"HG-" prefixed; Languo:
-// always a 2-letter prefix + hyphen + digits).
 function normalizeCombinedCode(token: string): BrandCode | null {
   const g = normalizeExtraCode(token);
   if (g) return { brand: "guangna", code: g };
@@ -96,7 +34,7 @@ function normalizeCombinedCode(token: string): BrandCode | null {
 }
 
 function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number, number, number] {
-  const half = 2; // sample a small 5x5 box to smooth out noise/anti-aliasing
+  const half = 2;
   const sx = Math.max(0, x - half);
   const sy = Math.max(0, y - half);
   const sw = Math.min(ctx.canvas.width - sx, half * 2 + 1);
@@ -110,10 +48,6 @@ function sampleAt(ctx: CanvasRenderingContext2D, x: number, y: number): [number,
   return [Math.round(r / count), Math.round(g / count), Math.round(b / count)];
 }
 
-// Noise-overlay protection, same technique as ColorConverter's
-// ProtectedSwatch and LanguoConverter's Swatch. Each instance gets its
-// own filter id via useId() -- reusing a static id="noise" across
-// multiple <svg> elements on the same page is invalid HTML.
 function ResultSwatch({ rgb, size = 40 }: { rgb: [number, number, number]; size?: number }) {
   const filterId = useId();
   const hex = rgbToHex(rgb);
@@ -162,8 +96,6 @@ export default function LegendConverter() {
   const [swatches, setSwatches] = useState<Swatch[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // "My Markers": multi-select set lists per brand + ONE combined
-  // extra-codes field. Optional -- matching works with none selected.
   const [mySetsGuangna, setMySetsGuangna] = useState<string[]>([]);
   const [mySetsLanguo, setMySetsLanguo] = useState<string[]>([]);
   const [myExtraCodes, setMyExtraCodes] = useState("");
@@ -307,7 +239,7 @@ export default function LegendConverter() {
       const hasAnyOwned = ownedGIds.length > 0 || ownedLIds.length > 0;
       setHasOwnedResult(hasAnyOwned);
 
-      const guangnaPoolIds = hasAnyOwned ? ownedGIds : GN_366_IDS;
+      const guangnaPoolIds = hasAnyOwned ? ownedGIds : GN_ALL_MATCHING_IDS;
       const languoPoolIds  = hasAnyOwned ? ownedLIds : LANGUO_PAINT_IDS;
 
       const filled = swatches
@@ -340,11 +272,8 @@ export default function LegendConverter() {
           matches = [{ brand: "languo", code: candL.code, rgb: candL.rgb }];
         }
 
-        // Overall best Guangna match (whichever slot it landed in) is a
-        // High Gloss code -- also surface the best regular GN match,
-        // since HG markers are newer and less commonly owned.
         const hgResult = matches.find(m => m.brand === "guangna" && m.code.startsWith("HG-"));
-        const fallback = hgResult ? findClosest(s.rgb, GN_ONLY_IDS) : null;
+        const fallback = hgResult ? findClosest(s.rgb, GN_MATCHING_IDS) : null;
 
         return { originalIndex: idx, matches, fallback };
       });
@@ -369,8 +298,8 @@ export default function LegendConverter() {
 
       const ML = 14, MR = 14;
       const ROW_H = 9;
-      const ROW_H_TALL = 13; // extra room for the "regular GN alternative" note line
-      const LOGO_RESERVED_H = 32; // bottom space kept clear for the logo on every page
+      const ROW_H_TALL = 13;
+      const LOGO_RESERVED_H = 32;
       const HEADER_TOP = 14;
       const TABLE_TOP = 50;
       const PAGE_BOTTOM = pageH - LOGO_RESERVED_H;
@@ -466,9 +395,6 @@ export default function LegendConverter() {
         doc.text(String(item.originalIndex + 1), leftX, y + ROW_H / 2 + 1, { baseline: "middle" });
 
         if (item.matches.length === 2) {
-          // matches[0] is always Guangna, matches[1] always Languo (see
-          // handleMatch's tie construction) -- fallback (HG-only) pairs
-          // with the Guangna slot.
           drawBlock(leftBlockX, y, half, rowH, item.matches[0], shaded, item.fallback);
           drawBlock(rightBlockX, y, half, rowH, item.matches[1], shaded);
         } else if (item.matches.length === 1) {
@@ -537,7 +463,6 @@ export default function LegendConverter() {
           💡 {t("disclaimer")}
         </div>
 
-        {/* Step 1 — upload */}
         <div className="card" style={{ marginBottom: 20 }}>
           <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t("step1.heading")}</h3>
           {!photoDataUrl ? (
@@ -572,7 +497,6 @@ export default function LegendConverter() {
 
         {photoDataUrl && (
           <>
-            {/* Step 2 — color count */}
             <div className="card" style={{ marginBottom: 20 }}>
               <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 8 }}>{t("step2.heading")}</h3>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -586,7 +510,6 @@ export default function LegendConverter() {
               </div>
             </div>
 
-            {/* Step 3 — click to sample */}
             <div className="card" style={{ marginBottom: 20 }}>
               <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>{t("step3.heading")}</h3>
               <div style={{
@@ -616,8 +539,6 @@ export default function LegendConverter() {
               </div>
             </div>
 
-            {/* My Markers -- both brands shown together, true multi-select
-                per brand + ONE combined extra-codes field. Optional. */}
             <div className="card" style={{ marginBottom: 20 }}>
               <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 4 }}>
                 {t("myMarkers.heading")} <span style={{ fontWeight: 400, fontSize: 12, color: "var(--muted)" }}>{t("myMarkers.optional")}</span>
@@ -669,7 +590,6 @@ export default function LegendConverter() {
                 placeholder={t("myMarkers.extraCodesPlaceholder")} style={{ width: "100%" }} />
             </div>
 
-            {/* Step 4 — match */}
             <div style={{ marginBottom: 20 }}>
               <button className="btn-primary" onClick={handleMatch} disabled={filledCount === 0 || matching}
                 style={{ width: "100%", opacity: (filledCount === 0 || matching) ? 0.6 : 1 }}>
@@ -682,7 +602,6 @@ export default function LegendConverter() {
               )}
             </div>
 
-            {/* Step 5 — palette guide results, ONE combined grid */}
             {results && (
               <div className="card" style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
@@ -750,7 +669,6 @@ export default function LegendConverter() {
                   {t("results.screenDisclaimer")}
                 </p>
 
-                {/* Step 6 — donate */}
                 <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", textAlign: "center" }}>
                   <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
                   <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
