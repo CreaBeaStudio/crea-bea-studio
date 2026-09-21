@@ -88,6 +88,7 @@
     "examples": "Voorbeelden",
     "tips": "Tips & Tricks",
     "faq": "FAQ",
+    "promoKreadoe": "Actie",
     "tagline": "Kleur je herinneringen",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact",
@@ -371,6 +372,7 @@
     },
     "yourColour": "Jouw kleur",
     "searchButton": "Vind mijn marker →",
+    "resetButton": "Reset",
     "searching": "🔍 Zoeken…",
     "results": {
       "heading": "Resultaten",
@@ -400,6 +402,7 @@
     "title": "Legenda naar kleurenpalet",
     "subtitle": "Upload de kleurenlegenda van een kleurplaat, klik elk vlakje aan en ontvang een kant-en-klare stiftgids.",
     "disclaimer": "Matches worden berekend door de kleuren die je aanklikt in je geüploade legenda en de dichtstbijzijnde marker voor elke kleur te vinden, met Delta E (CIE 1976) kleurafstand methode. Omdat dit een digitale vergelijking is, variëren de visuele resultaten afhankelijk van je scherm, de belichting en het papiersoort. Onze gemeten kleurwaarden kunnen iets afwijken van de werkelijke inkt, dus test je markers altijd eerst op een kladblaadje. Beschouw deze resultaten als een handig startpunt en niet als een perfecte garantie.",
+    "resetButton": "Reset",
     "step1": {
       "heading": "1 · Upload de kleurenlegenda",
       "dropHint": "Sleep hier een foto of klik om te uploaden",
@@ -1023,6 +1026,7 @@
     "extraCodesPlaceholder": "bijv. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Gratis voorbeeld genereren",
     "generatingButton": "Voorbeeld wordt gegenereerd...",
+    "resetButton": "Reset",
     "unlockFullDecoderButton": "Volledige decoder ontgrendelen ({price})",
     "unlockingButton": "Doorsturen naar afrekenen...",
     "noSetsSelectedError": "Kies minimaal één marker set (of typ eigen codes in) voordat je een voorbeeld genereert.",

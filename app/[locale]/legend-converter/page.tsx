@@ -11,7 +11,7 @@ import {
   type MatchResult,
 } from "@/lib/guangna";
 import {
-  LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
+  LANGUO_MATCHING_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
 } from "@/lib/languo";
 import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
 
@@ -23,7 +23,13 @@ type SwatchResult = { originalIndex: number; matches: TaggedMatch[]; fallback: M
 
 const DISPLAY_MAX_W = 640;
 const TIE_THRESHOLD = 2.0;
-const LANGUO_PAINT_IDS: string[] = LANGUO_SETS["Brush 288 Set"]?.codes ?? LANGUO_NON_GLITTER_IDS;
+
+const LANGUO_PAINT_SET_KEY = LANGUO_SETS["288 Set"] ? "288 Set" : "Brush 288 Set";
+const LANGUO_PAINT_IDS: string[] = (LANGUO_SETS[LANGUO_PAINT_SET_KEY]?.codes ?? []).filter(
+  (id) => LANGUO_MATCHING_IDS.includes(id)
+);
+
+const LANGUO_SET_OPTIONS_FOR_PICKER = LANGUO_SET_OPTIONS.filter((s) => s.key !== "Metallic Set");
 
 function normalizeCombinedCode(token: string): BrandCode | null {
   const g = normalizeExtraCode(token);
@@ -106,6 +112,25 @@ export default function LegendConverter() {
   const [pdfLoading, setPdfLoading] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const handleReset = () => {
+    setPhotoDataUrl(null);
+    setImgEl(null);
+    setCanvasSize({ w: 0, h: 0 });
+    setColorCountInput("24");
+    setSwatches([]);
+    setActiveIndex(0);
+    setMySetsGuangna([]);
+    setMySetsLanguo([]);
+    setMyExtraCodes("");
+    setResults(null);
+    setHasOwnedResult(false);
+
+    const fileInput = document.getElementById("legendPhotoInput") as HTMLInputElement | null;
+    if (fileInput) {
+      fileInput.value = "";
+    }
+  };
 
   const toggleGuangnaSet = (value: string) => {
     setMySetsGuangna(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -566,7 +591,7 @@ export default function LegendConverter() {
 
               <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6, paddingTop: 8, borderTop: "1px solid var(--border)" }}>{tc("brands.languo")}</div>
               <div className="marker-set-list">
-                {LANGUO_SET_OPTIONS.map(s => (
+                {LANGUO_SET_OPTIONS_FOR_PICKER.map(s => (
                   <label key={s.key} className="marker-set-row">
                     <input
                       type="checkbox"
@@ -604,11 +629,28 @@ export default function LegendConverter() {
 
             {results && (
               <div className="card" style={{ marginBottom: 20 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-                  <h2 style={{ fontWeight: 800, fontSize: 17 }}>{t("results.heading")}</h2>
-                  <button className="btn-primary" onClick={handleDownloadPdf} disabled={pdfLoading} style={{ padding: "8px 18px", opacity: pdfLoading ? 0.6 : 1 }}>
-                    {pdfLoading ? t("matching") : t("results.downloadPdf")}
-                  </button>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+                  <h2 style={{ fontWeight: 800, fontSize: 17, margin: 0 }}>{t("results.heading")}</h2>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <button className="btn-primary" onClick={handleDownloadPdf} disabled={pdfLoading} style={{ padding: "8px 18px", opacity: pdfLoading ? 0.6 : 1 }}>
+                      {pdfLoading ? t("matching") : t("results.downloadPdf")}
+                    </button>
+                    <button
+                      onClick={handleReset}
+                      style={{
+                        padding: "8px 16px",
+                        borderRadius: 8,
+                        border: "2px solid var(--pink)",
+                        background: "transparent",
+                        color: "var(--pink)",
+                        fontWeight: 700,
+                        fontSize: 13,
+                        cursor: "pointer",
+                      }}
+                    >
+                      ↺ {t("resetButton") || "Reset"}
+                    </button>
+                  </div>
                 </div>
 
                 {!hasOwnedResult && (anyGuangnaShown || anyLanguoShown) && (
@@ -669,15 +711,25 @@ export default function LegendConverter() {
                   {t("results.screenDisclaimer")}
                 </p>
 
-                <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", textAlign: "center" }}>
-                  <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>{t("donate.text")}</p>
-                  <a href="https://ko-fi.com/creabeastudio" target="_blank" rel="noopener noreferrer"
+                <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)", display: "flex", justifyContent: "center", gap: 12 }}>
+                  <button className="btn-primary" onClick={handleDownloadPdf} disabled={pdfLoading} style={{ padding: "10px 24px", opacity: pdfLoading ? 0.6 : 1 }}>
+                    {pdfLoading ? t("matching") : t("results.downloadPdf")}
+                  </button>
+                  <button
+                    onClick={handleReset}
                     style={{
-                      display: "inline-block", padding: "10px 22px", borderRadius: 20,
-                      background: "var(--pink)", color: "white", fontWeight: 700, fontSize: 13, textDecoration: "none",
-                    }}>
-                    {t("donate.button")}
-                  </a>
+                      padding: "10px 20px",
+                      borderRadius: 8,
+                      border: "2px solid var(--pink)",
+                      background: "transparent",
+                      color: "var(--pink)",
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: "pointer",
+                    }}
+                  >
+                    ↺ {t("resetButton") || "Reset"}
+                  </button>
                 </div>
               </div>
             )}

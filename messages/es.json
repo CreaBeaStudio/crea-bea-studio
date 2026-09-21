@@ -372,6 +372,7 @@
     },
     "yourColour": "Tu color",
     "searchButton": "Encontrar mi rotulador →",
+    "resetButton": "Reiniciar",
     "searching": "🔍 Buscando…",
     "results": {
       "heading": "Resultados",
@@ -401,6 +402,7 @@
     "title": "Leyenda a paleta de colores",
     "subtitle": "Sube la leyenda de colores de una página para colorear, haz clic en cada muestra y obtén una guía de rotuladores lista para usar.",
     "disclaimer": "Las coincidencias se calculan tomando muestras de los colores que haces clic en tu leyenda subida y buscando el rotulador más cercano para cada una, usando la distancia de color Delta E (CIE 1976). Al tratarse de una comparación digital, los resultados visuales variarán según tu pantalla, la iluminación y el tipo de papel. Nuestros valores de color medidos pueden diferir ligeramente de la tinta real, así que prueba siempre tus rotuladores en un papel de sobra. Considera estas coincidencias como un punto de partida útil, no como una garantía perfecta.",
+    "resetButton": "Reiniciar",
     "crossLink": {
       "text": "¿Solo necesitas comprobar un color?",
       "linkText": "Prueba el Convertidor de Colores →"
@@ -1024,6 +1026,7 @@
     "extraCodesPlaceholder": "ej. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Generar vista previa gratis",
     "generatingButton": "Generando vista previa...",
+    "resetButton": "Reiniciar",
     "unlockFullDecoderButton": "Desbloquear decodificador completo ({price})",
     "unlockingButton": "Redirigiendo a la pantalla de pago...",
     "noSetsSelectedError": "Elige al menos un set de rotuladores (o escribe algunos códigos que tengas) antes de generar una vista previa.",

@@ -371,6 +371,7 @@
     },
     "yourColour": "Ta couleur",
     "searchButton": "Trouver mon marqueur →",
+    "resetButton": "Réinitialiser",
     "searching": "🔍 Recherche en cours…",
     "results": {
       "heading": "Résultats",
@@ -400,7 +401,8 @@
     "title": "Nuancier vers palette de couleurs",
     "subtitle": "Téléchargez le nuancier d'un coloriage, cliquez sur chaque pastille et obtenez un guide de marqueurs prêt à l'emploi.",
     "disclaimer": "Les correspondances sont calculées en échantillonnant les couleurs que vous cliquez dans votre nuancier importé et en trouvant le marqueur le plus proche pour chacune, à l'aide du Delta E (CIE 1976). S'agissant d'une comparaison numérique, les résultats visuels varient selon votre écran, l'éclairage et le type de papier. Nos valeurs chromatiques mesurées peuvent légèrement différer de l'encre réelle, veuillez donc toujours tester vos feutres sur un brouillon. Considérez ces correspondances comme une bonne base de départ plutôt que comme une garantie absolue.",
-    "crossLink": {
+    "resetButton": "Réinitialiser",
+      "crossLink": {
       "text": "Besoin de vérifier une seule couleur ?",
       "linkText": "Essayez le convertisseur de couleurs →"
     },
@@ -1023,6 +1025,7 @@
     "extraCodesPlaceholder": "ex. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Générer un aperçu gratuit",
     "generatingButton": "Génération de l'aperçu...",
+    "resetButton": "Réinitialiser",
     "unlockFullDecoderButton": "Débloquer le nuancier complet ({price})",
     "unlockingButton": "Redirection vers le paiement...",
     "noSetsSelectedError": "Choisis au moins un set de feutres (ou saisis quelques codes en ta possession) avant de générer un aperçu.",

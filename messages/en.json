@@ -88,6 +88,7 @@
     "examples": "Examples",
     "tips": "Tips & Tricks",
     "faq": "FAQ",
+    "promoKreadoe": "Promotion",
     "tagline": "Color Your Memories",
     "taglineShort": "CreaBeaStudio",
     "contactUs": "Contact us",
@@ -371,6 +372,7 @@
     },
     "yourColour": "Your colour",
     "searchButton": "Find My Marker Match →",
+    "resetButton": "Reset",
     "searching": "🔍 Searching…",
     "results": {
       "heading": "Results",
@@ -400,7 +402,8 @@
     "title": "Legend to Color Palette",
     "subtitle": "Upload a coloring page's color legend, click each swatch, and get a ready-made marker guide.",
     "disclaimer": "Matches are calculated by sampling the colors you click in your uploaded legend and finding the closest marker to each, using Delta E (CIE 1976) color distance. Because this is a digital comparison, visual results will vary depending on your screen, lighting, and paper type. Our measured color values may differ slightly from the actual ink, so please always test your markers on a scrap piece. Treat these matches as a helpful starting point rather than a perfect guarantee.",
-    "step1": {
+    "resetButton": "Reset",
+     "step1": {
       "lightingTip": "For the most accurate codes: photograph the legend in natural, even daylight — shadows or yellow indoor lighting can distort the colors. A flatbed scan works even better than a photo if you have one available.",
       "heading": "1 · Upload the color legend",
       "dropHint": "Drop a photo here or click to upload",
@@ -1023,6 +1026,7 @@
     "extraCodesPlaceholder": "e.g. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Generate free preview",
     "generatingButton": "Generating preview...",
+    "resetButton": "Reset",
     "unlockFullDecoderButton": "Unlock full decoder ({price})",
     "unlockingButton": "Redirecting to checkout...",
     "noSetsSelectedError": "Pick at least one marker set (or type in some codes you own) before generating a preview.",

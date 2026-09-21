@@ -11,25 +11,45 @@
 // it happens to be, same philosophy as the live PBN owned-set
 // matching (multi-brand-pbn-expansion.md).
 //
+// METALLIC/GLITTER EXCLUSION (2026-09, per Mirjam): unlike the other
+// converters (Color/Legend/Brand Converter), where a customer's own
+// Metallic markers stay matchable once explicitly owned, the Mystery
+// Decoder excludes Metallic (both brands) and Glitter (Languo) from
+// the pool UNCONDITIONALLY -- even if a customer selects a bigger set
+// that happens to bundle some in (e.g. Guangna's GN.8101-488 or
+// Languo's "432 Set" both include their brand's Metallic codes as part
+// of the larger box). Reasoning: neither brand sells a standalone
+// "Metallic" or "Glitter" pack in real life -- they only ever come
+// bundled inside a bigger set -- so a decoder is never being built FOR
+// just-metallics/glitter the way it might be for a real single-size
+// set, and a metallic/glitter finish isn't meaningfully comparable to
+// a printed color by RGB distance anyway. The two picker components
+// (MysteryDecoderCustom.tsx) additionally hide the standalone
+// "Metallic Colors"/"Metallic Set" options from their own dropdowns
+// for the same reason (nobody owns "just the metallics"), but this
+// filter here is the real enforcement -- it holds even if a future
+// bigger set change bundles metallics in somewhere this module wasn't
+// updated to expect.
+//
 // Save as lib/mysteryDecoderMatch.ts (crea-bea-studio).
-
-import { rgbToLab, deltaE, GN_COLORS, hexToRgb, type MatchResult } from "./guangna";
-import { LANGUO_COLORS, LANGUO_GLITTER_IDS, type LanguoMatchResult } from "./languo";
-
+ 
+import { rgbToLab, deltaE, GN_COLORS, GN_METALLIC_IDS, hexToRgb, type MatchResult } from "./guangna";
+import { LANGUO_COLORS, LANGUO_GLITTER_IDS, LANGUO_METALLIC_IDS, type LanguoMatchResult } from "./languo";
+ 
 export type BrandSource = "guangna" | "languo";
-
+ 
 export interface BookEntry {
   line: string | null;
   label: string;
   hex: string;
 }
-
+ 
 export interface BookData {
   book: string;
   count: number;
   entries: BookEntry[];
 }
-
+ 
 // One pool item: a single ownable marker code from either brand, with
 // its RGB and precomputed Lab (computed once per pool build, not once
 // per book row -- a book can have 1800+ rows, so this matters).
@@ -39,7 +59,7 @@ interface PoolItem {
   rgb: [number, number, number];
   lab: [number, number, number];
 }
-
+ 
 export interface DecoderMatch {
   line: string | null;
   label: string;
@@ -49,7 +69,7 @@ export interface DecoderMatch {
   matchedRgb: [number, number, number];
   deltaE: number;
 }
-
+ 
 /**
  * Builds the combined candidate pool from the customer's selected sets.
  * guangnaSetKeys are keys into GUANGNA_SETS (lib/guangna.ts), languoSetKeys
@@ -58,7 +78,10 @@ export interface DecoderMatch {
  * only" selection; passing both is a combination.
  *
  * Deduplicates by code within each brand (a code appearing in two
- * selected sets of the same brand is only scored once).
+ * selected sets of the same brand is only scored once). Metallic
+ * codes (both brands) and Glitter codes (Languo) are always excluded,
+ * even if they're bundled inside a selected set -- see the file header
+ * comment for why this differs from the other converters.
  */
 export function buildCombinedPool(
   guangnaSetKeys: string[],
@@ -68,11 +91,12 @@ export function buildCombinedPool(
 ): PoolItem[] {
   const seen = new Set<string>(); // "guangna:GN-605" style dedupe key
   const pool: PoolItem[] = [];
-
+ 
   for (const setKey of guangnaSetKeys) {
     const codes = guangnaSets[setKey];
     if (!codes) continue;
     for (const code of codes) {
+      if (GN_METALLIC_IDS.includes(code)) continue; // never match against Metallic finish
       const key = `guangna:${code}`;
       if (seen.has(key)) continue;
       const c = GN_COLORS[code];
@@ -82,12 +106,13 @@ export function buildCombinedPool(
       pool.push({ source: "guangna", code, rgb, lab: rgbToLab(rgb) });
     }
   }
-
+ 
   for (const setKey of languoSetKeys) {
     const set = languoSets[setKey];
     if (!set) continue;
     for (const code of set.codes) {
-      if (LANGUO_GLITTER_IDS.includes(code)) continue; // never match against glitter finish
+      if (LANGUO_GLITTER_IDS.includes(code)) continue; // never match against Glitter finish
+      if (LANGUO_METALLIC_IDS.includes(code)) continue; // never match against Metallic finish
       const key = `languo:${code}`;
       if (seen.has(key)) continue;
       const rgb = LANGUO_COLORS[code];
@@ -96,10 +121,10 @@ export function buildCombinedPool(
       pool.push({ source: "languo", code, rgb, lab: rgbToLab(rgb) });
     }
   }
-
+ 
   return pool;
 }
-
+ 
 /**
  * Matches every entry in a book's data against the combined pool,
  * returning one best match per entry (skips entries with no hex --
@@ -109,13 +134,13 @@ export function buildCombinedPool(
  */
 export function matchBook(book: BookData, pool: PoolItem[]): DecoderMatch[] {
   if (pool.length === 0) return [];
-
+ 
   const results: DecoderMatch[] = [];
   for (const entry of book.entries) {
     const rgb = hexToRgb(entry.hex);
     if (!rgb) continue;
     const labT = rgbToLab(rgb);
-
+ 
     let best: PoolItem | null = null;
     let bestD = Infinity;
     for (const item of pool) {
@@ -126,7 +151,7 @@ export function matchBook(book: BookData, pool: PoolItem[]): DecoderMatch[] {
       }
     }
     if (!best) continue;
-
+ 
     results.push({
       line: entry.line,
       label: entry.label,
@@ -139,7 +164,7 @@ export function matchBook(book: BookData, pool: PoolItem[]): DecoderMatch[] {
   }
   return results;
 }
-
+ 
 /**
  * Convenience one-shot: build the pool and match the whole book in
  * one call. Use buildCombinedPool + matchBook separately instead if
@@ -157,3 +182,4 @@ export function matchBookWithSets(
   const pool = buildCombinedPool(guangnaSetKeys, languoSetKeys, guangnaSets, languoSets);
   return matchBook(book, pool);
 }
+ 

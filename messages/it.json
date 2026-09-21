@@ -371,6 +371,7 @@
     },
     "yourColour": "Il tuo colore",
     "searchButton": "Trova il mio marcatore →",
+    "resetButton": "Ripristina",
     "searching": "🔍 Ricerca in corso…",
     "results": {
       "heading": "Risultati",
@@ -400,6 +401,7 @@
     "title": "Legenda verso palette colori",
     "subtitle": "Carica la legenda colori di un disegno da colorare, clicca ogni tassello e ottieni una guida pronta ai pennarelli.",
     "disclaimer": "Le corrispondenze vengono calcolate campionando i colori che clicchi nella legenda caricata e trovando il marker più vicino per ciascuno, usando la distanza cromatica Delta E (CIE 1976). Trattandosi di un confronto digitale, i risultati visivi varieranno in base allo schermo, all'illuminazione e al tipo di carta. I valori cromatici da noi misurati potrebbero differire leggermente dall'inchiostro effettivo, quindi ti consigliamo di provare sempre i pennarelli su un foglio di prova. Considera queste corrispondenze come un utile punto di partenza e non come una garanzia assoluta.",
+    "resetButton": "Ripristina",
     "crossLink": {
       "text": "Devi controllare solo un colore?",
       "linkText": "Prova il convertitore di colori →"
@@ -1023,6 +1025,7 @@
     "extraCodesPlaceholder": "es. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Genera anteprima gratuita",
     "generatingButton": "Generazione anteprima in corso...",
+    "resetButton": "Ripristina",
     "unlockFullDecoderButton": "Sblocca decoder completo ({price})",
     "unlockingButton": "Reindirizzamento al pagamento...",
     "noSetsSelectedError": "Scegli almeno un set di pennarelli (o inserisci alcuni codici) prima di generare l'anteprima.",

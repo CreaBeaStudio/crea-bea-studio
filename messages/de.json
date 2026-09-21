@@ -371,6 +371,7 @@
     },
     "yourColour": "Deine Farbe",
     "searchButton": "In Marker-Code umwandeln →",
+    "resetButton": "Zurücksetzen",
     "searching": "🔍 Suche läuft…",
     "results": {
       "heading": "Ergebnisse",
@@ -400,6 +401,7 @@
     "title": "Legende zur Farbpalette",
     "subtitle": "Lade die Farblegende eines Malbuchs hoch, klicke jedes Farbfeld an und erhalte einen fertigen Stift-guide.",
     "disclaimer": "Die Treffer werden berechnet, indem die Farben, die du in deiner hochgeladenen Legende anklickst, erfasst und der jeweils nächstgelegene Marker anhand des Farbabstands (Delta E, CIE 1976) ermittelt wird. Da es sich um einen digitalen Vergleich handelt, können die visuellen Ergebnisse je nach Bildschirm, Beleuchtung und Papierart variieren. Unsere gemessenen Farbwerte können leicht von der tatsächlichen Tinte abweichen. Teste deine Marker daher bitte immer zuerst auf einem Schmierpapier. Betrachte diese Ergebnisse als hilfreichen Ausgangspunkt und nicht als perfekte Garantie.",
+    "resetButton": "Zurücksetzen",
     "step1": {
       "heading": "1 · Farblegende hochladen",
       "dropHint": "Foto hier ablegen oder klicken zum Hochladen",
@@ -1023,6 +1025,7 @@
     "extraCodesPlaceholder": "z. B. GN-605, HG-F01, BR-702",
     "generatePreviewButton": "Kostenlose Vorschau erstellen",
     "generatingButton": "Vorschau wird erstellt...",
+    "resetButton": "Zurücksetzen",
     "unlockFullDecoderButton": "Vollständigen Decoder freischalten ({price})",
     "unlockingButton": "Weiterleitung zur Kasse...",
     "noSetsSelectedError": "Wähle mindestens ein Marker-Set aus (oder gib eigene Codes ein), bevor du eine Vorschau erstellst.",

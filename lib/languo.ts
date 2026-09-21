@@ -67,8 +67,49 @@ import { rgbToLab, deltaE } from "./guangna";
 //     and for the 'LanguoxQimiart' set, but should be excluded from the
 //     Color/Legend/Languo-Guangna converters, the same way Guangna's
 //     Metallic markers are excluded there.
+//
+// 2026-09 Acrylic Brush expansion (432 Set): added 138 new codes bringing
+// the Acrylic Brush line from 288 to 432 (426 distinct data rows -- white
+// GB-401 and black GB-405 are each listed once here but count 4x in the
+// physical 432-marker set, per Mirjam). Breakdown of the 138:
+//   - 42 new Metallic codes (MC-001..MC-048, gaps at 003/016-018/021/024/
+//     026-028/031/033-034/036-039/041/044-047 -- not every number in the
+//     range was used) -- see LANGUO_METALLIC_IDS below. Like Guangna's
+//     Metallic markers, these should be excluded from color-matching
+//     defaults (see LANGUO_MATCHING_IDS) but remain typeable/ownable.
+//   - 48 new Glitter codes -- renamed from the source's SG-420..SG-467 to
+//     SG-420G..SG-467G (Mirjam's call) specifically to disambiguate them
+//     from the *other two* unrelated things that already used the "SG-"
+//     prefix: the pre-existing Acrylic Sage/Forest Green colors
+//     (SG-151..159, SG-221..232 -- ordinary matchable colors, NOT
+//     glitter) and the Languo x Qimiart Glitter set's own SG-01..SG-116
+//     codes (a completely different product line, already numbered 1-116
+//     with no letter suffix). The "G" suffix makes a glitter code
+//     recognizable on sight regardless of which other SG-prefixed thing
+//     is nearby. Added to LANGUO_GLITTER_IDS below.
+//   - 48 new ordinary colors across 4 brand-new prefixes (12 each):
+//     LG, SL, SW, VC.
+//   - Two data-quality issues caught and resolved before merging:
+//     CB-901..909 arrived shifted by one position in a 9-way cycle
+//     (new-sheet CB-901 held CB-902's real color, etc.) -- confirmed with
+//     Mirjam against the physical color chart that the EXISTING values
+//     below are correct; the shifted new-sheet values were discarded
+//     entirely (CB-910 was unaffected and needed no fix). MC-047's raw
+//     value coincidentally matched existing SG-92's color exactly --
+//     confirmed as not an error since MC-047 is Metallic and is excluded
+//     from color-matching regardless.
+//   - See lib/languoSets.ts for the resulting "432 Set" and "384 Set"
+//     membership (the 384 Set is a curated subset: 24 of the 42 Metallics
+//     and 24 of the 48 new Glitter codes, not a simple range).
 
 export const LANGUO_COLORS: Record<string,[number,number,number]> = {
+  "MC-001":[211,175,152],"MC-002":[182,166,117],"MC-004":[203,204,97],"MC-005":[129,165,54],"MC-006":[119,182,142],"MC-007":[62,187,162],
+  "MC-008":[55,150,65],"MC-009":[14,135,130],"MC-010":[13,127,165],"MC-011":[52,94,150],"MC-012":[138,181,189],"MC-013":[207,163,193],
+  "MC-014":[217,121,64],"MC-015":[231,100,103],"MC-017":[140,92,142],"MC-018":[120,70,103],"MC-019":[62,63,120],"MC-020":[80,80,80],
+  "MC-021":[118,95,88],"MC-022":[128,84,82],"MC-023":[133,112,88],"MC-025":[173,161,112],"MC-026":[210,186,97],"MC-028":[200,134,53],
+  "MC-029":[201,161,109],"MC-030":[103,80,52],"MC-031":[106,99,97],"MC-032":[146,74,92],"MC-034":[188,130,136],"MC-035":[175,160,150],
+  "MC-036":[164,157,141],"MC-037":[176,183,119],"MC-039":[167,184,48],"MC-040":[85,183,92],"MC-041":[12,140,100],"MC-042":[118,176,138],
+  "MC-043":[120,163,153],"MC-044":[70,140,170],"MC-045":[100,77,112],"MC-046":[138,128,170],"MC-047":[170,145,165],"MC-048":[178,168,182],
   "GB-401":[255,255,255],"BR-702":[228,221,211],"BR-706":[179,151,125],"CB-906":[109,74,68],"RY-09":[160,100,84],"RY-07":[156,52,52],
   "RY-06":[232,51,45],"RY-05":[234,90,61],"YE-126":[240,131,51],"RY-03":[250,191,93],"RY-02":[254,240,0],"RY-01":[255,250,188],
   "SG-221":[190,226,226],"PC-233":[248,221,231],"BL-261":[135,156,203],"GB-403":[186,186,186],"GB-404":[141,141,141],"GB-405":[54,46,46],
@@ -107,7 +148,7 @@ export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "PC-815":[162,90,117],"PC-813":[193,90,122],"PC-812":[231,116,168],"PC-803":[243,172,192],"PC-811":[240,161,193],"PU-309":[246,186,212],
   "AG-254":[146,146,103],"AG-246":[234,221,206],"BR-713":[220,167,107],"BR-714":[172,131,98],"BR-715":[137,116,83],"BR-708":[116,95,78],
   "GB-412":[86,79,79],"PU-315":[120,46,123],"PU-314":[126,105,169],"HC-605":[156,156,203],"PU-312":[191,191,222],"HC-137":[212,158,200],
-  "PU-313":[192,172,192],"PU-311":[231,231,241],"AG-253":[157,136,87],"AG-245":[230,216,216],"DS-184":[149,82,82],"DS-189":[102,95,78],
+  "PU-313":[192,172,192],"PU-311":[231,231,241],"AG-253":[157,136,87],"AG-245":[230,216,206],"DS-184":[149,82,82],"DS-189":[102,95,78],
   "DS-188":[133,105,89],"DS-187":[162,121,94],"DS-183":[162,121,82],"DS-182":[193,146,105],"RY-15":[220,110,60],"DS-185":[192,126,104],
   "DS-186":[205,151,119],"DS-181":[239,186,128],"LC-197":[252,245,230],"LC-196":[255,236,231],"AG-252":[129,136,75],"BL-257":[235,235,235],
   "DB-1611":[147,177,182],"AG-176":[147,161,140],"YE-1212":[180,167,124],"YE-1211":[205,191,133],"YE-1210":[233,226,174],"AG-179":[172,151,134],
@@ -193,15 +234,63 @@ export const LANGUO_COLORS: Record<string,[number,number,number]> = {
   "SG-94":[160,160,170],"SG-95":[135,145,145],"SG-96":[160,150,135],"SG-41":[180,210,225],"SG-42":[120,180,220],"SG-43":[108,180,195],
   "SG-44":[92,125,190],"SG-45":[75,95,165],"SG-46":[85,90,155],"SG-101":[105,110,170],"SG-102":[120,105,170],"SG-103":[85,90,160],
   "SG-104":[105,85,135],"SG-105":[155,90,155],"SG-106":[150,75,105],"SG-31":[200,50,120],"SG-32":[222,145,70],"SG-33":[245,235,100],
-  "SG-34":[170,200,80],"SG-35":[100,160,210],"SG-36":[100,110,170]
+  "SG-34":[170,200,80],"SG-35":[100,160,210],"SG-36":[100,110,170],
+  "SG-420G":[200,195,100],"SG-421G":[200,176,63],"SG-422G":[200,150,85],"SG-423G":[166,120,57],"SG-424G":[230,145,85],"SG-425G":[190,125,95],
+  "SG-426G":[175,112,76],"SG-427G":[190,118,134],"SG-428G":[205,95,100],"SG-429G":[187,86,93],"SG-430G":[155,103,77],"SG-431G":[142,113,88],
+  "SG-432G":[191,193,191],"SG-433G":[200,210,130],"SG-434G":[150,184,102],"SG-435G":[108,170,107],"SG-436G":[87,167,147],"SG-437G":[90,122,99],
+  "SG-438G":[55,146,155],"SG-439G":[69,120,156],"SG-440G":[114,184,208],"SG-441G":[46,162,208],"SG-442G":[65,130,175],"SG-443G":[85,120,175],
+  "SG-444G":[220,135,180],"SG-445G":[240,130,170],"SG-446G":[195,160,202],"SG-447G":[225,163,186],"SG-448G":[205,155,193],"SG-449G":[190,110,160],
+  "SG-450G":[160,121,162],"SG-451G":[140,104,168],"SG-452G":[122,95,161],"SG-453G":[80,80,150],"SG-454G":[120,115,113],"SG-455G":[90,90,80],
+  "SG-456G":[250,219,207],"SG-457G":[250,210,210],"SG-458G":[245,190,190],"SG-459G":[238,200,151],"SG-460G":[215,205,120],"SG-461G":[225,220,110],
+  "SG-462G":[180,195,145],"SG-463G":[190,218,196],"SG-464G":[162,203,225],"SG-465G":[196,183,200],"SG-466G":[195,185,155],"SG-467G":[150,140,127],
+  "LG-330":[205,205,140],"LG-331":[200,215,155],"LG-332":[190,215,100],"LG-333":[163,204,118],"LG-334":[193,198,98],"LG-335":[169,195,176],
+  "LG-336":[115,142,76],"LG-337":[90,132,87],"LG-338":[70,176,110],"LG-339":[131,170,155],"LG-340":[73,107,83],"LG-341":[80,95,65],
+  "SL-342":[80,180,195],"SL-343":[55,162,224],"SL-344":[67,120,183],"SL-345":[78,80,153],"SL-346":[90,120,165],"SL-347":[145,120,177],
+  "SL-348":[127,126,187],"SL-349":[143,155,206],"SL-350":[166,171,211],"SL-351":[167,173,188],"SL-352":[153,188,209],"SL-353":[185,225,247],
+  "SW-269":[255,243,236],"SW-270":[250,218,206],"SW-271":[250,219,223],"SW-272":[245,222,234],"SW-273":[255,230,197],"SW-274":[205,231,203],
+  "SW-275":[214,234,218],"SW-276":[216,236,231],"SW-277":[224,220,179],"SW-278":[241,240,208],"SW-279":[255,251,186],"SW-280":[188,209,190],
+  "VC-281":[205,170,80],"VC-282":[238,125,86],"VC-283":[203,69,69],"VC-284":[172,120,95],"VC-285":[185,107,113],"VC-286":[65,135,130],
+  "VC-287":[60,102,105],"VC-288":[100,71,75],"VC-289":[135,122,112],"VC-290":[160,130,148],"VC-291":[130,144,124],"VC-292":[187,167,150],
 };
 
-// Glitter pens (from the Languo x Qimiart Glitter set) -- these should be
-// excluded from all color-matching converters (Color Converter, Legend
-// Converter, Languo-Guangna Converter), the same way Guangna's Metallic
-// markers are excluded, since glitter finish isn't meaningfully comparable
-// by RGB color distance.
-export const LANGUO_GLITTER_IDS: string[] = ["SG-01", "SG-02", "SG-03", "SG-04", "SG-05", "SG-06", "SG-11", "SG-12", "SG-13", "SG-14", "SG-15", "SG-16", "SG-21", "SG-22", "SG-23", "SG-24", "SG-25", "SG-26", "SG-31", "SG-32", "SG-33", "SG-34", "SG-35", "SG-36", "SG-41", "SG-42", "SG-43", "SG-44", "SG-45", "SG-46", "SG-51", "SG-52", "SG-53", "SG-54", "SG-55", "SG-56", "SG-61", "SG-62", "SG-63", "SG-64", "SG-65", "SG-66", "SG-71", "SG-72", "SG-73", "SG-74", "SG-75", "SG-76", "SG-81", "SG-82", "SG-83", "SG-84", "SG-85", "SG-86", "SG-91", "SG-92", "SG-93", "SG-94", "SG-95", "SG-96", "SG-101", "SG-102", "SG-103", "SG-104", "SG-105", "SG-106", "SG-111", "SG-112", "SG-113", "SG-114", "SG-115", "SG-116"];
+// Metallic codes (Acrylic Brush line, added 2026-09). Like Guangna's
+// Metallic markers, these should be excluded from color-matching
+// defaults (see LANGUO_MATCHING_IDS) but remain typeable/ownable via
+// normalizeLanguoExtraCode -- a customer who owns them can still enter
+// them as "extra codes", they just won't be auto-suggested.
+// MC-001..MC-048: the 42 new Metallic codes from the 2026-09 Acrylic
+// Brush expansion (see the file header comment above). Also includes
+// HC-608 and HC-609 -- these are NOT part of that batch and keep their
+// original "Dopamine Series A" HC- prefix, but they're actually Gold
+// and Silver metallic-finish pens (confirmed against the source data's
+// own "(Gold)"/"(Silver)" labels), so they get the same treatment as
+// every other Metallic code here despite the different-looking prefix.
+export const LANGUO_METALLIC_IDS: string[] = [
+  "MC-001", "MC-002", "MC-004", "MC-005", "MC-006", "MC-007", "MC-008", "MC-009",
+  "MC-010", "MC-011", "MC-012", "MC-013", "MC-014", "MC-015", "MC-017", "MC-018",
+  "MC-019", "MC-020", "MC-021", "MC-022", "MC-023", "MC-025", "MC-026", "MC-028",
+  "MC-029", "MC-030", "MC-031", "MC-032", "MC-034", "MC-035", "MC-036", "MC-037",
+  "MC-039", "MC-040", "MC-041", "MC-042", "MC-043", "MC-044", "MC-045", "MC-046",
+  "MC-047", "MC-048",
+  "HC-608", "HC-609"
+];
+
+// Glitter pens (from the Languo x Qimiart Glitter set, plus the 48 new
+// Acrylic Brush glitter codes added 2026-09, renamed with a trailing
+// "G" to disambiguate them from the unrelated Sage/Forest Green SG-1xx/
+// SG-2xx codes and from this same list's own SG-01..SG-116 range) --
+// these should be excluded from all color-matching converters (Color
+// Converter, Legend Converter, Languo-Guangna Converter), the same way
+// Guangna's Metallic markers are excluded, since glitter finish isn't
+// meaningfully comparable by RGB color distance.
+export const LANGUO_GLITTER_IDS: string[] = ["SG-01", "SG-02", "SG-03", "SG-04", "SG-05", "SG-06", "SG-11", "SG-12", "SG-13", "SG-14", "SG-15", "SG-16", "SG-21", "SG-22", "SG-23", "SG-24", "SG-25", "SG-26", "SG-31", "SG-32", "SG-33", "SG-34", "SG-35", "SG-36", "SG-41", "SG-42", "SG-43", "SG-44", "SG-45", "SG-46", "SG-51", "SG-52", "SG-53", "SG-54", "SG-55", "SG-56", "SG-61", "SG-62", "SG-63", "SG-64", "SG-65", "SG-66", "SG-71", "SG-72", "SG-73", "SG-74", "SG-75", "SG-76", "SG-81", "SG-82", "SG-83", "SG-84", "SG-85", "SG-86", "SG-91", "SG-92", "SG-93", "SG-94", "SG-95", "SG-96", "SG-101", "SG-102", "SG-103", "SG-104", "SG-105", "SG-106", "SG-111", "SG-112", "SG-113", "SG-114", "SG-115", "SG-116",
+  "SG-420G", "SG-421G", "SG-422G", "SG-423G", "SG-424G", "SG-425G", "SG-426G", "SG-427G",
+  "SG-428G", "SG-429G", "SG-430G", "SG-431G", "SG-432G", "SG-433G", "SG-434G", "SG-435G",
+  "SG-436G", "SG-437G", "SG-438G", "SG-439G", "SG-440G", "SG-441G", "SG-442G", "SG-443G",
+  "SG-444G", "SG-445G", "SG-446G", "SG-447G", "SG-448G", "SG-449G", "SG-450G", "SG-451G",
+  "SG-452G", "SG-453G", "SG-454G", "SG-455G", "SG-456G", "SG-457G", "SG-458G", "SG-459G",
+  "SG-460G", "SG-461G", "SG-462G", "SG-463G", "SG-464G", "SG-465G", "SG-466G", "SG-467G"
+];
 
 // Sorted ascending so any UI that lists Languo codes (e.g. the
 // autocomplete on /languo-converter) shows them in a predictable order
@@ -217,6 +306,20 @@ export const LANGUO_IDS: string[] = Object.keys(LANGUO_COLORS).sort((a, b) =>
 // Guangna converters' exclusion of Metallic markers.
 export const LANGUO_NON_GLITTER_IDS: string[] = LANGUO_IDS.filter(
   (id) => !LANGUO_GLITTER_IDS.includes(id)
+);
+
+// LANGUO_NON_GLITTER_IDS minus Metallic codes too. This is the pool
+// converters should search by default (mirrors Guangna's
+// GN_MATCHING_IDS = GN_ONLY_IDS minus GN_METALLIC_IDS): Metallic finish
+// isn't a realistic "closest match" suggestion for an arbitrary photo
+// color, so it's excluded here and only surfaced when a customer
+// explicitly owns/types a Metallic code. Same policy as Guangna's
+// Metallic markers: excluded from this unrestricted default pool, but
+// still matchable within a customer's own owned-set search -- callers
+// should NOT filter an owned-codes pool through this list, only use it
+// for the no-selection/unrestricted default.
+export const LANGUO_MATCHING_IDS: string[] = LANGUO_NON_GLITTER_IDS.filter(
+  (id) => !LANGUO_METALLIC_IDS.includes(id)
 );
 
 export type LanguoMatchResult = { code: string; rgb: [number, number, number] };
@@ -244,19 +347,36 @@ export function findClosestLanguoN(rgb: [number, number, number], ids: string[],
 }
 
 // Normalizes a free-typed "extra Languo code" token to its LANGUO_COLORS
-// key, or null if it doesn't resolve to a real, non-Glitter entry.
-// Languo codes are always a 2-letter prefix + hyphen + 1-4 digits
-// ("BR-702", "AG-171", "DB-1610") -- the hyphen is optional in the typed
-// token ("br702" also resolves to "BR-702"). Glitter codes (the 72
-// "SG-xx" codes from the Languo x Qimiart set, distinct from the
-// Acrylic 288 "SG-1xx"/"SG-2xx" Sage/Forest Green codes that share the
-// same prefix) are deliberately excluded, same as LANGUO_GLITTER_IDS is
-// excluded everywhere else in the converters.
+// key, or null if it doesn't resolve to a real entry at all. Languo
+// codes are always a 2-letter prefix + hyphen + 1-4 digits ("BR-702",
+// "AG-171", "DB-1610"), optionally followed by a trailing "G" for the
+// new Acrylic Brush glitter codes ("SG-420G") -- the hyphen is optional
+// in the typed token ("br702" also resolves to "BR-702").
+//
+// Glitter and Metallic codes ARE recognized here (no "invalid code"
+// error) -- a customer typing "SG-420" (without the G) is auto-
+// corrected to "SG-420G", the code's real stored id, rather than being
+// told it doesn't exist. This function's job is purely "does this
+// token refer to a real code" -- it does NOT decide whether that code
+// is usable for color matching. That exclusion (both Glitter and
+// Metallic finish aren't meaningfully comparable by RGB distance, and
+// unlike Guangna's Metallic markers, Languo's are excluded even from a
+// customer's own owned-set matching, not just the unrestricted default
+// search) happens downstream via LANGUO_MATCHING_IDS -- callers building
+// an owned-codes pool for matching must filter through that, not rely
+// on this function to have already excluded anything.
 export function normalizeLanguoExtraCode(token: string): string | null {
   const t = token.trim().toUpperCase().replace(/\s+/g, "");
   if (!t) return null;
-  const m = t.match(/^([A-Z]{2})-?(\d{1,4})$/);
+  const m = t.match(/^([A-Z]{2})-?(\d{1,4})(G)?$/);
   if (!m) return null;
-  const id = `${m[1]}-${m[2]}`;
-  return LANGUO_COLORS[id] && !LANGUO_GLITTER_IDS.includes(id) ? id : null;
+  const base = `${m[1]}-${m[2]}`;
+  const id = m[3] ? `${base}G` : base;
+  if (LANGUO_COLORS[id]) return id;
+  // Bare token ("SG-420") didn't resolve directly -- check whether it's
+  // actually one of the new glitter codes, which are stored with a
+  // trailing "G" specifically to disambiguate them from unrelated
+  // codes sharing the same prefix (see LANGUO_GLITTER_IDS above).
+  if (!m[3] && LANGUO_COLORS[`${base}G`]) return `${base}G`;
+  return null;
 }

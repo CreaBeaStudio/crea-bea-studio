@@ -49,6 +49,18 @@
 //   - New translation keys: "unlockingButton", "unlockFailedError" --
 //     added to the EN block below and to messages/mysteryDecoderCustom-fr.json.
 //
+// v4 (2026-09) -- Metallic/Glitter exclusion: neither brand sells a
+// standalone "Metallic" or "Glitter" pack in real life (they only ever
+// come bundled inside a bigger set), so offering "Metallic Colors"
+// (Guangna) / "Metallic Set" (Languo) as their own pickable options
+// here was misleading -- nobody owns "just the metallics". Both are
+// now filtered out of their respective pickers below. The actual
+// matching-pool exclusion (Metallic for both brands, Glitter for
+// Languo, even when bundled inside a selected bigger set) lives in
+// lib/mysteryDecoderMatch.ts's buildCombinedPool -- that's the real
+// enforcement; this component's filtering is just so the picker UI
+// doesn't offer a choice that wouldn't do anything useful anyway.
+//
 // ARCHITECTURE STATUS: this component generates a real, live FREE
 // PREVIEW (the entire first page) entirely client-side, and now also
 // kicks off the real paid-unlock flow via handleUnlock(). The customer
@@ -74,7 +86,12 @@
 // the sets dict before calling buildCombinedPool. If you ever refactor
 // mysteryDecoderMatch.ts, keep this in mind -- those two key names are
 // reserved/magic as far as this component (and the download page) are
-// concerned.
+// concerned. Note: a customer typing a Metallic/Glitter code directly
+// into the extra-codes box will still have it silently excluded at
+// matching time by buildCombinedPool -- it's accepted as a recognized
+// code (no error), it just never becomes a match, consistent with how
+// the standalone Metallic sets are hidden from the pickers for the
+// same underlying reason.
 //
 // NEW translation keys needed under a "mysteryDecoderCustom" namespace
 // -- EN block below, ready to paste into en.json (FR translation
@@ -97,6 +114,7 @@
 //   "unlockFailedError": "Something went wrong starting checkout. Please try again, or contact us if it keeps happening.",
 //   "freePreviewCaption": "Free preview (first page) -- unlock the full decoder to see every page.",
 //   "viewPreviewButton": "View free preview PDF",
+//   "resetButton": "Reset",
 //   "languoLinePaint": "Paint",
 //   "languoLineGel": "Gel Pens",
 //   "languoLinePlus": "Plus",
@@ -110,7 +128,7 @@ import { useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { SET_OPTIONS, GUANGNA_SETS } from "@/lib/guangna";
-import { LANGUO_SETS } from "@/lib/languoSets";
+import { LANGUO_SETS, LANGUO_PRETTY_LABELS } from "@/lib/languoSets";
 import { MYSTERY_DECODER_VARIANT } from "@/lib/mysteryDecoderPricing";
 import { buildCombinedPool, matchBook, type BookData } from "@/lib/mysteryDecoderMatch";
 import { buildFreePreviewDoc } from "@/lib/mysteryDecoderPdf";
@@ -143,14 +161,26 @@ const BOOKS: BookOption[] = [
   { slug: "pokemon", title: "Pokemon" },
 ];
 
+// Guangna sets pickable here -- excludes "Metallic Colors" (GN.8301-
+// Metallic): nobody owns "just the metallics" as a standalone product,
+// they only ever come bundled inside a bigger set. See this file's v4
+// header note and lib/mysteryDecoderMatch.ts's buildCombinedPool for
+// the actual (unconditional, even-if-bundled) matching-pool exclusion.
+const GUANGNA_SET_OPTIONS_FOR_DECODER = SET_OPTIONS.filter(
+  (opt) => !opt.key.startsWith("GN.8301-Metallic")
+);
+
 // Groups LANGUO_SETS' keys by their `.line` field, preserving the
 // object's own key order within each group -- mirrors the grouping
 // create/page.tsx already does for the main PBN generator's Languo
 // picker (see [[multi-brand-pbn-expansion]]), so this UI's grouping
-// stays visually consistent with the rest of the site.
+// stays visually consistent with the rest of the site. "Metallic Set"
+// is excluded for the same reason GN.8301-Metallic is excluded above
+// -- see this file's v4 header note.
 function groupLanguoSetsByLine(): Record<string, string[]> {
   const groups: Record<string, string[]> = {};
   for (const [key, set] of Object.entries(LANGUO_SETS)) {
+    if (key === "Metallic Set") continue;
     const line = set.line;
     if (!groups[line]) groups[line] = [];
     groups[line].push(key);
@@ -206,6 +236,21 @@ export default function MysteryDecoderCustom() {
   };
 
   const bookTitleFor = (slug: string): string => BOOKS.find((b) => b.slug === slug)?.title ?? slug;
+
+  // Lets the customer try a different marker combo (or just redo the
+  // search) without reloading the page -- clears set selections, typed
+  // extra codes, and any preview/error state. Deliberately leaves the
+  // chosen book alone: a "redo" here is much more likely to mean
+  // "different markers for the same book" than "start over from
+  // scratch", and switching books already has its own selector.
+  const resetSelection = () => {
+    setSelectedGuangnaSets([]);
+    setSelectedLanguoSets([]);
+    setExtraCodesText("");
+    setErrorMsg(null);
+    setPreviewUrl(null);
+    setUnlockError(null);
+  };
 
   const setLabelFor = (guangnaKeys: string[], languoKeys: string[]): string => {
     const pickedLabels = [...guangnaKeys, ...languoKeys];
@@ -404,7 +449,7 @@ export default function MysteryDecoderCustom() {
         value={selectedGuangnaSets}
         onChange={(e) => setSelectedGuangnaSets(selectedOptionValues(e))}
       >
-        {SET_OPTIONS.map((opt) => (
+        {GUANGNA_SET_OPTIONS_FOR_DECODER.map((opt) => (
           <option key={opt.key} value={opt.key}>
             {opt.label}
           </option>
@@ -420,11 +465,11 @@ export default function MysteryDecoderCustom() {
         value={selectedLanguoSets}
         onChange={(e) => setSelectedLanguoSets(selectedOptionValues(e))}
       >
-        {Object.entries(LANGUO_GROUPS).map(([line, keys]) => (
+       {Object.entries(LANGUO_GROUPS).map(([line, keys]) => (
           <optgroup key={line} label={languoLineLabel(line)}>
             {keys.map((key) => (
               <option key={key} value={key}>
-                {key}
+                {LANGUO_PRETTY_LABELS[key] ?? key}
               </option>
             ))}
           </optgroup>
@@ -470,7 +515,28 @@ export default function MysteryDecoderCustom() {
           >
             {isUnlocking ? t("unlockingButton") : t("unlockFullDecoderButton", { price: MYSTERY_DECODER_VARIANT.price })}
             </button>
-      
+
+        {(selectedGuangnaSets.length > 0 || selectedLanguoSets.length > 0 || extraCodesText.trim() !== "" || previewUrl) && (
+          <button
+            type="button"
+            onClick={resetSelection}
+            disabled={isGenerating || isUnlocking}
+            style={{
+              padding: "10px 20px",
+              fontSize: 14,
+              fontWeight: 700,
+              borderRadius: 8,
+              border: "2px solid var(--border)",
+              background: "white",
+              color: "#555",
+              cursor: (isGenerating || isUnlocking) ? "default" : "pointer",
+              opacity: (isGenerating || isUnlocking) ? 0.6 : 1,
+            }}
+          >
+            {t("resetButton")}
+          </button>
+        )}
+
       </div>
 
       {errorMsg && <div className="mdc-error">{errorMsg}</div>}

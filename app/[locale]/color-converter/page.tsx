@@ -10,10 +10,10 @@ import {
   type MatchResult,
 } from "@/lib/guangna";
 import {
-  LANGUO_NON_GLITTER_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
+  LANGUO_MATCHING_IDS, findClosestLanguoN, normalizeLanguoExtraCode,
   type LanguoMatchResult,
 } from "@/lib/languo";
-import { LANGUO_SETS, LANGUO_SET_OPTIONS } from "@/lib/languoSets";
+import { LANGUO_SETS, LANGUO_SET_OPTIONS_COLOR_CONVERTER } from "@/lib/languoSets";
 
 type SimpleMatch = { code: string; name?: string; rgb: [number, number, number] };
 type BrandCode = { brand: "guangna" | "languo"; code: string };
@@ -208,6 +208,17 @@ export default function ColorConverter() {
     setHasOwnedLanguo(false);
   };
 
+  // Lets the customer start a fresh search without reloading the page --
+  // clears whichever input the current mode uses, plus any results, but
+  // deliberately leaves "My Markers" untouched (those are the customer's
+  // standing owned-set choices, not part of a single color lookup).
+  const resetInput = () => {
+    setHexInput("#ff6b6b");
+    setRInput("255"); setGInput("107"); setBInput("107");
+    setPhotoDataUrl(null); setPhotoName(""); setDominantRgb(null);
+    clearResults();
+  };
+
   const toggleGuangnaSet = (value: string) => {
     setMySetsGuangna(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
   };
@@ -281,7 +292,7 @@ export default function ColorConverter() {
         setHasOwnedGuangna(false);
       }
 
-      const fullL = findClosestLanguoN(rgb, LANGUO_NON_GLITTER_IDS, 1)[0] ?? null;
+      const fullL = findClosestLanguoN(rgb, LANGUO_MATCHING_IDS, 1)[0] ?? null;
       setBestFullLanguo(fullL);
       const ownedLIds = getOwnedLanguoIds();
       if (ownedLIds.length > 0) {
@@ -376,22 +387,23 @@ export default function ColorConverter() {
 
               <div style={{fontWeight:700,fontSize:13,marginBottom:6,paddingTop:8,borderTop:"1px solid var(--border)"}}>{tc("brands.languo")}</div>
               <div className="marker-set-list">
-                {LANGUO_SET_OPTIONS.map(s => (
-                  <label key={s.key} className="marker-set-row">
+              {LANGUO_SET_OPTIONS_COLOR_CONVERTER.map((opt) => (
+                  <label key={opt.key} className="marker-set-row">
                     <input
                       type="checkbox"
-                      checked={mySetsLanguo.includes(s.key)}
-                      onChange={()=>toggleLanguoSet(s.key)}
+                      checked={mySetsLanguo.includes(opt.key)}
+                      onChange={()=>toggleLanguoSet(opt.key)}
                       style={{accentColor:"var(--pink)"}}
                     />
-                    <span>{s.label}</span>
+                    <span>{opt.label}</span>
                   </label>
                 ))}
               </div>
               {mySetsLanguo.length > 0 && (
                 <p style={{fontSize:11,color:"var(--muted)",marginTop:6}}>{tc("setsSelected", { count: mySetsLanguo.length })}</p>
               )}
-              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}>{t("myMarkers.glitterNote")}</p>
+              
+              <p style={{ fontSize: 11, color: "var(--muted)", margin: "6px 0 14px" }}> {`${t("myMarkers.glitterNote")} ${t("myMarkers.metallicNote")}`} </p>
 
               <label style={{fontSize:13,fontWeight:600,display:"block",marginBottom:4}}>{t("myMarkers.extraCodesLabel")} <span style={{fontWeight:400,color:"var(--muted)"}}>{t("myMarkers.extraCodesHint")}</span></label>
               <input type="text" value={myExtraCodes} onChange={e=>setMyExtraCodes(e.target.value)}
@@ -479,11 +491,23 @@ export default function ColorConverter() {
                 </div>
               )}
 
-              <button className="btn-primary" onClick={handleSearch}
-                disabled={searching||(mode==="photo"&&!photoDataUrl)}
-                style={{width:"100%",marginTop:20,opacity:(searching||(mode==="photo"&&!photoDataUrl))?0.6:1}}>
-                {searching?t("searching"):t("searchButton")}
-              </button>
+              <div style={{display:"flex",gap:10,marginTop:20}}>
+                <button className="btn-primary" onClick={handleSearch}
+                  disabled={searching||(mode==="photo"&&!photoDataUrl)}
+                  style={{flex:1,opacity:(searching||(mode==="photo"&&!photoDataUrl))?0.6:1}}>
+                  {searching?t("searching"):t("searchButton")}
+                </button>
+                {(hasAnyResult || photoDataUrl) && (
+                  <button onClick={resetInput} disabled={searching}
+                    style={{
+                      padding:"0 20px",borderRadius:10,border:"2px solid var(--border)",
+                      background:"white",color:"#555",fontWeight:700,fontSize:14,
+                      cursor:searching?"default":"pointer",opacity:searching?0.6:1,
+                    }}>
+                    {t("resetButton")}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
