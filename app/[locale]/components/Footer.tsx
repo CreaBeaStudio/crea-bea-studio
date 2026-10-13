@@ -76,6 +76,7 @@ export default function Footer() {
         <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 12, marginTop: 8, alignItems: "center" }}>
           <a href="/privacy" style={linkStyle}>{t("footerPrivacy")}</a>
           <a href="/terms" style={linkStyle}>{t("footerTerms")}</a>
+          <a href="/promo-kreadoe" style={linkStyle}>Promo Terms</a>
           <a href="/refund" style={linkStyle}>{t("footerRefund")}</a>
           <button onClick={reopenConsentBanner} style={linkButtonStyle}>
             {t("footerCookieSettings")}

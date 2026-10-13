@@ -2,12 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
+  const locale = useLocale();
 
   // UPDATED (2026-07-23): "Create" is now a dropdown grouping the two
   // paid-generation features (Guangna-by-Number, Swatch Card Creator's
@@ -50,6 +51,23 @@ export default function Navbar() {
       ["faq", "/faq"],
     ]},
   ];
+
+  // ADDED: KreaDoe trade fair promo terms page (CREABEA15) -- nested
+  // inside the Help Center dropdown rather than top-level, EN/NL only
+  // (fair was in NL; flyer content is EN/NL/FR/DE but the site link
+  // itself is EN/NL-gated per her decision). Needs a "promoKreadoe"
+  // key added to nav namespace in en.json/nl.json -- no key needed in
+  // fr.json/de.json since it never renders for those locales.
+  const showPromoKreadoe = locale === "en" || locale === "nl";
+  const visibleLinks = LINKS.map((item: any) => {
+    if (item.labelKey === "helpCenter" && showPromoKreadoe) {
+      return {
+        ...item,
+        children: [...item.children, ["promoKreadoe", "/promo-kreadoe"]],
+      };
+    }
+    return item;
+  });
 
   return (
     <>
@@ -118,7 +136,7 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <div className="desktop-links" style={{ alignItems: "center", gap: 4, flexWrap: "nowrap" }}>
-            {LINKS.map((item: any) => {
+            {visibleLinks.map((item: any) => {
               if (item.children) {
                 return (
                   <div key={item.labelKey} className="dropdown-wrapper" style={{ position: "relative" }}>
@@ -214,7 +232,7 @@ return (
           borderTop: "1px solid var(--border)",
           paddingBottom: 12,
         }}>
-          {LINKS.map((item: any) => {
+          {visibleLinks.map((item: any) => {
             if (item.children) {
               return (
                 <div key={item.labelKey}>
