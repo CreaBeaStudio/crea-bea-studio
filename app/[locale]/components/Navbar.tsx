@@ -31,6 +31,13 @@ export default function Navbar() {
   // dropdown. Mystery Decoder and Free Coloring Pages stay top-level
   // (Free Coloring Pages is a conversion/lead-gen page, not a help
   // page, per her call).
+  //
+  // UPDATED (mobile language fix): the mobile menu had grown taller
+  // than a phone screen, and because the navbar is sticky it could not
+  // be scrolled -- the language switcher (previously at the very
+  // bottom) was unreachable. Fixes: (1) language switcher moved to the
+  // TOP of the mobile menu, (2) mobile menu now has a max-height with
+  // its own scrolling (.mobile-menu rule in the <style> block).
   const LINKS = [
     ["home", "/"],
     { labelKey: "create", children: [
@@ -98,6 +105,13 @@ export default function Navbar() {
           .hamburger { display: flex !important; }
           .tagline-full { display: none; }
           .tagline-short { display: inline; }
+          .mobile-menu {
+            max-height: calc(100vh - 70px);
+            max-height: calc(100dvh - 70px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+          }
         }
         @media (min-width: 901px) {
           .hamburger { display: none !important; }
@@ -165,19 +179,19 @@ export default function Navbar() {
               // usual single-line nowrap treatment every other
               // top-level link uses.
               const isMysteryDecoder = item[0] === "mysteryDecoder";
-return (
-  <Link key={item[0]} href={item[1]} className="nav-link" style={{
-    textDecoration: "none",
-    color: isFreePages ? "var(--pink)" : "var(--ink)",
-    fontSize: 15,
-    fontWeight: isFreePages ? 700 : 500,
-    padding: "6px 12px", borderRadius: 8,
-    whiteSpace: isMysteryDecoder ? "normal" : "nowrap",
-    ...(isMysteryDecoder ? { maxWidth: 120, textAlign: "center", lineHeight: 1.25 } : {}),
-  }}>
-    {t(item[0])}
-  </Link>
-);
+              return (
+                <Link key={item[0]} href={item[1]} className="nav-link" style={{
+                  textDecoration: "none",
+                  color: isFreePages ? "var(--pink)" : "var(--ink)",
+                  fontSize: 15,
+                  fontWeight: isFreePages ? 700 : 500,
+                  padding: "6px 12px", borderRadius: 8,
+                  whiteSpace: isMysteryDecoder ? "normal" : "nowrap",
+                  ...(isMysteryDecoder ? { maxWidth: 120, textAlign: "center", lineHeight: 1.25 } : {}),
+                }}>
+                  {t(item[0])}
+                </Link>
+              );
             })}
 
             {/* Language switcher */}
@@ -232,6 +246,11 @@ return (
           borderTop: "1px solid var(--border)",
           paddingBottom: 12,
         }}>
+          {/* Language switcher -- at the TOP so it is always reachable on a phone */}
+          <div style={{ padding: "12px 8px" }}>
+            <LanguageSwitcher />
+          </div>
+
           {visibleLinks.map((item: any) => {
             if (item.children) {
               return (
@@ -249,20 +268,16 @@ return (
               );
             }
             const isFreePagesMobile = item[0] === "freeColoringPages";
-return (
-  <Link key={item[0]} href={item[1]} onClick={() => setOpen(false)} style={{
-    textDecoration: "none",
-    color: isFreePagesMobile ? "var(--pink)" : "var(--ink)",
-    fontSize: 17,
-    fontWeight: isFreePagesMobile ? 700 : 500,
-    padding: "12px 8px", borderRadius: 8,
-  }}>{t(item[0])}</Link>
-);
+            return (
+              <Link key={item[0]} href={item[1]} onClick={() => setOpen(false)} style={{
+                textDecoration: "none",
+                color: isFreePagesMobile ? "var(--pink)" : "var(--ink)",
+                fontSize: 17,
+                fontWeight: isFreePagesMobile ? 700 : 500,
+                padding: "12px 8px", borderRadius: 8,
+              }}>{t(item[0])}</Link>
+            );
           })}
-
-          <div style={{ padding: "12px 8px" }}>
-            <LanguageSwitcher />
-          </div>
 
           <a href="mailto:hello@creabeastudio.com" style={{
             textDecoration: "none", color: "var(--ink)", fontSize: 17,
