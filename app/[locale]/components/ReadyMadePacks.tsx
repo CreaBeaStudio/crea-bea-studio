@@ -4,21 +4,23 @@
 // tool itself (moved 2026-07-24 -- SwatchCreator.tsx renders this first,
 // before its own intro/builder).
 //
+// v6 change: combo packs are now generic. Each combo has a `first` and a
+// `second` part, and each part has its own brand, size and optional
+// variant (HG / GP). So a combo can be Guangna+Languo, Languo+Languo or
+// Guangna+Guangna. The title is built from the two parts, e.g.
+// "Languo 384 x Languo 168 Gel Pens". Also: the A4 / US Letter buy
+// buttons are now one shared BuyButtons component used by both tile types.
+//
 // v5 change: the two Guangna High Gloss (HG) packs (168 and 288) were
 // already in PACKS but showed the exact same title as the standard 168
-// and 288 tiles. Pack now has an optional `variant: "HG"` field; when set,
-// the tile title gets a " · High Gloss" suffix. "High Gloss" is a product
-// name, so it is hardcoded (like "Guangna"/"Languo"), not translated.
-// Also: the grid is no longer "3x3" -- it is 12 tiles now, and the
-// responsive CSS (3 -> 2 -> 1 columns) handles any number of tiles.
+// and 288 tiles. Pack has an optional `variant` field; when set, the tile
+// title gets a " · High Gloss" / " · Gel Pens" suffix. These are product
+// names, so they are hardcoded (like "Guangna"/"Languo"), not translated.
 //
 // v4 change (2026-08-09): added a second, separate grid below the
-// original single-brand one for the "Guangna x Languo" combo packs
-// (LemonSqueezy product 1277743). Combo packs mix two brands + two sizes
-// into one pack (e.g. "Guangna 366 x Languo 288"), so they have their own
-// ComboPack type, COMBO_PACKS array, and ComboPackTile component. Reuses
-// the same VariantInfo shape, the same a4Label/usLabel/linkNeeded/
-// linkNotSetUp translation keys, and the same toUsdEstimate helper.
+// original single-brand one for combo packs (LemonSqueezy product
+// 1277743). Combo packs mix two sets into one pack, so they have their
+// own ComboPack type, COMBO_PACKS array, and ComboPackTile component.
 //
 // v3 change (2026-07-25): last hardcoded strings translated (linkNotSetUp,
 // a4Label, usLabel, linkNeeded) under the "readyMadePacks" namespace.
@@ -52,6 +54,9 @@ import { toUsdEstimate } from "@/lib/lemonSqueezyPricing";
 // been supplied yet -- those render as a disabled "Link needed" button.
 const LS_STORE = "https://creabeastudio.lemonsqueezy.com/checkout/buy";
 
+type Brand = "guangna" | "languo";
+type PackVariant = "HG" | "GP";
+
 interface VariantInfo {
   price: string;
   variantId: string;
@@ -60,23 +65,30 @@ interface VariantInfo {
 
 interface Pack {
   id: string;
-  brand: "guangna" | "languo";
+  brand: Brand;
   size: number;
-  // Optional product variant. "HG" = High Gloss marker set (Guangna 168HG
-  // and 288HG). Leave out for the standard sets.
-  variant?: "HG";
+  // Optional product variant. "HG" = Guangna High Gloss, "GP" = Languo
+  // Gel Pens. Leave out for the standard sets.
+  variant?: PackVariant;
   a4: VariantInfo;
   us: VariantInfo;
 }
 
-// Combo packs mix two brands/sizes into one pack (e.g. "Guangna 366 x
-// Languo 288") -- LemonSqueezy product 1277743 ("Guangna x Languo Swatch
-// Card Sets"), separate from the single-brand product (1240793) the PACKS
-// array belongs to.
+// One half of a combo pack, e.g. { brand: "languo", size: 384 } or
+// { brand: "languo", size: 168, variant: "GP" }.
+interface ComboPart {
+  brand: Brand;
+  size: number;
+  variant?: PackVariant;
+}
+
+// Combo packs mix two sets into one pack -- LemonSqueezy product 1277743
+// ("Guangna x Languo Swatch Card Sets"), separate from the single-brand
+// product (1240793) the PACKS array belongs to.
 interface ComboPack {
   id: string;
-  guangnaSize: number;
-  languoSize: number;
+  first: ComboPart;
+  second: ComboPart;
   a4: VariantInfo;
   us: VariantInfo;
 }
@@ -112,37 +124,175 @@ const PACKS: Pack[] = [
     a4: { price: "4,25€", variantId: "2232745", checkoutUrl: `${LS_STORE}/61508445-3b9d-4213-9c74-d9be76f23751` },
     us: { price: "4,75€", variantId: "2232751", checkoutUrl: `${LS_STORE}/22a612b6-5c44-4b46-9e9e-3577582f1baa` } },
   { id: "languo-192", brand: "languo", size: 192,
-    a4: { price: "3,75€", variantId: "1939556", checkoutUrl: `${LS_STORE}/2fa0a10a-a9f9-498b-a56c-c10835b93f89` },
-    us: { price: "4,25€", variantId: "1939558", checkoutUrl: `${LS_STORE}/c14817c3-180d-45fa-a561-ac4b8faa3191` } },
+    a4: { price: "3,75€", variantId: "2289391", checkoutUrl: `${LS_STORE}/c2ce71cd-0504-45d0-93d3-1d9279ff1db7` },
+    us: { price: "4,25€", variantId: "2289392", checkoutUrl: `${LS_STORE}/41d6cd17-8db6-49a9-a8ca-162229a33e8e` } },
   { id: "languo-240", brand: "languo", size: 240,
-    a4: { price: "4,00€", variantId: "1939561", checkoutUrl: `${LS_STORE}/45d1c9be-44e9-4107-8c1a-2d0f5f13c27e` },
-    us: { price: "4,50€", variantId: "1939576", checkoutUrl: `${LS_STORE}/94f6ea33-43ec-4b10-b9f7-cc97cf42e4d0` } },
+    a4: { price: "4,00€", variantId: "2289393", checkoutUrl: `${LS_STORE}/18530628-d639-482d-ae4e-3e848aa5367b` },
+    us: { price: "4,50€", variantId: "2289394", checkoutUrl: `${LS_STORE}/93ddffec-a6bd-4111-8b1f-710685a2a393` } },
   { id: "languo-288", brand: "languo", size: 288,
-    a4: { price: "4,25€", variantId: "1939578", checkoutUrl: `${LS_STORE}/7e8f1b95-d925-407c-8899-9a37497d9604` },
-    us: { price: "4,75€", variantId: "1939581", checkoutUrl: `${LS_STORE}/2d49e4ec-c6f9-47c6-a20f-c644b1203980` } },
+    a4: { price: "4,25€", variantId: "2289395", checkoutUrl: `${LS_STORE}/8699e4e4-e8b7-4281-91b7-f41de250c615` },
+    us: { price: "4,75€", variantId: "2289396", checkoutUrl: `${LS_STORE}/2a238e16-9f9c-4ebd-a221-64f7f9360cda` } },
+  { id: "languo-384", brand: "languo", size: 384,
+    a4: { price: "5,50€", variantId: "2289448", checkoutUrl: `${LS_STORE}/c4dc3826-1533-4449-9d54-a8f80350dfba` },
+    us: { price: "6,25€", variantId: "2289444", checkoutUrl: `${LS_STORE}/02127054-0279-495e-b5b8-13ba72366506` } },
+  { id: "languo-432", brand: "languo", size: 432,
+    a4: { price: "6,25€", variantId: "2289451", checkoutUrl: `${LS_STORE}/67707a1a-b34d-43cf-a11b-f142a2fd934d` },
+    us: { price: "7,00€", variantId: "2289452", checkoutUrl: `${LS_STORE}/b986cc31-6239-4f9d-9026-623f045229e9` } },
+  { id: "languo-168GP", brand: "languo", size: 168, variant: "GP",
+    a4: { price: "3,75€", variantId: "2289458", checkoutUrl: `${LS_STORE}/4875a152-372b-4a82-9928-16a4dd27105d` },
+    us: { price: "4,25€", variantId: "2289460", checkoutUrl: `${LS_STORE}/59659a7f-1f72-4acc-91b0-3d47b878e794` } },
+  { id: "languo-234GP", brand: "languo", size: 234, variant: "GP",
+    a4: { price: "4,25€", variantId: "2289472", checkoutUrl: `${LS_STORE}/e093a44d-a44f-432e-bbf9-bc3b97f27719` },
+    us: { price: "4,50€", variantId: "2289474", checkoutUrl: `${LS_STORE}/89743a78-fb01-48de-9ff0-615ff3678215` } },
 ];
 
-// "Guangna x Languo" combo packs (LemonSqueezy product 1277743), added
-// 2026-08-09. All 4 checkoutUrls confirmed unique.
+// Combo packs (LemonSqueezy product 1277743). Each combo = two parts.
+// To add e.g. a Guangna + Guangna combo:
+//   first: { brand: "guangna", size: 366 },
+//   second: { brand: "guangna", size: 168, variant: "HG" },
 const COMBO_PACKS: ComboPack[] = [
-  { id: "guangna366-languo288", guangnaSize: 366, languoSize: 288,
+  { id: "guangna366-languo288",
+    first: { brand: "guangna", size: 366 },
+    second: { brand: "languo", size: 288 },
     a4: { price: "8,00€", variantId: "1997612", checkoutUrl: `${LS_STORE}/46793ab0-be98-4658-8d6e-f68fa3ffcc55` },
     us: { price: "9,00€", variantId: "1997631", checkoutUrl: `${LS_STORE}/1968a94d-dc6e-4196-8d5b-34793c02ad12` } },
-  { id: "guangna360-languo288", guangnaSize: 360, languoSize: 288,
+  { id: "guangna360-languo288",
+    first: { brand: "guangna", size: 360 },
+    second: { brand: "languo", size: 288 },
     a4: { price: "8,00€", variantId: "1997632", checkoutUrl: `${LS_STORE}/c1858019-593f-4319-ae2f-5bc28c240be6` },
     us: { price: "9,00€", variantId: "1997633", checkoutUrl: `${LS_STORE}/ccc244a0-650e-455a-b827-f139fec93a17` } },
+  { id: "guangna360-guangna168HG",
+      first: { brand: "guangna", size: 360 },
+      second: { brand: "guangna", size: 168, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2289964", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/e68d7a35-cb9e-4352-bbfe-5eb153085661` },
+      us: { price: "9,00€", variantId: "2289967", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/b8b53b94-ae8b-48c3-a618-d664daaf5096` } },
+  { id: "guangna360-guangna288HG",
+      first: { brand: "guangna", size: 360 },
+      second: { brand: "guangna", size: 288, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2289987", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/955da28f-98e5-4735-8144-69e4934a724e` },
+      us: { price: "9,00€", variantId: "2289990", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/6eac7e9c-e4b4-4cf7-9f75-fbb4d0719429` } },
+  { id: "guangna366-guangna168HG",
+      first: { brand: "guangna", size: 366 },
+      second: { brand: "guangna", size: 168, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2289994", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/7011267e-4f4f-453d-81a4-379a4636a18c` },
+      us: { price: "9,00€", variantId: "2289999", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/d8a11cac-1027-4c29-a68a-716741577c6a` } },
+  { id: "guangna366-guangna288HG",
+      first: { brand: "guangna", size: 366 },
+      second: { brand: "guangna", size: 288, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2290007", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/3cb5f97e-cfe9-4820-8a57-459c64ad27fc` },
+      us: { price: "9,00€", variantId: "2290013", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/256a6c50-3b58-44aa-8686-cc319f7de00d` } },      
+  { id: "guangna488-guangna168HG",
+      first: { brand: "guangna", size: 488 },
+      second: { brand: "guangna", size: 168, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2290016", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/11daf9f7-ceb4-4b25-815a-71c87d277b9b` },
+      us: { price: "9,00€", variantId: "2290024", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/192410a0-f0c6-4024-ab51-dfc85d50e598` } },     
+  { id: "guangna488-guangna288HG",
+      first: { brand: "guangna", size: 488 },
+      second: { brand: "guangna", size: 288, variant: "HG" },
+      a4: { price: "8,00€", variantId: "2290029", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/b797dd5f-e56f-43d5-857d-ef64f9d2459f` },
+      us: { price: "9,00€", variantId: "2290036", checkoutUrl: `https://creabeastudio.lemonsqueezy.com/checkout/buy/e5cf4261-a68a-42ac-b2d1-13544de4f0c4` } },     
+  { id: "languo384-languo168GP",
+    first: { brand: "languo", size: 384 },
+    second: { brand: "languo", size: 168, variant: "GP" },
+    a4: { price: "8,00€", variantId: "2289496", checkoutUrl: `${LS_STORE}/1a7485da-88a0-46c5-8780-d96892e82581` },
+    us: { price: "9,00€", variantId: "2289499", checkoutUrl: `${LS_STORE}/929d6266-085a-488b-9497-e2e7f39c4bf4` } },
+  { id: "languo384-languo234GP",
+    first: { brand: "languo", size: 384 },
+    second: { brand: "languo", size: 234, variant: "GP" },
+    a4: { price: "8,00€", variantId: "2289502", checkoutUrl: `${LS_STORE}/22865d2f-f3e1-40ef-b237-571c653b5d58` },
+    us: { price: "9,00€", variantId: "2289505", checkoutUrl: `${LS_STORE}/8d0cae9f-c518-4cb2-9d5c-becd6f999bab` } },
+  { id: "languo432-languo168GP",
+    first: { brand: "languo", size: 432 },
+    second: { brand: "languo", size: 168, variant: "GP" },
+    a4: { price: "8,00€", variantId: "2289507", checkoutUrl: `${LS_STORE}/44aad93f-a233-4221-8055-218494947a18` },
+    us: { price: "9,00€", variantId: "2289511", checkoutUrl: `${LS_STORE}/4f33d227-10d5-4348-bb60-46e6ce06e282` } },
+  { id: "languo432-languo234GP",
+    first: { brand: "languo", size: 432 },
+    second: { brand: "languo", size: 234, variant: "GP" },
+    a4: { price: "8,00€", variantId: "2289516", checkoutUrl: `${LS_STORE}/8c6fb03a-1d15-4c86-8c98-a7ac56d6f2d1` },
+    us: { price: "9,00€", variantId: "2289519", checkoutUrl: `${LS_STORE}/de538d1b-eb8d-47ae-ba25-cba7df3c5a53` } },
 ];
 
-const BRAND_LABEL: Record<Pack["brand"], string> = {
+const BRAND_LABEL: Record<Brand, string> = {
   guangna: "Guangna",
   languo: "Languo",
 };
 
 // Display names for the optional pack variants. Product names, so they are
 // hardcoded rather than translated (same reasoning as BRAND_LABEL).
-const VARIANT_LABEL: Record<NonNullable<Pack["variant"]>, string> = {
+const VARIANT_LABEL: Record<PackVariant, string> = {
   HG: "High Gloss",
+  GP: "Gel Pens",
 };
+
+// "Languo 168 Gel Pens", "Guangna 366", etc. Used for combo titles.
+function partLabel(part: ComboPart): string {
+  const base = `${BRAND_LABEL[part.brand]} ${part.size}`;
+  return part.variant ? `${base} ${VARIANT_LABEL[part.variant]}` : base;
+}
+
+const tileStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  gap: 8,
+  padding: "10px 12px",
+  borderRadius: 12,
+  border: "1px solid var(--border)",
+  background: "white",
+};
+
+// The two buy buttons (A4 + US Letter) shared by both tile types.
+// US Letter: USD prominent, EUR small underneath -- same convention as
+// /create and /confirm's paper-size pricing.
+function BuyButtons({ a4, us }: { a4: VariantInfo; us: VariantInfo }) {
+  const t = useTranslations("readyMadePacks");
+
+  return (
+    <div style={{ display: "flex", gap: 6 }}>
+      {a4.checkoutUrl ? (
+        <a
+          href={a4.checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary"
+          style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center" }}
+        >
+          {t("a4Label")} · {a4.price}
+        </a>
+      ) : (
+        <span
+          title={t("linkNotSetUp")}
+          style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
+        >
+          {t("a4Label")} · {t("linkNeeded")}
+        </span>
+      )}
+      {us.checkoutUrl ? (
+        <a
+          href={us.checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary"
+          style={{
+            flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center",
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
+          }}
+        >
+          <span style={{ fontWeight: 800 }}>{t("usLabel")} · {toUsdEstimate(us.price)}</span>
+          <span style={{ fontSize: 9.5, opacity: 0.85 }}>≈ {us.price}</span>
+        </a>
+      ) : (
+        <span
+          title={t("linkNotSetUp")}
+          style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
+        >
+          {t("usLabel")} · {t("linkNeeded")}
+        </span>
+      )}
+    </div>
+  );
+}
 
 function PackTile({ pack }: { pack: Pack }) {
   const t = useTranslations("readyMadePacks");
@@ -152,129 +302,22 @@ function PackTile({ pack }: { pack: Pack }) {
   const title = pack.variant ? `${baseTitle} · ${VARIANT_LABEL[pack.variant]}` : baseTitle;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        gap: 8,
-        padding: "10px 12px",
-        borderRadius: 12,
-        border: "1px solid var(--border)",
-        background: "white",
-      }}
-    >
+    <div style={tileStyle}>
       <div style={{ fontSize: 13.5, fontWeight: 800, color: "var(--ink)" }}>{title}</div>
-      <div style={{ display: "flex", gap: 6 }}>
-        {pack.a4.checkoutUrl ? (
-          <a
-            href={pack.a4.checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center" }}
-          >
-            {t("a4Label")} · {pack.a4.price}
-          </a>
-        ) : (
-          <span
-            title={t("linkNotSetUp")}
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
-          >
-            {t("a4Label")} · {t("linkNeeded")}
-          </span>
-        )}
-        {/* US Letter: USD prominent, EUR small underneath -- same
-            convention as /create and /confirm's paper-size pricing. */}
-        {pack.us.checkoutUrl ? (
-          <a
-            href={pack.us.checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-            style={{
-              flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center",
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
-            }}
-          >
-            <span style={{ fontWeight: 800 }}>{t("usLabel")} · {toUsdEstimate(pack.us.price)}</span>
-            <span style={{ fontSize: 9.5, opacity: 0.85 }}>≈ {pack.us.price}</span>
-          </a>
-        ) : (
-          <span
-            title={t("linkNotSetUp")}
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
-          >
-            {t("usLabel")} · {t("linkNeeded")}
-          </span>
-        )}
-      </div>
+      <BuyButtons a4={pack.a4} us={pack.us} />
     </div>
   );
 }
 
-// Same tile layout as PackTile, but the title combines both brands/sizes
-// ("Guangna 366 x Languo 288") instead of one brand's colorCount string.
+// Same tile layout as PackTile, but the title combines two sets, e.g.
+// "Guangna 366 x Languo 288" or "Languo 384 x Languo 168 Gel Pens".
 function ComboPackTile({ pack }: { pack: ComboPack }) {
-  const t = useTranslations("readyMadePacks");
-  const title = `Guangna ${pack.guangnaSize} x Languo ${pack.languoSize}`;
+  const title = `${partLabel(pack.first)} x ${partLabel(pack.second)}`;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        gap: 8,
-        padding: "10px 12px",
-        borderRadius: 12,
-        border: "1px solid var(--border)",
-        background: "white",
-      }}
-    >
+    <div style={tileStyle}>
       <div style={{ fontSize: 13.5, fontWeight: 800, color: "var(--ink)" }}>{title}</div>
-      <div style={{ display: "flex", gap: 6 }}>
-        {pack.a4.checkoutUrl ? (
-          <a
-            href={pack.a4.checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center" }}
-          >
-            {t("a4Label")} · {pack.a4.price}
-          </a>
-        ) : (
-          <span
-            title={t("linkNotSetUp")}
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
-          >
-            {t("a4Label")} · {t("linkNeeded")}
-          </span>
-        )}
-        {pack.us.checkoutUrl ? (
-          <a
-            href={pack.us.checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-            style={{
-              flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center",
-              display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
-            }}
-          >
-            <span style={{ fontWeight: 800 }}>{t("usLabel")} · {toUsdEstimate(pack.us.price)}</span>
-            <span style={{ fontSize: 9.5, opacity: 0.85 }}>≈ {pack.us.price}</span>
-          </a>
-        ) : (
-          <span
-            title={t("linkNotSetUp")}
-            style={{ flex: 1, padding: "6px 8px", fontSize: 11.5, textAlign: "center", borderRadius: 8, background: "var(--border)", color: "var(--muted)", cursor: "not-allowed" }}
-          >
-            {t("usLabel")} · {t("linkNeeded")}
-          </span>
-        )}
-      </div>
+      <BuyButtons a4={pack.a4} us={pack.us} />
     </div>
   );
 }
